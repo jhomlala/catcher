@@ -6,4 +6,11 @@ class Report {
 
   Report(this.error, this.stackTrace, this.deviceParameters,
       this.applicationParameters);
+
+  Map<String,dynamic> toJson() =>{
+    "error":error.toString(),
+    "stackTrace":stackTrace.toString(),
+    "deviceParameters":deviceParameters,
+    "applicationParameters":applicationParameters
+  };
 }

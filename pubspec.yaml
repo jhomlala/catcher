@@ -14,6 +14,7 @@ dependencies:
   device_info: ^0.4.0
   package_info: ^0.4.0
   mailer: ^2.2.0
+  dio: ^1.0.14
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
 

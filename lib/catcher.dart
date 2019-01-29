@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:catcher/handlers/email_handler.dart';
+import 'package:catcher/handlers/http_handler.dart';
 import 'package:catcher/report.dart';
 import 'package:catcher/handlers/report_handler.dart';
 import 'package:catcher/handlers/console_handler.dart';
@@ -19,12 +20,7 @@ class Catcher {
   Map<String, dynamic> _applicationParameters = Map();
   static Catcher _instance;
 
-  Catcher(
-      {@required this.application,
-      this.handlers = const [
-        ConsoleHandler(),
-        ToastHandler(),
-      ]}) {
+  Catcher({@required this.application, this.handlers = const []}) {
     _loadDeviceInfo();
     _loadApplicationInfo();
     _setupErrorHooks(application);
@@ -52,8 +48,8 @@ class Catcher {
     });
   }
 
-  reportCheckedError(dynamic error, dynamic stackTrace){
-    _reportError(error,stackTrace);
+  reportCheckedError(dynamic error, dynamic stackTrace) {
+    _reportError(error, stackTrace);
   }
 
   _reportError(dynamic error, dynamic stackTrace) async {
@@ -117,12 +113,10 @@ class Catcher {
     });
   }
 
-  static Catcher getInstance(){
-    if (_instance == null){
+  static Catcher getInstance() {
+    if (_instance == null) {
       throw StateError("Instance not created");
     }
     return _instance;
   }
-
-
 }
