@@ -1,6 +1,6 @@
-import 'package:catcher/report.dart';
+import 'package:catcher/model/report.dart';
 
 abstract class ReportHandler{
   const ReportHandler();
-  bool handle(Report error);
+  Future<bool> handle(Report error);
 }

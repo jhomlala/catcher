@@ -2,12 +2,8 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:isolate';
 
-import 'package:catcher/handlers/email_handler.dart';
-import 'package:catcher/handlers/http_handler.dart';
-import 'package:catcher/report.dart';
 import 'package:catcher/handlers/report_handler.dart';
-import 'package:catcher/handlers/console_handler.dart';
-import 'package:catcher/handlers/toast_handler.dart';
+import 'package:catcher/model/report.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,11 +12,19 @@ import 'package:package_info/package_info.dart';
 class Catcher {
   final List<ReportHandler> handlers;
   final Widget application;
+  final int handlerTimeout;
+  final Map<String, dynamic> customParameters;
+
   Map<String, dynamic> _deviceParameters = Map();
   Map<String, dynamic> _applicationParameters = Map();
+
   static Catcher _instance;
 
-  Catcher({@required this.application, this.handlers = const []}) {
+  Catcher(
+      {@required this.application,
+      this.handlers = const [],
+      this.handlerTimeout = 5000,
+      this.customParameters = const {} }) {
     _loadDeviceInfo();
     _loadApplicationInfo();
     _setupErrorHooks(application);
@@ -54,9 +58,19 @@ class Catcher {
 
   _reportError(dynamic error, dynamic stackTrace) async {
     Report catcherError =
-        Report(error, stackTrace, _deviceParameters, _applicationParameters);
+        Report(error, stackTrace, _deviceParameters, _applicationParameters, customParameters);
     for (ReportHandler handler in handlers) {
-      handler.handle(catcherError);
+      handler.handle(catcherError).catchError((handlerError) {
+        print(
+            "Error occured in ${handler.toString()}: ${handlerError.toString()}");
+      }).then((result) {
+        if (!result) {
+          print("${handler.toString()} failed to report error");
+        }
+      }).timeout(Duration(milliseconds: handlerTimeout), onTimeout: () {
+        print(
+            "${handler.toString()} failed to report error because of timeout");
+      });
     }
   }
 
@@ -102,7 +116,19 @@ class Catcher {
         androidDeviceInfo.version.securityPatch;
   }
 
-  void _loadiOSParameters(IosDeviceInfo iosInfo) {}
+  void _loadiOSParameters(IosDeviceInfo iosInfo) {
+    _deviceParameters["model"] = iosInfo.model;
+    _deviceParameters["isPsychicalDevice"] = iosInfo.isPhysicalDevice;
+    _deviceParameters["name"] = iosInfo.name;
+    _deviceParameters["identifierForVendor"] = iosInfo.identifierForVendor;
+    _deviceParameters["localizedModel"] = iosInfo.localizedModel;
+    _deviceParameters["systemName"] = iosInfo.systemName;
+    _deviceParameters["utsnameVersion"] = iosInfo.utsname.version;
+    _deviceParameters["utsnameRelease"] = iosInfo.utsname.release;
+    _deviceParameters["utsnameMachine"] = iosInfo.utsname.machine;
+    _deviceParameters["utsnameNodename"] = iosInfo.utsname.nodename;
+    _deviceParameters["utsnameSysname"] = iosInfo.utsname.sysname;
+  }
 
   void _loadApplicationInfo() {
     PackageInfo.fromPlatform().then((packageInfo) {

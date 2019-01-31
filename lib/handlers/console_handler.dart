@@ -1,18 +1,21 @@
-import 'package:catcher/report.dart';
+import 'package:catcher/model/report.dart';
 import 'package:catcher/handlers/report_handler.dart';
+import 'package:flutter/foundation.dart';
 
 class ConsoleHandler extends ReportHandler {
   final bool enableDeviceParameters;
   final bool enableApplicationParameters;
   final bool enableStackTrace;
+  final bool enableCustomParameters;
 
   const ConsoleHandler(
       {this.enableDeviceParameters = true,
       this.enableApplicationParameters = true,
-      this.enableStackTrace = true});
+      this.enableStackTrace = true,
+      this.enableCustomParameters = false});
 
   @override
-  bool handle(Report error) {
+  Future<bool> handle(Report error) {
     print(
         "============================== CATCHER LOG ==============================");
     print("Crash occured on ${DateTime.now()}");
@@ -26,15 +29,18 @@ class ConsoleHandler extends ReportHandler {
       print("");
     }
     print("---------- ERROR ----------");
-    print("Error: ${error.error}");
+    print("${error.error}");
     print("");
     if (enableStackTrace) {
       print("------- STACK TRACE -------");
-      print("StackTrace: ${error.stackTrace}");
+      print("${error.stackTrace}");
+    }
+    if (enableCustomParameters){
+      printCustomParametersFormatted(error.customParameters);
     }
     print(
         "======================================================================");
-    return true;
+    return Future.value(true);
   }
 
   printDeviceParametersFormatted(Map<String, dynamic> deviceParameters) {
@@ -48,6 +54,13 @@ class ConsoleHandler extends ReportHandler {
       Map<String, dynamic> applicationParameters) {
     print("------- APP INFO -------");
     for (var entry in applicationParameters.entries) {
+      print("${entry.key}: ${entry.value}");
+    }
+  }
+
+  printCustomParametersFormatted(Map<String,dynamic> customParameters) {
+    print("------- CUSTOM INFO -------");
+    for (var entry in customParameters.entries) {
       print("${entry.key}: ${entry.value}");
     }
   }

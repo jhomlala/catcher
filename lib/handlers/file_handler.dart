@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:catcher/report.dart';
+import 'package:catcher/model/report.dart';
 import 'package:catcher/handlers/report_handler.dart';
+import 'package:flutter/foundation.dart';
 
 class FileHandler extends ReportHandler{
 
@@ -12,9 +13,9 @@ class FileHandler extends ReportHandler{
   FileHandler(this.file);
 
   @override
-  bool handle(Report report) {
+  Future<bool> handle(Report report) {
     _writeNewLineToFile(report.toString());
-    return true;
+    return SynchronousFuture(true);
   }
 
   Future<bool> checkFile() async{

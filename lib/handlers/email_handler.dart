@@ -1,5 +1,6 @@
-import 'package:catcher/report.dart';
+import 'package:catcher/model/report.dart';
 import 'package:catcher/handlers/report_handler.dart';
+import 'package:flutter/foundation.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 import 'package:meta/meta.dart';
@@ -21,9 +22,9 @@ class EmailHandler extends ReportHandler {
       @required this.recipients});
 
   @override
-  bool handle(Report error) {
+  Future<bool> handle(Report error) {
     _sendMail(error);
-    return true;
+    return SynchronousFuture(true);
   }
   _sendMail(Report report) async {
 
