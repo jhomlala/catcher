@@ -3,20 +3,26 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:catcher/handlers/report_handler.dart';
+import 'package:catcher/mode/notification_report_mode.dart';
+import 'package:catcher/mode/report_mode.dart';
+import 'package:catcher/mode/report_mode_action_confirmed.dart';
 import 'package:catcher/model/report.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 
-class Catcher {
+class Catcher with ReportModeAction {
   final List<ReportHandler> handlers;
   final Widget application;
   final int handlerTimeout;
+  ReportMode reportMode;
   final Map<String, dynamic> customParameters;
 
   Map<String, dynamic> _deviceParameters = Map();
   Map<String, dynamic> _applicationParameters = Map();
+
+  List<Report> cachedReports = List();
 
   static Catcher _instance;
 
@@ -24,7 +30,11 @@ class Catcher {
       {@required this.application,
       this.handlers = const [],
       this.handlerTimeout = 5000,
-      this.customParameters = const {} }) {
+      this.reportMode,
+      this.customParameters = const {}}) {
+    if (this.reportMode == null) {
+      this.reportMode = NotificationReportMode(this);
+    }
     _loadDeviceInfo();
     _loadApplicationInfo();
     _setupErrorHooks(application);
@@ -57,21 +67,10 @@ class Catcher {
   }
 
   _reportError(dynamic error, dynamic stackTrace) async {
-    Report catcherError =
-        Report(error, stackTrace, _deviceParameters, _applicationParameters, customParameters);
-    for (ReportHandler handler in handlers) {
-      handler.handle(catcherError).catchError((handlerError) {
-        print(
-            "Error occured in ${handler.toString()}: ${handlerError.toString()}");
-      }).then((result) {
-        if (!result) {
-          print("${handler.toString()} failed to report error");
-        }
-      }).timeout(Duration(milliseconds: handlerTimeout), onTimeout: () {
-        print(
-            "${handler.toString()} failed to report error because of timeout");
-      });
-    }
+    Report report = Report(error, stackTrace, _deviceParameters,
+        _applicationParameters, customParameters);
+    cachedReports.add(report);
+    reportMode.requestAction();
   }
 
   _loadDeviceInfo() {
@@ -144,5 +143,36 @@ class Catcher {
       throw StateError("Instance not created");
     }
     return _instance;
+  }
+
+  @override
+  void onActionConfirmed() {
+    print("Action confirmed");
+    List<Report> reportsToRemove = List();
+
+    for (Report report in cachedReports) {
+      for (ReportHandler handler in handlers) {
+        handler.handle(report).catchError((handlerError) {
+          print(
+              "Error occured in ${handler.toString()}: ${handlerError.toString()}");
+        }).then((result) {
+          if (!result) {
+            print("${handler.toString()} failed to report error");
+          }
+        }).timeout(Duration(milliseconds: handlerTimeout), onTimeout: () {
+          print(
+              "${handler.toString()} failed to report error because of timeout");
+        });
+      }
+      reportsToRemove.add(report);
+    }
+
+    cachedReports.removeWhere((report) => reportsToRemove.contains(report));
+    print("Reports after remove " + cachedReports.length.toString());
+  }
+
+  @override
+  void onActionRejected() {
+    print("On action rejected");
   }
 }

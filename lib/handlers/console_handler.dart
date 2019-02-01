@@ -1,6 +1,5 @@
 import 'package:catcher/model/report.dart';
 import 'package:catcher/handlers/report_handler.dart';
-import 'package:flutter/foundation.dart';
 
 class ConsoleHandler extends ReportHandler {
   final bool enableDeviceParameters;
@@ -35,7 +34,7 @@ class ConsoleHandler extends ReportHandler {
       print("------- STACK TRACE -------");
       print("${error.stackTrace}");
     }
-    if (enableCustomParameters){
+    if (enableCustomParameters) {
       printCustomParametersFormatted(error.customParameters);
     }
     print(
@@ -58,7 +57,7 @@ class ConsoleHandler extends ReportHandler {
     }
   }
 
-  printCustomParametersFormatted(Map<String,dynamic> customParameters) {
+  printCustomParametersFormatted(Map<String, dynamic> customParameters) {
     print("------- CUSTOM INFO -------");
     for (var entry in customParameters.entries) {
       print("${entry.key}: ${entry.value}");

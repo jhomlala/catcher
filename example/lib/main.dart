@@ -1,16 +1,10 @@
 import 'package:catcher/handlers/console_handler.dart';
-import 'package:catcher/handlers/http_handler.dart';
-import 'package:catcher/handlers/notification_handler.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:catcher/catcher.dart';
+void main() => Catcher(application: MyApp(), handlers: [ConsoleHandler()]);
+class MyApp extends StatefulWidget{
 
-
-void main() => Catcher(application: MyApp(), handlers: [ConsoleHandler(),HttpHandler(endpointUri: Uri.parse("http://sometest.com"), printLogs: true)]);
-
-class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -25,6 +19,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -40,8 +35,6 @@ class _MyAppState extends State<MyApp> {
   generateError()  async {
 
     try {
-      //throw new NullThrownError();
-      //throw new ArgumentError(" :) ");
       foo() async {
         throw new StateError('This is an async Dart exception.');
       }
@@ -54,4 +47,5 @@ class _MyAppState extends State<MyApp> {
       Catcher.getInstance().reportCheckedError(exc, stackTrace);
     }
   }
+
 }

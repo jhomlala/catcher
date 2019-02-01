@@ -37,16 +37,7 @@ class EmailHandler extends ReportHandler {
       ..text = _setupMessageText(report);
 
     print("Sending email!!!");
-    final sendReports = await send(message, _setupSmtpServer());
-
-
-    /*print("Send: " +
-        sendReports[0].sent.toString() +
-        "code: " +
-        sendReports[0].validationProblems[0].code +
-        " problems: " +
-        sendReports[0].validationProblems[0].msg);*/
-
+    await send(message, _setupSmtpServer());
     return true;
   }
 

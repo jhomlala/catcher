@@ -34,8 +34,7 @@ class FileHandler extends ReportHandler{
     return false;
   }
 
-  @override
-  log(String logString) async {
+  logToFile(String logString) async {
     if (isWritable) {
       _writeNewLineToFile(logString);
     }
