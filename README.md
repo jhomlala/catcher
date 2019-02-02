@@ -210,6 +210,7 @@ I/flutter ( 4820): versionSecurityPatch: 2018-08-05
 
 * enableStackTrace: display in log section with stack trace:
 
+```dart
 I/flutter ( 5073): ------- STACK TRACE -------
 I/flutter ( 5073): #0      _MyAppState.generateError (package:catcher_example/main.dart:38:5)
 I/flutter ( 5073): <asynchronous suspension>
@@ -223,5 +224,5 @@ I/flutter ( 5073): #7      PrimaryPointerGestureRecognizer.handleEvent (package:
 I/flutter ( 5073): #8      PointerRouter._dispatch (package:flutter/src/gestures/pointer_router.dart:73:12)
 I/flutter ( 5073): #9      PointerRouter.route (package:flutter/src/gestures/pointer_router.dart:101:11)
 I/flutter ( 5073): #10     _WidgetsFlutterBinding&BindingBase&GestureBinding.handleEvent (package:flutter
-
+```
 
