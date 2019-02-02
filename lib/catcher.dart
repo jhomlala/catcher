@@ -32,7 +32,7 @@ class Catcher with ReportModeAction {
   Catcher(
       {@required this.application,
       this.handlers = const [],
-      this.handlerTimeout = 5000,
+      this.handlerTimeout = 6000,
       this.reportModeType = ReportModeType.silent,
       this.customParameters = const {}}) {
     _setupReportMode();
