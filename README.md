@@ -154,5 +154,74 @@ For silent mode there won't be any visuals shown for user. For notification mode
 <img width="250px" src="https://github.com/jhomlala/catcher/blob/master/screenshots/1.png">
 </p>
 
+### Console Handler
+Console Handler is the default and basic handler. It show crash log in console. Console logger allows you to parametrize log output:
+
+```dart
+ConsoleHandler(
+          enableApplicationParameters: true,
+          enableDeviceParameters: true,
+          enableCustomParameters: true,
+          enableStackTrace: true)
+
+```
+
+* enableApplicationParameters: display in log section with application data:
+
+```
+I/flutter ( 4820): ------- APP INFO -------
+I/flutter ( 4820): version: 1.0
+I/flutter ( 4820): appName: catcher_example
+I/flutter ( 4820): buildNumber: 1
+I/flutter ( 4820): packageName: com.jhomlala.catcherexample
+I/flutter ( 4820): 
+```
+
+* enableDeviceParameters: display in log section with device data (it will show android/ios data):
+
+```
+I/flutter ( 4820): ------- DEVICE INFO -------
+I/flutter ( 4820): id: PSR1.180720.061
+I/flutter ( 4820): androidId: fd97a76448e87410
+I/flutter ( 4820): board: goldfish_x86
+I/flutter ( 4820): bootloader: unknown
+I/flutter ( 4820): brand: google
+I/flutter ( 4820): device: generic_x86
+I/flutter ( 4820): display: sdk_gphone_x86-userdebug 9 PSR1.180720.061 5075414 dev-keys
+I/flutter ( 4820): fingerprint: google/sdk_gphone_x86/generic_x86:9/PSR1.180720.061/5075414:userdebug/dev-keys
+I/flutter ( 4820): hardware: ranchu
+I/flutter ( 4820): host: vped9.mtv.corp.google.com
+I/flutter ( 4820): isPsychicalDevice: false
+I/flutter ( 4820): manufacturer: Google
+I/flutter ( 4820): model: Android SDK built for x86
+I/flutter ( 4820): product: sdk_gphone_x86
+I/flutter ( 4820): tags: dev-keys
+I/flutter ( 4820): type: userdebug
+I/flutter ( 4820): versionBaseOs: 
+I/flutter ( 4820): versionCodename: REL
+I/flutter ( 4820): versionIncremental: 5075414
+I/flutter ( 4820): versionPreviewSdk: 0
+I/flutter ( 4820): versionRelase: 9
+I/flutter ( 4820): versionSdk: 28
+I/flutter ( 4820): versionSecurityPatch: 2018-08-05
+```
+
+* enableCustomParameters: display in log section with custom parameters passed to Catcher constructor
+
+* enableStackTrace: display in log section with stack trace:
+
+I/flutter ( 5073): ------- STACK TRACE -------
+I/flutter ( 5073): #0      _MyAppState.generateError (package:catcher_example/main.dart:38:5)
+I/flutter ( 5073): <asynchronous suspension>
+I/flutter ( 5073): #1      _MyAppState.build.<anonymous closure> (package:catcher_example/main.dart:31:69)
+I/flutter ( 5073): #2      _InkResponseState._handleTap (package:flutter/src/material/ink_well.dart:507:14)
+I/flutter ( 5073): #3      _InkResponseState.build.<anonymous closure> (package:flutter/src/material/ink_well.dart:562:30)
+I/flutter ( 5073): #4      GestureRecognizer.invokeCallback (package:flutter/src/gestures/recognizer.dart:102:24)
+I/flutter ( 5073): #5      TapGestureRecognizer._checkUp (package:flutter/src/gestures/tap.dart:242:9)
+I/flutter ( 5073): #6      TapGestureRecognizer.handlePrimaryPointer (package:flutter/src/gestures/tap.dart:175:7)
+I/flutter ( 5073): #7      PrimaryPointerGestureRecognizer.handleEvent (package:flutter/src/gestures/recognizer.dart:315:9)
+I/flutter ( 5073): #8      PointerRouter._dispatch (package:flutter/src/gestures/pointer_router.dart:73:12)
+I/flutter ( 5073): #9      PointerRouter.route (package:flutter/src/gestures/pointer_router.dart:101:11)
+I/flutter ( 5073): #10     _WidgetsFlutterBinding&BindingBase&GestureBinding.handleEvent (package:flutter
 
 
