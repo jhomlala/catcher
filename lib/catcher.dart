@@ -29,9 +29,8 @@ class Catcher with ReportModeAction {
 
   static Catcher _instance;
 
-  Catcher(
-      {@required this.application,
-      this.handlers = const [],
+  Catcher(this.application,
+      {this.handlers = const [],
       this.handlerTimeout = 6000,
       this.reportModeType = ReportModeType.silent,
       this.customParameters = const {}}) {
@@ -53,7 +52,6 @@ class Catcher with ReportModeAction {
   _setupErrorHooks(Widget application) {
     FlutterError.onError = (FlutterErrorDetails details) async {
       await _reportError(details.exception, details.stack);
-
     };
 
     Isolate.current.addErrorListener(new RawReceivePort((dynamic pair) async {

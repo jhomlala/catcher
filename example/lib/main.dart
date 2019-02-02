@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'package:catcher/catcher.dart';
 
-void main() => Catcher(
-    application: MyApp(),
+void main() => Catcher(MyApp(),
     handlerTimeout: 5000,
     handlers: [ConsoleHandler(), ToastHandler()],
     customParameters: {"application_version": "debug"},
