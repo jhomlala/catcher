@@ -310,6 +310,11 @@ You can find code of backend server here: https://github.com/jhomlala/catcher/tr
 <img src="https://github.com/jhomlala/catcher/blob/master/screenshots/4.png">
 </p>
 
+Note: Remeber to add Internet permission in Android Manifest:
+```xml
+<uses-permission android:name="android.permission.INTERNET"/>
+```
+
 ### File Handler
 File handler allows to store logs in file. Minimal example:
 
