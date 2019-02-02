@@ -17,7 +17,7 @@ class ConsoleHandler extends ReportHandler {
   Future<bool> handle(Report error) {
     print(
         "============================== CATCHER LOG ==============================");
-    print("Crash occured on ${DateTime.now()}");
+    print("Crash occured on ${error.dateTime}");
     print("");
     if (enableDeviceParameters) {
       printDeviceParametersFormatted(error.deviceParameters);

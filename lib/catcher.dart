@@ -43,7 +43,7 @@ class Catcher with ReportModeAction {
   }
 
   void _setupReportMode() {
-       if (this.reportModeType == ReportModeType.silent) {
+    if (this.reportModeType == ReportModeType.silent) {
       this.reportMode = SilentReportMode(this);
     } else {
       this.reportMode = NotificationReportMode(this);
@@ -53,6 +53,7 @@ class Catcher with ReportModeAction {
   _setupErrorHooks(Widget application) {
     FlutterError.onError = (FlutterErrorDetails details) async {
       await _reportError(details.exception, details.stack);
+
     };
 
     Isolate.current.addErrorListener(new RawReceivePort((dynamic pair) async {
@@ -74,7 +75,7 @@ class Catcher with ReportModeAction {
   }
 
   _reportError(dynamic error, dynamic stackTrace) async {
-    Report report = Report(error, stackTrace, _deviceParameters,
+    Report report = Report(error, stackTrace, DateTime.now(), _deviceParameters,
         _applicationParameters, customParameters);
     cachedReports.add(report);
     reportMode.requestAction();
