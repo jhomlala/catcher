@@ -50,7 +50,6 @@ class FileHandler extends ReportHandler {
       print(exc + " " + stackTrace);
       return false;
     }
-
   }
 
   _openFile() {
@@ -118,8 +117,8 @@ class FileHandler extends ReportHandler {
     }
   }
 
-  _printLog(String log){
-    if (printLogs){
+  _printLog(String log) {
+    if (printLogs) {
       print(log);
     }
   }

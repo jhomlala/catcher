@@ -1,4 +1,5 @@
-abstract class ReportModeAction{
+abstract class ReportModeAction {
   void onActionConfirmed();
+
   void onActionRejected();
 }

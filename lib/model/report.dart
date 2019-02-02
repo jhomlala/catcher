@@ -6,16 +6,15 @@ class Report {
   final Map<String, dynamic> applicationParameters;
   final Map<String, dynamic> customParameters;
 
-  Report(this.error, this.stackTrace,this.dateTime, this.deviceParameters,
+  Report(this.error, this.stackTrace, this.dateTime, this.deviceParameters,
       this.applicationParameters, this.customParameters);
 
-
-  Map<String,dynamic> toJson() =>{
-    "error":error.toString(),
-    "stackTrace":stackTrace.toString(),
-    "deviceParameters":deviceParameters,
-    "applicationParameters":applicationParameters,
-    "customParameters":customParameters,
-    "dateTime":dateTime.toIso8601String()
-  };
+  Map<String, dynamic> toJson() => {
+        "error": error.toString(),
+        "stackTrace": stackTrace.toString(),
+        "deviceParameters": deviceParameters,
+        "applicationParameters": applicationParameters,
+        "customParameters": customParameters,
+        "dateTime": dateTime.toIso8601String()
+      };
 }

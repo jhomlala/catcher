@@ -2,7 +2,6 @@ import 'package:catcher/model/report.dart';
 import 'package:catcher/handlers/report_handler.dart';
 import 'package:catcher/model/toast_handler_gravity.dart';
 import 'package:catcher/model/toast_handler_length.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 

@@ -1,3 +1,1 @@
-enum ReportModeType{
-  silent,notification
-}
+enum ReportModeType { silent, notification }

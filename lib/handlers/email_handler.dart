@@ -148,10 +148,9 @@ class EmailHandler extends ReportHandler {
     return buffer.toString();
   }
 
-  _printLog(String log){
-    if (printLogs){
+  _printLog(String log) {
+    if (printLogs) {
       print(log);
     }
   }
-
 }
