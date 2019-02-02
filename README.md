@@ -282,3 +282,34 @@ You can find code of backend server here: https://github.com/jhomlala/catcher/tr
 <p align="justify">
 <img src="https://github.com/jhomlala/catcher/blob/master/screenshots/4.png">
 </p>
+
+### File Handler
+File handler allows to store logs in file. Minimal example:
+
+```dart
+Future<File> getFile() async {
+  final directory = await getApplicationDocumentsDirectory();
+  return File(directory.path+"/logs.txt");
+}
+
+void main() async{
+
+  File file = await getFile();
+
+  Catcher(
+      application: MyApp(),
+      handlers: [
+        ConsoleHandler(),
+        FileHandler(file),
+      ],
+      reportModeType: ReportModeType.silent);
+}
+```
+
+All parameters list:  
+* file - the file where you want to store your logs  
+* enableDeviceParameters - please look in console handler description   
+* enableApplicationParameters - please look in console handler description  
+* enableStackTrace - please look in console handler description  
+* enableCustomParameters - please look in console handler description  
+* printLogs - enable/disable debug logs  
