@@ -38,7 +38,7 @@ import 'package:catcher/catcher.dart';
 
 Basic example has Simple Report Mode and Console Handler:
 
-```
+```dart
 void main() => Catcher(application: MyApp(), handlers: [ConsoleHandler()]);
 
 class MyApp extends StatefulWidget{
@@ -145,9 +145,12 @@ There are two report modes:
 
 To configure report mode, you need to specify `reportModeType` parameter in Catcher constructor:
 
-```
+```dart
 Catcher(application: MyApp(), handlers: [ConsoleHandler()], reportModeType: ReportModeType.notification );
 ```
+
+For silent mode there won't be any visuals shown for user. For notification mode, this notification will be shown:
+<img width="250px" src="https://github.com/jhomlala/catcher/blob/master/screenshots/1.png">
 
 
 
