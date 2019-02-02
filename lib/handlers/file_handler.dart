@@ -11,7 +11,6 @@ class FileHandler extends ReportHandler {
   final bool enableStackTrace;
   final bool enableCustomParameters;
   final bool printLogs;
-  bool isWritable;
   IOSink _sink;
 
   FileHandler(this.file,

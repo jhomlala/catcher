@@ -19,14 +19,13 @@ class Catcher with ReportModeAction {
   final Widget application;
   final int handlerTimeout;
   final ReportModeType reportModeType;
-  ReportMode reportMode;
   final Map<String, dynamic> customParameters;
 
+  ReportMode _reportMode;
   Map<String, dynamic> _deviceParameters = Map();
   Map<String, dynamic> _applicationParameters = Map();
 
-  List<Report> cachedReports = List();
-
+  List<Report> _cachedReports = List();
   static Catcher _instance;
 
   Catcher(this.application,
@@ -43,9 +42,9 @@ class Catcher with ReportModeAction {
 
   void _setupReportMode() {
     if (this.reportModeType == ReportModeType.silent) {
-      this.reportMode = SilentReportMode(this);
+      this._reportMode = SilentReportMode(this);
     } else {
-      this.reportMode = NotificationReportMode(this);
+      this._reportMode = NotificationReportMode(this);
     }
   }
 
@@ -75,8 +74,8 @@ class Catcher with ReportModeAction {
   _reportError(dynamic error, dynamic stackTrace) async {
     Report report = Report(error, stackTrace, DateTime.now(), _deviceParameters,
         _applicationParameters, customParameters);
-    cachedReports.add(report);
-    reportMode.requestAction();
+    _cachedReports.add(report);
+    _reportMode.requestAction();
   }
 
   _loadDeviceInfo() {
@@ -155,7 +154,7 @@ class Catcher with ReportModeAction {
   void onActionConfirmed() {
     List<Report> reportsToRemove = List();
 
-    for (Report report in cachedReports) {
+    for (Report report in _cachedReports) {
       for (ReportHandler handler in handlers) {
         handler.handle(report).catchError((handlerError) {
           print(
@@ -163,16 +162,17 @@ class Catcher with ReportModeAction {
         }).then((result) {
           if (!result) {
             print("${handler.toString()} failed to report error");
+          } else {
+            reportsToRemove.add(report);
           }
         }).timeout(Duration(milliseconds: handlerTimeout), onTimeout: () {
           print(
               "${handler.toString()} failed to report error because of timeout");
         });
       }
-      reportsToRemove.add(report);
     }
 
-    cachedReports.removeWhere((report) => reportsToRemove.contains(report));
+    _cachedReports.removeWhere((report) => reportsToRemove.contains(report));
   }
 
   @override

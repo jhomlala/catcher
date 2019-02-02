@@ -41,7 +41,7 @@ class ToastHandler extends ReportHandler {
       case ToastHandlerGravity.center: return ToastGravity.CENTER;
       case ToastHandlerGravity.top: return ToastGravity.TOP;
     }
-    return ToastGravity.TOP;
+    return ToastGravity.BOTTOM;
   }
 
   Toast _getLength(){

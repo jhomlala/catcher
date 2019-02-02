@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 
 class HttpHandler extends ReportHandler {
   final Dio _dio = Dio();
+
   final HttpRequestType requestType;
   final Uri endpointUri;
   final Map<String, dynamic> headers;
@@ -16,11 +17,8 @@ class HttpHandler extends ReportHandler {
 
   HttpHandler(this.requestType, this.endpointUri,
       {this.headers = const {},
-      this.requestTimeout = 1000,
-      this.printLogs = false}) {
-    assert(endpointUri != null, "Endpoint uri can't be null");
-    assert(requestTimeout > 0, "Request timeout must be greather than 0");
-  }
+      this.requestTimeout = 5000,
+      this.printLogs = false});
 
   @override
   Future<bool> handle(Report error) async {
