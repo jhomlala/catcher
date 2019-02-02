@@ -1,3 +1,7 @@
+<p align="center">
+<img src="https://github.com/jhomlala/catcher/blob/master/screenshots/logo.png">
+</p>
+
 # Catcher
 
 [![pub package](https://img.shields.io/pub/v/catcher.svg)](https://pub.dartlang.org/packages/catcher)
