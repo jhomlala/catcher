@@ -1,8 +1,10 @@
 import 'package:catcher/handlers/console_handler.dart';
+import 'package:catcher/model/report_mode_type.dart';
 import 'package:flutter/material.dart';
 
 import 'package:catcher/catcher.dart';
-void main() => Catcher(application: MyApp(), handlers: [ConsoleHandler()]);
+void main() => Catcher(application: MyApp(), handlers: [ConsoleHandler()], reportModeType: ReportModeType.notification );
+
 class MyApp extends StatefulWidget{
 
   @override
@@ -33,19 +35,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   generateError()  async {
-
-    try {
-      foo() async {
-        throw new StateError('This is an async Dart exception.');
-      }
-      bar() async {
-        await foo();
-      }
-      await bar();
-    } catch (exc,stackTrace){
-      print("Cathced exc: "+ exc.toString());
-      Catcher.getInstance().reportCheckedError(exc, stackTrace);
-    }
+    throw "Test exception";
   }
 
 }

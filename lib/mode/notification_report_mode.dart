@@ -36,7 +36,7 @@ class NotificationReportMode extends ReportMode{
 
 
     await _flutterLocalNotificationsPlugin.show(
-        0, "Crash", "We have detected unexpected crash of application. Click here to send crash logs.", platformChannelSpecifics,
+        0, "We have detected unexpected crash.", "Click here to send crash logs.", platformChannelSpecifics,
         payload: "");
   }
 }

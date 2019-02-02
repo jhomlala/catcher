@@ -6,7 +6,9 @@ import 'package:catcher/handlers/report_handler.dart';
 import 'package:catcher/mode/notification_report_mode.dart';
 import 'package:catcher/mode/report_mode.dart';
 import 'package:catcher/mode/report_mode_action_confirmed.dart';
+import 'package:catcher/mode/silent_report_mode.dart';
 import 'package:catcher/model/report.dart';
+import 'package:catcher/model/report_mode_type.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,7 @@ class Catcher with ReportModeAction {
   final List<ReportHandler> handlers;
   final Widget application;
   final int handlerTimeout;
+  final ReportModeType reportModeType;
   ReportMode reportMode;
   final Map<String, dynamic> customParameters;
 
@@ -30,15 +33,21 @@ class Catcher with ReportModeAction {
       {@required this.application,
       this.handlers = const [],
       this.handlerTimeout = 5000,
-      this.reportMode,
+      this.reportModeType = ReportModeType.silent,
       this.customParameters = const {}}) {
-    if (this.reportMode == null) {
-      this.reportMode = NotificationReportMode(this);
-    }
+    _setupReportMode();
     _loadDeviceInfo();
     _loadApplicationInfo();
     _setupErrorHooks(application);
     _instance = this;
+  }
+
+  void _setupReportMode() {
+       if (this.reportModeType == ReportModeType.silent) {
+      this.reportMode = SilentReportMode(this);
+    } else {
+      this.reportMode = NotificationReportMode(this);
+    }
   }
 
   _setupErrorHooks(Widget application) {
@@ -47,8 +56,6 @@ class Catcher with ReportModeAction {
     };
 
     Isolate.current.addErrorListener(new RawReceivePort((dynamic pair) async {
-      print('Isolate.current.addErrorListener caught an error');
-      print(pair);
       await _reportError(
         (pair as List<String>).first,
         (pair as List<String>).last,
@@ -147,7 +154,6 @@ class Catcher with ReportModeAction {
 
   @override
   void onActionConfirmed() {
-    print("Action confirmed");
     List<Report> reportsToRemove = List();
 
     for (Report report in cachedReports) {
@@ -168,7 +174,6 @@ class Catcher with ReportModeAction {
     }
 
     cachedReports.removeWhere((report) => reportsToRemove.contains(report));
-    print("Reports after remove " + cachedReports.length.toString());
   }
 
   @override
