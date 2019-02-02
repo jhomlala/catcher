@@ -313,3 +313,18 @@ All parameters list:
 * enableStackTrace - please look in console handler description  
 * enableCustomParameters - please look in console handler description  
 * printLogs - enable/disable debug logs  
+
+### Toast Handler
+Toast handler allows to show short message in toast. Minimal example:
+
+All parameters list:
+* gravity - location of the toast on screen top/middle/bottom
+* length - length of toast: long or short
+* backgroundColor - background color of toast
+* textColor - text color of toast
+* fontSize - text size
+* customMessage - custom message for toast, if not set then "Error occured: error" will be displayed.
+
+<p align="justify">
+<img src="https://github.com/jhomlala/catcher/blob/master/screenshots/5.png">
+</p>
