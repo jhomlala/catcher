@@ -1,4 +1,5 @@
 import 'package:catcher/handlers/console_handler.dart';
+import 'package:catcher/handlers/http_handler.dart';
 import 'package:catcher/model/report_mode_type.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,7 @@ void main() => Catcher(
     application: MyApp(),
     handlers: [
       ConsoleHandler(),
+      HttpHandler(endpointUri: Uri.parse("http://192.168.0.59:8080/report"),printLogs: true)
     ],
     reportModeType: ReportModeType.silent);
 

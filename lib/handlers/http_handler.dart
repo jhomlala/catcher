@@ -15,11 +15,12 @@ class HttpHandler extends ReportHandler {
   final int requestTimeout;
   final bool printLogs;
 
-  HttpHandler({this.requestType = HttpRequestType.post,
-    @required this.endpointUri,
-    this.headers = const {},
-    this.requestTimeout = 1000,
-    this.printLogs = false}) {
+  HttpHandler(
+      {this.requestType = HttpRequestType.post,
+      @required this.endpointUri,
+      this.headers = const {},
+      this.requestTimeout = 1000,
+      this.printLogs = false}) {
     assert(endpointUri != null, "Endpoint uri can't be null");
     assert(requestTimeout > 0, "Request timeout must be greather than 0");
   }
@@ -31,7 +32,6 @@ class HttpHandler extends ReportHandler {
       return false;
     }
 
-
     if (requestType == HttpRequestType.post) {
       return _sendPost(error);
     }
@@ -42,12 +42,12 @@ class HttpHandler extends ReportHandler {
     try {
       var json = error.toJson();
       Options options =
-      Options(connectTimeout: requestTimeout, headers: headers);
+          Options(connectTimeout: requestTimeout, headers: headers);
+      _printLog("Calling: ${endpointUri.toString()}");
       Response response =
-      await _dio.post(endpointUri.toString(), data: json, options: options);
+          await _dio.post(endpointUri.toString(), data: json, options: options);
       print(
-          "HttpHandler response status: ${response.statusCode} body: ${response
-              .data}");
+          "HttpHandler response status: ${response.statusCode} body: ${response.data}");
       return SynchronousFuture(true);
     } catch (error, stackTrace) {
       _printLog("HttpHandler error: $error, stackTrace: $stackTrace");
@@ -78,6 +78,4 @@ class HttpHandler extends ReportHandler {
   String toString() {
     return 'HttpHandler';
   }
-
-
 }

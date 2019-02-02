@@ -1,0 +1,39 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- load MUI -->
+<link href="//cdn.muicss.com/mui-0.9.41/css/mui.min.css"
+	rel="stylesheet" type="text/css" />
+<script src="//cdn.muicss.com/mui-0.9.41/js/mui.min.js"></script>
+<title>Reports</title>
+</head>
+<body>
+	<!-- example content -->
+	<div class="mui-container">
+		<table class="mui-table mui-table--bordered">
+			<thead>
+				<tr>
+					<th>Date</th>
+					<th>Application</th>
+					<th>Error</th>
+					<th>Stack trace</th>
+					<th>Device data</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="reportLog : ${reportLogs}">
+					<td th:text="${reportLog.dateTime}"></td>
+					<td
+						th:text="${reportLog.applicationParameters.get('packageName')} + ' ' + ${reportLog.applicationParameters.get('version')}"></td>
+					<td th:text="${reportLog.error}"></td>
+					<td th:utext="${reportLog.getStackTraceFormatted()}"></td>
+					<td th:utext="${reportLog.getDeviceDataFormatted()}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

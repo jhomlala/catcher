@@ -9,12 +9,22 @@ class Report {
   Report(this.error, this.stackTrace,this.dateTime, this.deviceParameters,
       this.applicationParameters, this.customParameters);
 
-  Map<String,dynamic> toJson() =>{
+  /*Map<String,dynamic> toJson() =>{
     "error":error.toString(),
-    "stackTrace":stackTrace.toString(),
+    "stackTrace":stackTrace,
     "dateTime":dateTime,
     "deviceParameters":deviceParameters,
     "applicationParameters":applicationParameters,
     "customParameters":customParameters,
+  };*/
+
+
+  Map<String,dynamic> toJson() =>{
+    "error":error.toString(),
+    "stackTrace":stackTrace.toString(),
+    "deviceParameters":deviceParameters,
+    "applicationParameters":applicationParameters,
+    "customParameters":customParameters,
+    "dateTime":dateTime.toIso8601String()
   };
 }
