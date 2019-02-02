@@ -254,8 +254,9 @@ Optional:
 * emailTitle - custom title of report email, if not set then title will be: `Handled Error: >> [Error name] <<`
 * emailHeader - custom header message before report data
 * sendHtml - enable/disable html data in your email, if enabled then html will be sent and your report will look much better
+* printLog - enable/disable debug logs
 
 Example email:
 <p align="justify">
-<img src="https://github.com/jhomlala/catcher/blob/master/screenshots/2.png">
+<img src="https://github.com/jhomlala/catcher/blob/master/screenshots/3.png">
 </p>
