@@ -18,6 +18,7 @@ class EmailHandler extends ReportHandler {
   final String emailTitle;
   final String emailHeader;
   final bool sendHtml;
+  final bool printLogs;
 
   const EmailHandler(this.smtpHost, this.smtpPort, this.senderEmail,
       this.senderName, this.senderPassword, this.recipients,
@@ -28,7 +29,8 @@ class EmailHandler extends ReportHandler {
       this.enableCustomParameters = true,
       this.emailTitle,
       this.emailHeader,
-      this.sendHtml = true});
+      this.sendHtml = true,
+      this.printLogs = false});
 
   @override
   Future<bool> handle(Report error) {
@@ -46,20 +48,22 @@ class EmailHandler extends ReportHandler {
       if (sendHtml) {
         message.html = _setupHtmlMessageText(report);
       }
+      _printLog("Sending email...");
 
       var results = await send(message, _setupSmtpServer());
       for (SendReport sendReport in results) {
-        print("Sent " + sendReport.sent.toString());
+        _printLog("Sending status: " + sendReport.sent.toString());
         if (sendReport.validationProblems != null &&
             sendReport.validationProblems.length > 0) {
           for (var problem in sendReport.validationProblems) {
-            print("Problem: " + problem.code + " msg: " + problem.msg);
+            _printLog("Problem: " + problem.code + " msg: " + problem.msg);
           }
         }
         return sendReport.sent;
       }
       return true;
     } catch (exc) {
+      _printLog(exc);
       return false;
     }
   }
@@ -143,4 +147,11 @@ class EmailHandler extends ReportHandler {
     }
     return buffer.toString();
   }
+
+  _printLog(String log){
+    if (printLogs){
+      print(log);
+    }
+  }
+
 }
