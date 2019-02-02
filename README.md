@@ -260,3 +260,19 @@ Example email:
 <p align="justify">
 <img src="https://github.com/jhomlala/catcher/blob/master/screenshots/3.png">
 </p>
+
+### Http Handler
+
+Http Handler provides feature for sending report to external server. Data will be encoded in JSON and sent to specified server. Currently only POST request can be send. Minimal example:
+
+```dart
+HttpHandler(HttpRequestType.post, Uri.parse("http://logs.server.com")
+```
+
+All parameters list:
+* requestType - type of request, currently only POST is supported  
+* endpointUri - uri address of server  
+* headers - map of additional headers that can be send in http request  
+* requestTimeout - request time in milliseconds  
+* printLogs - show debug logs  
+
