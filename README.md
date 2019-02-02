@@ -276,3 +276,9 @@ All parameters list:
 * requestTimeout - request time in milliseconds  
 * printLogs - show debug logs  
 
+You can try using example backend server which handles logs. It's written in Java 8 and Spring Framework and uses material design.
+You can find code of backend server here: https://github.com/jhomlala/catcher/tree/master/backend
+
+<p align="justify">
+<img src="https://github.com/jhomlala/catcher/blob/master/screenshots/4.png">
+</p>
