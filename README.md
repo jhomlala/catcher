@@ -43,7 +43,7 @@ import 'package:catcher/catcher.dart';
 Basic example has Simple Report Mode and Console Handler:
 
 ```dart
-void main() => Catcher(application: MyApp(), handlers: [ConsoleHandler()]);
+void main() => Catcher(MyApp(), handlers: [ConsoleHandler()]);
 
 class MyApp extends StatefulWidget{
 
@@ -142,7 +142,7 @@ I/flutter ( 4820): =============================================================
 ### Catcher configuration
 ```dart
     Catcher(
-        application: MyApp(),
+        MyApp(),
         handlerTimeout: 5000,
         handlers: [ConsoleHandler(), ToastHandler()],
         customParameters: {"application_version": "debug"},
@@ -174,7 +174,7 @@ There are two report modes:
 To configure report mode, you need to specify `reportModeType` parameter in Catcher constructor:
 
 ```dart
-Catcher(application: MyApp(), handlers: [ConsoleHandler()], reportModeType: ReportModeType.notification );
+Catcher(MyApp(), handlers: [ConsoleHandler()], reportModeType: ReportModeType.notification );
 ```
 
 For silent mode there won't be any visuals shown for user. For notification mode, this notification will be shown:
@@ -285,7 +285,7 @@ Optional:
 * printLog - enable/disable debug logs
 
 Example email:
-<p align="justify">
+<p align="center">
 <img src="https://github.com/jhomlala/catcher/blob/master/screenshots/3.png">
 </p>
 
@@ -307,7 +307,7 @@ All parameters list:
 You can try using example backend server which handles logs. It's written in Java 8 and Spring Framework and uses material design.
 You can find code of backend server here: https://github.com/jhomlala/catcher/tree/master/backend
 
-<p align="justify">
+<p align="center">
 <img src="https://github.com/jhomlala/catcher/blob/master/screenshots/4.png">
 </p>
 
@@ -353,6 +353,6 @@ All parameters list:
 * fontSize - text size
 * customMessage - custom message for toast, if not set then "Error occured: error" will be displayed.
 
-<p align="justify">
+<p align="center">
 <img src="https://github.com/jhomlala/catcher/blob/master/screenshots/5.png" width="250px">
 </p>
