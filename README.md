@@ -1,5 +1,8 @@
 # Catcher
 
+[![pub package](https://img.shields.io/pub/v/catcher.svg)](https://pub.dartlang.org/packages/catcher)
+
+
 Catcher is Flutter library which catches automatically errors/exceptions and report them. Catcher offers multiple way to report catched error. There are handlers:
 
 * Console Handler
