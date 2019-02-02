@@ -168,7 +168,7 @@ ConsoleHandler(
 
 * enableApplicationParameters: display in log section with application data:
 
-```
+```dart
 I/flutter ( 4820): ------- APP INFO -------
 I/flutter ( 4820): version: 1.0
 I/flutter ( 4820): appName: catcher_example
@@ -179,7 +179,7 @@ I/flutter ( 4820):
 
 * enableDeviceParameters: display in log section with device data (it will show android/ios data):
 
-```
+```dart
 I/flutter ( 4820): ------- DEVICE INFO -------
 I/flutter ( 4820): id: PSR1.180720.061
 I/flutter ( 4820): androidId: fd97a76448e87410
@@ -225,4 +225,35 @@ I/flutter ( 5073): #8      PointerRouter._dispatch (package:flutter/src/gestures
 I/flutter ( 5073): #9      PointerRouter.route (package:flutter/src/gestures/pointer_router.dart:101:11)
 I/flutter ( 5073): #10     _WidgetsFlutterBinding&BindingBase&GestureBinding.handleEvent (package:flutter
 ```
+
+### Email Handler
+Email handler can be used to send automatically email with error reports. Email handler has multiple configuration parameters. Few of them are required, other are optional. These parameters are required:
+
+```dart
+ EmailHandler("smtp.gmail.com", 587, "somefakeemail@gmail.com", "Catcher",
+          "FakePassword", ["myemail@gmail.com"])
+```
+We need to setup email smtp server, email account and recipient. Currently, only Gmail was tested and worked. You can try use other email providers, but there can be errors.  
+
+List of all parameters: 
+
+Required:  
+* smtpHost - host address of your email, for example host for gmail is smtp.gmail.com  
+* smtpPort - smtp port of your email, for example port for gmail is 587  
+* senderEmail - email from which Catcher will send email (it will be sender of error emails)  
+* senderName - name of sender email
+* senderPassword - password for sender email 
+* recipients - list which contains recipient emails  
+
+Optional: 
+* enableSSL - if your email provider supports SSL, you can enable this option
+* enableDeviceParameters - please look in console handler description
+* enableApplicationParameters - please look in console handler description
+* enableStackTrace - please look in console handler description
+* enableCustomParameters - please look in console handler description
+* emailTitle - custom title of report email, if not set then title will be: `Handled Error: >> [Error name] <<`
+* emailHeader - custom header message before report data
+* sendHtml - enable/disable html data in your email, if enabled then html will be sent and your report will look much better
+
+Example email:
 
