@@ -141,8 +141,7 @@ I/flutter ( 4820): =============================================================
 
 ### Catcher configuration
 ```dart
-    Catcher(
-        MyApp(),
+Catcher(MyApp(),
         handlerTimeout: 5000,
         handlers: [ConsoleHandler(), ToastHandler()],
         customParameters: {"application_version": "debug"},
