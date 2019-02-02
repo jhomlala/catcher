@@ -79,7 +79,7 @@ class _MyAppState extends State<MyApp> {
 If you run this code you will see screen with "Generate error" button on middle of the screen. After clicking on it, you will generate error, which will be handler by Catcher. You will see these logs in your console:
 
 
-```
+```dart
 I/flutter ( 4820): ============================== CATCHER LOG ==============================
 I/flutter ( 4820): Crash occured on 2019-02-02 08:18:14.707484
 I/flutter ( 4820): 
@@ -256,4 +256,6 @@ Optional:
 * sendHtml - enable/disable html data in your email, if enabled then html will be sent and your report will look much better
 
 Example email:
-
+<p align="justify">
+<img src="https://github.com/jhomlala/catcher/blob/master/screenshots/2.png">
+</p>
