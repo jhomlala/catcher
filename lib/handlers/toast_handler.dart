@@ -11,7 +11,7 @@ class ToastHandler extends ReportHandler {
   final ToastHandlerLength length;
   final Color backgroundColor;
   final Color textColor;
-  final double fontSize;
+  final double textSize;
   final String customMessage;
 
   const ToastHandler(
@@ -19,7 +19,7 @@ class ToastHandler extends ReportHandler {
       this.length = ToastHandlerLength.long,
       this.backgroundColor = Colors.black87,
       this.textColor = Colors.white,
-      this.fontSize = 12,
+      this.textSize = 12,
       this.customMessage});
 
   @override
@@ -31,7 +31,7 @@ class ToastHandler extends ReportHandler {
         timeInSecForIos: _getLengthIos(),
         backgroundColor: backgroundColor,
         textColor: textColor,
-        fontSize: fontSize);
+        fontSize: textSize);
 
     return true;
   }

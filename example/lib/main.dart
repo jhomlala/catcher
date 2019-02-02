@@ -7,10 +7,9 @@ import 'package:catcher/catcher.dart';
 
 void main() => Catcher(
     application: MyApp(),
-    handlers: [
-      ConsoleHandler(),
-      ToastHandler()
-    ],
+    handlerTimeout: 5000,
+    handlers: [ConsoleHandler(), ToastHandler()],
+    customParameters: {"application_version": "debug"},
     reportModeType: ReportModeType.silent);
 
 class MyApp extends StatefulWidget {
