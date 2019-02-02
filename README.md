@@ -35,6 +35,7 @@ import 'package:catcher/catcher.dart';
 ```
 
 ## Basic example
+
 Basic example has Simple Report Mode and Console Handler:
 
 ```
@@ -74,7 +75,9 @@ class _MyAppState extends State<MyApp> {
   }
 }
 ```
+
 If you run this code you will see screen with "Generate error" button on middle of the screen. After clicking on it, you will generate error, which will be handler by Catcher. You will see these logs in your console:
+
 
 ```
 I/flutter ( 4820): ============================== CATCHER LOG ==============================
@@ -130,8 +133,22 @@ I/flutter ( 4820): #10     _WidgetsFlutterBinding&BindingBase&GestureBinding.han
 I/flutter ( 4820): ======================================================================
 ```
 
+## Advanced usage
+
+### Report modes
+
+There are two report modes:
+
+* Silent Report Mode which is default one. This report mode doesn't ask user for permission to handle crash logs. It will push logs automatically to handlers.
+
+* Notification Report Mode is another report mode. It shows notificaiton in user device after crash. User need to click on notification to send logs to handlers.
+
+To configure report mode, you need to specify `reportModeType` parameter in Catcher constructor:
+
+```
+Catcher(application: MyApp(), handlers: [ConsoleHandler()], reportModeType: ReportModeType.notification );
+```
 
 
-  
 
 
