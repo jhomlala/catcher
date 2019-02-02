@@ -135,6 +135,30 @@ I/flutter ( 4820): =============================================================
 
 ## Advanced usage
 
+### Catcher configuration
+```dart
+    Catcher(
+        application: MyApp(),
+        handlerTimeout: 5000,
+        handlers: [ConsoleHandler(), ToastHandler()],
+        customParameters: {"application_version": "debug"},
+        reportModeType: ReportModeType.silent);
+```
+
+* application - base application widget
+* handlers - list of all handlers
+* handlerTimeout - max time of handler to process report error
+* reportModeType - type of report mode: silent or notification
+* customParameters - list of custom parameters that will be send with report
+
+
+### Report catched exception
+When you catch your exception in try/catch block, then exception will not be processed by Catcher. You can send error manually to catcher by using:
+
+```dart
+Catcher.getInstance().reportCheckedError(error, stackTrace)
+```
+
 ### Report modes
 
 There are two report modes:
@@ -326,5 +350,5 @@ All parameters list:
 * customMessage - custom message for toast, if not set then "Error occured: error" will be displayed.
 
 <p align="justify">
-<img src="https://github.com/jhomlala/catcher/blob/master/screenshots/5.png">
+<img src="https://github.com/jhomlala/catcher/blob/master/screenshots/5.png" width="250px">
 </p>
