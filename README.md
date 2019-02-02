@@ -19,18 +19,18 @@ Reports can be generated in two modes:
 ## Install
 
 Add this line to your **pubspec.yaml**:
-```
+```yaml
 dependencies:
   catcher: ^0.0.3
 ```
 
 Then run this command:
-```
+```bash
 $ flutter packages get
 ```
 
 Then add this import:
-```
+```dart
 import 'package:catcher/catcher.dart';
 ```
 
@@ -150,8 +150,9 @@ Catcher(application: MyApp(), handlers: [ConsoleHandler()], reportModeType: Repo
 ```
 
 For silent mode there won't be any visuals shown for user. For notification mode, this notification will be shown:
+<p align="justify">
 <img width="250px" src="https://github.com/jhomlala/catcher/blob/master/screenshots/1.png">
-
+</p>
 
 
 
