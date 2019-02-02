@@ -1,0 +1,1 @@
+enum ToastHandlerLength { short, long }

@@ -1,5 +1,7 @@
 import 'package:catcher/model/report.dart';
 import 'package:catcher/handlers/report_handler.dart';
+import 'package:catcher/model/toast_handler_gravity.dart';
+import 'package:catcher/model/toast_handler_length.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -21,7 +23,7 @@ class ToastHandler extends ReportHandler {
       this.customMessage});
 
   @override
-  Future<bool> handle(Report error) {
+  Future<bool> handle(Report error) async {
     Fluttertoast.showToast(
         msg: _getErrorMessage(error),
         toastLength: _getLength(),
@@ -31,7 +33,7 @@ class ToastHandler extends ReportHandler {
         textColor: textColor,
         fontSize: fontSize);
 
-    return SynchronousFuture(true);
+    return true;
   }
 
   ToastGravity _getGravity() {
@@ -70,6 +72,3 @@ class ToastHandler extends ReportHandler {
 
 }
 
-enum ToastHandlerLength { short, long }
-
-enum ToastHandlerGravity { bottom, center, top }
