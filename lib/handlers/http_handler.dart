@@ -5,7 +5,6 @@ import 'package:catcher/model/http_request_type.dart';
 import 'package:catcher/model/report.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:meta/meta.dart';
 
 class HttpHandler extends ReportHandler {
   final Dio _dio = Dio();
@@ -15,10 +14,8 @@ class HttpHandler extends ReportHandler {
   final int requestTimeout;
   final bool printLogs;
 
-  HttpHandler(
-      {this.requestType = HttpRequestType.post,
-      @required this.endpointUri,
-      this.headers = const {},
+  HttpHandler(this.requestType, this.endpointUri,
+      {this.headers = const {},
       this.requestTimeout = 1000,
       this.printLogs = false}) {
     assert(endpointUri != null, "Endpoint uri can't be null");
