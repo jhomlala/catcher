@@ -37,7 +37,7 @@ class EmailHandler extends ReportHandler {
     return _sendMail(error);
   }
 
-  _sendMail(Report report) async {
+  Future<bool> _sendMail(Report report) async {
     try {
       final message = new Message()
         ..from = new Address(this.senderEmail, this.senderName)
