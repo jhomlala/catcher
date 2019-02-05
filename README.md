@@ -25,7 +25,7 @@ Reports can be generated in two modes:
 Add this line to your **pubspec.yaml**:
 ```yaml
 dependencies:
-  catcher: ^0.0.5
+  catcher: ^0.0.6
 ```
 
 Then run this command:
