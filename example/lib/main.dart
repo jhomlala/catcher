@@ -1,8 +1,4 @@
-import 'package:catcher/handlers/console_handler.dart';
-import 'package:catcher/handlers/toast_handler.dart';
-import 'package:catcher/model/report_mode_type.dart';
 import 'package:flutter/material.dart';
-
 import 'package:catcher/catcher.dart';
 
 void main() => Catcher(MyApp(),
