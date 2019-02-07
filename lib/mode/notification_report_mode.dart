@@ -1,5 +1,7 @@
 import 'package:catcher/mode/report_mode.dart';
 import 'package:catcher/mode/report_mode_action_confirmed.dart';
+import 'package:catcher/model/report.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class NotificationReportMode extends ReportMode {
@@ -18,7 +20,7 @@ class NotificationReportMode extends ReportMode {
   }
 
   @override
-  void requestAction() {
+  void requestAction(Report report, BuildContext context) {
     _sendNotification();
   }
 

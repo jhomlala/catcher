@@ -5,7 +5,7 @@ void main() => Catcher(MyApp(),
     handlerTimeout: 5000,
     handlers: [ConsoleHandler(), ToastHandler()],
     customParameters: {"application_version": "debug"},
-    reportModeType: ReportModeType.silent);
+    reportModeType: ReportModeType.dialog);
 
 class MyApp extends StatefulWidget {
   @override
@@ -18,22 +18,35 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: Catcher.navigatorKey,
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
-            child: FlatButton(
-                child: Text("Generate error"),
-                onPressed: () => generateError())),
+          appBar: AppBar(
+            title: const Text('Plugin example app'),
+          ),
+          body: ChildWidget()
       ),
     );
+  }
+}
+
+
+
+class ChildWidget extends StatelessWidget{
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(child:  FlatButton(
+        child: Text("Generate error"),
+        onPressed: () => generateError()));
   }
 
   generateError() async {
     throw "Test exception";
   }
+
 }
+

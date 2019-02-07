@@ -1,4 +1,5 @@
 library catcher;
+
 export "package:catcher/handlers/console_handler.dart";
 export "package:catcher/handlers/email_handler.dart";
 export "package:catcher/handlers/file_handler.dart";
@@ -20,7 +21,9 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:catcher/handlers/report_handler.dart';
+import 'package:catcher/mode/dialog_report_mode.dart';
 import 'package:catcher/mode/notification_report_mode.dart';
+import 'package:catcher/mode/page_report_mode.dart';
 import 'package:catcher/mode/report_mode.dart';
 import 'package:catcher/mode/report_mode_action_confirmed.dart';
 import 'package:catcher/mode/silent_report_mode.dart';
@@ -30,6 +33,7 @@ import 'package:device_info/device_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
+import 'package:path/path.dart';
 
 class Catcher with ReportModeAction {
   final List<ReportHandler> handlers;
@@ -43,7 +47,8 @@ class Catcher with ReportModeAction {
   Map<String, dynamic> _applicationParameters = Map();
 
   List<Report> _cachedReports = List();
-  static Catcher _instance;
+  static final GlobalKey<NavigatorState> navigatorKey =
+      new GlobalKey<NavigatorState>();
 
   Catcher(this.application,
       {this.handlers = const [],
@@ -54,14 +59,17 @@ class Catcher with ReportModeAction {
     _loadDeviceInfo();
     _loadApplicationInfo();
     _setupErrorHooks(application);
-    _instance = this;
   }
 
   void _setupReportMode() {
     if (this.reportModeType == ReportModeType.silent) {
       this._reportMode = SilentReportMode(this);
-    } else {
+    } else if (this.reportModeType == ReportModeType.notification) {
       this._reportMode = NotificationReportMode(this);
+    } else if (this.reportModeType == ReportModeType.page) {
+      this._reportMode = PageReportMode(this);
+    } else if (this.reportModeType == ReportModeType.dialog){
+      this._reportMode = DialogReportMode(this);
     }
   }
 
@@ -92,7 +100,17 @@ class Catcher with ReportModeAction {
     Report report = Report(error, stackTrace, DateTime.now(), _deviceParameters,
         _applicationParameters, customParameters);
     _cachedReports.add(report);
-    _reportMode.requestAction();
+
+    if (_reportMode is PageReportMode || _reportMode is DialogReportMode) {
+      if (_isContextValid()) {
+        _reportMode.requestAction(report, _getContext());
+      } else {
+        print(
+            "Couldn't use report mode becuase you didn't provide navigator key. Add navigator key to use this report mode.");
+      }
+    } else {
+      _reportMode.requestAction(report, null);
+    }
   }
 
   _loadDeviceInfo() {
@@ -160,13 +178,6 @@ class Catcher with ReportModeAction {
     });
   }
 
-  static Catcher getInstance() {
-    if (_instance == null) {
-      throw StateError("Instance not created");
-    }
-    return _instance;
-  }
-
   @override
   void onActionConfirmed() {
     List<Report> reportsToRemove = List();
@@ -196,5 +207,12 @@ class Catcher with ReportModeAction {
   void onActionRejected() {
     print("On action rejected");
   }
-}
 
+  BuildContext _getContext() {
+    return navigatorKey.currentState.overlay.context;
+  }
+
+  bool _isContextValid() {
+    return navigatorKey.currentState != null;
+  }
+}
