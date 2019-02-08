@@ -1,4 +1,4 @@
-import 'package:catcher/catcher.dart';
+import 'package:catcher/catcher_plugin.dart';
 import 'package:catcher/mode/report_mode.dart';
 import 'package:catcher/mode/report_mode_action_confirmed.dart';
 import 'package:flutter/material.dart';

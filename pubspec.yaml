@@ -16,6 +16,7 @@ dependencies:
   mailer: ^2.2.0
   dio: ^1.0.14
   flutter_local_notifications: ^0.4.4+2
+  flutter_mailer: ^0.3.0
 flutter:
   plugin:
     androidPackage: com.jhomlala.catcher
