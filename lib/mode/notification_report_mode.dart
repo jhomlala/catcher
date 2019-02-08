@@ -1,5 +1,4 @@
 import 'package:catcher/mode/report_mode.dart';
-import 'package:catcher/mode/report_mode_action_confirmed.dart';
 import 'package:catcher/model/report.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -7,8 +6,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 class NotificationReportMode extends ReportMode {
   FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin;
 
-  NotificationReportMode(ReportModeAction reportModeAction)
-      : super(reportModeAction) {
+  NotificationReportMode() {
     _flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
     var initializationSettingsAndroid =
         new AndroidInitializationSettings("@mipmap/ic_launcher");

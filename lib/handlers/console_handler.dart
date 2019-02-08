@@ -1,13 +1,15 @@
 import 'package:catcher/model/report.dart';
 import 'package:catcher/handlers/report_handler.dart';
+import 'package:logging/logging.dart';
 
 class ConsoleHandler extends ReportHandler {
   final bool enableDeviceParameters;
   final bool enableApplicationParameters;
   final bool enableStackTrace;
   final bool enableCustomParameters;
+  Logger _logger = Logger("Catcher|ConsoleHandler");
 
-  const ConsoleHandler(
+  ConsoleHandler(
       {this.enableDeviceParameters = true,
       this.enableApplicationParameters = true,
       this.enableStackTrace = true,
@@ -15,52 +17,58 @@ class ConsoleHandler extends ReportHandler {
 
   @override
   Future<bool> handle(Report error) {
-    print(
+    _logger.info(
         "============================== CATCHER LOG ==============================");
-    print("Crash occured on ${error.dateTime}");
-    print("");
+    _logger.info("Crash occured on ${error.dateTime}");
+    _logger.info("");
     if (enableDeviceParameters) {
-      printDeviceParametersFormatted(error.deviceParameters);
-      print("");
+      _printDeviceParametersFormatted(error.deviceParameters);
+      _logger.info("");
     }
     if (enableApplicationParameters) {
-      printApplicationParametersFormatted(error.applicationParameters);
-      print("");
+      _printApplicationParametersFormatted(error.applicationParameters);
+      _logger.info("");
     }
-    print("---------- ERROR ----------");
-    print("${error.error}");
-    print("");
+    _logger.info("---------- ERROR ----------");
+    _logger.info("${error.error}");
+    _logger.info("");
     if (enableStackTrace) {
-      print("------- STACK TRACE -------");
-      print("${error.stackTrace}");
+      _printStackTraceFormatted(error.stackTrace);
     }
     if (enableCustomParameters) {
-      printCustomParametersFormatted(error.customParameters);
+      _printCustomParametersFormatted(error.customParameters);
     }
-    print(
+    _logger.info(
         "======================================================================");
     return Future.value(true);
   }
 
-  printDeviceParametersFormatted(Map<String, dynamic> deviceParameters) {
-    print("------- DEVICE INFO -------");
+  _printDeviceParametersFormatted(Map<String, dynamic> deviceParameters) {
+    _logger.info("------- DEVICE INFO -------");
     for (var entry in deviceParameters.entries) {
-      print("${entry.key}: ${entry.value}");
+      _logger.info("${entry.key}: ${entry.value}");
     }
   }
 
-  printApplicationParametersFormatted(
+  _printApplicationParametersFormatted(
       Map<String, dynamic> applicationParameters) {
-    print("------- APP INFO -------");
+    _logger.info("------- APP INFO -------");
     for (var entry in applicationParameters.entries) {
-      print("${entry.key}: ${entry.value}");
+      _logger.info("${entry.key}: ${entry.value}");
     }
   }
 
-  printCustomParametersFormatted(Map<String, dynamic> customParameters) {
-    print("------- CUSTOM INFO -------");
+  _printCustomParametersFormatted(Map<String, dynamic> customParameters) {
+    _logger.info("------- CUSTOM INFO -------");
     for (var entry in customParameters.entries) {
-      print("${entry.key}: ${entry.value}");
+      _logger.info("${entry.key}: ${entry.value}");
+    }
+  }
+
+  _printStackTraceFormatted(StackTrace stackTrace) {
+    _logger.info("------- STACK TRACE -------");
+    for (var entry in stackTrace.toString().split("\n")) {
+      _logger.info("$entry");
     }
   }
 }

@@ -3,17 +3,19 @@ import 'package:catcher/model/report.dart';
 import 'package:flutter/widgets.dart';
 
 abstract class ReportMode {
-  final ReportModeAction reportModeAction;
+  ReportModeAction _reportModeAction;
 
-  const ReportMode(this.reportModeAction);
+  setReportModeAction(ReportModeAction reportModeAction){
+    this._reportModeAction = reportModeAction;
+  }
 
   void requestAction(Report report, BuildContext context);
 
   void onActionConfirmed() {
-    reportModeAction.onActionConfirmed();
+    _reportModeAction.onActionConfirmed();
   }
 
   void onActionRejected() {
-    reportModeAction.onActionRejected();
+    _reportModeAction.onActionRejected();
   }
 }

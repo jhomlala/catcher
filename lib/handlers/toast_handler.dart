@@ -13,7 +13,7 @@ class ToastHandler extends ReportHandler {
   final double textSize;
   final String customMessage;
 
-  const ToastHandler(
+ ToastHandler(
       {this.gravity = ToastHandlerGravity.bottom,
       this.length = ToastHandlerLength.long,
       this.backgroundColor = Colors.black87,

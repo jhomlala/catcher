@@ -3,7 +3,7 @@ import 'package:catcher/handlers/report_handler.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 
-class EmailHandler extends ReportHandler {
+class EmailAutoHandler extends ReportHandler {
   final String smtpHost;
   final int smtpPort;
   final String senderEmail;
@@ -20,7 +20,7 @@ class EmailHandler extends ReportHandler {
   final bool sendHtml;
   final bool printLogs;
 
-  const EmailHandler(this.smtpHost, this.smtpPort, this.senderEmail,
+  EmailAutoHandler(this.smtpHost, this.smtpPort, this.senderEmail,
       this.senderName, this.senderPassword, this.recipients,
       {this.enableSsl = false,
       this.enableDeviceParameters = true,

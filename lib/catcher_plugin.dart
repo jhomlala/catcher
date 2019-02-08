@@ -1,7 +1,7 @@
 library catcher;
 
 export "package:catcher/handlers/console_handler.dart";
-export "package:catcher/handlers/email_handler.dart";
+export "package:catcher/handlers/email_auto_handler.dart";
 export "package:catcher/handlers/file_handler.dart";
 export "package:catcher/handlers/http_handler.dart";
 export "package:catcher/handlers/report_handler.dart";

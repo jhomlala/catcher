@@ -1,27 +1,38 @@
 import 'package:catcher/catcher_plugin.dart';
 import 'package:catcher/mode/report_mode.dart';
-import 'package:catcher/mode/report_mode_action_confirmed.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class PageReportMode extends ReportMode {
-  final ReportModeAction reportModeAction;
-  PageReportMode(this.reportModeAction) : super(reportModeAction);
+  final String titleText;
+  final String descriptionText;
+  final bool showStackTrace;
+  final String acceptText;
+  final String cancelText;
+
+  PageReportMode(
+      {this.titleText = "Crash",
+      this.descriptionText = "Unexepcted error occured in application. " +
+          "We have created report which can be send it by you to developers. "
+          "Please click accept to send error report.",
+      this.showStackTrace = true,
+      this.acceptText = "Accept",
+      this.cancelText = "Cancel"});
 
   @override
   void requestAction(Report report, BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => PageWidget(reportModeAction,report)),
+      MaterialPageRoute(builder: (context) => PageWidget(this, report)),
     );
   }
 }
 
 class PageWidget extends StatefulWidget {
-  final ReportModeAction reportModeAction;
+  final PageReportMode pageReportMode;
   final Report report;
 
-  PageWidget(this.reportModeAction, this.report);
+  PageWidget(this.pageReportMode, this.report);
 
   @override
   PageWidgetState createState() {
@@ -34,38 +45,38 @@ class PageWidgetState extends State<PageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var items = getStackTrace();
     _context = context;
     return Scaffold(
-        appBar: AppBar(title: Text("Crash handler"),), body: Container(
-        padding: EdgeInsets.only(left: 10, right: 10),
-        decoration: BoxDecoration(color: Colors.white),
-        child: Column(
-          children: [
-            Padding(padding: EdgeInsets.only(top: 30)),
-            Text("Crash", style: _getTextStyle(45)),
-            Padding(padding: EdgeInsets.only(top: 20)),
-            Text(
-                "Unexepcted error occured in application. We have created report which can be send it by you to developers. Please click accept to send error report.",
-                style: _getTextStyle(15)),
-            Padding(padding: EdgeInsets.only(top: 20)),
-            SizedBox(
-              height: 400.0,
-              child: ListView.builder(
-                padding: EdgeInsets.all(8.0),
-
-                itemCount: items.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Text('${items[index]}', style: _getTextStyle(10),);
-                },
-              ),
-            ),
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-              FlatButton(child: Text("Accept"), onPressed: () => _acceptReport(),),
-              FlatButton(child: Text("Cancel"), onPressed: () => _cancelReport(),),
-            ],)
-          ],
-        )));
+        appBar: AppBar(
+          title: Text(widget.pageReportMode.titleText),
+        ),
+        body: Container(
+            padding: EdgeInsets.only(left: 10, right: 10),
+            decoration: BoxDecoration(color: Colors.white),
+            child: Column(
+              children: [
+                Padding(padding: EdgeInsets.only(top: 30)),
+                Text("Crash", style: _getTextStyle(45)),
+                Padding(padding: EdgeInsets.only(top: 20)),
+                Text(widget.pageReportMode.descriptionText,
+                    style: _getTextStyle(15)),
+                Padding(padding: EdgeInsets.only(top: 20)),
+                _getStackTraceWidget(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    FlatButton(
+                      child: Text(widget.pageReportMode.acceptText),
+                      onPressed: () => _acceptReport(),
+                    ),
+                    FlatButton(
+                      child: Text(widget.pageReportMode.cancelText),
+                      onPressed: () => _cancelReport(),
+                    ),
+                  ],
+                )
+              ],
+            )));
   }
 
   TextStyle _getTextStyle(double fontSize) {
@@ -75,17 +86,34 @@ class PageWidgetState extends State<PageWidget> {
         decoration: TextDecoration.none);
   }
 
-  List<String> getStackTrace() {
-    return widget.report.stackTrace.toString().split("\n");
+  Widget _getStackTraceWidget() {
+    if (widget.pageReportMode.showStackTrace) {
+      var items = widget.report.stackTrace.toString().split("\n");
+      return SizedBox(
+        height: 400.0,
+        child: ListView.builder(
+          padding: EdgeInsets.all(8.0),
+          itemCount: items.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Text(
+              '${items[index]}',
+              style: _getTextStyle(10),
+            );
+          },
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
 
   _acceptReport() {
-    widget.reportModeAction.onActionConfirmed();
+    widget.pageReportMode.onActionConfirmed();
     _closePage();
   }
 
   _cancelReport() {
-    widget.reportModeAction.onActionRejected();
+    widget.pageReportMode.onActionRejected();
     _closePage();
   }
 

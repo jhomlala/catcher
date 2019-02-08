@@ -1,11 +1,12 @@
+import 'package:catcher/mode/dialog_report_mode.dart';
 import 'package:flutter/material.dart';
-import 'package:catcher/catcher.dart';
+import 'package:catcher/catcher_plugin.dart';
 
 void main() => Catcher(MyApp(),
     handlerTimeout: 5000,
-    handlers: [ConsoleHandler(), ToastHandler()],
+    handlers: [ConsoleHandler(), EmailManualHandler(["jhomlala@gmail.com"])],
     customParameters: {"application_version": "debug"},
-    reportModeType: ReportModeType.dialog);
+    reportMode: DialogReportMode());
 
 class MyApp extends StatefulWidget {
   @override
