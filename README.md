@@ -250,7 +250,7 @@ ReportMode reportMode = NotificationReportMode();
 ```
 
 <p align="center">
-<img width="250px" src="https://github.com/jhomlala/catcher/blob/master/screenshots/1.png">
+<img width="250px" src="https://github.com/jhomlala/catcher/blob/master/screenshots/1.png"><br/>
   <i>Notification Report Mode</i>
 </p>
 
@@ -272,7 +272,7 @@ cancelText (optional) - cancel button text
 
 
 <p align="center">
-<img width="250px" src="https://github.com/jhomlala/catcher/blob/master/screenshots/6.png">
+<img width="250px" src="https://github.com/jhomlala/catcher/blob/master/screenshots/6.png"><br/>
   <i>Dialog report mode</i>
 </p>
 
@@ -296,7 +296,7 @@ cancelText (optional) - cancel button text
 showStackTrace (optional) - enables/disables stack trace view
 
 <p align="center">
-<img width="250px" src="https://github.com/jhomlala/catcher/blob/master/screenshots/7.png">
+<img width="250px" src="https://github.com/jhomlala/catcher/blob/master/screenshots/7.png"><br/>
   <i>Page report mode</i>
 </p>
 
