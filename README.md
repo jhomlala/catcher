@@ -5,6 +5,8 @@
 # Catcher
 
 [![pub package](https://img.shields.io/pub/v/catcher.svg)](https://pub.dartlang.org/packages/catcher)
+[![pub package](https://img.shields.io/github/license/jhomlala/catcher.svg?style=flat)](https://github.com/jhomlala/catcher)
+[![pub package](https://img.shields.io/badge/platform-flutter-blue.svg)](https://github.com/jhomlala/catcher)
 
 Catcher is Flutter plugin which automatically catches error/exceptions and handle them. Catcher offers mutliple way to handle errors.
 Catcher is heavily inspired from ACRA: https://github.com/ACRA/acra
@@ -92,9 +94,15 @@ Debug configuration has dialog report mode and console handler, release configur
 If you run this code you will see screen with "Generate error" button on middle of the screen. 
 After clicking on it, it will generate test exception, which will be handled by Catcher. Before Catcher process exception to handler, it will
 show dialog with information for user. This dialog is shown because we have used DialogReportHandler. Once user confirms action in this dialog,
-report will be send to console handler which will log:
+report will be send to console handler which will log to console error informations.
+
+<p align="center">
+<img src="https://github.com/jhomlala/catcher/blob/master/screenshots/6.png" width="250px"> <br/> 
+  <i>Dialog with default confirmation message</i>
+</p>
 
 
+  
 ```dart
 I/flutter ( 7457): [2019-02-09 12:40:21.527271 | ConsoleHandler | INFO] ============================== CATCHER LOG ==============================
 I/flutter ( 7457): [2019-02-09 12:40:21.527742 | ConsoleHandler | INFO] Crash occured on 2019-02-09 12:40:20.424286
