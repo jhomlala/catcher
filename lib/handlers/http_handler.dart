@@ -5,9 +5,11 @@ import 'package:catcher/model/http_request_type.dart';
 import 'package:catcher/model/report.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:logging/logging.dart';
 
 class HttpHandler extends ReportHandler {
   final Dio _dio = Dio();
+  final Logger _logger = Logger("HttpHandler");
 
   final HttpRequestType requestType;
   final Uri endpointUri;
@@ -41,7 +43,7 @@ class HttpHandler extends ReportHandler {
       _printLog("Calling: ${endpointUri.toString()}");
       Response response =
           await _dio.post(endpointUri.toString(), data: json, options: options);
-      print(
+      _printLog(
           "HttpHandler response status: ${response.statusCode} body: ${response.data}");
       return SynchronousFuture(true);
     } catch (error, stackTrace) {
@@ -52,7 +54,7 @@ class HttpHandler extends ReportHandler {
 
   _printLog(String log) {
     if (printLogs) {
-      print(log);
+      _logger.info(log);
     }
   }
 

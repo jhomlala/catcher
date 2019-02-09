@@ -1,15 +1,9 @@
-import 'package:catcher/model/report.dart';
 import 'package:catcher/handlers/report_handler.dart';
-import 'package:mailer/mailer.dart';
-import 'package:mailer/smtp_server.dart';
+import 'package:catcher/model/report.dart';
+import 'package:flutter_mailer/flutter_mailer.dart';
+import 'package:logging/logging.dart';
 
-class EmailHandler extends ReportHandler {
-  final String smtpHost;
-  final int smtpPort;
-  final String senderEmail;
-  final String senderName;
-  final String senderPassword;
-  final bool enableSsl;
+class EmailManualHandler extends ReportHandler {
   final List<String> recipients;
   final bool enableDeviceParameters;
   final bool enableApplicationParameters;
@@ -19,11 +13,10 @@ class EmailHandler extends ReportHandler {
   final String emailHeader;
   final bool sendHtml;
   final bool printLogs;
+  final Logger _logger = Logger("EmailManualHandler");
 
-  const EmailHandler(this.smtpHost, this.smtpPort, this.senderEmail,
-      this.senderName, this.senderPassword, this.recipients,
-      {this.enableSsl = false,
-      this.enableDeviceParameters = true,
+  EmailManualHandler(this.recipients,
+      {this.enableDeviceParameters = true,
       this.enableApplicationParameters = true,
       this.enableStackTrace = true,
       this.enableCustomParameters = true,
@@ -33,54 +26,41 @@ class EmailHandler extends ReportHandler {
       this.printLogs = false});
 
   @override
-  Future<bool> handle(Report error) {
-    return _sendMail(error);
+  Future<bool> handle(Report error) async {
+    return _sendEmail(error);
   }
 
-  Future<bool> _sendMail(Report report) async {
+  Future<bool> _sendEmail(Report report) async {
     try {
-      final message = new Message()
-        ..from = new Address(this.senderEmail, this.senderName)
-        ..recipients.addAll(recipients)
-        ..subject = _getEmailTitle(report)
-        ..text = _setupRawMessageText(report);
-
-      if (sendHtml) {
-        message.html = _setupHtmlMessageText(report);
-      }
-      _printLog("Sending email...");
-
-      var results = await send(message, _setupSmtpServer());
-      for (SendReport sendReport in results) {
-        _printLog("Sending status: " + sendReport.sent.toString());
-        if (sendReport.validationProblems != null &&
-            sendReport.validationProblems.length > 0) {
-          for (var problem in sendReport.validationProblems) {
-            _printLog("Problem: " + problem.code + " msg: " + problem.msg);
-          }
-        }
-        return sendReport.sent;
-      }
+      final MailOptions mailOptions = MailOptions(
+        body: _getBody(report),
+        subject: _getTitle(report),
+        recipients: recipients,
+        isHTML: sendHtml,
+      );
+      _printLog("Creating mail request");
+      await FlutterMailer.send(mailOptions);
+      _printLog("Creating mail request success");
       return true;
-    } catch (exc) {
-      _printLog(exc);
+    } catch (exc, stackTrace) {
+      _printLog("Exception occured: $exc stack: $stackTrace");
       return false;
     }
   }
 
-  SmtpServer _setupSmtpServer() {
-    return SmtpServer(smtpHost,
-        port: smtpPort,
-        ssl: enableSsl,
-        username: senderEmail,
-        password: senderPassword);
-  }
-
-  String _getEmailTitle(Report report) {
+  String _getTitle(Report report) {
     if (emailTitle != null && emailTitle.length > 0) {
       return emailTitle;
     } else {
       return "Handled Error: >> ${report.error} <<";
+    }
+  }
+
+  String _getBody(Report report) {
+    if (sendHtml) {
+      return _setupHtmlMessageText(report);
+    } else {
+      return _setupRawMessageText(report);
     }
   }
 
@@ -150,7 +130,7 @@ class EmailHandler extends ReportHandler {
 
   _printLog(String log) {
     if (printLogs) {
-      print(log);
+      _logger.info(log);
     }
   }
 }

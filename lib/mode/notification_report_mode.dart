@@ -1,12 +1,14 @@
-import 'package:catcher/mode/report_mode.dart';
-import 'package:catcher/mode/report_mode_action_confirmed.dart';
+import 'package:catcher/model/report_mode.dart';
+import 'package:catcher/model/report.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:logging/logging.dart';
 
 class NotificationReportMode extends ReportMode {
   FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin;
+  Report _lastReport;
 
-  NotificationReportMode(ReportModeAction reportModeAction)
-      : super(reportModeAction) {
+  NotificationReportMode() {
     _flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
     var initializationSettingsAndroid =
         new AndroidInitializationSettings("@mipmap/ic_launcher");
@@ -18,17 +20,17 @@ class NotificationReportMode extends ReportMode {
   }
 
   @override
-  void requestAction() {
+  void requestAction(Report report, BuildContext context) {
+    _lastReport = report;
     _sendNotification();
   }
 
   Future onSelectedNotification(String payload) {
-    onActionConfirmed();
+    onActionConfirmed(_lastReport);
     return Future.value(null);
   }
 
   void _sendNotification() async {
-    print("Sending notification");
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
         'CATCHER', 'Catcher', 'Catcher error handler',
         importance: Importance.Default, priority: Priority.Default);

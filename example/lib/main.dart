@@ -1,11 +1,23 @@
-import 'package:flutter/material.dart';
-import 'package:catcher/catcher.dart';
+import 'dart:io';
 
-void main() => Catcher(MyApp(),
-    handlerTimeout: 5000,
-    handlers: [ConsoleHandler(), ToastHandler()],
-    customParameters: {"application_version": "debug"},
-    reportModeType: ReportModeType.silent);
+import 'package:catcher/mode/dialog_report_mode.dart';
+import 'package:catcher/model/catcher_options.dart';
+import 'package:flutter/material.dart';
+import 'package:catcher/catcher_plugin.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+Future main() async {
+  Directory externalDir = await getExternalStorageDirectory();
+  String path = externalDir.path.toString() + "/log.txt";
+  print("Path: " + path);
+
+  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(),[ConsoleHandler()]);
+  CatcherOptions releaseOptions = CatcherOptions(DialogReportMode(),[ConsoleHandler()]);
+
+  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
+
+}
 
 class MyApp extends StatefulWidget {
   @override
@@ -21,16 +33,29 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: Catcher.navigatorKey,
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
-            child: FlatButton(
-                child: Text("Generate error"),
-                onPressed: () => generateError())),
-      ),
+          appBar: AppBar(
+            title: const Text('Plugin example app'),
+          ),
+          body: ChildWidget()),
     );
+  }
+}
+
+class ChildWidget extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    permission();
+    return Container(
+        child: FlatButton(
+            child: Text("Generate error"), onPressed: () => generateError()));
+  }
+
+  permission() async{
+    Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler().requestPermissions([PermissionGroup.storage]);
+    //bool isShown = await PermissionHandler().shouldShowRequestPermissionRationale(PermissionGroup.storage);
   }
 
   generateError() async {
