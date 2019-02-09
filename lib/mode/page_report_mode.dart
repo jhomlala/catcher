@@ -108,12 +108,12 @@ class PageWidgetState extends State<PageWidget> {
   }
 
   _acceptReport() {
-    widget.pageReportMode.onActionConfirmed();
+    widget.pageReportMode.onActionConfirmed(widget.report);
     _closePage();
   }
 
   _cancelReport() {
-    widget.pageReportMode.onActionRejected();
+    widget.pageReportMode.onActionRejected(widget.report);
     _closePage();
   }
 

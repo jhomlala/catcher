@@ -13,7 +13,7 @@ class ToastHandler extends ReportHandler {
   final double textSize;
   final String customMessage;
 
- ToastHandler(
+  ToastHandler(
       {this.gravity = ToastHandlerGravity.bottom,
       this.length = ToastHandlerLength.long,
       this.backgroundColor = Colors.black87,
@@ -36,38 +36,38 @@ class ToastHandler extends ReportHandler {
   }
 
   ToastGravity _getGravity() {
-    switch(gravity){
-      case ToastHandlerGravity.bottom: return ToastGravity.BOTTOM;
-      case ToastHandlerGravity.center: return ToastGravity.CENTER;
-      case ToastHandlerGravity.top: return ToastGravity.TOP;
+    switch (gravity) {
+      case ToastHandlerGravity.bottom:
+        return ToastGravity.BOTTOM;
+      case ToastHandlerGravity.center:
+        return ToastGravity.CENTER;
+      case ToastHandlerGravity.top:
+        return ToastGravity.TOP;
     }
     return ToastGravity.BOTTOM;
   }
 
-  Toast _getLength(){
-    if (length == ToastHandlerLength.long){
+  Toast _getLength() {
+    if (length == ToastHandlerLength.long) {
       return Toast.LENGTH_LONG;
     } else {
       return Toast.LENGTH_SHORT;
     }
   }
 
-  int _getLengthIos(){
-    if (length == ToastHandlerLength.long){
+  int _getLengthIos() {
+    if (length == ToastHandlerLength.long) {
       return 5;
     } else {
       return 1;
     }
   }
 
-  String _getErrorMessage(Report error){
-    if (customMessage != null && customMessage.length > 0){
+  String _getErrorMessage(Report error) {
+    if (customMessage != null && customMessage.length > 0) {
       return customMessage;
     } else {
       return "Error occured: ${error.error}";
     }
   }
-
-
 }
-

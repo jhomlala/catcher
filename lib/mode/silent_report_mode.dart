@@ -6,6 +6,6 @@ class SilentReportMode extends ReportMode {
   @override
   void requestAction(Report report, BuildContext context) {
     // no action needed, request is automatically accepted
-    super.onActionConfirmed();
+    super.onActionConfirmed(report);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:catcher/model/report.dart';
 import 'package:catcher/handlers/report_handler.dart';
+import 'package:logging/logging.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 
@@ -19,6 +20,7 @@ class EmailAutoHandler extends ReportHandler {
   final String emailHeader;
   final bool sendHtml;
   final bool printLogs;
+  final Logger _logger = Logger("Catcher|EmailAutoHandler");
 
   EmailAutoHandler(this.smtpHost, this.smtpPort, this.senderEmail,
       this.senderName, this.senderPassword, this.recipients,
@@ -150,7 +152,7 @@ class EmailAutoHandler extends ReportHandler {
 
   _printLog(String log) {
     if (printLogs) {
-      print(log);
+      _logger.info(log);
     }
   }
 }

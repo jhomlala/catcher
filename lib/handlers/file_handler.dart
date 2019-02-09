@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:catcher/model/report.dart';
 import 'package:catcher/handlers/report_handler.dart';
+import 'package:logging/logging.dart';
 
 class FileHandler extends ReportHandler {
   final File file;
@@ -11,7 +12,11 @@ class FileHandler extends ReportHandler {
   final bool enableStackTrace;
   final bool enableCustomParameters;
   final bool printLogs;
+
+  final Logger _logger = Logger("Catcher|FileHandler");
   IOSink _sink;
+  bool _fileValidated = false;
+  bool _fileValidationResult = false;
 
   FileHandler(this.file,
       {this.enableDeviceParameters = true,
@@ -22,12 +27,23 @@ class FileHandler extends ReportHandler {
 
   @override
   Future<bool> handle(Report report) async {
-    bool fileValidation = await _checkFile();
-    _printLog("File validation: $fileValidation");
-    if (fileValidation) {
-      _openFile();
+    try {
+      if (!_fileValidated) {
+        _fileValidationResult = await _checkFile();
+        _fileValidated = true;
+      }
+      return await _processReport(report);
+    } catch (exc, stackTrace) {
+      _printLog("Exception occured: $exc stack: $stackTrace");
+      return false;
+    }
+  }
+
+  _processReport(Report report) async {
+    if (_fileValidationResult) {
+      await _openFile();
       _writeReportToFile(report);
-      _closeFile();
+      await _closeFile();
       return true;
     } else {
       return false;
@@ -42,16 +58,16 @@ class FileHandler extends ReportHandler {
       }
       IOSink sink = file.openWrite(mode: FileMode.append);
       sink.write("");
-      sink.flush();
-      sink.close();
+      await sink.flush();
+      await sink.close();
       return true;
     } catch (exc, stackTrace) {
-      print(exc + " " + stackTrace);
+      _printLog("Exception occured: $exc stack: $stackTrace");
       return false;
     }
   }
 
-  _openFile() {
+  _openFile() async {
     _sink = file.openWrite(mode: FileMode.append);
     _printLog("Opened file");
   }
@@ -118,7 +134,7 @@ class FileHandler extends ReportHandler {
 
   _printLog(String log) {
     if (printLogs) {
-      print(log);
+      _logger.info(log);
     }
   }
 }

@@ -1,6 +1,7 @@
 import 'package:catcher/handlers/report_handler.dart';
 import 'package:catcher/model/report.dart';
 import 'package:flutter_mailer/flutter_mailer.dart';
+import 'package:logging/logging.dart';
 
 class EmailManualHandler extends ReportHandler {
   final List<String> recipients;
@@ -12,6 +13,7 @@ class EmailManualHandler extends ReportHandler {
   final String emailHeader;
   final bool sendHtml;
   final bool printLogs;
+  final Logger _logger = Logger("Catcher|EmailManualHandler");
 
   EmailManualHandler(this.recipients,
       {this.enableDeviceParameters = true,
@@ -29,15 +31,21 @@ class EmailManualHandler extends ReportHandler {
   }
 
   Future<bool> _sendEmail(Report report) async {
-    final MailOptions mailOptions = MailOptions(
-      body: _getBody(report),
-      subject: _getTitle(report),
-      recipients: recipients,
-      isHTML: sendHtml,
-    );
-
-    await FlutterMailer.send(mailOptions);
-    return true;
+    try {
+      final MailOptions mailOptions = MailOptions(
+        body: _getBody(report),
+        subject: _getTitle(report),
+        recipients: recipients,
+        isHTML: sendHtml,
+      );
+      _printLog("Creating mail request");
+      await FlutterMailer.send(mailOptions);
+      _printLog("Creating mail request success");
+      return true;
+    } catch (exc, stackTrace) {
+      _printLog("Exception occured: $exc stack: $stackTrace");
+      return false;
+    }
   }
 
   String _getTitle(Report report) {
@@ -118,5 +126,11 @@ class EmailManualHandler extends ReportHandler {
       buffer.write("\n\n");
     }
     return buffer.toString();
+  }
+
+  _printLog(String log) {
+    if (printLogs) {
+      _logger.info(log);
+    }
   }
 }

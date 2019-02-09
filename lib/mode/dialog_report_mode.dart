@@ -31,24 +31,24 @@ class DialogReportMode extends ReportMode {
             actions: <Widget>[
               FlatButton(
                 child: Text(acceptText),
-                onPressed: () => _acceptReport(context),
+                onPressed: () => _acceptReport(context, report),
               ),
               FlatButton(
                 child: Text(cancelText),
-                onPressed: () => _cancelReport(context),
+                onPressed: () => _cancelReport(context, report),
               ),
             ],
           );
         });
   }
 
-  _acceptReport(BuildContext context) {
-    super.onActionConfirmed();
+  _acceptReport(BuildContext context, Report report) {
+    super.onActionConfirmed(report);
     Navigator.pop(context);
   }
 
-  _cancelReport(BuildContext context) {
-    super.onActionRejected();
+  _cancelReport(BuildContext context, Report report) {
+    super.onActionRejected(report);
     Navigator.pop(context);
   }
 }

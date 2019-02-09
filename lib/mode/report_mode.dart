@@ -5,17 +5,17 @@ import 'package:flutter/widgets.dart';
 abstract class ReportMode {
   ReportModeAction _reportModeAction;
 
-  setReportModeAction(ReportModeAction reportModeAction){
+  setReportModeAction(ReportModeAction reportModeAction) {
     this._reportModeAction = reportModeAction;
   }
 
   void requestAction(Report report, BuildContext context);
 
-  void onActionConfirmed() {
-    _reportModeAction.onActionConfirmed();
+  void onActionConfirmed(Report report) {
+    _reportModeAction.onActionConfirmed(report);
   }
 
-  void onActionRejected() {
-    _reportModeAction.onActionRejected();
+  void onActionRejected(Report report) {
+    _reportModeAction.onActionRejected(report);
   }
 }

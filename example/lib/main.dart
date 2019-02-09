@@ -1,12 +1,23 @@
+import 'dart:io';
+
 import 'package:catcher/mode/dialog_report_mode.dart';
 import 'package:flutter/material.dart';
 import 'package:catcher/catcher_plugin.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-void main() => Catcher(MyApp(),
-    handlerTimeout: 5000,
-    handlers: [ConsoleHandler(), EmailManualHandler(["jhomlala@gmail.com"])],
-    customParameters: {"application_version": "debug"},
-    reportMode: DialogReportMode());
+Future main() async {
+  Directory externalDir = await getExternalStorageDirectory();
+  String path = externalDir.path.toString() + "/log.txt";
+  print("Path: " + path);
+  Catcher(MyApp(),
+      handlerTimeout: 5000,
+      handlers: [
+        FileHandler(File(path), printLogs: true)
+      ],
+      customParameters: {"application_version": "debug"},
+      reportMode: DialogReportMode());
+}
 
 class MyApp extends StatefulWidget {
   @override
@@ -19,7 +30,6 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,26 +38,27 @@ class _MyAppState extends State<MyApp> {
           appBar: AppBar(
             title: const Text('Plugin example app'),
           ),
-          body: ChildWidget()
-      ),
+          body: ChildWidget()),
     );
   }
 }
 
-
-
-class ChildWidget extends StatelessWidget{
+class ChildWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(child:  FlatButton(
-        child: Text("Generate error"),
-        onPressed: () => generateError()));
+    permission();
+    return Container(
+        child: FlatButton(
+            child: Text("Generate error"), onPressed: () => generateError()));
+  }
+
+  permission() async{
+    Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler().requestPermissions([PermissionGroup.storage]);
+    //bool isShown = await PermissionHandler().shouldShowRequestPermissionRationale(PermissionGroup.storage);
   }
 
   generateError() async {
     throw "Test exception";
   }
-
 }
-

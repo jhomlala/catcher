@@ -1,5 +1,7 @@
-abstract class ReportModeAction {
-  void onActionConfirmed();
+import 'package:catcher/model/report.dart';
 
-  void onActionRejected();
+abstract class ReportModeAction {
+  void onActionConfirmed(Report report);
+
+  void onActionRejected(Report report);
 }
