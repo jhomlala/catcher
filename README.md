@@ -249,8 +249,9 @@ Notification Report Mode shows local notification about error. Once user clicks 
 ReportMode reportMode = NotificationReportMode();
 ```
 
-<p align="justify">
+<p align="center">
 <img width="250px" src="https://github.com/jhomlala/catcher/blob/master/screenshots/1.png">
+  <i>Notification Report Mode</i>
 </p>
 
 #### Dialog Report Mode
@@ -270,8 +271,9 @@ acceptText (optional) - confirmation button text
 cancelText (optional) - cancel button text
 
 
-<p align="justify">
+<p align="center">
 <img width="250px" src="https://github.com/jhomlala/catcher/blob/master/screenshots/6.png">
+  <i>Dialog report mode</i>
 </p>
 
 #### Page Report Mode
@@ -293,11 +295,17 @@ acceptText (optional) - confirmation button text
 cancelText (optional) - cancel button text
 showStackTrace (optional) - enables/disables stack trace view
 
-<p align="justify">
+<p align="center">
 <img width="250px" src="https://github.com/jhomlala/catcher/blob/master/screenshots/7.png">
+  <i>Page report mode</i>
 </p>
 
-### Console Handler
+### Handlers
+Handlers are an last point in error processing flow. They are doing specific task with error report, for example logging report to console.
+
+#### Console Handler
+
+
 Console Handler is the default and basic handler. It show crash log in console. Console logger allows you to parametrize log output:
 
 ```dart
@@ -309,7 +317,7 @@ ConsoleHandler(
 
 ```
 
-* enableApplicationParameters: display in log section with application data:
+* enableApplicationParameters (optional) - display in log section with application data:
 
 ```dart
 I/flutter ( 4820): ------- APP INFO -------
@@ -320,7 +328,7 @@ I/flutter ( 4820): packageName: com.jhomlala.catcherexample
 I/flutter ( 4820): 
 ```
 
-* enableDeviceParameters: display in log section with device data (it will show android/ios data):
+* enableDeviceParameters (optional) - display in log section with device data (it will show android/ios data):
 
 ```dart
 I/flutter ( 4820): ------- DEVICE INFO -------
@@ -349,9 +357,9 @@ I/flutter ( 4820): versionSdk: 28
 I/flutter ( 4820): versionSecurityPatch: 2018-08-05
 ```
 
-* enableCustomParameters: display in log section with custom parameters passed to Catcher constructor
+* enableCustomParameters (optional) - display in log section with custom parameters passed to Catcher constructor
 
-* enableStackTrace: display in log section with stack trace:
+* enableStackTrace (optional) - display in log section with stack trace:
 
 ```dart
 I/flutter ( 5073): ------- STACK TRACE -------
@@ -368,8 +376,34 @@ I/flutter ( 5073): #8      PointerRouter._dispatch (package:flutter/src/gestures
 I/flutter ( 5073): #9      PointerRouter.route (package:flutter/src/gestures/pointer_router.dart:101:11)
 I/flutter ( 5073): #10     _WidgetsFlutterBinding&BindingBase&GestureBinding.handleEvent (package:flutter
 ```
+#### Email Manual Handler
+Email manual handler can be used to send email manually by user. It opens default email application with prepared email.
 
-### Email Handler
+```dart
+EmailManualHandler(
+      ["email1@email.com", "email2@email.com"],
+      enableDeviceParameters: true,
+      enableStackTrace: true,
+      enableCustomParameters: true,
+      enableApplicationParameters: true,
+      sendHtml: true,
+      emailTitle: "Sample Title",
+      emailHeader: "Sample Header",
+      printLogs: true
+```
+
+Email Manual Handler parameters:
+* recipients (required) - list of email addresses of recipients
+* enableDeviceParameters (optional) - see Console Handler description
+* enableStackTrace (optional) - see Console Handler description
+* enableCustomParameters (optional) - see Console Handler description
+* enableApplicationParameters (optional) - see Console Handler description
+* sendHtml (optional) - enable/disable html email formatting
+* emailTitle (optional) - set custom email title
+* emailHeader (optional) - set additional email text header
+* printLogs (optional) - enable/disable debug logs
+
+#### Email Auto Handler
 Email handler can be used to send automatically email with error reports. Email handler has multiple configuration parameters. Few of them are required, other are optional. These parameters are required:
 
 ```dart
@@ -379,32 +413,29 @@ Email handler can be used to send automatically email with error reports. Email 
 We need to setup email smtp server, email account and recipient. Currently, only Gmail was tested and worked. You can try use other email providers, but there can be errors.  
 
 List of all parameters: 
-
-Required:  
-* smtpHost - host address of your email, for example host for gmail is smtp.gmail.com  
-* smtpPort - smtp port of your email, for example port for gmail is 587  
-* senderEmail - email from which Catcher will send email (it will be sender of error emails)  
-* senderName - name of sender email
-* senderPassword - password for sender email 
-* recipients - list which contains recipient emails  
-
-Optional: 
-* enableSSL - if your email provider supports SSL, you can enable this option
-* enableDeviceParameters - please look in console handler description
-* enableApplicationParameters - please look in console handler description
-* enableStackTrace - please look in console handler description
-* enableCustomParameters - please look in console handler description
-* emailTitle - custom title of report email, if not set then title will be: `Handled Error: >> [Error name] <<`
-* emailHeader - custom header message before report data
-* sendHtml - enable/disable html data in your email, if enabled then html will be sent and your report will look much better
-* printLog - enable/disable debug logs
+ 
+* smtpHost (required) - host address of your email, for example host for gmail is smtp.gmail.com  
+* smtpPort (required) - smtp port of your email, for example port for gmail is 587  
+* senderEmail (required) - email from which Catcher will send email (it will be sender of error emails)  
+* senderName (required) - name of sender email
+* senderPassword (required) - password for sender email 
+* recipients (required) - list which contains recipient emails   
+* enableSSL (optional) - if your email provider supports SSL, you can enable this option
+* enableDeviceParameters (optional) - please look in console handler description
+* enableApplicationParameters (optional) - please look in console handler description
+* enableStackTrace (optional) - please look in console handler description
+* enableCustomParameters (optional) - please look in console handler description
+* emailTitle (optional) - custom title of report email, if not set then title will be: `Handled Error: >> [Error name] <<`
+* emailHeader (optional)-  custom header message before report data
+* sendHtml (optional) - enable/disable html data in your email, if enabled then html will be sent and your report will look much better
+* printLog (optional) - enable/disable debug logs
 
 Example email:
 <p align="center">
 <img src="https://github.com/jhomlala/catcher/blob/master/screenshots/3.png">
 </p>
 
-### Http Handler
+#### Http Handler
 
 Http Handler provides feature for sending report to external server. Data will be encoded in JSON and sent to specified server. Currently only POST request can be send. Minimal example:
 
@@ -413,11 +444,11 @@ HttpHandler(HttpRequestType.post, Uri.parse("http://logs.server.com")
 ```
 
 All parameters list:
-* requestType - type of request, currently only POST is supported  
-* endpointUri - uri address of server  
-* headers - map of additional headers that can be send in http request  
-* requestTimeout - request time in milliseconds  
-* printLogs - show debug logs  
+* requestType (required) - type of request, currently only POST is supported  
+* endpointUri (required) - uri address of server  
+* headers (optional) - map of additional headers that can be send in http request  
+* requestTimeout (optional) - request time in milliseconds  
+* printLogs (optional) - show debug logs  
 
 You can try using example backend server which handles logs. It's written in Java 8 and Spring Framework and uses material design.
 You can find code of backend server here: https://github.com/jhomlala/catcher/tree/master/backend
@@ -431,7 +462,7 @@ Note: Remeber to add Internet permission in Android Manifest:
 <uses-permission android:name="android.permission.INTERNET"/>
 ```
 
-### File Handler
+#### File Handler
 File handler allows to store logs in file. Minimal example:
 
 ```dart
@@ -455,23 +486,23 @@ void main() async{
 ```
 
 All parameters list:  
-* file - the file where you want to store your logs  
-* enableDeviceParameters - please look in console handler description   
-* enableApplicationParameters - please look in console handler description  
-* enableStackTrace - please look in console handler description  
-* enableCustomParameters - please look in console handler description  
-* printLogs - enable/disable debug logs  
+* file (required) - the file where you want to store your logs  
+* enableDeviceParameters (optional) - please look in console handler description   
+* enableApplicationParameters (optional) - please look in console handler description  
+* enableStackTrace (optional) - please look in console handler description  
+* enableCustomParameters (optional) - please look in console handler description  
+* printLogs (optional) - enable/disable debug logs  
 
 ### Toast Handler
 Toast handler allows to show short message in toast. Minimal example:
 
 All parameters list:
-* gravity - location of the toast on screen top/middle/bottom
-* length - length of toast: long or short
-* backgroundColor - background color of toast
-* textColor - text color of toast
-* fontSize - text size
-* customMessage - custom message for toast, if not set then "Error occured: error" will be displayed.
+* gravity (optional) - location of the toast on screen top/middle/bottom
+* length (optional) - length of toast: long or short
+* backgroundColor (optional) - background color of toast
+* textColor (optional) - text color of toast
+* fontSize (optional) - text size
+* customMessage (optional) - custom message for toast, if not set then "Error occured: error" will be displayed.
 
 <p align="center">
 <img src="https://github.com/jhomlala/catcher/blob/master/screenshots/5.png" width="250px">
