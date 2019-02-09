@@ -515,6 +515,8 @@ All parameters list:
 * enableCustomParameters (optional) - please look in console handler description  
 * printLogs (optional) - enable/disable debug logs  
 
+Example of logging to file in external directory: https://github.com/jhomlala/catcher/blob/master/example/lib/file_example.dart
+
 #### Toast Handler
 Toast handler allows to show short message in toast. Minimal example:
 
