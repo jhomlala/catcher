@@ -5,6 +5,8 @@
 # Catcher
 
 [![pub package](https://img.shields.io/pub/v/catcher.svg)](https://pub.dartlang.org/packages/catcher)
+[![pub package](https://img.shields.io/github/license/jhomlala/catcher.svg?style=flat)](https://github.com/jhomlala/catcher)
+[![pub package](https://img.shields.io/badge/platform-flutter-blue.svg)](https://github.com/jhomlala/catcher)
 
 Catcher is Flutter plugin which automatically catches error/exceptions and handle them. Catcher offers mutliple way to handle errors.
 Catcher is heavily inspired from ACRA: https://github.com/ACRA/acra
@@ -92,9 +94,15 @@ Debug configuration has dialog report mode and console handler, release configur
 If you run this code you will see screen with "Generate error" button on middle of the screen. 
 After clicking on it, it will generate test exception, which will be handled by Catcher. Before Catcher process exception to handler, it will
 show dialog with information for user. This dialog is shown because we have used DialogReportHandler. Once user confirms action in this dialog,
-report will be send to console handler which will log:
+report will be send to console handler which will log to console error informations.
+
+<p align="center">
+<img src="https://github.com/jhomlala/catcher/blob/master/screenshots/6.png" width="250px"> <br/> 
+  <i>Dialog with default confirmation message</i>
+</p>
 
 
+  
 ```dart
 I/flutter ( 7457): [2019-02-09 12:40:21.527271 | ConsoleHandler | INFO] ============================== CATCHER LOG ==============================
 I/flutter ( 7457): [2019-02-09 12:40:21.527742 | ConsoleHandler | INFO] Crash occured on 2019-02-09 12:40:20.424286
@@ -159,29 +167,68 @@ I/flutter ( 7457): [2019-02-09 12:40:21.536375 | ConsoleHandler | INFO]
 I/flutter ( 7457): [2019-02-09 12:40:21.536539 | ConsoleHandler | INFO] ======================================================================
 ```
 
-## Advanced usage
+## Catcher usage
 
-### Catcher configuration
+### Adding navigator key
+In order to make work Page Report Mode and Dialog Report Mode, you must include navigator key. Catcher plugin exposes key which must be included in your MaterialApp or WidgetApp:
+
 ```dart
-Catcher(MyApp(),
-        handlerTimeout: 5000,
-        handlers: [ConsoleHandler(), ToastHandler()],
-        customParameters: {"application_version": "debug"},
-        reportModeType: ReportModeType.silent);
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      //********************************************
+      navigatorKey: Catcher.navigatorKey,
+      //********************************************
+      home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Plugin example app'),
+          ),
+          body: ChildWidget()),
+    );
+  }
+
+You need to provide this key, because Catcher needs context of navigator to show dialogs/pages. There is no need to include this navigator key if you won't use Page/Dialog Report Mode.
+
 ```
 
-* application - base application widget
-* handlers - list of all handlers
-* handlerTimeout - max time of handler to process report error
-* reportModeType - type of report mode: silent or notification
-* customParameters - list of custom parameters that will be send with report
+### Catcher configuration
+Catcher instance needs 1 required and 3 optional parameters.
+
+* rootWidget (required) - instance of your root application widget
+* debugConfig (optional) - config used when Catcher detects that application runs in debug mode
+* releaseConfig (optional) - config used when Catcher detects that application runs in release mode
+* profileConfig (optional) - config used when Catcher detects that application runs in profile mode
+
+
+```dart
+main() {
+  CatcherOptions debugOptions =
+  CatcherOptions(DialogReportMode(), [ConsoleHandler()]);
+  CatcherOptions releaseOptions = CatcherOptions(DialogReportMode(), [
+    EmailManualHandler(["recipient@email.com"])
+  ]);
+  CatcherOptions profileOptions = CatcherOptions(
+    NotificationReportMode(), [ConsoleHandler(), ToastHandler()],
+    handlerTimeout: 10000, customParameters: {"example": "example_parameter"},)
+  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions, profileConfig: profileOptions);
+}
+```
+CatcherOptions parameters:
+reportMode - describes how error report will be shown to user, see report modes to get more informations
+handlers - list of handlers, which will process report, see handlers to get more informations
+handlerTimeout - timeout in milliseconds, this parameter describes max time of handling report by handler
+customParameters - map of additional parameters that will be included in report (for example user id or user name)
 
 
 ### Report catched exception
-When you catch your exception in try/catch block, then exception will not be processed by Catcher. You can send error manually to catcher by using:
+Catcher won't process exceptions catched in try/catch block. You can send exception from try catch block to Catcher:
 
 ```dart
-Catcher.getInstance().reportCheckedError(error, stackTrace)
+try {
+  ...
+} catch (error,stackTrace) {
+  Catcher.getInstance().reportCheckedError(error, stackTrace)
+}
 ```
 
 ### Report modes
