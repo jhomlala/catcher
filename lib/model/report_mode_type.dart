@@ -1,1 +1,1 @@
-enum ReportModeType { silent, notification,page,dialog }
+enum ReportModeType { silent, notification, page, dialog }

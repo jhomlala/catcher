@@ -7,7 +7,7 @@ class ConsoleHandler extends ReportHandler {
   final bool enableApplicationParameters;
   final bool enableStackTrace;
   final bool enableCustomParameters;
-  Logger _logger = Logger("Catcher|ConsoleHandler");
+  Logger _logger = Logger("ConsoleHandler");
 
   ConsoleHandler(
       {this.enableDeviceParameters = true,

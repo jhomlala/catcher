@@ -13,7 +13,7 @@ class EmailManualHandler extends ReportHandler {
   final String emailHeader;
   final bool sendHtml;
   final bool printLogs;
-  final Logger _logger = Logger("Catcher|EmailManualHandler");
+  final Logger _logger = Logger("EmailManualHandler");
 
   EmailManualHandler(this.recipients,
       {this.enableDeviceParameters = true,

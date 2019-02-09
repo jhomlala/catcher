@@ -13,7 +13,7 @@ class FileHandler extends ReportHandler {
   final bool enableCustomParameters;
   final bool printLogs;
 
-  final Logger _logger = Logger("Catcher|FileHandler");
+  final Logger _logger = Logger("FileHandler");
   IOSink _sink;
   bool _fileValidated = false;
   bool _fileValidationResult = false;

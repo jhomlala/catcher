@@ -20,7 +20,7 @@ class EmailAutoHandler extends ReportHandler {
   final String emailHeader;
   final bool sendHtml;
   final bool printLogs;
-  final Logger _logger = Logger("Catcher|EmailAutoHandler");
+  final Logger _logger = Logger("EmailAutoHandler");
 
   EmailAutoHandler(this.smtpHost, this.smtpPort, this.senderEmail,
       this.senderName, this.senderPassword, this.recipients,

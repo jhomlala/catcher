@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:catcher/mode/dialog_report_mode.dart';
+import 'package:catcher/model/catcher_options.dart';
 import 'package:flutter/material.dart';
 import 'package:catcher/catcher_plugin.dart';
 import 'package:path_provider/path_provider.dart';
@@ -10,13 +11,12 @@ Future main() async {
   Directory externalDir = await getExternalStorageDirectory();
   String path = externalDir.path.toString() + "/log.txt";
   print("Path: " + path);
-  Catcher(MyApp(),
-      handlerTimeout: 5000,
-      handlers: [
-        FileHandler(File(path), printLogs: true)
-      ],
-      customParameters: {"application_version": "debug"},
-      reportMode: DialogReportMode());
+
+  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(),[ConsoleHandler()]);
+  CatcherOptions releaseOptions = CatcherOptions(DialogReportMode(),[ConsoleHandler()]);
+
+  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
+
 }
 
 class MyApp extends StatefulWidget {
