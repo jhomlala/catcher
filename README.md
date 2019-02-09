@@ -34,7 +34,7 @@ import 'import 'package:catcher/catcher_plugin.dart';
 
 ## Basic example
 
-Basic example has Simple Report Mode and Console Handler:
+Basic example utilizes debug config with Dialog Report Mode and Console Handler and release config with Dialog Report Mode and Email Manual Handler.
 
 ```dart
 import 'package:flutter/material.dart';
@@ -187,9 +187,9 @@ In order to make work Page Report Mode and Dialog Report Mode, you must include 
     );
   }
 
+```
 You need to provide this key, because Catcher needs context of navigator to show dialogs/pages. There is no need to include this navigator key if you won't use Page/Dialog Report Mode.
 
-```
 
 ### Catcher configuration
 Catcher instance needs 1 required and 3 optional parameters.
@@ -209,7 +209,7 @@ main() {
   ]);
   CatcherOptions profileOptions = CatcherOptions(
     NotificationReportMode(), [ConsoleHandler(), ToastHandler()],
-    handlerTimeout: 10000, customParameters: {"example": "example_parameter"},)
+    handlerTimeout: 10000, customParameters: {"example": "example_parameter"},);
   Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions, profileConfig: profileOptions);
 }
 ```
@@ -232,22 +232,69 @@ try {
 ```
 
 ### Report modes
+Report mode is the process of gathering user permission to handle error. User can accept or deny permission to handle error. There are 4 types of report mode:
 
-There are two report modes:
 
-* Silent Report Mode which is default one. This report mode doesn't ask user for permission to handle crash logs. It will push logs automatically to handlers.
-
-* Notification Report Mode is another report mode. It shows notificaiton in user device after crash. User need to click on notification to send logs to handlers.
-
-To configure report mode, you need to specify `reportModeType` parameter in Catcher constructor:
+#### Silent Report Mode
+Silent Report Mode is default report mode. This report mode doesn't ask user for permission to handle crash logs. It will push logs automatically to handlers.
 
 ```dart
-Catcher(MyApp(), handlers: [ConsoleHandler()], reportModeType: ReportModeType.notification );
+ReportMode reportMode = SilentReportMode();
 ```
 
-For silent mode there won't be any visuals shown for user. For notification mode, this notification will be shown:
+#### Notification Report Mode
+Notification Report Mode shows local notification about error. Once user clicks on notification, report will be pushed to handlers.
+
+```dart
+ReportMode reportMode = NotificationReportMode();
+```
+
 <p align="justify">
 <img width="250px" src="https://github.com/jhomlala/catcher/blob/master/screenshots/1.png">
+</p>
+
+#### Dialog Report Mode
+Dialog Report Mode shows dialog with information about error. Dialog has title, description and 2 buttons: Accept and Cancel. Once user clicks on Accept button, report will be pushed to handlers.
+
+```dart
+  ReportMode reportMode = DialogReportMode(
+      titleText: "Crash",
+      descriptionText: "My description",
+      acceptText: "OK",
+      cancelText: "Back");
+```
+Dialog Report Mode can be configured with optional parameters:
+titleText (optional) - text for dialog title
+descriptionText (optional) - text for dialog description
+acceptText (optional) - confirmation button text
+cancelText (optional) - cancel button text
+
+
+<p align="justify">
+<img width="250px" src="https://github.com/jhomlala/catcher/blob/master/screenshots/6.png">
+</p>
+
+#### Page Report Mode
+Page Report Mode shows new page with information about error. Page has title, description, stack trace view and 2 buttons: Accept and Cancel. Once user clicks on Accept button, report will be pushed to handlers.
+
+```dart
+  ReportMode reportMode = PageReportMode(
+      titleText: "Crash",
+      descriptionText: "My description",
+      acceptText: "OK",
+      cancelText: "Back",
+      showStackTrace: false);
+```
+
+Page Report Mode can be configured with optional parameters:
+titleText (optional) - text for title in toobar
+descriptionText (optional) - text for page descrption
+acceptText (optional) - confirmation button text
+cancelText (optional) - cancel button text
+showStackTrace (optional) - enables/disables stack trace view
+
+<p align="justify">
+<img width="250px" src="https://github.com/jhomlala/catcher/blob/master/screenshots/7.png">
 </p>
 
 ### Console Handler
