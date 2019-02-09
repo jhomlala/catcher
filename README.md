@@ -37,12 +37,14 @@ import 'import 'package:catcher/catcher_plugin.dart';
 [Catcher usage](#catcher-usage)  
 [Adding navigator key](#adding-navigator-key)  
 [Catcher configuration](#catcher-configuration)  
-[Report catched exception](#report-catched-exception)  
+[Report catched exception](#report-catched-exception) 
+
 [Report modes](#report-modes)  
 * [Silent Report Mode](#silent-report-mode)
 * [Notification Report Mode](#notification-report-mode)  
 * [Dialog Report Mode](#dialog-report-mode)  
 * [Page Report Mode](#page-report-mode)  
+
 [Handlers](#handlers)  
 * [Console Handler](#console-handler)  
 * [Email Manual Handler](#email-manual-handler)  
