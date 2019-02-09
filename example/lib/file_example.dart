@@ -12,8 +12,8 @@ Future main() async {
   String path = externalDir.path.toString() + "/log.txt";
   print("Path: " + path);
 
-  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(),[ConsoleHandler()]);
-  CatcherOptions releaseOptions = CatcherOptions(DialogReportMode(),[ConsoleHandler()]);
+  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(),[FileHandler(File(path))]);
+  CatcherOptions releaseOptions = CatcherOptions(DialogReportMode(),[FileHandler(File(path))]);
 
   Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
 

@@ -2,30 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:catcher/catcher_plugin.dart';
 
 main() {
-  //silent:
-  //ReportMode reportMode = SilentReportMode();
+  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
+    EmailManualHandler(
+      ["email1@email.com", "email2@email.com"],
+      enableDeviceParameters: true,
+      enableStackTrace: true,
+      enableCustomParameters: true,
+      enableApplicationParameters: true,
+      sendHtml: true,
+      emailTitle: "Sample Title",
+      emailHeader: "Sample Header",
+      printLogs: true
 
-  //notification:
-  //ReportMode reportMode = NotificationReportMode();
+    )
+  ]);
 
-  //dialog:
-  /*ReportMode reportMode = DialogReportMode(
-      titleText: "Crash",
-      descriptionText: "My description",
-      acceptText: "OK",
-      cancelText: "Back");*/
-
-  //page:
-  ReportMode reportMode = PageReportMode(
-      titleText: "Crash",
-      descriptionText: "My description",
-      acceptText: "OK",
-      cancelText: "Back",
-      showStackTrace: false);
-
-  CatcherOptions debugOptions = CatcherOptions(reportMode, [ConsoleHandler()]);
-
-  Catcher(MyApp(), debugConfig: debugOptions);
+  Catcher(MyApp(),
+      debugConfig: debugOptions,);
 }
 
 class MyApp extends StatefulWidget {
