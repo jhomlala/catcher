@@ -32,6 +32,26 @@ Then add this import:
 import 'import 'package:catcher/catcher_plugin.dart';
 ```
 
+## Table of contents
+[Basic example](#basic-example)  
+[Catcher usage](#catcher-usage)  
+[Adding navigator key](#adding-navigator-key)  
+[Catcher configuration](#catcher-configuration)  
+[Report catched exception](#report-catched-exception)  
+[Report modes](#report-modes)  
+* [Silent Report Mode](#silent-report-mode)
+* [Notification Report Mode](#notification-report-mode)  
+* [Dialog Report Mode](#dialog-report-mode)  
+* [Page Report Mode](#page-report-mode)  
+[Handlers](#handlers)  
+* [Console Handler](#console-handler)  
+* [Email Manual Handler](#email-manual-handler)  
+* [Email Auto Handler](#email-auto-handler)  
+* [Http Handler](#http-handler)  
+* [File Handler](#file-handler)  
+* [Toast Handler](#toast-handler)  
+
+
 ## Basic example
 
 Basic example utilizes debug config with Dialog Report Mode and Console Handler and release config with Dialog Report Mode and Email Manual Handler.
@@ -493,7 +513,7 @@ All parameters list:
 * enableCustomParameters (optional) - please look in console handler description  
 * printLogs (optional) - enable/disable debug logs  
 
-### Toast Handler
+#### Toast Handler
 Toast handler allows to show short message in toast. Minimal example:
 
 All parameters list:
