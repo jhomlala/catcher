@@ -2,16 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:catcher/catcher_plugin.dart';
 
 main() {
-  CatcherOptions debugOptions =
-  CatcherOptions(DialogReportMode(), [ConsoleHandler()]);
-  CatcherOptions releaseOptions = CatcherOptions(DialogReportMode(), [
-    EmailManualHandler(["recipient@email.com"])
-  ]);
-  CatcherOptions profileOptions = CatcherOptions(
-    NotificationReportMode(), [ConsoleHandler(), ToastHandler()],
-    handlerTimeout: 10000, customParameters: {"example": "example_parameter"},);
+  //silent:
+  //ReportMode reportMode = SilentReportMode();
 
-  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions, profileConfig: profileOptions);
+  //notification:
+  //ReportMode reportMode = NotificationReportMode();
+
+  //dialog:
+   //ReportMode reportMode = DialogReportMode();
+
+  //page:
+  ReportMode reportMode = PageReportMode();
+
+  CatcherOptions debugOptions =
+      CatcherOptions(reportMode, [ConsoleHandler()]);
+
+  Catcher(MyApp(), debugConfig: debugOptions);
 }
 
 class MyApp extends StatefulWidget {
@@ -43,8 +49,7 @@ class ChildWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         child: FlatButton(
-            child: Text("Generate error"),
-            onPressed: () => generateError()));
+            child: Text("Generate error"), onPressed: () => generateError()));
   }
 
   generateError() async {
