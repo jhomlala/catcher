@@ -411,7 +411,7 @@ EmailManualHandler(
       sendHtml: true,
       emailTitle: "Sample Title",
       emailHeader: "Sample Header",
-      printLogs: true
+      printLogs: true)
 ```
 
 Email Manual Handler parameters:
@@ -429,7 +429,7 @@ Email Manual Handler parameters:
 Email handler can be used to send automatically email with error reports. Email handler has multiple configuration parameters. Few of them are required, other are optional. These parameters are required:
 
 ```dart
- EmailHandler("smtp.gmail.com", 587, "somefakeemail@gmail.com", "Catcher",
+ EmailAutoHandler("smtp.gmail.com", 587, "somefakeemail@gmail.com", "Catcher",
           "FakePassword", ["myemail@gmail.com"])
 ```
 We need to setup email smtp server, email account and recipient. Currently, only Gmail was tested and worked. You can try use other email providers, but there can be errors.  
