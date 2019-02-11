@@ -1,3 +1,6 @@
+## 0.0.9
+* Updated Dio to version 2.0.0
+
 ## 0.0.8
 * Added email manual handler
 * Changed email handler to email auto handler
