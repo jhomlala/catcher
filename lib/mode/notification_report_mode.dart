@@ -7,10 +7,23 @@ class NotificationReportMode extends ReportMode {
   FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin;
   Report _lastReport;
 
-  NotificationReportMode() {
+  final String notificationTitle;
+  final String notificationContent;
+  final String notificationChannelId;
+  final String notificationChannelName;
+  final String notificationChannelDescription;
+  final String notificationIcon;
+
+  NotificationReportMode(
+      {this.notificationTitle = "Application error occurred",
+      this.notificationContent = "Click here to send error report",
+      this.notificationChannelId = "Catcher",
+      this.notificationChannelName = "Catcher",
+      this.notificationChannelDescription = "Catcher default channel",
+      this.notificationIcon = "@mipmap/ic_launcher"}) {
     _flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
     var initializationSettingsAndroid =
-        new AndroidInitializationSettings("@mipmap/ic_launcher");
+        new AndroidInitializationSettings(notificationIcon);
     var initializationSettingsIOS = new IOSInitializationSettings();
     var initializationSettings = new InitializationSettings(
         initializationSettingsAndroid, initializationSettingsIOS);
@@ -31,17 +44,17 @@ class NotificationReportMode extends ReportMode {
 
   void _sendNotification() async {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
-        'CATCHER', 'Catcher', 'Catcher error handler',
-        importance: Importance.Default, priority: Priority.Default);
+        notificationChannelId,
+        notificationChannelName,
+        notificationChannelDescription,
+        importance: Importance.Default,
+        priority: Priority.Default);
     var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
     var platformChannelSpecifics = new NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
 
     await _flutterLocalNotificationsPlugin.show(
-        0,
-        "We have detected unexpected crash.",
-        "Click here to send crash logs.",
-        platformChannelSpecifics,
+        0, notificationTitle, notificationContent, platformChannelSpecifics,
         payload: "");
   }
 }
