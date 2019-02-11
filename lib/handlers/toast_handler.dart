@@ -67,7 +67,7 @@ class ToastHandler extends ReportHandler {
     if (customMessage != null && customMessage.length > 0) {
       return customMessage;
     } else {
-      return "Error occured: ${error.error}";
+      return "Error occurred: ${error.error}";
     }
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:catcher/catcher_plugin.dart';
 
 main() {
-  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
+  CatcherOptions debugOptions = CatcherOptions(PageReportMode(), [
     ConsoleHandler(),
     HttpHandler(HttpRequestType.post, Uri.parse("https://httpstat.us/200"),
         printLogs: true)

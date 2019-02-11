@@ -52,7 +52,7 @@ class EmailManualHandler extends ReportHandler {
     if (emailTitle != null && emailTitle.length > 0) {
       return emailTitle;
     } else {
-      return "Handled Error: >> ${report.error} <<";
+      return "Error report: >> ${report.error} <<";
     }
   }
 

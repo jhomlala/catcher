@@ -7,23 +7,23 @@ class NotificationReportMode extends ReportMode {
   FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin;
   Report _lastReport;
 
-  final String notificationTitle;
-  final String notificationContent;
-  final String notificationChannelId;
-  final String notificationChannelName;
-  final String notificationChannelDescription;
-  final String notificationIcon;
+  final String titleText;
+  final String contentText;
+  final String channelId;
+  final String channelName;
+  final String channelDescription;
+  final String icon;
 
   NotificationReportMode(
-      {this.notificationTitle = "Application error occurred",
-      this.notificationContent = "Click here to send error report",
-      this.notificationChannelId = "Catcher",
-      this.notificationChannelName = "Catcher",
-      this.notificationChannelDescription = "Catcher default channel",
-      this.notificationIcon = "@mipmap/ic_launcher"}) {
+      {this.titleText = "Application error occurred",
+      this.contentText = "Click here to send error report to support team.",
+      this.channelId = "Catcher",
+      this.channelName = "Catcher",
+      this.channelDescription = "Catcher default channel",
+      this.icon = "@mipmap/ic_launcher"}) {
     _flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
     var initializationSettingsAndroid =
-        new AndroidInitializationSettings(notificationIcon);
+        new AndroidInitializationSettings(icon);
     var initializationSettingsIOS = new IOSInitializationSettings();
     var initializationSettings = new InitializationSettings(
         initializationSettingsAndroid, initializationSettingsIOS);
@@ -44,9 +44,9 @@ class NotificationReportMode extends ReportMode {
 
   void _sendNotification() async {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
-        notificationChannelId,
-        notificationChannelName,
-        notificationChannelDescription,
+        channelId,
+        channelName,
+        channelDescription,
         importance: Importance.Default,
         priority: Priority.Default);
     var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
@@ -54,7 +54,7 @@ class NotificationReportMode extends ReportMode {
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
 
     await _flutterLocalNotificationsPlugin.show(
-        0, notificationTitle, notificationContent, platformChannelSpecifics,
+        0, titleText, contentText, platformChannelSpecifics,
         payload: "");
   }
 }

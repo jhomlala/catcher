@@ -10,9 +10,9 @@ class DialogReportMode extends ReportMode {
 
   DialogReportMode(
       {this.titleText = "Crash",
-      this.descriptionText = "Unexepcted error occured in application. "
-          "We have created report which can be send it by you to developers. "
-          "Please click accept to send error report.",
+      this.descriptionText = "Unexpected error occurred in application. "
+          "Error report is ready to send to support team. "
+          "Please click Accept to send error report or Cancel to dismiss report.",
       this.acceptText = "Accept",
       this.cancelText = "Cancel"});
 

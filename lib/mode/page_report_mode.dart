@@ -10,14 +10,15 @@ class PageReportMode extends ReportMode {
   final String acceptText;
   final String cancelText;
 
-  PageReportMode(
-      {this.titleText = "Crash",
-      this.descriptionText = "Unexepcted error occured in application. " +
-          "We have created report which can be send it by you to developers. "
-          "Please click accept to send error report.",
-      this.showStackTrace = true,
-      this.acceptText = "Accept",
-      this.cancelText = "Cancel"});
+  PageReportMode({
+    this.titleText = "Crash",
+    this.descriptionText = "Unexpected error occurred in application. "
+        "Error report is ready to send to support team. "
+        "Please click Accept to send error report or Cancel to dismiss report.",
+    this.acceptText = "Accept",
+    this.cancelText = "Cancel",
+    this.showStackTrace = true,
+  });
 
   @override
   void requestAction(Report report, BuildContext context) {
@@ -55,11 +56,12 @@ class PageWidgetState extends State<PageWidget> {
             decoration: BoxDecoration(color: Colors.white),
             child: Column(
               children: [
-                Padding(padding: EdgeInsets.only(top: 30)),
-                Text("Crash", style: _getTextStyle(45)),
-                Padding(padding: EdgeInsets.only(top: 20)),
-                Text(widget.pageReportMode.descriptionText,
-                    style: _getTextStyle(15)),
+                Padding(padding: EdgeInsets.only(top: 10)),
+                Text(
+                  widget.pageReportMode.descriptionText,
+                  style: _getTextStyle(15),
+                  textAlign: TextAlign.center,
+                ),
                 Padding(padding: EdgeInsets.only(top: 20)),
                 _getStackTraceWidget(),
                 Row(
@@ -90,7 +92,7 @@ class PageWidgetState extends State<PageWidget> {
     if (widget.pageReportMode.showStackTrace) {
       var items = widget.report.stackTrace.toString().split("\n");
       return SizedBox(
-        height: 400.0,
+        height: 300.0,
         child: ListView.builder(
           padding: EdgeInsets.all(8.0),
           itemCount: items.length,
