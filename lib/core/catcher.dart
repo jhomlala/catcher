@@ -31,9 +31,28 @@ class Catcher with ReportModeAction {
   Map<String, dynamic> _applicationParameters = Map();
   List<Report> _cachedReports = List();
 
+  static Catcher _instance;
+
   Catcher(this.rootWidget,
       {this.releaseConfig, this.debugConfig, this.profileConfig}) {
     _configure();
+  }
+
+  _configure() {
+    _instance = this;
+    _configureLogger();
+    _setupCurrentConfig();
+    _setupReportMode();
+    _loadDeviceInfo();
+    _loadApplicationInfo();
+    _setupErrorHooks();
+    if (_currentConfig.handlers.isEmpty) {
+      _logger
+          .warning("Handlers list is empty. Configure at least one handler to "
+              "process error reports.");
+    } else {
+      _logger.fine("Catcher configured successfully.");
+    }
   }
 
   _setupCurrentConfig() {
@@ -71,21 +90,6 @@ class Catcher with ReportModeAction {
     }
   }
 
-  _configure() {
-    _configureLogger();
-    _setupCurrentConfig();
-    _setupReportMode();
-    _loadDeviceInfo();
-    _loadApplicationInfo();
-    _setupErrorHooks();
-    if (_currentConfig.handlers.isEmpty) {
-      _logger
-          .warning("Handlers list is empty. Configure at least one handler to "
-              "process error reports.");
-    } else {
-      _logger.fine("Catcher configured successfully.");
-    }
-  }
 
   void _setupReportMode() {
     this._currentConfig.reportMode.setReportModeAction(this);
@@ -183,8 +187,14 @@ class Catcher with ReportModeAction {
     });
   }
 
-  reportCheckedError(dynamic error, dynamic stackTrace) {
-    _reportError(error, stackTrace);
+  static reportCheckedError(dynamic error, dynamic stackTrace) {
+    if (error == null){
+      error = "undefined error";
+    }
+    if (stackTrace == null){
+      stackTrace = StackTrace.current;
+    }
+    _instance._reportError(error, stackTrace);
   }
 
   _reportError(dynamic error, dynamic stackTrace) async {
@@ -238,4 +248,5 @@ class Catcher with ReportModeAction {
   bool _isContextValid() {
     return navigatorKey.currentState != null;
   }
+
 }
