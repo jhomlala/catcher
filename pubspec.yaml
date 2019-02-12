@@ -10,14 +10,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  fluttertoast: ^2.2.11
-  device_info: ^0.4.0
-  package_info: ^0.4.0
-  mailer: ^2.2.0
-  dio: ^2.0.0
-  flutter_local_notifications: ^0.4.4+2
-  flutter_mailer: ^0.3.0
-  logging: ^0.11.3+2
+  fluttertoast: 3.0.0
+  device_info: 0.4.0
+  package_info: 0.4.0
+  mailer: 2.2.0
+  dio: 2.0.0
+  flutter_local_notifications: 0.5.1
+  flutter_mailer: 0.4.0+1
+  logging: 0.11.3+2
 flutter:
   plugin:
     androidPackage: com.jhomlala.catcher

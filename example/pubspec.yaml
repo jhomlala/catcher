@@ -16,8 +16,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  permission_handler: '^2.1.2'
-  path_provider: ^0.5.0+1
+
 
   catcher:
     path: ../
