@@ -1,3 +1,7 @@
+## 0.0.10
+* Fixed texts in report modes
+* Fixed cached error report feature
+
 ## 0.0.9
 * Updated Dio to version 2.0.0
 
