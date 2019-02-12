@@ -32,7 +32,7 @@ $ flutter packages get
 
 Then add this import:
 ```dart
-import 'import 'package:catcher/catcher_plugin.dart';
+import 'package:catcher/catcher_plugin.dart';
 ```
 
 ## Table of contents
