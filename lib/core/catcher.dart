@@ -90,7 +90,6 @@ class Catcher with ReportModeAction {
     }
   }
 
-
   void _setupReportMode() {
     this._currentConfig.reportMode.setReportModeAction(this);
   }
@@ -188,10 +187,10 @@ class Catcher with ReportModeAction {
   }
 
   static reportCheckedError(dynamic error, dynamic stackTrace) {
-    if (error == null){
+    if (error == null) {
       error = "undefined error";
     }
-    if (stackTrace == null){
+    if (stackTrace == null) {
       stackTrace = StackTrace.current;
     }
     _instance._reportError(error, stackTrace);
@@ -248,5 +247,4 @@ class Catcher with ReportModeAction {
   bool _isContextValid() {
     return navigatorKey.currentState != null;
   }
-
 }

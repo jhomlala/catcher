@@ -22,8 +22,7 @@ class NotificationReportMode extends ReportMode {
       this.channelDescription = "Catcher default channel",
       this.icon = "@mipmap/ic_launcher"}) {
     _flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
-    var initializationSettingsAndroid =
-        new AndroidInitializationSettings(icon);
+    var initializationSettingsAndroid = new AndroidInitializationSettings(icon);
     var initializationSettingsIOS = new IOSInitializationSettings();
     var initializationSettings = new InitializationSettings(
         initializationSettingsAndroid, initializationSettingsIOS);
@@ -44,17 +43,13 @@ class NotificationReportMode extends ReportMode {
 
   void _sendNotification() async {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
-        channelId,
-        channelName,
-        channelDescription,
-        importance: Importance.Default,
-        priority: Priority.Default);
+        channelId, channelName, channelDescription,
+        importance: Importance.Default, priority: Priority.Default);
     var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
     var platformChannelSpecifics = new NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
 
-    await _flutterLocalNotificationsPlugin.show(
-        0, titleText, contentText, platformChannelSpecifics,
-        payload: "");
+    await _flutterLocalNotificationsPlugin
+        .show(0, titleText, contentText, platformChannelSpecifics, payload: "");
   }
 }
