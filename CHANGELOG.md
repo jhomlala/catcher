@@ -1,3 +1,6 @@
+## 0.0.12
+* Fixed notification report mode bug
+
 ## 0.0.11
 * [BREAKING CHANGE] Updated dependency libs to support AndroidX
 

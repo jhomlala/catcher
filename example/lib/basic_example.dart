@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:catcher/catcher_plugin.dart';
 
 main() {
-  CatcherOptions debugOptions = CatcherOptions(PageReportMode(), [
+  CatcherOptions debugOptions = CatcherOptions(NotificationReportMode(), [
     ConsoleHandler(),
     HttpHandler(HttpRequestType.post, Uri.parse("https://httpstat.us/200"),
         printLogs: true)
   ]);
-  CatcherOptions releaseOptions = CatcherOptions(DialogReportMode(), [
+  CatcherOptions releaseOptions = CatcherOptions(NotificationReportMode(), [
     EmailManualHandler(["recipient@email.com"])
   ]);
 
