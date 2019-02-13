@@ -1,3 +1,6 @@
+## 0.0.11
+* [BREAKING CHANGE] Updated dependency libs to support AndroidX
+
 ## 0.0.10
 * Fixed texts in report modes
 * Fixed cached error report feature

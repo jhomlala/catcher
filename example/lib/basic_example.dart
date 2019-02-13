@@ -10,17 +10,11 @@ main() {
   CatcherOptions releaseOptions = CatcherOptions(DialogReportMode(), [
     EmailManualHandler(["recipient@email.com"])
   ]);
-  CatcherOptions profileOptions = CatcherOptions(
-    NotificationReportMode(),
-    [ConsoleHandler(), ToastHandler()],
-    handlerTimeout: 10000,
-    customParameters: {"example": "example_parameter"},
-  );
+
 
   Catcher(MyApp(),
       debugConfig: debugOptions,
-      releaseConfig: releaseOptions,
-      profileConfig: profileOptions);
+      releaseConfig: releaseOptions);
 }
 
 class MyApp extends StatefulWidget {
