@@ -35,8 +35,8 @@ import 'package:catcher/catcher_plugin.dart';
 ```
 
 ## Table of contents
-[Basic example](#basic-example)
-[AndroidX](#androidx)
+[Basic example](#basic-example)  
+[AndroidX](#androidx)  
 [Catcher usage](#catcher-usage)  
 [Adding navigator key](#adding-navigator-key)  
 [Catcher configuration](#catcher-configuration)  
@@ -192,7 +192,7 @@ I/flutter ( 7457): [2019-02-09 12:40:21.536375 | ConsoleHandler | INFO]
 I/flutter ( 7457): [2019-02-09 12:40:21.536539 | ConsoleHandler | INFO] ======================================================================
 ```
 ## AndroidX
-Catcher from version 0.0.11 uses libraries which utilizes AndroidX. If you're using version greather than 0.0.11, please set your compileSdkVersion and targetSdkVersion to 28. If you're want use Catcher without AndroidX, please use Catcher 0.0.10.
+Catcher from version 0.0.11 uses libraries which utilizes AndroidX. If you're using version greater than 0.0.11, please set your compileSdkVersion and targetSdkVersion to 28. If you're want use Catcher without AndroidX, please use Catcher 0.0.10.
 
 ## Catcher usage
 
