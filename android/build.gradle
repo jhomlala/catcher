@@ -33,7 +33,7 @@ android {
     }
 }
 
-subprojects {
+rootProject.allprojects {
     project.configurations.all {
         resolutionStrategy.eachDependency { details ->
             if (details.requested.group == 'androidx.core') {
@@ -43,7 +43,7 @@ subprojects {
                 details.useVersion "2.0.0"
             }
             if (details.requested.group == 'androidx.versionedparcelable') {
-                details.useVersion "2.0.0"
+                details.useVersion "1.0.0"
             }
         }
     }
