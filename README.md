@@ -7,9 +7,8 @@
 [![pub package](https://img.shields.io/pub/v/catcher.svg)](https://pub.dartlang.org/packages/catcher)
 [![pub package](https://img.shields.io/github/license/jhomlala/catcher.svg?style=flat)](https://github.com/jhomlala/catcher)
 [![pub package](https://img.shields.io/badge/platform-flutter-blue.svg)](https://github.com/jhomlala/catcher)
-<a href="https://github.com/Solido/awesome-flutter">
-   <img alt="Awesome Flutter" src="https://img.shields.io/badge/Awesome-Flutter-blue.svg?longCache=true&style=flat-square" />
-</a>
+[![pub package](https://img.shields.io/badge/Awesome-Flutter-blue.svg?longCache=true&style=flat-square)](https://github.com/Solido/awesome-flutter)
+
 
 Catcher is Flutter plugin which automatically catches error/exceptions and handle them. Catcher offers mutliple way to handle errors.
 Catcher is heavily inspired from ACRA: https://github.com/ACRA/acra
@@ -22,7 +21,7 @@ your own backend where you're storing application logs, so you can manipulate it
 Add this line to your **pubspec.yaml**:
 ```yaml
 dependencies:
-  catcher: ^0.0.10
+  catcher: ^0.0.11
 ```
 
 Then run this command:
@@ -36,7 +35,8 @@ import 'package:catcher/catcher_plugin.dart';
 ```
 
 ## Table of contents
-[Basic example](#basic-example)  
+[Basic example](#basic-example)
+[AndroidX](#androidx)
 [Catcher usage](#catcher-usage)  
 [Adding navigator key](#adding-navigator-key)  
 [Catcher configuration](#catcher-configuration)  
@@ -191,6 +191,8 @@ I/flutter ( 7457): [2019-02-09 12:40:21.536271 | ConsoleHandler | INFO] #19     
 I/flutter ( 7457): [2019-02-09 12:40:21.536375 | ConsoleHandler | INFO] 
 I/flutter ( 7457): [2019-02-09 12:40:21.536539 | ConsoleHandler | INFO] ======================================================================
 ```
+## AndroidX
+Catcher from version 0.0.11 uses libraries which utilizes AndroidX. If you're using version greather than 0.0.11, please set your compileSdkVersion and targetSdkVersion to 28. If you're want use Catcher without AndroidX, please use Catcher 0.0.10.
 
 ## Catcher usage
 
