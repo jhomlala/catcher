@@ -19,4 +19,5 @@ export 'package:catcher/model/report_mode_type.dart';
 export 'package:catcher/model/toast_handler_gravity.dart';
 export 'package:catcher/model/toast_handler_length.dart';
 export 'package:catcher/model/catcher_options.dart';
+export 'package:catcher/model/localization_options.dart';
 export 'package:catcher/core/catcher.dart';

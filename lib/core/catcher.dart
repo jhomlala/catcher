@@ -9,6 +9,7 @@ import 'package:catcher/mode/page_report_mode.dart';
 import 'package:catcher/model/application_profile.dart';
 import 'package:catcher/model/catcher_options.dart';
 import 'package:catcher/mode/report_mode_action_confirmed.dart';
+import 'package:catcher/model/localization_options.dart';
 import 'package:catcher/model/report.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/foundation.dart';
@@ -30,6 +31,7 @@ class Catcher with ReportModeAction {
   Map<String, dynamic> _deviceParameters = Map();
   Map<String, dynamic> _applicationParameters = Map();
   List<Report> _cachedReports = List();
+  LocalizationOptions _localizationOptions;
 
   static Catcher _instance;
 
@@ -42,10 +44,12 @@ class Catcher with ReportModeAction {
     _instance = this;
     _configureLogger();
     _setupCurrentConfig();
+    _setupErrorHooks();
+    _setupLocalization();
     _setupReportMode();
     _loadDeviceInfo();
     _loadApplicationInfo();
-    _setupErrorHooks();
+
     if (_currentConfig.handlers.isEmpty) {
       _logger
           .warning("Handlers list is empty. Configure at least one handler to "
@@ -91,7 +95,7 @@ class Catcher with ReportModeAction {
   }
 
   void _setupReportMode() {
-    this._currentConfig.reportMode.setReportModeAction(this);
+    this._currentConfig.reportMode.initialize(this, _localizationOptions);
   }
 
   _setupErrorHooks() {
@@ -184,6 +188,33 @@ class Catcher with ReportModeAction {
       _applicationParameters["buildNumber"] = packageInfo.buildNumber;
       _applicationParameters["packageName"] = packageInfo.packageName;
     });
+  }
+
+  _setupLocalization() {
+    BuildContext context = _getContext();
+    Locale locale;
+    if (context != null) {
+      locale = Localizations.localeOf(context);
+      _logger.info("Current locale: " + locale.languageCode);
+    } else {
+      locale = Locale("en", "US");
+    }
+
+    if (_currentConfig.localizationOptions != null) {
+      for (var options in _currentConfig.localizationOptions) {
+        if (options.languageCode.toLowerCase() ==
+            locale.languageCode.toLowerCase()) {
+          _localizationOptions = options;
+        }
+      }
+    }
+
+    if (_localizationOptions == null) {
+      _localizationOptions = LocalizationOptions.buildDefault();
+    }
+
+    _logger
+        .info("Using localization options: " + _localizationOptions.toString());
   }
 
   static reportCheckedError(dynamic error, dynamic stackTrace) {
