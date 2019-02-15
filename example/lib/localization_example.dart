@@ -7,7 +7,7 @@ main() {
     HttpHandler(HttpRequestType.post, Uri.parse("https://httpstat.us/200"),
         printLogs: true)
   ], localizationOptions: [
-    LocalizationOptions.buildDefault(notificationReportModeTitle: "aaaaaaa!")
+    LocalizationOptions.buildDefault()
   ]);
   CatcherOptions releaseOptions = CatcherOptions(NotificationReportMode(), [
     EmailManualHandler(["recipient@email.com"])

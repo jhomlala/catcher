@@ -133,7 +133,7 @@ class Catcher with ReportModeAction {
       });
     } else {
       deviceInfo.iosInfo.then((iosInfo) {
-        _loadiOSParameters(iosInfo);
+        _loadIosParameters(iosInfo);
       });
     }
   }
@@ -167,7 +167,7 @@ class Catcher with ReportModeAction {
         androidDeviceInfo.version.securityPatch;
   }
 
-  void _loadiOSParameters(IosDeviceInfo iosInfo) {
+  void _loadIosParameters(IosDeviceInfo iosInfo) {
     _deviceParameters["model"] = iosInfo.model;
     _deviceParameters["isPsychicalDevice"] = iosInfo.isPhysicalDevice;
     _deviceParameters["name"] = iosInfo.name;
