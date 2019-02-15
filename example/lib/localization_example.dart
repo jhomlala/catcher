@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:catcher/catcher_plugin.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 main() {
-  CatcherOptions debugOptions = CatcherOptions(NotificationReportMode(), [
+  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
     ConsoleHandler(),
     HttpHandler(HttpRequestType.post, Uri.parse("https://httpstat.us/200"),
         printLogs: true)
   ], localizationOptions: [
-    LocalizationOptions.buildDefault()
+    LocalizationOptions.buildDefaultPolishOptions()
   ]);
   CatcherOptions releaseOptions = CatcherOptions(NotificationReportMode(), [
     EmailManualHandler(["recipient@email.com"])
@@ -31,6 +32,14 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: Catcher.navigatorKey,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('en', 'US'),
+        const Locale('pl', 'PL'),
+      ],
       home: Scaffold(
           appBar: AppBar(
             title: const Text('Plugin example app'),

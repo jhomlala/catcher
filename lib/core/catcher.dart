@@ -104,6 +104,8 @@ class Catcher with ReportModeAction {
     };
 
     Isolate.current.addErrorListener(new RawReceivePort((dynamic pair) async {
+      _logger.info("List dynamic: " + pair.toString());
+
       await _reportError(
         (pair as List<String>).first,
         (pair as List<String>).last,
@@ -210,11 +212,38 @@ class Catcher with ReportModeAction {
     }
 
     if (_localizationOptions == null) {
-      _localizationOptions = LocalizationOptions.buildDefault();
+      _localizationOptions =
+          _getDefaultLocalizationOptionsForLanguage(locale.languageCode);
     }
 
     _logger
         .info("Using localization options: " + _localizationOptions.toString());
+  }
+
+  LocalizationOptions _getDefaultLocalizationOptionsForLanguage(
+      String language) {
+    switch (language.toLowerCase()) {
+      case "en":
+        return LocalizationOptions.buildDefaultEnglishOptions();
+      case "zh":
+        return LocalizationOptions.buildDefaultChineseOptions();
+      case "hi":
+        return LocalizationOptions.buildDefaultHindiOptions();
+      case "es":
+        return LocalizationOptions.buildDefaultSpanishOptions();
+      case "ms":
+        return LocalizationOptions.buildDefaultMalayOptions();
+      case "ru":
+        return LocalizationOptions.buildDefaultRussianOptions();
+      case "pt":
+        return LocalizationOptions.buildDefaultPortugueseOptions();
+      case "fr":
+        return LocalizationOptions.buildDefaultFrenchOptions();
+      case "pl":
+        return LocalizationOptions.buildDefaultPolishOptions();
+      default:
+        return LocalizationOptions.buildDefaultEnglishOptions();
+    }
   }
 
   static reportCheckedError(dynamic error, dynamic stackTrace) {
