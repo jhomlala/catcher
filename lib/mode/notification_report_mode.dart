@@ -27,12 +27,10 @@ class NotificationReportMode extends ReportMode {
     return super.initialize(reportModeAction, localizationOptions);
   }
 
-  /**
-   * We need to init notifications plugin after constructor. If we init
-   * in constructor, and there will be 2 catcher options which uses this report
-   * mode, only notification report mode from second catcher options will be
-   * initialized correctly. That's why init is delayed.
-   */
+  /// We need to init notifications plugin after constructor. If we init
+  /// in constructor, and there will be 2 catcher options which uses this report
+  /// mode, only notification report mode from second catcher options will be
+  /// initialized correctly. That's why init is delayed.
   void _initializeNotificationsPlugin() {
     _flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
     var initializationSettingsAndroid = new AndroidInitializationSettings(icon);

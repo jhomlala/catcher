@@ -1,3 +1,7 @@
+## 0.1.0
+* Finished basic API
+* Added localization feature
+
 ## 0.0.12
 * Fixed notification report mode bug
 

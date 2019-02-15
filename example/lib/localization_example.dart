@@ -8,7 +8,20 @@ main() {
     HttpHandler(HttpRequestType.post, Uri.parse("https://httpstat.us/200"),
         printLogs: true)
   ], localizationOptions: [
-    LocalizationOptions.buildDefaultPolishOptions()
+    LocalizationOptions("pl",
+        notificationReportModeTitle: "Wystąpił błąd aplikacji",
+        notificationReportModeContent:
+            "Naciśnij tutaj aby wysłać raport do zespołu wpsarcia",
+        dialogReportModeTitle: "Błąd aplikacji",
+        dialogReportModeDescription:
+            "Wystąpił niespodziewany błąd aplikacji. Raport z błędem jest gotowy do wysłania do zespołu wsparcia. Naciśnij akceptuj aby wysłać raport lub odrzuć aby odrzucić raport.",
+        dialogReportModeAccept: "Akceptuj",
+        dialogReportModeCancel: "Odrzuć",
+        pageReportModeTitle: "Błąd aplikacji",
+        pageReportModeDescription:
+            "Wystąpił niespodziewany błąd aplikacji. Raport z błędem jest gotowy do wysłania do zespołu wsparcia. Naciśnij akceptuj aby wysłać raport lub odrzuć aby odrzucić raport.",
+        pageReportModeAccept: "Akceptuj",
+        pageReportModeCancel: "Odrzuć")
   ]);
   CatcherOptions releaseOptions = CatcherOptions(NotificationReportMode(), [
     EmailManualHandler(["recipient@email.com"])
