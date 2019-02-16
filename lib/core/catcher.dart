@@ -303,4 +303,8 @@ class Catcher with ReportModeAction {
     return navigatorKey.currentState != null &&
         navigatorKey.currentState.overlay != null;
   }
+
+  static void sendTestException(){
+    throw "TestException";
+  }
 }

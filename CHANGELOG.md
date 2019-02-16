@@ -1,3 +1,6 @@
+## 0.1.1
+* Added test exception
+
 ## 0.1.0
 * Finished basic API
 * Added localization feature

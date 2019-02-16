@@ -21,7 +21,7 @@ your own backend where you're storing application logs, so you can manipulate it
 Add this line to your **pubspec.yaml**:
 ```yaml
 dependencies:
-  catcher: ^0.1.0
+  catcher: ^0.1.1
 ```
 
 Then run this command:
@@ -55,8 +55,9 @@ import 'package:catcher/catcher_plugin.dart';
 * [Email Auto Handler](#email-auto-handler)  
 * [Http Handler](#http-handler)  
 * [File Handler](#file-handler)  
-* [Toast Handler](#toast-handler)  
+* [Toast Handler](#toast-handler)
 
+[Test Exception](#test-exception)
 
 ## Basic example
 
@@ -695,3 +696,10 @@ All parameters list:
 <p align="center">
 <img src="https://github.com/jhomlala/catcher/blob/master/screenshots/5.png" width="250px">
 </p>
+
+### Test exception
+Send test exception:
+
+```dart
+    Catcher.sendTestException();
+```

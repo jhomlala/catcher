@@ -47,6 +47,6 @@ class ChildWidget extends StatelessWidget {
   }
 
   generateError() async {
-    throw "Test exception";
+    Catcher.sendTestException();
   }
 }
