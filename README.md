@@ -701,5 +701,5 @@ All parameters list:
 Send test exception:
 
 ```dart
-    Catcher.sendTestException();
+Catcher.sendTestException();
 ```
