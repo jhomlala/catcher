@@ -41,7 +41,7 @@ import 'package:catcher/catcher_plugin.dart';
 [Adding navigator key](#adding-navigator-key)  
 [Catcher configuration](#catcher-configuration)  
 [Report catched exception](#report-catched-exception) 
-[Localization](#localization)
+[Localization](#localization)  
 
 [Report modes](#report-modes)  
 * [Silent Report Mode](#silent-report-mode)
