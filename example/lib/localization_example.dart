@@ -8,6 +8,13 @@ main() {
     HttpHandler(HttpRequestType.post, Uri.parse("https://httpstat.us/200"),
         printLogs: true)
   ], localizationOptions: [
+    LocalizationOptions(
+      "en",
+      dialogReportModeTitle: "Custom message",
+      dialogReportModeDescription: "Custom message",
+      dialogReportModeAccept: "YES",
+      dialogReportModeCancel: "NO",
+    ),
     LocalizationOptions("pl",
         notificationReportModeTitle: "Wystąpił błąd aplikacji",
         notificationReportModeContent:

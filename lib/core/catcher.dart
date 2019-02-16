@@ -104,11 +104,10 @@ class Catcher with ReportModeAction {
     };
 
     Isolate.current.addErrorListener(new RawReceivePort((dynamic pair) async {
-      _logger.info("List dynamic: " + pair.toString());
-
+      var isolateError = pair as List<dynamic>;
       await _reportError(
-        (pair as List<String>).first,
-        (pair as List<String>).last,
+        isolateError.first.toString(),
+        isolateError.last.toString(),
       );
     }).sendPort);
 
@@ -193,20 +192,19 @@ class Catcher with ReportModeAction {
   }
 
   _setupLocalization() {
-    BuildContext context = _getContext();
-    Locale locale;
-    if (context != null) {
-      locale = Localizations.localeOf(context);
-      _logger.info("Current locale: " + locale.languageCode);
-    } else {
-      locale = Locale("en", "US");
-    }
+    Locale locale = Locale("en", "US");
+    if (_isContextValid()) {
+      BuildContext context = _getContext();
+      if (context != null) {
+        locale = Localizations.localeOf(context);
+      }
 
-    if (_currentConfig.localizationOptions != null) {
-      for (var options in _currentConfig.localizationOptions) {
-        if (options.languageCode.toLowerCase() ==
-            locale.languageCode.toLowerCase()) {
-          _localizationOptions = options;
+      if (_currentConfig.localizationOptions != null) {
+        for (var options in _currentConfig.localizationOptions) {
+          if (options.languageCode.toLowerCase() ==
+              locale.languageCode.toLowerCase()) {
+            _localizationOptions = options;
+          }
         }
       }
     }
@@ -215,9 +213,6 @@ class Catcher with ReportModeAction {
       _localizationOptions =
           _getDefaultLocalizationOptionsForLanguage(locale.languageCode);
     }
-
-    _logger
-        .info("Using localization options: " + _localizationOptions.toString());
   }
 
   LocalizationOptions _getDefaultLocalizationOptionsForLanguage(
@@ -305,6 +300,7 @@ class Catcher with ReportModeAction {
   }
 
   bool _isContextValid() {
-    return navigatorKey.currentState != null;
+    return navigatorKey.currentState != null &&
+        navigatorKey.currentState.overlay != null;
   }
 }
