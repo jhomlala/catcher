@@ -39,10 +39,10 @@ import 'package:catcher/catcher_plugin.dart';
 [AndroidX](#androidx)  
 [Catcher usage](#catcher-usage)  
 [Adding navigator key](#adding-navigator-key)  
-[Catcher configuration](#catcher-configuration)  
-[Report catched exception](#report-catched-exception) 
-[Localization](#localization)
-
+[Catcher configuration](#catcher-configuration)    
+[Report catched exception](#report-catched-exception)   
+[Localization](#localization)    
+  
 [Report modes](#report-modes)  
 * [Silent Report Mode](#silent-report-mode)
 * [Notification Report Mode](#notification-report-mode)  
@@ -445,6 +445,7 @@ Notification Report Mode shows local notification about error. Once user clicks 
 ```dart
 ReportMode reportMode = NotificationReportMode();
 ```
+
 See localization options to change default texts.
 
 <p align="center">
@@ -458,6 +459,7 @@ Dialog Report Mode shows dialog with information about error. Dialog has title, 
 ```dart
   ReportMode reportMode = DialogReportMode();
 ```
+
 See localization options to change default texts.
 
 
@@ -474,7 +476,8 @@ Page Report Mode shows new page with information about error. Page has title, de
 ```
 
 Page Report Mode can be configured with optional parameters:
-showStackTrace (optional) - enables/disables stack trace view
+showStackTrace (optional) - enables/disables stack trace view  
+
 See localization options to change default texts.
 
 
