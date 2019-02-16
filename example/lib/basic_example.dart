@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:catcher/catcher_plugin.dart';
 
 main() {
-  CatcherOptions debugOptions = CatcherOptions(NotificationReportMode(), [
+  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
     ConsoleHandler(),
     HttpHandler(HttpRequestType.post, Uri.parse("https://httpstat.us/200"),
         printLogs: true)
@@ -11,10 +11,7 @@ main() {
     EmailManualHandler(["recipient@email.com"])
   ]);
 
-
-  Catcher(MyApp(),
-      debugConfig: debugOptions,
-      releaseConfig: releaseOptions);
+  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
 }
 
 class MyApp extends StatefulWidget {

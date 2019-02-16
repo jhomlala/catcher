@@ -1,4 +1,5 @@
 import 'package:catcher/mode/report_mode_action_confirmed.dart';
+import 'package:catcher/model/localization_options.dart';
 import 'package:catcher/model/report_mode.dart';
 import 'package:catcher/model/report.dart';
 import 'package:flutter/widgets.dart';
@@ -8,34 +9,29 @@ class NotificationReportMode extends ReportMode {
   FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin;
   Report _lastReport;
 
-  final String titleText;
-  final String contentText;
   final String channelId;
   final String channelName;
   final String channelDescription;
   final String icon;
 
   NotificationReportMode(
-      {this.titleText = "Application error occurred",
-      this.contentText = "Click here to send error report to support team.",
-      this.channelId = "Catcher",
+      {this.channelId = "Catcher",
       this.channelName = "Catcher",
       this.channelDescription = "Catcher default channel",
       this.icon = "@mipmap/ic_launcher"});
 
   @override
-  setReportModeAction(ReportModeAction reportModeAction) {
+  initialize(ReportModeAction reportModeAction,
+      LocalizationOptions localizationOptions) {
     _initializeNotificationsPlugin();
-    return super.setReportModeAction(reportModeAction);
+    return super.initialize(reportModeAction, localizationOptions);
   }
 
-  /**
-   * We need to init notifications plugin after constructor. If we init
-   * in constructor, and there will be 2 catcher options which uses this report
-   * mode, only notification report mode from second catcher options will be
-   * initialized correctly. That's why init is delayed.
-   */
-  void _initializeNotificationsPlugin(){
+  /// We need to init notifications plugin after constructor. If we init
+  /// in constructor, and there will be 2 catcher options which uses this report
+  /// mode, only notification report mode from second catcher options will be
+  /// initialized correctly. That's why init is delayed.
+  void _initializeNotificationsPlugin() {
     _flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
     var initializationSettingsAndroid = new AndroidInitializationSettings(icon);
     var initializationSettingsIOS = new IOSInitializationSettings();
@@ -64,7 +60,11 @@ class NotificationReportMode extends ReportMode {
     var platformChannelSpecifics = new NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
 
-    await _flutterLocalNotificationsPlugin
-        .show(0, titleText, contentText, platformChannelSpecifics, payload: "");
+    await _flutterLocalNotificationsPlugin.show(
+        0,
+        localizationOptions.notificationReportModeTitle,
+        localizationOptions.notificationReportModeContent,
+        platformChannelSpecifics,
+        payload: "");
   }
 }

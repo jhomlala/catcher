@@ -39,9 +39,10 @@ import 'package:catcher/catcher_plugin.dart';
 [AndroidX](#androidx)  
 [Catcher usage](#catcher-usage)  
 [Adding navigator key](#adding-navigator-key)  
-[Catcher configuration](#catcher-configuration)  
-[Report catched exception](#report-catched-exception) 
-
+[Catcher configuration](#catcher-configuration)    
+[Report catched exception](#report-catched-exception)   
+[Localization](#localization)    
+  
 [Report modes](#report-modes)  
 * [Silent Report Mode](#silent-report-mode)
 * [Notification Report Mode](#notification-report-mode)  
@@ -258,6 +259,175 @@ try {
 }
 ```
 
+### Localization
+Catcher allows to create localizations for Report modes. To add localization support, you need setup
+few things:
+
+Add navigatorKey in your MaterialApp:
+```dart
+ navigatorKey: Catcher.navigatorKey,
+```
+
+Add flutter localizations delegates and locales in your MaterialApp:
+```dart
+ localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('en', 'US'),
+        const Locale('pl', 'PL'),
+      ],
+```
+
+Add localizationOptions in catcherOptions:
+```dart
+CatcherOptions(
+...
+    localizationOptions: [
+        LocalizationOptions("pl", notificationReportModeTitle: "My translation" ...),
+        LocalizationOptions("de", notificationReportModeTitle: "My translation" ...),
+    ]
+)
+```
+
+You can add translate for given parameters:
+```dart
+  final String notificationReportModeTitle; // notification report mode title
+  final String notificationReportModeContent; // notification report mode subtitle
+
+  final String dialogReportModeTitle; // dialog report mode title
+  final String dialogReportModeDescription; // dialog report mode description
+  final String dialogReportModeAccept; // dialog report mode accept button
+  final String dialogReportModeCancel; // dialog report mode cancel button
+
+  final String pageReportModeTitle; // page report mode toolbar title
+  final String pageReportModeDescription; // page report mode description
+  final String pageReportModeAccept; // page report mode accept button
+  final String pageReportModeCancel; // page report mode cancel button
+```
+
+If you want to override default english texts, just add simply localization options for "en" language.
+
+There are build in support for languages:
+* english
+```dart
+LocalizationOptions.buildDefaultEnglishOptions();
+```
+* chinese
+```dart
+LocalizationOptions.buildDefaultChineseOptions();
+```
+* hindi
+```dart
+LocalizationOptions.buildDefaultHindiOptions();
+```
+* spanish
+```dart
+LocalizationOptions.buildDefaultSpanishOptions();
+```
+* malay
+```dart
+LocalizationOptions.buildDefaultMalayOptions();
+```
+* russian
+```dart
+LocalizationOptions.buildDefaultRussianOptions();
+```
+* portuguese
+```dart
+LocalizationOptions.buildDefaultPortugueseOptions();
+```
+* french
+```dart
+LocalizationOptions.buildDefaultFrenchOptions();
+```
+* polish
+```dart
+LocalizationOptions.buildDefaultPolishOptions();
+```
+
+Complete Example:
+```dart
+import 'package:flutter/material.dart';
+import 'package:catcher/catcher_plugin.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
+main() {
+  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
+    ConsoleHandler(),
+    HttpHandler(HttpRequestType.post, Uri.parse("https://httpstat.us/200"),
+        printLogs: true)
+  ], localizationOptions: [
+    LocalizationOptions("pl",
+        notificationReportModeTitle: "Wystąpił błąd aplikacji",
+        notificationReportModeContent:
+            "Naciśnij tutaj aby wysłać raport do zespołu wpsarcia",
+        dialogReportModeTitle: "Błąd aplikacji",
+        dialogReportModeDescription:
+            "Wystąpił niespodziewany błąd aplikacji. Raport z błędem jest gotowy do wysłania do zespołu wsparcia. Naciśnij akceptuj aby wysłać raport lub odrzuć aby odrzucić raport.",
+        dialogReportModeAccept: "Akceptuj",
+        dialogReportModeCancel: "Odrzuć",
+        pageReportModeTitle: "Błąd aplikacji",
+        pageReportModeDescription:
+            "Wystąpił niespodziewany błąd aplikacji. Raport z błędem jest gotowy do wysłania do zespołu wsparcia. Naciśnij akceptuj aby wysłać raport lub odrzuć aby odrzucić raport.",
+        pageReportModeAccept: "Akceptuj",
+        pageReportModeCancel: "Odrzuć")
+  ]);
+  CatcherOptions releaseOptions = CatcherOptions(NotificationReportMode(), [
+    EmailManualHandler(["recipient@email.com"])
+  ]);
+
+  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
+}
+
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      navigatorKey: Catcher.navigatorKey,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('en', 'US'),
+        const Locale('pl', 'PL'),
+      ],
+      home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Plugin example app'),
+          ),
+          body: ChildWidget()),
+    );
+  }
+}
+
+class ChildWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: FlatButton(
+            child: Text("Generate error"), onPressed: () => generateError()));
+  }
+
+  generateError() async {
+    throw "Test exception";
+  }
+}
+
+```
+
 ### Report modes
 Report mode is the process of gathering user permission to handle error. User can accept or deny permission to handle error. There are 4 types of report mode:
 
@@ -276,6 +446,8 @@ Notification Report Mode shows local notification about error. Once user clicks 
 ReportMode reportMode = NotificationReportMode();
 ```
 
+See localization options to change default texts.
+
 <p align="center">
 <img width="250px" src="https://github.com/jhomlala/catcher/blob/master/screenshots/1.png"><br/>
   <i>Notification Report Mode</i>
@@ -285,17 +457,10 @@ ReportMode reportMode = NotificationReportMode();
 Dialog Report Mode shows dialog with information about error. Dialog has title, description and 2 buttons: Accept and Cancel. Once user clicks on Accept button, report will be pushed to handlers.
 
 ```dart
-  ReportMode reportMode = DialogReportMode(
-      titleText: "Crash",
-      descriptionText: "My description",
-      acceptText: "OK",
-      cancelText: "Back");
+  ReportMode reportMode = DialogReportMode();
 ```
-Dialog Report Mode can be configured with optional parameters:
-titleText (optional) - text for dialog title
-descriptionText (optional) - text for dialog description
-acceptText (optional) - confirmation button text
-cancelText (optional) - cancel button text
+
+See localization options to change default texts.
 
 
 <p align="center">
@@ -307,20 +472,14 @@ cancelText (optional) - cancel button text
 Page Report Mode shows new page with information about error. Page has title, description, stack trace view and 2 buttons: Accept and Cancel. Once user clicks on Accept button, report will be pushed to handlers.
 
 ```dart
-  ReportMode reportMode = PageReportMode(
-      titleText: "Crash",
-      descriptionText: "My description",
-      acceptText: "OK",
-      cancelText: "Back",
-      showStackTrace: false);
+  ReportMode reportMode = PageReportMode(showStackTrace: false);
 ```
 
 Page Report Mode can be configured with optional parameters:
-titleText (optional) - text for title in toobar
-descriptionText (optional) - text for page descrption
-acceptText (optional) - confirmation button text
-cancelText (optional) - cancel button text
-showStackTrace (optional) - enables/disables stack trace view
+showStackTrace (optional) - enables/disables stack trace view  
+
+See localization options to change default texts.
+
 
 <p align="center">
 <img width="250px" src="https://github.com/jhomlala/catcher/blob/master/screenshots/7.png"><br/>

@@ -4,19 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class PageReportMode extends ReportMode {
-  final String titleText;
-  final String descriptionText;
   final bool showStackTrace;
-  final String acceptText;
-  final String cancelText;
 
   PageReportMode({
-    this.titleText = "Crash",
-    this.descriptionText = "Unexpected error occurred in application. "
-        "Error report is ready to send to support team. "
-        "Please click Accept to send error report or Cancel to dismiss report.",
-    this.acceptText = "Accept",
-    this.cancelText = "Cancel",
     this.showStackTrace = true,
   });
 
@@ -49,7 +39,7 @@ class PageWidgetState extends State<PageWidget> {
     _context = context;
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.pageReportMode.titleText),
+          title: Text(widget.pageReportMode.localizationOptions.pageReportModeTitle),
         ),
         body: Container(
             padding: EdgeInsets.only(left: 10, right: 10),
@@ -58,7 +48,7 @@ class PageWidgetState extends State<PageWidget> {
               children: [
                 Padding(padding: EdgeInsets.only(top: 10)),
                 Text(
-                  widget.pageReportMode.descriptionText,
+                  widget.pageReportMode.localizationOptions.pageReportModeDescription,
                   style: _getTextStyle(15),
                   textAlign: TextAlign.center,
                 ),
@@ -68,11 +58,11 @@ class PageWidgetState extends State<PageWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     FlatButton(
-                      child: Text(widget.pageReportMode.acceptText),
+                      child: Text(widget.pageReportMode.localizationOptions.pageReportModeAccept),
                       onPressed: () => _acceptReport(),
                     ),
                     FlatButton(
-                      child: Text(widget.pageReportMode.cancelText),
+                      child: Text(widget.pageReportMode.localizationOptions.pageReportModeCancel),
                       onPressed: () => _cancelReport(),
                     ),
                   ],

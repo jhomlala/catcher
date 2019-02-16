@@ -1,6 +1,6 @@
 class Report {
   final dynamic error;
-  final StackTrace stackTrace;
+  final dynamic stackTrace;
   final DateTime dateTime;
   final Map<String, dynamic> deviceParameters;
   final Map<String, dynamic> applicationParameters;

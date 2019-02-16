@@ -9,6 +9,7 @@ import 'package:catcher/mode/page_report_mode.dart';
 import 'package:catcher/model/application_profile.dart';
 import 'package:catcher/model/catcher_options.dart';
 import 'package:catcher/mode/report_mode_action_confirmed.dart';
+import 'package:catcher/model/localization_options.dart';
 import 'package:catcher/model/report.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/foundation.dart';
@@ -30,6 +31,7 @@ class Catcher with ReportModeAction {
   Map<String, dynamic> _deviceParameters = Map();
   Map<String, dynamic> _applicationParameters = Map();
   List<Report> _cachedReports = List();
+  LocalizationOptions _localizationOptions;
 
   static Catcher _instance;
 
@@ -42,10 +44,12 @@ class Catcher with ReportModeAction {
     _instance = this;
     _configureLogger();
     _setupCurrentConfig();
+    _setupErrorHooks();
+    _setupLocalization();
     _setupReportMode();
     _loadDeviceInfo();
     _loadApplicationInfo();
-    _setupErrorHooks();
+
     if (_currentConfig.handlers.isEmpty) {
       _logger
           .warning("Handlers list is empty. Configure at least one handler to "
@@ -91,7 +95,7 @@ class Catcher with ReportModeAction {
   }
 
   void _setupReportMode() {
-    this._currentConfig.reportMode.setReportModeAction(this);
+    this._currentConfig.reportMode.initialize(this, _localizationOptions);
   }
 
   _setupErrorHooks() {
@@ -100,9 +104,10 @@ class Catcher with ReportModeAction {
     };
 
     Isolate.current.addErrorListener(new RawReceivePort((dynamic pair) async {
+      var isolateError = pair as List<dynamic>;
       await _reportError(
-        (pair as List<String>).first,
-        (pair as List<String>).last,
+        isolateError.first.toString(),
+        isolateError.last.toString(),
       );
     }).sendPort);
 
@@ -129,7 +134,7 @@ class Catcher with ReportModeAction {
       });
     } else {
       deviceInfo.iosInfo.then((iosInfo) {
-        _loadiOSParameters(iosInfo);
+        _loadIosParameters(iosInfo);
       });
     }
   }
@@ -163,7 +168,7 @@ class Catcher with ReportModeAction {
         androidDeviceInfo.version.securityPatch;
   }
 
-  void _loadiOSParameters(IosDeviceInfo iosInfo) {
+  void _loadIosParameters(IosDeviceInfo iosInfo) {
     _deviceParameters["model"] = iosInfo.model;
     _deviceParameters["isPsychicalDevice"] = iosInfo.isPhysicalDevice;
     _deviceParameters["name"] = iosInfo.name;
@@ -184,6 +189,56 @@ class Catcher with ReportModeAction {
       _applicationParameters["buildNumber"] = packageInfo.buildNumber;
       _applicationParameters["packageName"] = packageInfo.packageName;
     });
+  }
+
+  _setupLocalization() {
+    Locale locale = Locale("en", "US");
+    if (_isContextValid()) {
+      BuildContext context = _getContext();
+      if (context != null) {
+        locale = Localizations.localeOf(context);
+      }
+
+      if (_currentConfig.localizationOptions != null) {
+        for (var options in _currentConfig.localizationOptions) {
+          if (options.languageCode.toLowerCase() ==
+              locale.languageCode.toLowerCase()) {
+            _localizationOptions = options;
+          }
+        }
+      }
+    }
+
+    if (_localizationOptions == null) {
+      _localizationOptions =
+          _getDefaultLocalizationOptionsForLanguage(locale.languageCode);
+    }
+  }
+
+  LocalizationOptions _getDefaultLocalizationOptionsForLanguage(
+      String language) {
+    switch (language.toLowerCase()) {
+      case "en":
+        return LocalizationOptions.buildDefaultEnglishOptions();
+      case "zh":
+        return LocalizationOptions.buildDefaultChineseOptions();
+      case "hi":
+        return LocalizationOptions.buildDefaultHindiOptions();
+      case "es":
+        return LocalizationOptions.buildDefaultSpanishOptions();
+      case "ms":
+        return LocalizationOptions.buildDefaultMalayOptions();
+      case "ru":
+        return LocalizationOptions.buildDefaultRussianOptions();
+      case "pt":
+        return LocalizationOptions.buildDefaultPortugueseOptions();
+      case "fr":
+        return LocalizationOptions.buildDefaultFrenchOptions();
+      case "pl":
+        return LocalizationOptions.buildDefaultPolishOptions();
+      default:
+        return LocalizationOptions.buildDefaultEnglishOptions();
+    }
   }
 
   static reportCheckedError(dynamic error, dynamic stackTrace) {
@@ -245,6 +300,7 @@ class Catcher with ReportModeAction {
   }
 
   bool _isContextValid() {
-    return navigatorKey.currentState != null;
+    return navigatorKey.currentState != null &&
+        navigatorKey.currentState.overlay != null;
   }
 }

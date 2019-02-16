@@ -3,18 +3,6 @@ import 'package:catcher/model/report.dart';
 import 'package:flutter/material.dart';
 
 class DialogReportMode extends ReportMode {
-  final String titleText;
-  final String descriptionText;
-  final String acceptText;
-  final String cancelText;
-
-  DialogReportMode(
-      {this.titleText = "Crash",
-      this.descriptionText = "Unexpected error occurred in application. "
-          "Error report is ready to send to support team. "
-          "Please click Accept to send error report or Cancel to dismiss report.",
-      this.acceptText = "Accept",
-      this.cancelText = "Cancel"});
 
   @override
   void requestAction(Report report, BuildContext context) {
@@ -26,15 +14,15 @@ class DialogReportMode extends ReportMode {
         context: context,
         builder: (BuildContext build) {
           return AlertDialog(
-            title: Text(titleText),
-            content: Text(descriptionText),
+            title: Text(localizationOptions.dialogReportModeTitle),
+            content: Text(localizationOptions.dialogReportModeDescription),
             actions: <Widget>[
               FlatButton(
-                child: Text(acceptText),
+                child: Text(localizationOptions.dialogReportModeAccept),
                 onPressed: () => _acceptReport(context, report),
               ),
               FlatButton(
-                child: Text(cancelText),
+                child: Text(localizationOptions.dialogReportModeCancel),
                 onPressed: () => _cancelReport(context, report),
               ),
             ],

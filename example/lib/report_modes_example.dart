@@ -17,10 +17,6 @@ main() {
 
   //page:
   ReportMode reportMode = PageReportMode(
-      titleText: "Crash",
-      descriptionText: "My description",
-      acceptText: "OK",
-      cancelText: "Back",
       showStackTrace: false);
 
   CatcherOptions debugOptions = CatcherOptions(reportMode, [ConsoleHandler()]);

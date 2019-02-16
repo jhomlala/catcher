@@ -1,12 +1,15 @@
 import 'package:catcher/mode/report_mode_action_confirmed.dart';
+import 'package:catcher/model/localization_options.dart';
 import 'package:catcher/model/report.dart';
 import 'package:flutter/widgets.dart';
 
 abstract class ReportMode {
   ReportModeAction _reportModeAction;
+  LocalizationOptions _localizationOptions;
 
-  setReportModeAction(ReportModeAction reportModeAction) {
+  void initialize(ReportModeAction reportModeAction, LocalizationOptions localizationOptions){
     this._reportModeAction = reportModeAction;
+    this._localizationOptions = localizationOptions;
   }
 
   void requestAction(Report report, BuildContext context);
@@ -18,4 +21,6 @@ abstract class ReportMode {
   void onActionRejected(Report report) {
     _reportModeAction.onActionRejected(report);
   }
+
+  LocalizationOptions get localizationOptions => _localizationOptions;
 }
