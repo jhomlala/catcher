@@ -36,16 +36,16 @@ class LocalizationOptions {
 
   static LocalizationOptions buildDefaultChineseOptions() {
     return LocalizationOptions("zh",
-        notificationReportModeTitle: "發生應用錯誤",
-        notificationReportModeContent: "單擊此處將錯誤報告發送給支持團隊。",
-        dialogReportModeTitle: "緊急",
+        notificationReportModeTitle: "发生应用错误",
+        notificationReportModeContent: "单击此处将错误报告发送给支持团队。",
+        dialogReportModeTitle: "紧急",
         dialogReportModeDescription:
-            "應用程序中發生意外錯誤。 錯誤報告已準備好發送給支持團隊。 請單擊“接受”以發送錯誤報告，或單擊“取消”以關閉報告。",
+            "应用程序中发生意外错误。 错误报告已准备好发送给支持团队。 请单击“接受”以发送错误报告，或单击“取消”以关闭报告。",
         dialogReportModeAccept: "接受",
         dialogReportModeCancel: "取消",
-        pageReportModeTitle: "緊急",
+        pageReportModeTitle: "紧急",
         pageReportModeDescription:
-            "應用程序中發生意外錯誤。 錯誤報告已準備好發送給支持團隊。 請單擊“接受”以發送錯誤報告，或單擊“取消”以關閉報告。",
+            "应用程序中发生意外错误。 错误报告已准备好发送给支持团队。 请单击“接受”以发送错误报告，或单击“取消”以关闭报告。",
         pageReportModeAccept: "接受",
         pageReportModeCancel: "取消");
   }
