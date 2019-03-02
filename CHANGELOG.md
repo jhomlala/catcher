@@ -1,3 +1,6 @@
+## 0.1.2
+* Updated chinese translations (Catcher is now using simplified chinese)
+
 ## 0.1.1
 * Added test exception
 
