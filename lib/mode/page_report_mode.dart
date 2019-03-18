@@ -39,7 +39,8 @@ class PageWidgetState extends State<PageWidget> {
     _context = context;
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.pageReportMode.localizationOptions.pageReportModeTitle),
+          title: Text(
+              widget.pageReportMode.localizationOptions.pageReportModeTitle),
         ),
         body: Container(
             padding: EdgeInsets.only(left: 10, right: 10),
@@ -48,7 +49,8 @@ class PageWidgetState extends State<PageWidget> {
               children: [
                 Padding(padding: EdgeInsets.only(top: 10)),
                 Text(
-                  widget.pageReportMode.localizationOptions.pageReportModeDescription,
+                  widget.pageReportMode.localizationOptions
+                      .pageReportModeDescription,
                   style: _getTextStyle(15),
                   textAlign: TextAlign.center,
                 ),
@@ -58,11 +60,13 @@ class PageWidgetState extends State<PageWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     FlatButton(
-                      child: Text(widget.pageReportMode.localizationOptions.pageReportModeAccept),
+                      child: Text(widget.pageReportMode.localizationOptions
+                          .pageReportModeAccept),
                       onPressed: () => _acceptReport(),
                     ),
                     FlatButton(
-                      child: Text(widget.pageReportMode.localizationOptions.pageReportModeCancel),
+                      child: Text(widget.pageReportMode.localizationOptions
+                          .pageReportModeCancel),
                       onPressed: () => _cancelReport(),
                     ),
                   ],

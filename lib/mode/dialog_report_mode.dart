@@ -3,7 +3,6 @@ import 'package:catcher/model/report.dart';
 import 'package:flutter/material.dart';
 
 class DialogReportMode extends ReportMode {
-
   @override
   void requestAction(Report report, BuildContext context) {
     _showDialog(report, context);
