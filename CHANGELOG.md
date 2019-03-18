@@ -1,3 +1,6 @@
+## 0.1.3
+* Added italian translations
+
 ## 0.1.2
 * Updated chinese translations (Catcher is now using simplified chinese)
 
