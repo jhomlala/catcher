@@ -347,6 +347,10 @@ LocalizationOptions.buildDefaultFrenchOptions();
 ```dart
 LocalizationOptions.buildDefaultPolishOptions();
 ```
+* italian
+```dart
+LocalizationOptions.buildDefaultItalianOptions();
+```
 
 Complete Example:
 ```dart

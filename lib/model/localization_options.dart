@@ -169,6 +169,20 @@ class LocalizationOptions {
         pageReportModeCancel: "Odrzuć");
   }
 
-
-
+  static LocalizationOptions buildDefaultItalianOptions() {
+    return LocalizationOptions('it',
+        notificationReportModeTitle: "Si è verificato un errore",
+        notificationReportModeContent:
+            "Clicca qui per inviare il report relativo all'errore al team di supporto.",
+        dialogReportModeTitle: "Errore",
+        dialogReportModeDescription:
+            "Si è verificato un errore imprevisto durante l'esecuzione. Il report è pronto per essere inviato al team di supporto. Clicca Accetta per inviare il report or Annulla per rifiutare.",
+        dialogReportModeAccept: "Accetta",
+        dialogReportModeCancel: "Annulla",
+        pageReportModeTitle: "Errore",
+        pageReportModeDescription:
+            "Si è verificato un errore imprevisto durante l'esecuzione. Il report è pronto per essere inviato al team di supporto. Clicca Accetta per inviare il report or Annulla per rifiutare.",
+        pageReportModeAccept: "Accetta",
+        pageReportModeCancel: "Annulla");
+  }
 }

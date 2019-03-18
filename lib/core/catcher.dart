@@ -236,6 +236,8 @@ class Catcher with ReportModeAction {
         return LocalizationOptions.buildDefaultFrenchOptions();
       case "pl":
         return LocalizationOptions.buildDefaultPolishOptions();
+      case "it":
+        return LocalizationOptions.buildDefaultItalianOptions();
       default:
         return LocalizationOptions.buildDefaultEnglishOptions();
     }
@@ -304,7 +306,7 @@ class Catcher with ReportModeAction {
         navigatorKey.currentState.overlay != null;
   }
 
-  static void sendTestException(){
+  static void sendTestException() {
     throw "TestException";
   }
 }
