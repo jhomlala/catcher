@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:catcher/catcher_plugin.dart';
 
 main() {
+  initCatcher();
+}
+
+void initCatcher(){
   CatcherOptions debugOptions = CatcherOptions(SilentReportMode(), [
     ConsoleHandler(),
     HttpHandler(HttpRequestType.post, Uri.parse("https://httpstat.us/200"),
@@ -13,7 +17,6 @@ main() {
 
   Catcher.withFunction(init, debugConfig: debugOptions, releaseConfig: releaseOptions);
 }
-
 
 Widget init(){
   //Init something here, before catcher runs!
