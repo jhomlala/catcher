@@ -21,7 +21,8 @@ class Catcher with ReportModeAction {
   static final GlobalKey<NavigatorState> navigatorKey =
       new GlobalKey<NavigatorState>();
 
-  final Widget rootWidget;
+  Widget _rootWidget;
+  Widget Function() _function;
   final CatcherOptions releaseConfig;
   final CatcherOptions debugConfig;
   final CatcherOptions profileConfig;
@@ -35,8 +36,13 @@ class Catcher with ReportModeAction {
 
   static Catcher _instance;
 
-  Catcher(this.rootWidget,
+
+  Catcher(this._rootWidget,
       {this.releaseConfig, this.debugConfig, this.profileConfig}) {
+    _configure();
+  }
+
+  Catcher.withFunction(this._function,{this.releaseConfig, this.debugConfig, this.profileConfig}){
     _configure();
   }
 
@@ -112,7 +118,10 @@ class Catcher with ReportModeAction {
     }).sendPort);
 
     runZoned(() async {
-      runApp(rootWidget);
+      if (_function != null){
+        _rootWidget = _function();
+      }
+      runApp(_rootWidget);
     }, onError: (error, stackTrace) async {
       await _reportError(error, stackTrace);
     });
