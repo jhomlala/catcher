@@ -14,11 +14,11 @@ void initCatcher(){
   CatcherOptions releaseOptions = CatcherOptions(NotificationReportMode(), [
     EmailManualHandler(["recipient@email.com"])
   ]);
-
+  
   Catcher.withFunction(init, debugConfig: debugOptions, releaseConfig: releaseOptions);
 }
 
-Widget init(){
+init(){
   //Init something here, before catcher runs!
   print("Config init");
   var number = 0;
@@ -26,7 +26,7 @@ Widget init(){
     throw new Exception("Invalid number");
   }
 
-  return MyApp();
+  runApp(MyApp());
 }
 
 

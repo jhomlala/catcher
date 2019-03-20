@@ -22,7 +22,7 @@ class Catcher with ReportModeAction {
       new GlobalKey<NavigatorState>();
 
   Widget _rootWidget;
-  Widget Function() _function;
+  Function() _function;
   final CatcherOptions releaseConfig;
   final CatcherOptions debugConfig;
   final CatcherOptions profileConfig;
@@ -119,9 +119,10 @@ class Catcher with ReportModeAction {
 
     runZoned(() async {
       if (_function != null){
-        _rootWidget = _function();
+        _function();
+      } else {
+        runApp(_rootWidget);
       }
-      runApp(_rootWidget);
     }, onError: (error, stackTrace) async {
       await _reportError(error, stackTrace);
     });

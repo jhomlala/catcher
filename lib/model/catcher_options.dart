@@ -12,6 +12,7 @@ class CatcherOptions {
   final Map<String, dynamic> customParameters;
   final List<LocalizationOptions> localizationOptions;
 
+
   CatcherOptions(this.reportMode, this.handlers,
       {this.handlerTimeout = 5000,
       this.customParameters = const {},
