@@ -271,8 +271,29 @@ class Catcher with ReportModeAction {
     }
   }
 
+  ReportHandler _getReportHandlerFromExplicitExceptionHandlerMap(
+      dynamic error) {
+    var errorName = error != null ? error.toString().toLowerCase() : "";
+    ReportHandler reportHandler;
+    _currentConfig.explicitExceptionHandlersMap.forEach((key, value) {
+      if (errorName.contains(key.toLowerCase())) {
+        reportHandler = value;
+        return;
+      }
+    });
+    return reportHandler;
+  }
+
   @override
   void onActionConfirmed(Report report) {
+    ReportHandler reportHandler =
+        _getReportHandlerFromExplicitExceptionHandlerMap(report.error);
+    if (reportHandler != null) {
+      _logger.info("Using explicit report handler");
+      reportHandler.handle(report);
+      return;
+    }
+
     for (ReportHandler handler in _currentConfig.handlers) {
       handler.handle(report).catchError((handlerError) {
         _logger.warning(
@@ -307,6 +328,6 @@ class Catcher with ReportModeAction {
   }
 
   static void sendTestException() {
-    throw "TestException";
+    throw FormatException("Test");
   }
 }

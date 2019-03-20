@@ -11,30 +11,35 @@ class CatcherOptions {
   final ReportMode reportMode;
   final Map<String, dynamic> customParameters;
   final List<LocalizationOptions> localizationOptions;
+  final Map<String, ReportHandler> explicitExceptionHandlersMap;
 
   CatcherOptions(this.reportMode, this.handlers,
       {this.handlerTimeout = 5000,
       this.customParameters = const {},
-      this.localizationOptions = const []});
+      this.localizationOptions = const [],
+      this.explicitExceptionHandlersMap = const {}});
 
   CatcherOptions.getDefaultReleaseOptions()
       : this.handlers = [ConsoleHandler()],
         this.reportMode = NotificationReportMode(),
         handlerTimeout = 5000,
         customParameters = Map(),
-        localizationOptions = [];
+        localizationOptions = [],
+        explicitExceptionHandlersMap = {};
 
   CatcherOptions.getDefaultDebugOptions()
       : this.handlers = [ConsoleHandler()],
         this.reportMode = SilentReportMode(),
         handlerTimeout = 10000,
         customParameters = Map(),
-        localizationOptions = [];
+        localizationOptions = [],
+        explicitExceptionHandlersMap = {};
 
   CatcherOptions.getDefaultProfileOptions()
       : this.handlers = [ConsoleHandler()],
         this.reportMode = SilentReportMode(),
         handlerTimeout = 10000,
         customParameters = Map(),
-        localizationOptions = [];
+        localizationOptions = [],
+        explicitExceptionHandlersMap = {};
 }

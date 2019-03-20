@@ -1,3 +1,6 @@
+## 0.1.4
+* Added explicit exception report handler map feature
+
 ## 0.1.3
 * Added italian translations
 
