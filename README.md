@@ -21,7 +21,7 @@ your own backend where you're storing application logs, so you can manipulate it
 Add this line to your **pubspec.yaml**:
 ```yaml
 dependencies:
-  catcher: ^0.1.3
+  catcher: ^0.1.4
 ```
 
 Then run this command:
@@ -707,3 +707,19 @@ Send test exception:
 ```dart
 Catcher.sendTestException();
 ```
+
+### Explicit exception report handler
+Explicit exception report handler allows you to setup report handler for specific exception. For example if you want to setup Console Handler for FormatException, you can write:
+```dart
+var explicitMap = {"FormatException": ConsoleHandler()};
+  CatcherOptions debugOptions = CatcherOptions(
+      DialogReportMode(),
+      [
+        ConsoleHandler(),
+        HttpHandler(HttpRequestType.post, Uri.parse("https://httpstat.us/200"),
+            printLogs: true)
+      ],
+      explicitExceptionHandlersMap: explicitMap);
+```
+
+Now if `FormatException` will be catched, then Console Handler will be used. Warning: if you setup explicit exception map for specific exception, then only this handler will be used for this exception!
