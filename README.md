@@ -58,6 +58,7 @@ import 'package:catcher/catcher_plugin.dart';
 * [Toast Handler](#toast-handler)
 
 [Test Exception](#test-exception)
+[Explicit exception report handler map](#explicit-exception-report-handler-map)
 
 ## Basic example
 
@@ -708,11 +709,11 @@ Send test exception:
 Catcher.sendTestException();
 ```
 
-### Explicit exception report handler
-Explicit exception report handler allows you to setup report handler for specific exception. For example if you want to setup Console Handler for FormatException, you can write:
+### Explicit exception report handler map
+Explicit exception report handler map allows you to setup report handler for specific exception. For example if you want to setup Console Handler for FormatException, you can write:
 ```dart
 var explicitMap = {"FormatException": ConsoleHandler()};
-  CatcherOptions debugOptions = CatcherOptions(
+CatcherOptions debugOptions = CatcherOptions(
       DialogReportMode(),
       [
         ConsoleHandler(),
