@@ -57,8 +57,8 @@ import 'package:catcher/catcher_plugin.dart';
 * [File Handler](#file-handler)  
 * [Toast Handler](#toast-handler)
 
-[Test Exception](#test-exception)
-[Explicit exception report handler map](#explicit-exception-report-handler-map)
+[Test Exception](#test-exception)  
+[Explicit exception report handler map](#explicit-exception-report-handler-map)  
 
 ## Basic example
 
