@@ -32,11 +32,17 @@ class Catcher with ReportModeAction {
   Map<String, dynamic> _applicationParameters = Map();
   List<Report> _cachedReports = List();
   LocalizationOptions _localizationOptions;
+  bool enableLogger;
 
   static Catcher _instance;
 
-  Catcher(this.rootWidget,
-      {this.releaseConfig, this.debugConfig, this.profileConfig}) {
+  Catcher(
+    this.rootWidget, {
+    this.releaseConfig,
+    this.debugConfig,
+    this.profileConfig,
+    this.enableLogger = true,
+  }) {
     _configure();
   }
 
@@ -119,11 +125,13 @@ class Catcher with ReportModeAction {
   }
 
   void _configureLogger() {
-    Logger.root.level = Level.ALL;
-    Logger.root.onRecord.listen((LogRecord rec) {
-      print(
-          '[${rec.time} | ${rec.loggerName} | ${rec.level.name}] ${rec.message}');
-    });
+    if (enableLogger) {
+      Logger.root.level = Level.ALL;
+      Logger.root.onRecord.listen((LogRecord rec) {
+        print(
+            '[${rec.time} | ${rec.loggerName} | ${rec.level.name}] ${rec.message}');
+      });
+    }
   }
 
   _loadDeviceInfo() {
