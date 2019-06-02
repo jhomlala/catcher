@@ -8,7 +8,8 @@ class DialogReportMode extends ReportMode {
     _showDialog(report, context);
   }
 
-  _showDialog(Report report, BuildContext context) {
+  _showDialog(Report report, BuildContext context) async {
+    await Future.delayed(Duration.zero);
     showDialog(
         context: context,
         builder: (BuildContext build) {
