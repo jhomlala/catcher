@@ -1,3 +1,7 @@
+## 0.1.5
+* Fixed debugLock error
+* Added flag to switch Catcher logger on/off
+
 ## 0.1.4
 * Added explicit exception report handler map feature
 
