@@ -228,6 +228,7 @@ Catcher instance needs 1 required and 3 optional parameters.
 * debugConfig (optional) - config used when Catcher detects that application runs in debug mode
 * releaseConfig (optional) - config used when Catcher detects that application runs in release mode
 * profileConfig (optional) - config used when Catcher detects that application runs in profile mode
+* enableLogger (optional) - enable/disable internal Catcher logs
 
 
 ```dart
@@ -240,7 +241,7 @@ main() {
   CatcherOptions profileOptions = CatcherOptions(
     NotificationReportMode(), [ConsoleHandler(), ToastHandler()],
     handlerTimeout: 10000, customParameters: {"example": "example_parameter"},);
-  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions, profileConfig: profileOptions);
+  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions, profileConfig: profileOptions, enableLogger: false);
 }
 ```
 CatcherOptions parameters:
