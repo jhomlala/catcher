@@ -12,11 +12,12 @@ main() async {
   String path = externalDir.path.toString() + "/log.txt";
   print("Path: " + path);
 
-  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(),[FileHandler(File(path))]);
-  CatcherOptions releaseOptions = CatcherOptions(DialogReportMode(),[FileHandler(File(path))]);
+  CatcherOptions debugOptions =
+      CatcherOptions(DialogReportMode(), [FileHandler(File(path))]);
+  CatcherOptions releaseOptions =
+      CatcherOptions(DialogReportMode(), [FileHandler(File(path))]);
 
   Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
-
 }
 
 class MyApp extends StatefulWidget {
@@ -44,7 +45,6 @@ class _MyAppState extends State<MyApp> {
 }
 
 class ChildWidget extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     permission();
@@ -53,8 +53,9 @@ class ChildWidget extends StatelessWidget {
             child: Text("Generate error"), onPressed: () => generateError()));
   }
 
-  permission() async{
-    Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler().requestPermissions([PermissionGroup.storage]);
+  permission() async {
+    Map<PermissionGroup, PermissionStatus> permissions =
+        await PermissionHandler().requestPermissions([PermissionGroup.storage]);
     //bool isShown = await PermissionHandler().shouldShowRequestPermissionRationale(PermissionGroup.storage);
   }
 
