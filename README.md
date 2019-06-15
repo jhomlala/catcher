@@ -750,6 +750,8 @@ You can add error widget which will replace red screen of death. To add this int
     );
   }
 ```
+You need to add in your MaterialApp or CupertinoApp builder method with ```Catcher.addDefaultErrorWidget()```. This will add error handler for each widget in your app.
+
 You can provide optional parameters:
 * showStacktrace - show/hide stacktrace
 * customTitle - custom title for error widget
