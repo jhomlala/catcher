@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://github.com/jhomlala/catcher/blob/master/screenshots/logo.png">
+<img src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/logo.png">
 </p>
 
 # Catcher
@@ -59,6 +59,7 @@ import 'package:catcher/catcher_plugin.dart';
 
 [Test Exception](#test-exception)  
 [Explicit exception report handler map](#explicit-exception-report-handler-map)  
+[Error widget](#error-widget)
 
 ## Basic example
 
@@ -125,7 +126,7 @@ show dialog with information for user. This dialog is shown because we have used
 report will be send to console handler which will log to console error informations.
 
 <p align="center">
-<img src="https://github.com/jhomlala/catcher/blob/master/screenshots/6.png" width="250px"> <br/> 
+<img src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/6.png" width="250px"> <br/> 
   <i>Dialog with default confirmation message</i>
 </p>
 
@@ -456,7 +457,7 @@ ReportMode reportMode = NotificationReportMode();
 See localization options to change default texts.
 
 <p align="center">
-<img width="250px" src="https://github.com/jhomlala/catcher/blob/master/screenshots/1.png"><br/>
+<img width="250px" src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/1.png"><br/>
   <i>Notification Report Mode</i>
 </p>
 
@@ -471,7 +472,7 @@ See localization options to change default texts.
 
 
 <p align="center">
-<img width="250px" src="https://github.com/jhomlala/catcher/blob/master/screenshots/6.png"><br/>
+<img width="250px" src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/6.png"><br/>
   <i>Dialog report mode</i>
 </p>
 
@@ -489,7 +490,7 @@ See localization options to change default texts.
 
 
 <p align="center">
-<img width="250px" src="https://github.com/jhomlala/catcher/blob/master/screenshots/7.png"><br/>
+<img width="250px" src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/7.png"><br/>
   <i>Page report mode</i>
 </p>
 
@@ -625,7 +626,7 @@ List of all parameters:
 
 Example email:
 <p align="center">
-<img src="https://github.com/jhomlala/catcher/blob/master/screenshots/3.png">
+<img src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/3.png">
 </p>
 
 #### Http Handler
@@ -647,7 +648,7 @@ You can try using example backend server which handles logs. It's written in Jav
 You can find code of backend server here: https://github.com/jhomlala/catcher/tree/master/backend
 
 <p align="center">
-<img src="https://github.com/jhomlala/catcher/blob/master/screenshots/4.png">
+<img src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/4.png">
 </p>
 
 Note: Remeber to add Internet permission in Android Manifest:
@@ -700,7 +701,7 @@ All parameters list:
 * customMessage (optional) - custom message for toast, if not set then "Error occured: error" will be displayed.
 
 <p align="center">
-<img src="https://github.com/jhomlala/catcher/blob/master/screenshots/5.png" width="250px">
+<img src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/5.png" width="250px">
 </p>
 
 ### Test exception
@@ -757,6 +758,7 @@ You can provide optional parameters:
 * customTitle - custom title for error widget
 * customDescription - custom description for error widget
 
+<p align="center">
 <table>
 	<tr>
 		<td>With error widget</td><td>Without error widget</td>
@@ -765,5 +767,5 @@ You can provide optional parameters:
 		<td><img src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/8.png" width="250px"></td><td><img src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/9.png" width="250px"></td>
 	</tr>
  </table>
-
+</p>
 
