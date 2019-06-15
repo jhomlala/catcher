@@ -1,3 +1,6 @@
+## 0.1.6
+* Updated dependencies
+
 ## 0.1.5
 * Fixed debugLock error
 * Added flag to switch Catcher logger on/off
