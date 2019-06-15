@@ -725,3 +725,39 @@ CatcherOptions debugOptions = CatcherOptions(
 ```
 
 Now if `FormatException` will be catched, then Console Handler will be used. Warning: if you setup explicit exception map for specific exception, then only this handler will be used for this exception!
+
+### Error widget
+You can add error widget which will replace red screen of death. To add this into your app, see code below:
+```dart
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      navigatorKey: Catcher.navigatorKey,
+      //********************************************
+      builder: (BuildContext context, Widget widget) {
+        Catcher.addDefaultErrorWidget(
+            showStacktrace: true,
+            customTitle: "Custom error title",
+            customDescription: "Custom error description");
+        return widget;
+      },
+      //********************************************
+      home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Plugin example app'),
+          ),
+          body: ChildWidget()),
+    );
+  }
+```
+You can provide optional parameters:
+* showStacktrace - show/hide stacktrace
+* customTitle - custom title for error widget
+* customDescription - custom description for error widget
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/8.png" width="250px">
+</p>
+
+
+
