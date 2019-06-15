@@ -755,9 +755,13 @@ You can provide optional parameters:
 * customTitle - custom title for error widget
 * customDescription - custom description for error widget
 
-<p align="center">
-<img src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/8.png" width="250px">
-</p>
-
+<table>
+	<tr>
+		<td>With error widget</td><td>Without error widget</td>
+	</tr>
+		<tr>
+		<td><img src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/8.png" width="250px"></td><td><img src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/9.png" width="250px"></td>
+	</tr>
+ </table>
 
 
