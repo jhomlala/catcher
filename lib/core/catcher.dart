@@ -11,6 +11,7 @@ import 'package:catcher/model/catcher_options.dart';
 import 'package:catcher/mode/report_mode_action_confirmed.dart';
 import 'package:catcher/model/localization_options.dart';
 import 'package:catcher/model/report.dart';
+import 'package:catcher/utils/catcher_error_widget.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -337,5 +338,16 @@ class Catcher with ReportModeAction {
 
   static void sendTestException() {
     throw FormatException("Test");
+  }
+
+  static void addDefaultErrorWidget({bool showStacktrace, String customTitle, String customDescription}) {
+    ErrorWidget.builder = (FlutterErrorDetails details) {
+      return CatcherErrorWidget(
+        details: details,
+        showStacktrace: showStacktrace,
+        customTitle: customTitle,
+        customDescription: customDescription,
+      );
+    };
   }
 }
