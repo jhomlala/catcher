@@ -21,7 +21,7 @@ your own backend where you're storing application logs, so you can manipulate it
 Add this line to your **pubspec.yaml**:
 ```yaml
 dependencies:
-  catcher: ^0.1.7
+  catcher: ^0.1.8
 ```
 
 Then run this command:
@@ -57,8 +57,9 @@ import 'package:catcher/catcher_plugin.dart';
 * [File Handler](#file-handler)  
 * [Toast Handler](#toast-handler)
 
-[Test Exception](#test-exception)  
-[Explicit exception report handler map](#explicit-exception-report-handler-map)  
+[Test Exception](#test-exception)
+[Explicit exception report handler map](#explicit-exception-report-handler-map)
+[Explicit exception report mode map](#explicit-exception-report-mode-map)
 [Error widget](#error-widget)
 
 ## Basic example
@@ -726,6 +727,23 @@ CatcherOptions debugOptions = CatcherOptions(
 ```
 
 Now if `FormatException` will be catched, then Console Handler will be used. Warning: if you setup explicit exception map for specific exception, then only this handler will be used for this exception!
+
+### Explicit exception report mode map
+Same as explicit report handler map, but it's for report mode. Let's say you want to use specific report mode for some exception:
+```dart
+ var explicitReportModesMap = {"FormatException": NotificationReportMode()};
+  CatcherOptions debugOptions = CatcherOptions(
+      DialogReportMode(),
+      [
+        ConsoleHandler(),
+        HttpHandler(HttpRequestType.post, Uri.parse("https://httpstat.us/200"),
+            printLogs: true)
+      ],
+      explicitExceptionReportModesMap: explicitReportModesMap,);
+```
+When `FormatException` will be catched, then NotificationReportMode will be used. For other exceptions, Catcher will use DialogReportMode.
+
+
 
 ### Error widget
 You can add error widget which will replace red screen of death. To add this into your app, see code below:

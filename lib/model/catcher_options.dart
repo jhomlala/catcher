@@ -11,12 +11,14 @@ class CatcherOptions {
   final ReportMode reportMode;
   final Map<String, dynamic> customParameters;
   final List<LocalizationOptions> localizationOptions;
+  final Map<String, ReportMode> explicitExceptionReportModesMap;
   final Map<String, ReportHandler> explicitExceptionHandlersMap;
 
   CatcherOptions(this.reportMode, this.handlers,
       {this.handlerTimeout = 5000,
       this.customParameters = const {},
       this.localizationOptions = const [],
+      this.explicitExceptionReportModesMap = const {},
       this.explicitExceptionHandlersMap = const {}});
 
   CatcherOptions.getDefaultReleaseOptions()
@@ -25,6 +27,7 @@ class CatcherOptions {
         handlerTimeout = 5000,
         customParameters = Map(),
         localizationOptions = [],
+        this.explicitExceptionReportModesMap = {},
         explicitExceptionHandlersMap = {};
 
   CatcherOptions.getDefaultDebugOptions()
@@ -33,6 +36,7 @@ class CatcherOptions {
         handlerTimeout = 10000,
         customParameters = Map(),
         localizationOptions = [],
+        this.explicitExceptionReportModesMap =  {},
         explicitExceptionHandlersMap = {};
 
   CatcherOptions.getDefaultProfileOptions()
@@ -41,5 +45,6 @@ class CatcherOptions {
         handlerTimeout = 10000,
         customParameters = Map(),
         localizationOptions = [],
+        this.explicitExceptionReportModesMap = {},
         explicitExceptionHandlersMap = {};
 }
