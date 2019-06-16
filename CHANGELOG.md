@@ -1,5 +1,8 @@
+## 0.1.8
+* Added explicit report mode map feature
+
 ## 0.1.7
-* Added error widget
+* Added error widget feature
 
 ## 0.1.6
 * Updated dependencies

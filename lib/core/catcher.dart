@@ -11,6 +11,7 @@ import 'package:catcher/model/catcher_options.dart';
 import 'package:catcher/mode/report_mode_action_confirmed.dart';
 import 'package:catcher/model/localization_options.dart';
 import 'package:catcher/model/report.dart';
+import 'package:catcher/model/report_mode.dart';
 import 'package:catcher/utils/catcher_error_widget.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/foundation.dart';
@@ -103,6 +104,12 @@ class Catcher with ReportModeAction {
 
   void _setupReportMode() {
     this._currentConfig.reportMode.initialize(this, _localizationOptions);
+    this
+        ._currentConfig
+        .explicitExceptionReportModesMap
+        .forEach((error, reportMode) {
+      reportMode.initialize(this, _localizationOptions);
+    });
   }
 
   _setupErrorHooks() {
@@ -266,18 +273,36 @@ class Catcher with ReportModeAction {
     Report report = Report(error, stackTrace, DateTime.now(), _deviceParameters,
         _applicationParameters, _currentConfig.customParameters);
     _cachedReports.add(report);
+    ReportMode reportMode =
+        _getReportModeFromExplicitExceptionReportModeMap(error);
+    if (reportMode != null) {
+      _logger.info("Using explicit report mode for error");
+    } else {
+      reportMode = _currentConfig.reportMode;
+    }
 
-    if (_currentConfig.reportMode is PageReportMode ||
-        _currentConfig.reportMode is DialogReportMode) {
+    if (reportMode is PageReportMode || reportMode is DialogReportMode) {
       if (_isContextValid()) {
-        _currentConfig.reportMode.requestAction(report, _getContext());
+        reportMode.requestAction(report, _getContext());
       } else {
         _logger.warning(
             "Couldn't use report mode becuase you didn't provide navigator key. Add navigator key to use this report mode.");
       }
     } else {
-      _currentConfig.reportMode.requestAction(report, null);
+      reportMode.requestAction(report, null);
     }
+  }
+
+  ReportMode _getReportModeFromExplicitExceptionReportModeMap(dynamic error) {
+    var errorName = error != null ? error.toString().toLowerCase() : "";
+    ReportMode reportMode;
+    _currentConfig.explicitExceptionReportModesMap.forEach((key, value) {
+      if (errorName.contains(key.toLowerCase())) {
+        reportMode = value;
+        return;
+      }
+    });
+    return reportMode;
   }
 
   ReportHandler _getReportHandlerFromExplicitExceptionHandlerMap(
@@ -340,7 +365,8 @@ class Catcher with ReportModeAction {
     throw FormatException("Test");
   }
 
-  static void addDefaultErrorWidget({bool showStacktrace, String customTitle, String customDescription}) {
+  static void addDefaultErrorWidget(
+      {bool showStacktrace, String customTitle, String customDescription}) {
     ErrorWidget.builder = (FlutterErrorDetails details) {
       return CatcherErrorWidget(
         details: details,
