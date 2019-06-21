@@ -115,6 +115,15 @@ class EmailAutoHandler extends ReportHandler {
       }
       buffer.write("<br><br>");
     }
+
+    if (enableCustomParameters) {
+      buffer.write("<h2>Custom parameters:</h2>");
+      for (var entry in report.customParameters.entries) {
+        buffer.write("<b>${entry.key}</b>: ${entry.value}<br>");
+      }
+      buffer.write("<br><br>");
+    }
+
     return buffer.toString();
   }
 
@@ -143,6 +152,13 @@ class EmailAutoHandler extends ReportHandler {
     if (enableApplicationParameters) {
       buffer.write("Application parameters:\n");
       for (var entry in report.applicationParameters.entries) {
+        buffer.write("${entry.key}: ${entry.value}\n");
+      }
+      buffer.write("\n\n");
+    }
+    if (enableCustomParameters) {
+      buffer.write("Custom parameters:\n");
+      for (var entry in report.customParameters.entries) {
         buffer.write("${entry.key}: ${entry.value}\n");
       }
       buffer.write("\n\n");

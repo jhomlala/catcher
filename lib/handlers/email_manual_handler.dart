@@ -133,6 +133,14 @@ class EmailManualHandler extends ReportHandler {
       }
       buffer.write("\n\n");
     }
+    if (enableCustomParameters) {
+      buffer.write("Custom parameters:\n");
+      for (var entry in report.customParameters.entries) {
+        buffer.write("${entry.key}: ${entry.value}\n");
+      }
+      buffer.write("\n\n");
+    }
+
     return buffer.toString();
   }
 
