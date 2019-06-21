@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:catcher/catcher_plugin.dart';
 
 main() {
-  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
+  CatcherOptions debugOptions = CatcherOptions( DialogReportMode(), [
     EmailManualHandler(
       ["email1@email.com", "email2@email.com"],
       enableDeviceParameters: true,
@@ -12,10 +12,9 @@ main() {
       sendHtml: true,
       emailTitle: "Sample Title",
       emailHeader: "Sample Header",
-      printLogs: true
+      printLogs: true)
 
-    )
-  ]);
+  ], customParameters: {"Test": "Test12345","Test2": "Test54321"});
 
   Catcher(MyApp(),
       debugConfig: debugOptions,);
