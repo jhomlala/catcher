@@ -1,3 +1,7 @@
+## 0.1.9
+* Fixed custom parameters in email manual handler and email auto handler
+* Added sentry handler
+
 ## 0.1.8
 * Added explicit report mode map feature
 
