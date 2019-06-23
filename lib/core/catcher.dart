@@ -204,6 +204,7 @@ class Catcher with ReportModeAction {
       _applicationParameters["appName"] = packageInfo.appName;
       _applicationParameters["buildNumber"] = packageInfo.buildNumber;
       _applicationParameters["packageName"] = packageInfo.packageName;
+      _applicationParameters["environment"] = ApplicationProfileManager.getApplicationProfile().toString();
     });
   }
 

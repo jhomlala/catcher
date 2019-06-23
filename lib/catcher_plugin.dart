@@ -7,6 +7,7 @@ export "package:catcher/handlers/http_handler.dart";
 export "package:catcher/handlers/report_handler.dart";
 export "package:catcher/handlers/toast_handler.dart";
 export "package:catcher/handlers/email_manual_handler.dart";
+export "package:catcher/handlers/sentry_handler.dart";
 export "package:catcher/mode/notification_report_mode.dart";
 export 'package:catcher/model/report_mode.dart';
 export 'package:catcher/mode/silent_report_mode.dart';

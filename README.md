@@ -56,6 +56,7 @@ import 'package:catcher/catcher_plugin.dart';
 * [Http Handler](#http-handler)  
 * [File Handler](#file-handler)  
 * [Toast Handler](#toast-handler)
+* [Sentry Handler](#sentry-handler)
 
 [Test Exception](#test-exception)  
 [Explicit exception report handler map](#explicit-exception-report-handler-map)  
@@ -711,6 +712,31 @@ Send test exception:
 ```dart
 Catcher.sendTestException();
 ```
+
+#### Sentry Handler
+Sentry handler allows to send handled errors to Sentry.io. Before using sentry handler, you need to create your project in
+Sentry.io page and then copy DSN link. Example:
+
+```dart
+main() {
+
+  CatcherOptions debugOptions = CatcherOptions(
+      DialogReportMode(), [SentryHandler("YOUR_DSN_HERE")]);
+  CatcherOptions releaseOptions = CatcherOptions(NotificationReportMode(), [
+    EmailManualHandler(["recipient@email.com"])
+  ]);
+
+  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
+}
+```
+
+All parameters list:
+* enableDeviceParameters (optional) - please look in console handler description
+* enableApplicationParameters (optional) - please look in console handler description
+* enableCustomParameters (optional) - please look in console handler description
+* printLogs (optional) - enable/disable debug logs
+
+
 
 ### Explicit exception report handler map
 Explicit exception report handler map allows you to setup report handler for specific exception. For example if you want to setup Console Handler for FormatException, you can write:
