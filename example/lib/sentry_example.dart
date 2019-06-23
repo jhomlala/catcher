@@ -2,13 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:catcher/catcher_plugin.dart';
 
 main() {
-  Map<String, dynamic> customParameters = Map();
-  customParameters["Test"] = "12345";
-  customParameters["Test2"] = "543210";
-
   CatcherOptions debugOptions = CatcherOptions(
-      DialogReportMode(), [SentryHandler("YOUR_DSN_HERE")],
-      customParameters: customParameters);
+      DialogReportMode(), [SentryHandler("YOUR_DSN_HERE")]);
   CatcherOptions releaseOptions = CatcherOptions(NotificationReportMode(), [
     EmailManualHandler(["recipient@email.com"])
   ]);
