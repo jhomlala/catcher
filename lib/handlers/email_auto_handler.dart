@@ -1,5 +1,5 @@
-import 'package:catcher/model/report.dart';
 import 'package:catcher/handlers/report_handler.dart';
+import 'package:catcher/model/report.dart';
 import 'package:logging/logging.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
@@ -58,7 +58,7 @@ class EmailAutoHandler extends ReportHandler {
         if (sendReport.validationProblems != null &&
             sendReport.validationProblems.length > 0) {
           for (var problem in sendReport.validationProblems) {
-            _printLog("Problem: " + problem.code + " msg: " + problem.msg);
+            _printLog("Problem: ${problem?.code} msg: ${problem?.msg}");
           }
         }
         return sendReport.sent;
