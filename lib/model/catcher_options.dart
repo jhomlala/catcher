@@ -36,7 +36,7 @@ class CatcherOptions {
         handlerTimeout = 10000,
         customParameters = Map(),
         localizationOptions = [],
-        this.explicitExceptionReportModesMap =  {},
+        this.explicitExceptionReportModesMap = {},
         explicitExceptionHandlersMap = {};
 
   CatcherOptions.getDefaultProfileOptions()

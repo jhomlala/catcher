@@ -21,7 +21,7 @@ class SentryHandler extends ReportHandler {
         _printLog("DSN is empty. Sentry handler won't work!");
       }
       sentry = SentryClient(dsn: dsn);
-    } catch(exception){
+    } catch (exception) {
       _printLog("Exception in sentry handler init: $exception");
     }
   }
@@ -79,7 +79,7 @@ class SentryHandler extends ReportHandler {
     return sentryMap;
   }
 
-  void _printLog(String message){
+  void _printLog(String message) {
     if (printLogs) {
       _logger.info(message);
     }

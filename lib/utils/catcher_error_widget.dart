@@ -6,16 +6,20 @@ class CatcherErrorWidget extends StatelessWidget {
   final String customTitle;
   final String customDescription;
 
-  const CatcherErrorWidget({Key key, this.details, this.showStacktrace, this.customTitle, this.customDescription})
+  const CatcherErrorWidget(
+      {Key key,
+      this.details,
+      this.showStacktrace,
+      this.customTitle,
+      this.customDescription})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var title = "An application error has occurred";
-    if (customTitle != null){
+    if (customTitle != null) {
       title = customTitle;
     }
-
 
     var description =
         "There was unexepcted situation in application. Application has been able to recover from error state.";
@@ -23,10 +27,9 @@ class CatcherErrorWidget extends StatelessWidget {
       description += " See details below.";
     }
 
-    if (customDescription != null){
+    if (customDescription != null) {
       description = customDescription;
     }
-
 
     return Container(
         margin: EdgeInsets.all(20),
