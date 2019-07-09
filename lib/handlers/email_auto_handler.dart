@@ -52,20 +52,18 @@ class EmailAutoHandler extends ReportHandler {
       }
       _printLog("Sending email...");
 
-      var results = await send(message, _setupSmtpServer());
-      for (SendReport sendReport in results) {
-        _printLog("Sending status: " + sendReport.sent.toString());
-        if (sendReport.validationProblems != null &&
-            sendReport.validationProblems.length > 0) {
-          for (var problem in sendReport.validationProblems) {
-            _printLog("Problem: ${problem?.code} msg: ${problem?.msg}");
-          }
-        }
-        return sendReport.sent;
+      var result = await send(message, _setupSmtpServer());
+      if (result != null) {
+        _printLog("Email result: mail: ${result.mail} "
+            "sending start time: ${result.messageSendingStart} "
+            "sending end time: ${result?.messageSendingEnd}");
+      } else {
+        _printLog("Result is empty - failed to send email");
       }
       return true;
-    } catch (exc) {
-      _printLog(exc);
+    } catch (stacktrace, exception) {
+      _printLog(stacktrace.toString());
+      _printLog(exception.toString());
       return false;
     }
   }

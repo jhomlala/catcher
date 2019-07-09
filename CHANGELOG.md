@@ -1,3 +1,7 @@
+## 0.2.0
+* Updated Dio and Mailer version
+* Refactored auto email handler
+
 ## 0.1.9
 * Fixed custom parameters in email manual handler and email auto handler
 * Added sentry handler

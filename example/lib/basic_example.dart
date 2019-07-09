@@ -3,18 +3,8 @@ import 'package:catcher/catcher_plugin.dart';
 
 main() {
   CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
-    EmailManualHandler(
-        ["jhomlala@gmail.com"],
-        enableDeviceParameters: true,
-        enableStackTrace: true,
-        enableCustomParameters: true,
-        enableApplicationParameters: true,
-        sendHtml: true,
-        emailTitle: "Sample Title",
-        emailHeader: "Sample Header",
+    HttpHandler(HttpRequestType.post, Uri.parse("https://httpstat.us/200"),
         printLogs: true)
-    /*HttpHandler(HttpRequestType.post, Uri.parse("https://httpstat.us/200"),
-        printLogs: true)*/
   ]);
   CatcherOptions releaseOptions = CatcherOptions(NotificationReportMode(), [
     EmailManualHandler(["recipient@email.com"])
