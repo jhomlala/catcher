@@ -9,10 +9,10 @@ class CatcherOptions {
   final List<ReportHandler> handlers;
   final int handlerTimeout;
   final ReportMode reportMode;
-  final Map<String, dynamic> customParameters;
   final List<LocalizationOptions> localizationOptions;
   final Map<String, ReportMode> explicitExceptionReportModesMap;
   final Map<String, ReportHandler> explicitExceptionHandlersMap;
+  final Map<String, dynamic> customParameters;
 
   CatcherOptions(this.reportMode, this.handlers,
       {this.handlerTimeout = 5000,

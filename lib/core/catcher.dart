@@ -363,6 +363,10 @@ class Catcher with ReportModeAction {
         navigatorKey.currentState.overlay != null;
   }
 
+  CatcherOptions getCurrentConfig(){
+    return _currentConfig;
+  }
+
   static void sendTestException() {
     throw FormatException("Test");
   }

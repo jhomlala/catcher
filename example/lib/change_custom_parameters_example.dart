@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:catcher/catcher_plugin.dart';
 
+Catcher catcher;
+
 main() {
-  CatcherOptions debugOptions = CatcherOptions(PageReportMode(), [
-    EmailManualHandler(["recipient@email.com"]),
-    //ConsoleHandler()
-  ]);
+  Map<String, dynamic> customParameters = new Map<String, dynamic>();
+  customParameters["First"] = "First parameter";
+  CatcherOptions debugOptions = CatcherOptions(
+      NotificationReportMode(),
+      [
+        ConsoleHandler(enableCustomParameters: true),
+      ],
+      customParameters: customParameters);
   CatcherOptions releaseOptions = CatcherOptions(NotificationReportMode(), [
     EmailManualHandler(["recipient@email.com"])
   ]);
 
-  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
+  catcher = Catcher(MyApp(),
+      debugConfig: debugOptions, releaseConfig: releaseOptions);
 }
 
 class MyApp extends StatefulWidget {
@@ -41,11 +48,21 @@ class ChildWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: FlatButton(
-            child: Text("Generate error"), onPressed: () => generateError()));
+        child: Column(children: [
+      RaisedButton(
+          child: Text("Change custom parameters"),
+          onPressed: _changeCustomParameters),
+      RaisedButton(
+          child: Text("Generate error"), onPressed: () => generateError())
+    ]));
   }
 
   generateError() async {
     Catcher.sendTestException();
+  }
+
+  void _changeCustomParameters() {
+    CatcherOptions options = catcher.getCurrentConfig();
+    options.customParameters["Second"] = "Second parameter";
   }
 }

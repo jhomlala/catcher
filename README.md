@@ -21,7 +21,7 @@ your own backend where you're storing application logs, so you can manipulate it
 Add this line to your **pubspec.yaml**:
 ```yaml
 dependencies:
-  catcher: ^0.2.0
+  catcher: ^0.2.1
 ```
 
 Then run this command:
@@ -813,3 +813,9 @@ You can provide optional parameters:
  </table>
 </p>
 
+### Current config
+You can get currently used config by using:
+```dart
+CatcherOptions options = catcher.getCurrentConfig();
+```
+This can be used for example to change custom parameters in runtime.

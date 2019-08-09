@@ -1,3 +1,7 @@
+## 0.2.1
+* Added getCurrentConfig() method in Catcher class.
+* Updated dependencies
+
 ## 0.2.0
 * Updated Dio and Mailer version
 * Refactored auto email handler
