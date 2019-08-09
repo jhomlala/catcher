@@ -62,7 +62,7 @@ import 'package:catcher/catcher_plugin.dart';
 [Explicit exception report handler map](#explicit-exception-report-handler-map)  
 [Explicit exception report mode map](#explicit-exception-report-mode-map)  
 [Error widget](#error-widget)  
-[Current config](#current-config)  
+[Current config](#current-config)
 
 ## Basic example
 
