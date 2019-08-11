@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:catcher/handlers/report_handler.dart';
 import 'package:catcher/model/http_request_type.dart';
 import 'package:catcher/model/report.dart';
+import 'package:catcher/utils/catcher_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
@@ -24,7 +25,7 @@ class HttpHandler extends ReportHandler {
 
   @override
   Future<bool> handle(Report error) async {
-    if (!(await _isInternetConnectionAvailable())) {
+    if (!(await CatcherUtils.isInternetConnectionAvailable())) {
       _printLog("No internet connection available");
       return false;
     }
@@ -55,19 +56,6 @@ class HttpHandler extends ReportHandler {
   _printLog(String log) {
     if (printLogs) {
       _logger.info(log);
-    }
-  }
-
-  Future<bool> _isInternetConnectionAvailable() async {
-    try {
-      final result = await InternetAddress.lookup('flutter.io');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        return Future.value(true);
-      } else {
-        return Future.value(false);
-      }
-    } catch (_) {
-      return Future.value(false);
     }
   }
 
