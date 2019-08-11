@@ -732,7 +732,7 @@ All parameters list:
 * enableCustomParameters (optional) - please look in console handler description
 * printLogs (optional) - enable/disable debug logs
 
-#### Slack Handler  
+#### Slack Handler
 Slack Handler allows to send messages to your Slack workspace. You can specify destination
 of your message and format. You need to register webhook in your workspace to make this handler
 works: https://api.slack.com/incoming-webhooks.
@@ -769,7 +769,7 @@ All parameters list:
 
 #### Discord Handler
 Discord Handler allows to send messages to your Discord workspace. You need to register webhook in your server to make this handler
-works: https://support.discordapp.com/hc/en-us/articles/228383668-Intro-to-Webhooks
+works: https://support.discordapp.com/hc/en-us/articles/228383668-Intro-to-Webhooks.
 
 ```dart
 main() {
