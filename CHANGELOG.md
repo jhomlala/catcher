@@ -1,3 +1,7 @@
+## 0.2.2
+* Added Slack handler
+* Added Discord handler
+
 ## 0.2.1
 * Added getCurrentConfig() method in Catcher class.
 * Updated dependencies

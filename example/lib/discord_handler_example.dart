@@ -5,13 +5,12 @@ import 'package:catcher/catcher_plugin.dart';
 main() {
   CatcherOptions debugOptions = CatcherOptions(SilentReportMode(), [
     DiscordHandler(
-        "https://discordapp.com/api/webhooks/610021484378718208/6pDaGiRjZMbzv6ouldDKhulEzoBQb0dJNDiz3lc3HwafzfzZKB18K7ERgshxMaj_BVGY",
+        "<web_hook_url>",
         enableDeviceParameters: true,
         enableApplicationParameters: true,
         enableCustomParameters: true,
         enableStackTrace: true,
         printLogs: true),
-    //ConsoleHandler()
   ]);
   CatcherOptions releaseOptions = CatcherOptions(NotificationReportMode(), [
     EmailManualHandler(["recipient@email.com"])

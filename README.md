@@ -21,7 +21,7 @@ your own backend where you're storing application logs, so you can manipulate it
 Add this line to your **pubspec.yaml**:
 ```yaml
 dependencies:
-  catcher: ^0.2.1
+  catcher: ^0.2.2
 ```
 
 Then run this command:
@@ -57,6 +57,8 @@ import 'package:catcher/catcher_plugin.dart';
 * [File Handler](#file-handler)  
 * [Toast Handler](#toast-handler)
 * [Sentry Handler](#sentry-handler)
+* [Slack Handler](#slack-handler)
+* [Discord Handler](#discord-handler)
 
 [Test Exception](#test-exception)  
 [Explicit exception report handler map](#explicit-exception-report-handler-map)  
@@ -707,13 +709,6 @@ All parameters list:
 <img src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/5.png" width="250px">
 </p>
 
-### Test exception
-Send test exception:
-
-```dart
-Catcher.sendTestException();
-```
-
 #### Sentry Handler
 Sentry handler allows to send handled errors to Sentry.io. Before using sentry handler, you need to create your project in
 Sentry.io page and then copy DSN link. Example:
@@ -736,6 +731,70 @@ All parameters list:
 * enableApplicationParameters (optional) - please look in console handler description
 * enableCustomParameters (optional) - please look in console handler description
 * printLogs (optional) - enable/disable debug logs
+
+#### Slack Handler  
+Slack Handler allows to send messages to your Slack workspace. You can specify destination
+of your message and format. You need to register webhook in your workspace to make this handler
+works: https://api.slack.com/incoming-webhooks.
+
+```dart
+main() {
+
+ CatcherOptions debugOptions = CatcherOptions(SilentReportMode(), [
+     SlackHandler(
+         "<web_hook_url>",
+         "#catcher",
+         username: "CatcherTest",
+         iconEmoji: ":thinking_face:",
+         enableDeviceParameters: true,
+         enableApplicationParameters: true,
+         enableCustomParameters: true,
+         enableStackTrace: true,
+         printLogs: true),
+   ]);
+   Catcher(MyApp(), debugConfig: debugOptions);
+}
+```
+
+All parameters list:
+* webhookUrl (required) - url of your webhook
+* channel (required) - your channel name (i.e. #catcher)
+* username (optional) - name of the integration bot
+* iconEmoji (optional) - avatar of the integration bot
+* enableDeviceParameters (optional) - please look in console handler description
+* enableApplicationParameters (optional) - please look in console handler description
+* enableCustomParameters (optional) - please look in console handler description
+* enableStackTrace (optional) - please look in console handler description
+* printLogs (optional) - enable/disable debug logs
+
+#### Discord Handler
+Discord Handler allows to send messages to your Discord workspace. You need to register webhook in your server to make this handler
+works: https://support.discordapp.com/hc/en-us/articles/228383668-Intro-to-Webhooks
+
+```dart
+main() {
+ CatcherOptions debugOptions = CatcherOptions(SilentReportMode(), [
+     DiscordHandler(
+         "<web_hook_url>",
+         enableDeviceParameters: true,
+         enableApplicationParameters: true,
+         enableCustomParameters: true,
+         enableStackTrace: true,
+         printLogs: true),
+   ]);
+
+   Catcher(MyApp(), debugConfig: debugOptions);
+}
+```
+
+All parameters list:
+* webhookUrl (required) - url of your webhook
+* enableDeviceParameters (optional) - please look in console handler description
+* enableApplicationParameters (optional) - please look in console handler description
+* enableCustomParameters (optional) - please look in console handler description
+* enableStackTrace (optional) - please look in console handler description
+* printLogs (optional) - enable/disable debug logs
+
 
 
 
@@ -820,3 +879,10 @@ You can get currently used config by using:
 CatcherOptions options = catcher.getCurrentConfig();
 ```
 This can be used for example to change custom parameters in runtime.
+
+### Test exception
+Send test exception:
+
+```dart
+Catcher.sendTestException();
+```
