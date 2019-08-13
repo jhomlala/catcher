@@ -185,4 +185,18 @@ class LocalizationOptions {
         pageReportModeAccept: "Accetta",
         pageReportModeCancel: "Annulla");
   }
+
+  static LocalizationOptions buildDefaultKoreanOptions() {
+    return LocalizationOptions('ko',
+        notificationReportModeTitle: "어플리케이션 에러 발생",
+        notificationReportModeContent: "지원팀에 오류를 보고하시려면 여기를 클릭하세요",
+        dialogReportModeTitle: "에러",
+        dialogReportModeDescription: "어플리케이션에서 예기치 않은 오류가 발생했습니다. 지원팀에 오류를 보고할 준비가 되어 있으니 수락을 클릭하여 오류 보고서를 전송하시거나 취소를 클릭하여 보고서를 닫으세요.",
+        dialogReportModeAccept: "수락",
+        dialogReportModeCancel: "취소",
+        pageReportModeTitle: "에러",
+        pageReportModeDescription: "어플리케이션에서 예기치 않은 오류가 발생했습니다. 지원팀에 오류를 보고할 준비가 되어 있으니 수락을 클릭하여 오류 보고서를 전송하시거나 취소를 클릭하여 보고서를 닫으세요.",
+        pageReportModeAccept: "수락",
+        pageReportModeCancel: "취소");
+  }
 }
