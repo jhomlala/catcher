@@ -1,6 +1,6 @@
 import 'dart:io';
 
-class CatcherUtils{
+class CatcherUtils {
   static Future<bool> isInternetConnectionAvailable() async {
     try {
       final result = await InternetAddress.lookup('flutter.io');

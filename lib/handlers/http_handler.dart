@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:catcher/handlers/report_handler.dart';
 import 'package:catcher/model/http_request_type.dart';
 import 'package:catcher/model/report.dart';

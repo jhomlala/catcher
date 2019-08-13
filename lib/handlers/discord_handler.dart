@@ -62,7 +62,7 @@ class DiscordHandler extends ReportHandler {
     return messages;
   }
 
-  String _setupMessage(Report report){
+  String _setupMessage(Report report) {
     StringBuffer stringBuffer = new StringBuffer();
     stringBuffer.write("**Error:**\n${report.error}\n\n");
     if (enableStackTrace) {

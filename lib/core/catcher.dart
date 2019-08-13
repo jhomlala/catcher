@@ -257,7 +257,7 @@ class Catcher with ReportModeAction {
       case "it":
         return LocalizationOptions.buildDefaultItalianOptions();
       case "ko":
-        return LocalizationOptions.buildDefaultKoreanOptions();        
+        return LocalizationOptions.buildDefaultKoreanOptions();
       default:
         return LocalizationOptions.buildDefaultEnglishOptions();
     }
@@ -365,7 +365,7 @@ class Catcher with ReportModeAction {
         navigatorKey.currentState.overlay != null;
   }
 
-  CatcherOptions getCurrentConfig(){
+  CatcherOptions getCurrentConfig() {
     return _currentConfig;
   }
 
