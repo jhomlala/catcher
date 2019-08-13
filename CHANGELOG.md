@@ -1,3 +1,6 @@
+## 0.2.3
+* Added Korean translations by Jace Shim (https://github.com/jaceshim)
+
 ## 0.2.2
 * Added Slack handler
 * Added Discord handler
