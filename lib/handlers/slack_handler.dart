@@ -27,8 +27,8 @@ class SlackHandler extends ReportHandler {
       this.enableApplicationParameters = false,
       this.enableStackTrace = false,
       this.enableCustomParameters = false}) {
-    assert(webhookUrl != null, "Webhook must be specified");
-    assert(channel != null, "Channel must be specified");
+    assert(webhookUrl != null, "Webhook can't be null");
+    assert(channel != null, "Channel can't be null");
   }
 
   @override

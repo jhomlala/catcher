@@ -23,7 +23,9 @@ class FileHandler extends ReportHandler {
       this.enableApplicationParameters = true,
       this.enableStackTrace = true,
       this.enableCustomParameters = true,
-      this.printLogs = false});
+      this.printLogs = false}) {
+    assert(this.file != null, "File can't be null");
+  }
 
   @override
   Future<bool> handle(Report report) async {

@@ -17,9 +17,7 @@ class SentryHandler extends ReportHandler {
       this.enableCustomParameters = true,
       this.printLogs = true}) {
     try {
-      if (dsn == null || dsn.isEmpty || dsn == "") {
-        _printLog("DSN is empty. Sentry handler won't work!");
-      }
+      assert(dsn != null && dsn.isNotEmpty, "DSN can't be null or empty");
       sentry = SentryClient(dsn: dsn);
     } catch (exception) {
       _printLog("Exception in sentry handler init: $exception");

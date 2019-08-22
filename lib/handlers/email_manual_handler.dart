@@ -23,7 +23,10 @@ class EmailManualHandler extends ReportHandler {
       this.emailTitle,
       this.emailHeader,
       this.sendHtml = true,
-      this.printLogs = false});
+      this.printLogs = false}) {
+    assert(this.recipients != null && this.recipients.isNotEmpty,
+        "Recipients can't be null or empty");
+  }
 
   @override
   Future<bool> handle(Report error) async {

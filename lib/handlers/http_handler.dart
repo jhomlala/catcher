@@ -19,7 +19,10 @@ class HttpHandler extends ReportHandler {
   HttpHandler(this.requestType, this.endpointUri,
       {this.headers = const {},
       this.requestTimeout = 5000,
-      this.printLogs = false});
+      this.printLogs = false}) {
+    assert(this.requestType != null, "Request type can't be null");
+    assert(this.endpointUri != null, "Endpoint uri can't be null");
+  }
 
   @override
   Future<bool> handle(Report error) async {
