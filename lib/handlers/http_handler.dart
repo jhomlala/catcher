@@ -14,11 +14,13 @@ class HttpHandler extends ReportHandler {
   final Uri endpointUri;
   final Map<String, dynamic> headers;
   final int requestTimeout;
+  final int responseTimeout;
   final bool printLogs;
 
   HttpHandler(this.requestType, this.endpointUri,
       {this.headers = const {},
       this.requestTimeout = 5000,
+      this.responseTimeout = 5000,
       this.printLogs = false}) {
     assert(this.requestType != null, "Request type can't be null");
     assert(this.endpointUri != null, "Endpoint uri can't be null");
@@ -41,7 +43,7 @@ class HttpHandler extends ReportHandler {
     try {
       var json = error.toJson();
       Options options =
-          Options(connectTimeout: requestTimeout, headers: headers);
+          Options(sendTimeout: requestTimeout, receiveTimeout: responseTimeout, headers: headers);
       _printLog("Calling: ${endpointUri.toString()}");
       Response response =
           await _dio.post(endpointUri.toString(), data: json, options: options);
