@@ -1,3 +1,6 @@
+## 0.2.4
+* Fixed Dio API breaking change
+
 ## 0.2.3
 * Added Korean translations by Jace Shim (https://github.com/jaceshim)
 
