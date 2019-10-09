@@ -1,3 +1,7 @@
+## 0.2.5
+* Fixed Dio version
+* Updated portuguese translation by Estevão Costa (https://github.com/estevao90)
+
 ## 0.2.4
 * Fixed Dio API breaking change
 
