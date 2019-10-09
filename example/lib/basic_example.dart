@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:catcher/catcher_plugin.dart';
 
 main() {
-  CatcherOptions debugOptions = CatcherOptions(NotificationReportMode(), [
+  CatcherOptions debugOptions = CatcherOptions(PageReportMode(), [
     EmailManualHandler(["recipient@email.com"]),
     ConsoleHandler()
   ]);

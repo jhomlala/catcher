@@ -285,7 +285,7 @@ class Catcher with ReportModeAction {
       reportMode = _currentConfig.reportMode;
     }
 
-    if (reportMode is PageReportMode || reportMode is DialogReportMode) {
+    if (reportMode.isContextRequired()) {
       if (_isContextValid()) {
         reportMode.requestAction(report, _getContext());
       } else {

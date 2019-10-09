@@ -39,4 +39,9 @@ class DialogReportMode extends ReportMode {
     super.onActionRejected(report);
     Navigator.pop(context);
   }
+
+  @override
+  bool isContextRequired() {
+    return true;
+  }
 }

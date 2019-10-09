@@ -22,6 +22,11 @@ class PageReportMode extends ReportMode {
       MaterialPageRoute(builder: (context) => PageWidget(this, report)),
     );
   }
+
+  @override
+  bool isContextRequired() {
+    return true;
+  }
 }
 
 class PageWidget extends StatefulWidget {

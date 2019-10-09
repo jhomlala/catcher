@@ -23,5 +23,9 @@ abstract class ReportMode {
     _reportModeAction.onActionRejected(report);
   }
 
+  bool isContextRequired(){
+    return false;
+  }
+
   LocalizationOptions get localizationOptions => _localizationOptions;
 }
