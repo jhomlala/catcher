@@ -1,3 +1,5 @@
+## 0.2.6
+* Added context required flag to report mode. Reason for that is to build custom report modes with context
 ## 0.2.5
 * Fixed Dio version
 * Updated portuguese translation by Estevão Costa (https://github.com/estevao90)

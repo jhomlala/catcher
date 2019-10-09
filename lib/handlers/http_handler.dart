@@ -42,8 +42,10 @@ class HttpHandler extends ReportHandler {
   Future<bool> _sendPost(Report error) async {
     try {
       var json = error.toJson();
-      Options options =
-          Options(sendTimeout: requestTimeout, receiveTimeout: responseTimeout, headers: headers);
+      Options options = Options(
+          sendTimeout: requestTimeout,
+          receiveTimeout: responseTimeout,
+          headers: headers);
       _printLog("Calling: ${endpointUri.toString()}");
       Response response =
           await _dio.post(endpointUri.toString(), data: json, options: options);
