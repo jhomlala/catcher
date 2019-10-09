@@ -120,17 +120,17 @@ class LocalizationOptions {
 
   static LocalizationOptions buildDefaultPortugueseOptions() {
     return LocalizationOptions("pt",
-        notificationReportModeTitle: "Erro de aplicaçãod",
+        notificationReportModeTitle: "Erro na aplicação",
         notificationReportModeContent:
-            "Clique aqui para enviar um relatório de erros para a equipe de suporte.",
-        dialogReportModeTitle: "Batido",
+            "Clique aqui para enviar o relatório de erros à equipe de suporte.",
+        dialogReportModeTitle: "Erro",
         dialogReportModeDescription:
-            "Ocorreu um erro inesperado no aplicativo. O relatório de erros está pronto para enviar para a equipe de suporte. Por favor, clique em Aceitar para enviar um relatório de erro ou em Cancelar para descartar o relatório.",
+            "Ocorreu um erro inesperado no aplicativo. O relatório de erros está pronto para ser enviado à equipe de suporte. Por favor, clique em Aceitar para enviar o relatório de erros ou em Cancelar para descartar o relatório.",
         dialogReportModeAccept: "Aceitar",
         dialogReportModeCancel: "Cancelar",
-        pageReportModeTitle: "Batido",
+        pageReportModeTitle: "Erro",
         pageReportModeDescription:
-            "Ocorreu um erro inesperado no aplicativo. O relatório de erros está pronto para enviar para a equipe de suporte. Por favor, clique em Aceitar para enviar um relatório de erro ou em Cancelar para descartar o relatório.",
+            "Ocorreu um erro inesperado no aplicativo. O relatório de erros está pronto para ser enviado à equipe de suporte. Por favor, clique em Aceitar para enviar o relatório de erros ou em Cancelar para descartar o relatório.",
         pageReportModeAccept: "Aceitar",
         pageReportModeCancel: "Cancelar");
   }
