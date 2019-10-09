@@ -21,7 +21,7 @@ your own backend where you're storing application logs, so you can manipulate it
 Add this line to your **pubspec.yaml**:
 ```yaml
 dependencies:
-  catcher: ^0.2.6
+  catcher: ^0.2.7
 ```
 
 Then run this command:

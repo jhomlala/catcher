@@ -31,33 +31,35 @@ class CatcherErrorWidget extends StatelessWidget {
       description = customDescription;
     }
 
-    return Container(
-        margin: EdgeInsets.all(20),
-        child: Center(
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Icon(
-            Icons.announcement,
-            color: Colors.red,
-            size: 40,
-          ),
-          Text(
-            title,
-            style: TextStyle(color: Colors.black, fontSize: 25),
-            textAlign: TextAlign.center,
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 10),
-          ),
-          Text(
-            description,
-            textAlign: TextAlign.center,
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 10),
-          ),
-          _getStackTraceWidget()
-        ])));
+    return Scaffold(
+        body: Container(
+            margin: EdgeInsets.all(20),
+            child: Center(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                  Icon(
+                    Icons.announcement,
+                    color: Colors.red,
+                    size: 40,
+                  ),
+                  Text(
+                    title,
+                    style: TextStyle(color: Colors.black, fontSize: 25),
+                    textAlign: TextAlign.center,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 10),
+                  ),
+                  Text(
+                    description,
+                    textAlign: TextAlign.center,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 10),
+                  ),
+                  _getStackTraceWidget()
+                ]))));
   }
 
   Widget _getStackTraceWidget() {

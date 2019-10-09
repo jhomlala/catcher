@@ -4,8 +4,6 @@ import 'package:catcher/catcher_plugin.dart';
 main() {
   CatcherOptions debugOptions = CatcherOptions(SilentReportMode(), [
     ConsoleHandler(),
-    HttpHandler(HttpRequestType.post, Uri.parse("https://httpstat.us/200"),
-        printLogs: true)
   ]);
   CatcherOptions releaseOptions = CatcherOptions(NotificationReportMode(), [
     EmailManualHandler(["recipient@email.com"])
