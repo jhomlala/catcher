@@ -30,9 +30,6 @@ class SentryHandler extends ReportHandler {
       _printLog("Logging to sentry...");
       await sentry.captureException(
           exception: error.error, stackTrace: error.stackTrace);
-      String applicationVersion = error.applicationParameters["appName"] +
-          " " +
-          error.applicationParameters["version"];
       var tags = Map<String, dynamic>();
       if (enableApplicationParameters) {
         tags.addAll(error.applicationParameters);
@@ -44,18 +41,7 @@ class SentryHandler extends ReportHandler {
         tags.addAll(error.customParameters);
       }
 
-      var event = Event(
-        loggerName: "Catcher",
-        serverName: "Catcher",
-        release: applicationVersion,
-        environment: error.applicationParameters["environment"],
-        message: "Error handled by Catcher",
-        exception: error.error,
-        stackTrace: error.stackTrace,
-        level: SeverityLevel.error,
-        culprit: "",
-        tags: _changeToSentryMap(tags),
-      );
+      var event = buildEvent(error, tags);
       await sentry.capture(event: event);
       _printLog("Logged to sentry!");
       return true;
@@ -65,7 +51,25 @@ class SentryHandler extends ReportHandler {
     }
   }
 
-  Map<String, String> _changeToSentryMap(Map<String, dynamic> map) {
+  Event buildEvent(Report error, Map<String, dynamic> tags) {
+    String applicationVersion = error.applicationParameters["appName"] +
+        " " +
+        error.applicationParameters["version"];
+    return Event(
+      loggerName: "Catcher",
+      serverName: "Catcher",
+      release: applicationVersion,
+      environment: error.applicationParameters["environment"],
+      message: "Error handled by Catcher",
+      exception: error.error,
+      stackTrace: error.stackTrace,
+      level: SeverityLevel.error,
+      culprit: "",
+      tags: changeToSentryMap(tags),
+    );
+  }
+
+  Map<String, String> changeToSentryMap(Map<String, dynamic> map) {
     var sentryMap = Map<String, String>();
     map.forEach((key, value) {
       if (value.toString() == null || value.toString().isEmpty) {
