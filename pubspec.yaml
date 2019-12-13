@@ -18,8 +18,9 @@ dependencies:
   flutter_mailer: ^0.4.2
   logging: ^0.11.3+2
   sentry: ^3.0.0+1
+  flutter_plugin_android_lifecycle: ^1.0.3
+
 flutter:
   plugin:
     androidPackage: com.jhomlala.catcher
     pluginClass: CatcherPlugin
-
