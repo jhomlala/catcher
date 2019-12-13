@@ -17,3 +17,6 @@ android/.gradle
 .flutter-plugins
 *.lock
 *.lock
+.vscode
+android/gradlew
+android/gradlew.bat
