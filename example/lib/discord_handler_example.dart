@@ -12,7 +12,7 @@ main() {
         enableStackTrace: true,
         printLogs: true),
   ]);
-  CatcherOptions releaseOptions = CatcherOptions(NotificationReportMode(), [
+  CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
     EmailManualHandler(["recipient@email.com"])
   ]);
 

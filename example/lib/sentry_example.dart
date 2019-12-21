@@ -4,7 +4,7 @@ import 'package:catcher/catcher_plugin.dart';
 main() {
   CatcherOptions debugOptions = CatcherOptions(
       DialogReportMode(), [SentryHandler("YOUR_DSN_HERE")]);
-  CatcherOptions releaseOptions = CatcherOptions(NotificationReportMode(), [
+  CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
     EmailManualHandler(["recipient@email.com"])
   ]);
 

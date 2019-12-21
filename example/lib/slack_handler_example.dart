@@ -1,12 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:catcher/catcher_plugin.dart';
 
 main() {
   CatcherOptions debugOptions = CatcherOptions(SilentReportMode(), [
-    SlackHandler(
-        "<web_hook_url>",
-        "#catcher",
+    SlackHandler("<web_hook_url>", "#catcher",
         username: "CatcherTest",
         iconEmoji: ":thinking_face:",
         enableDeviceParameters: true,
@@ -16,7 +13,7 @@ main() {
         printLogs: true),
     //ConsoleHandler()
   ]);
-  CatcherOptions releaseOptions = CatcherOptions(NotificationReportMode(), [
+  CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
     EmailManualHandler(["recipient@email.com"])
   ]);
 

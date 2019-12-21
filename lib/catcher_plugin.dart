@@ -10,7 +10,6 @@ export "package:catcher/handlers/email_manual_handler.dart";
 export "package:catcher/handlers/sentry_handler.dart";
 export "package:catcher/handlers/slack_handler.dart";
 export "package:catcher/handlers/discord_handler.dart";
-export "package:catcher/mode/notification_report_mode.dart";
 export 'package:catcher/model/report_mode.dart';
 export 'package:catcher/mode/silent_report_mode.dart';
 export 'package:catcher/mode/dialog_report_mode.dart';

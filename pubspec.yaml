@@ -15,7 +15,6 @@ dependencies:
   package_info: ^0.4.0+6
   mailer: ^3.0.3
   dio: ^3.0.3
-  flutter_local_notifications: ^0.8.4
   flutter_mailer: ^0.4.1+2
   logging: ^0.11.3+2
   sentry: ^2.2.0

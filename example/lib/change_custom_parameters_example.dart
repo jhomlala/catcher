@@ -7,12 +7,12 @@ main() {
   Map<String, dynamic> customParameters = new Map<String, dynamic>();
   customParameters["First"] = "First parameter";
   CatcherOptions debugOptions = CatcherOptions(
-      NotificationReportMode(),
+      PageReportMode(),
       [
         ConsoleHandler(enableCustomParameters: true),
       ],
       customParameters: customParameters);
-  CatcherOptions releaseOptions = CatcherOptions(NotificationReportMode(), [
+  CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
     EmailManualHandler(["recipient@email.com"])
   ]);
 

@@ -2,8 +2,59 @@ import 'package:catcher/mode/report_mode_action_confirmed.dart';
 import 'package:catcher/model/localization_options.dart';
 import 'package:catcher/model/report_mode.dart';
 import 'package:catcher/model/report.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:catcher/catcher_plugin.dart';
+
+main() {
+  CatcherOptions debugOptions = CatcherOptions(NotificationReportMode(), [
+    EmailManualHandler(["recipient@email.com"]),
+    ConsoleHandler()
+  ]);
+  CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
+    EmailManualHandler(["recipient@email.com"])
+  ]);
+
+  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
+}
+
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      navigatorKey: Catcher.navigatorKey,
+      home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Plugin example app'),
+          ),
+          body: ChildWidget()),
+    );
+  }
+}
+
+class ChildWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: FlatButton(
+            child: Text("Generate error"), onPressed: () => generateError()));
+  }
+
+  generateError() async {
+    Catcher.sendTestException();
+  }
+}
 
 class NotificationReportMode extends ReportMode {
   FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin;
@@ -16,9 +67,9 @@ class NotificationReportMode extends ReportMode {
 
   NotificationReportMode(
       {this.channelId = "Catcher",
-      this.channelName = "Catcher",
-      this.channelDescription = "Catcher default channel",
-      this.icon = "@mipmap/ic_launcher"});
+        this.channelName = "Catcher",
+        this.channelDescription = "Catcher default channel",
+        this.icon = "@mipmap/ic_launcher"});
 
   @override
   initialize(ReportModeAction reportModeAction,

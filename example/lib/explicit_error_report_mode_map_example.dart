@@ -3,7 +3,7 @@ import 'package:catcher/model/catcher_options.dart';
 import 'package:flutter/material.dart';
 
 main() {
-  var explicitReportModesMap = {"FormatException": NotificationReportMode()};
+  var explicitReportModesMap = {"FormatException": PageReportMode()};
   CatcherOptions debugOptions = CatcherOptions(
       DialogReportMode(),
       [
@@ -12,7 +12,7 @@ main() {
             printLogs: true)
       ],
       explicitExceptionReportModesMap: explicitReportModesMap,);
-  CatcherOptions releaseOptions = CatcherOptions(NotificationReportMode(), [
+  CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
     EmailManualHandler(["recipient@email.com"])
   ]);
 

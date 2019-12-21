@@ -1,4 +1,5 @@
 ## 0.2.8
+* [BREAKING CHANGE] Removed local notifications report mode due to incompatible with firebase_messaging. Check local_notifications_example to re-add local notifications to your app.
 * More sentry handler customization
 * Added support for custom navigator key provided from outside of Catcher
 * Updated gradle version and min sdk version (android)

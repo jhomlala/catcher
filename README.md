@@ -458,18 +458,7 @@ ReportMode reportMode = SilentReportMode();
 ```
 
 #### Notification Report Mode
-Notification Report Mode shows local notification about error. Once user clicks on notification, report will be pushed to handlers.
-
-```dart
-ReportMode reportMode = NotificationReportMode();
-```
-
-See localization options to change default texts.
-
-<p align="center">
-<img width="250px" src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/1.png"><br/>
-  <i>Notification Report Mode</i>
-</p>
+Notification Report Mode has been removed because of incompatbility with firebase. Please check local_notifications_example to re-add local notificaitons to your app.
 
 #### Dialog Report Mode
 Dialog Report Mode shows dialog with information about error. Dialog has title, description and 2 buttons: Accept and Cancel. Once user clicks on Accept button, report will be pushed to handlers.

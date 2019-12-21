@@ -5,7 +5,7 @@ main() {
   CatcherOptions debugOptions = CatcherOptions(SilentReportMode(), [
     ConsoleHandler(),
   ]);
-  CatcherOptions releaseOptions = CatcherOptions(NotificationReportMode(), [
+  CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
     EmailManualHandler(["recipient@email.com"])
   ]);
 
