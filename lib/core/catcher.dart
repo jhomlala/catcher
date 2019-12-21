@@ -4,8 +4,6 @@ import 'dart:isolate';
 
 import 'package:catcher/core/application_profile_manager.dart';
 import 'package:catcher/handlers/report_handler.dart';
-import 'package:catcher/mode/dialog_report_mode.dart';
-import 'package:catcher/mode/page_report_mode.dart';
 import 'package:catcher/model/application_profile.dart';
 import 'package:catcher/model/catcher_options.dart';
 import 'package:catcher/mode/report_mode_action_confirmed.dart';
@@ -20,15 +18,14 @@ import 'package:logging/logging.dart';
 import 'package:package_info/package_info.dart';
 
 class Catcher with ReportModeAction {
-  static final GlobalKey<NavigatorState> navigatorKey =
-      new GlobalKey<NavigatorState>();
-
   final Widget rootWidget;
   final CatcherOptions releaseConfig;
   final CatcherOptions debugConfig;
   final CatcherOptions profileConfig;
 
   final Logger _logger = Logger("Catcher");
+
+
   CatcherOptions _currentConfig;
   Map<String, dynamic> _deviceParameters = Map();
   Map<String, dynamic> _applicationParameters = Map();
@@ -37,19 +34,23 @@ class Catcher with ReportModeAction {
   bool enableLogger;
 
   static Catcher _instance;
-
-  Catcher(
-    this.rootWidget, {
-    this.releaseConfig,
-    this.debugConfig,
-    this.profileConfig,
-    this.enableLogger = true,
-  }) {
-    _configure();
+  static GlobalKey<NavigatorState> _navigatorKey;
+  static GlobalKey<NavigatorState> get navigatorKey {
+    return _navigatorKey;
   }
 
-  _configure() {
+  Catcher(this.rootWidget,
+      {this.releaseConfig,
+      this.debugConfig,
+      this.profileConfig,
+      this.enableLogger = true,
+      GlobalKey<NavigatorState> navigatorKey}) {
+    _configure(navigatorKey);
+  }
+
+  _configure(GlobalKey<NavigatorState> navigatorKey) {
     _instance = this;
+    _configureNavigatorKey(navigatorKey);
     _configureLogger();
     _setupCurrentConfig();
     _setupErrorHooks();
@@ -64,6 +65,14 @@ class Catcher with ReportModeAction {
               "process error reports.");
     } else {
       _logger.fine("Catcher configured successfully.");
+    }
+  }
+
+  _configureNavigatorKey(GlobalKey<NavigatorState> navigatorKey){
+    if (navigatorKey != null){
+      _navigatorKey = navigatorKey;
+    } else {
+      _navigatorKey = GlobalKey<NavigatorState>();
     }
   }
 

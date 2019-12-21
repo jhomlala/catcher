@@ -225,7 +225,7 @@ In order to make work Page Report Mode and Dialog Report Mode, you must include 
 
 ```
 You need to provide this key, because Catcher needs context of navigator to show dialogs/pages. There is no need to include this navigator key if you won't use Page/Dialog Report Mode.
-
+You can also provide your own navigator key if need to. You can provide it with Catcher constructor (see below). Please check custom navigator key example to see basic example.
 
 ### Catcher configuration
 Catcher instance needs 1 required and 3 optional parameters.
@@ -235,6 +235,7 @@ Catcher instance needs 1 required and 3 optional parameters.
 * releaseConfig (optional) - config used when Catcher detects that application runs in release mode
 * profileConfig (optional) - config used when Catcher detects that application runs in profile mode
 * enableLogger (optional) - enable/disable internal Catcher logs
+* navigatorKey (optional) - provide optional navigator key from outside of Catcher
 
 
 ```dart
@@ -247,7 +248,7 @@ main() {
   CatcherOptions profileOptions = CatcherOptions(
     NotificationReportMode(), [ConsoleHandler(), ToastHandler()],
     handlerTimeout: 10000, customParameters: {"example": "example_parameter"},);
-  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions, profileConfig: profileOptions, enableLogger: false);
+  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions, profileConfig: profileOptions, enableLogger: false, navigatorKey: navigatorKey);
 }
 ```
 CatcherOptions parameters:

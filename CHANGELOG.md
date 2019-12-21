@@ -1,3 +1,7 @@
+## 0.2.8
+* More sentry handler customization
+* Added support for custom navigator key provided from outside of Catcher
+
 ## 0.2.7
 * Fix for theme problem in error widget
 
