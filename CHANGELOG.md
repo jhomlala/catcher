@@ -3,6 +3,7 @@
 * More sentry handler customization
 * Added support for custom navigator key provided from outside of Catcher
 * Updated gradle version and min sdk version (android)
+* Updated dependencies versions
 
 ## 0.2.7
 * Fix for theme problem in error widget
