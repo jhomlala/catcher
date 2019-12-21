@@ -25,7 +25,6 @@ class Catcher with ReportModeAction {
 
   final Logger _logger = Logger("Catcher");
 
-
   CatcherOptions _currentConfig;
   Map<String, dynamic> _deviceParameters = Map();
   Map<String, dynamic> _applicationParameters = Map();
@@ -35,6 +34,7 @@ class Catcher with ReportModeAction {
 
   static Catcher _instance;
   static GlobalKey<NavigatorState> _navigatorKey;
+
   static GlobalKey<NavigatorState> get navigatorKey {
     return _navigatorKey;
   }
@@ -68,8 +68,8 @@ class Catcher with ReportModeAction {
     }
   }
 
-  _configureNavigatorKey(GlobalKey<NavigatorState> navigatorKey){
-    if (navigatorKey != null){
+  _configureNavigatorKey(GlobalKey<NavigatorState> navigatorKey) {
+    if (navigatorKey != null) {
       _navigatorKey = navigatorKey;
     } else {
       _navigatorKey = GlobalKey<NavigatorState>();
