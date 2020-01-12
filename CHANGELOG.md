@@ -1,3 +1,7 @@
+## 0.3.0
+* Fixed AndroidX issues
+* Changed sentry handler to accept sentry client instead of dsn
+
 ## 0.2.9
 * Fixed localization options not initializing correctly
 

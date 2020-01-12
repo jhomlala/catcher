@@ -711,7 +711,7 @@ Sentry.io page and then copy DSN link. Example:
 main() {
 
   CatcherOptions debugOptions = CatcherOptions(
-      DialogReportMode(), [SentryHandler("YOUR_DSN_HERE")]);
+      DialogReportMode(), [SentryHandler(SentryClient("YOUR_DSN_HERE"))]);
   CatcherOptions releaseOptions = CatcherOptions(NotificationReportMode(), [
     EmailManualHandler(["recipient@email.com"])
   ]);
@@ -721,6 +721,7 @@ main() {
 ```
 
 All parameters list:
+* sentryClient - sentry client instance
 * enableDeviceParameters (optional) - please look in console handler description
 * enableApplicationParameters (optional) - please look in console handler description
 * enableCustomParameters (optional) - please look in console handler description
