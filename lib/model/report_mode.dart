@@ -7,9 +7,11 @@ abstract class ReportMode {
   ReportModeAction _reportModeAction;
   LocalizationOptions _localizationOptions;
 
-  void initialize(ReportModeAction reportModeAction,
-      LocalizationOptions localizationOptions) {
+  void setReportModeAction(ReportModeAction reportModeAction) {
     this._reportModeAction = reportModeAction;
+  }
+
+  void setLocalizationOptions(LocalizationOptions localizationOptions){
     this._localizationOptions = localizationOptions;
   }
 

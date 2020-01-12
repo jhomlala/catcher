@@ -54,8 +54,7 @@ class Catcher with ReportModeAction {
     _configureLogger();
     _setupCurrentConfig();
     _setupErrorHooks();
-    _setupLocalization();
-    _setupReportMode();
+    _setupReportModeActionInReportMode();
     _loadDeviceInfo();
     _loadApplicationInfo();
 
@@ -111,13 +110,23 @@ class Catcher with ReportModeAction {
     }
   }
 
-  void _setupReportMode() {
-    this._currentConfig.reportMode.initialize(this, _localizationOptions);
+  void _setupReportModeActionInReportMode() {
+    this._currentConfig.reportMode.setReportModeAction(this);
     this
         ._currentConfig
         .explicitExceptionReportModesMap
         .forEach((error, reportMode) {
-      reportMode.initialize(this, _localizationOptions);
+      reportMode.setReportModeAction(this);
+    });
+  }
+
+  void _setupLocalizationsOptionsInReportMode() {
+    this._currentConfig.reportMode.setLocalizationOptions(_localizationOptions);
+    this
+        ._currentConfig
+        .explicitExceptionReportModesMap
+        .forEach((error, reportMode) {
+      reportMode.setLocalizationOptions(_localizationOptions);
     });
   }
 
@@ -218,6 +227,8 @@ class Catcher with ReportModeAction {
     });
   }
 
+  ///We need to setup localizations lazily because context needed to setup these
+  ///localizations can be used after app was build for the first time.
   _setupLocalization() {
     Locale locale = Locale("en", "US");
     if (_isContextValid()) {
@@ -225,7 +236,6 @@ class Catcher with ReportModeAction {
       if (context != null) {
         locale = Localizations.localeOf(context);
       }
-
       if (_currentConfig.localizationOptions != null) {
         for (var options in _currentConfig.localizationOptions) {
           if (options.languageCode.toLowerCase() ==
@@ -240,6 +250,7 @@ class Catcher with ReportModeAction {
       _localizationOptions =
           _getDefaultLocalizationOptionsForLanguage(locale.languageCode);
     }
+    _setupLocalizationsOptionsInReportMode();
   }
 
   LocalizationOptions _getDefaultLocalizationOptionsForLanguage(
@@ -283,6 +294,11 @@ class Catcher with ReportModeAction {
   }
 
   _reportError(dynamic error, dynamic stackTrace) async {
+    if (_localizationOptions == null) {
+      print("Setup localization lazily!");
+      _setupLocalization();
+    }
+
     Report report = Report(error, stackTrace, DateTime.now(), _deviceParameters,
         _applicationParameters, _currentConfig.customParameters);
     _cachedReports.add(report);
@@ -296,6 +312,8 @@ class Catcher with ReportModeAction {
 
     if (reportMode.isContextRequired()) {
       if (_isContextValid()) {
+        print("REPORT :::" + _isContextValid().toString());
+
         reportMode.requestAction(report, _getContext());
       } else {
         _logger.warning(
@@ -370,6 +388,7 @@ class Catcher with ReportModeAction {
   }
 
   bool _isContextValid() {
+    print("Current state: " + navigatorKey.currentState.toString());
     return navigatorKey.currentState != null &&
         navigatorKey.currentState.overlay != null;
   }

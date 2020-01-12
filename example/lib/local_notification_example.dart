@@ -72,10 +72,9 @@ class NotificationReportMode extends ReportMode {
         this.icon = "@mipmap/ic_launcher"});
 
   @override
-  initialize(ReportModeAction reportModeAction,
-      LocalizationOptions localizationOptions) {
+  setReportModeAction(ReportModeAction reportModeAction) {
     _initializeNotificationsPlugin();
-    return super.initialize(reportModeAction, localizationOptions);
+    return super.setReportModeAction(reportModeAction);
   }
 
   /// We need to init notifications plugin after constructor. If we init
