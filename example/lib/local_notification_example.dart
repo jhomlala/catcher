@@ -1,5 +1,4 @@
 import 'package:catcher/mode/report_mode_action_confirmed.dart';
-import 'package:catcher/model/localization_options.dart';
 import 'package:catcher/model/report_mode.dart';
 import 'package:catcher/model/report.dart';
 import 'package:flutter/material.dart';

@@ -5,7 +5,7 @@ import 'package:catcher/model/catcher_options.dart';
 import 'package:flutter/material.dart';
 import 'package:catcher/catcher_plugin.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
+//import 'package:permission_handler/permission_handler.dart';
 
 main() async {
   Directory externalDir = await getExternalStorageDirectory();
@@ -54,8 +54,8 @@ class ChildWidget extends StatelessWidget {
   }
 
   permission() async {
-    Map<PermissionGroup, PermissionStatus> permissions =
-        await PermissionHandler().requestPermissions([PermissionGroup.storage]);
+    /*Map<PermissionGroup, PermissionStatus> permissions =
+        await PermissionHandler().requestPermissions([PermissionGroup.storage]);*/
     //bool isShown = await PermissionHandler().shouldShowRequestPermissionRationale(PermissionGroup.storage);
   }
 

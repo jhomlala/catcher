@@ -1,3 +1,6 @@
+## 0.2.9
+* Fixed localization options not initializing correctly
+
 ## 0.2.8
 * [BREAKING CHANGE] Removed local notifications report mode due to incompatible with firebase_messaging. Check local_notifications_example to re-add local notifications to your app.
 * More sentry handler customization
