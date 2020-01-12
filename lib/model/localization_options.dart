@@ -201,5 +201,4 @@ class LocalizationOptions {
         pageReportModeAccept: "수락",
         pageReportModeCancel: "취소");
   }
-
 }

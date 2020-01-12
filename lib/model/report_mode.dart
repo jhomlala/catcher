@@ -11,7 +11,7 @@ abstract class ReportMode {
     this._reportModeAction = reportModeAction;
   }
 
-  void setLocalizationOptions(LocalizationOptions localizationOptions){
+  void setLocalizationOptions(LocalizationOptions localizationOptions) {
     this._localizationOptions = localizationOptions;
   }
 
@@ -25,7 +25,7 @@ abstract class ReportMode {
     _reportModeAction.onActionRejected(report);
   }
 
-  bool isContextRequired(){
+  bool isContextRequired() {
     return false;
   }
 
