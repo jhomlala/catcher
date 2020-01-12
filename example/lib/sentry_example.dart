@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:catcher/catcher_plugin.dart';
+import 'package:sentry/sentry.dart';
 
 main() {
   CatcherOptions debugOptions = CatcherOptions(
-      DialogReportMode(), [SentryHandler("YOUR_DSN_HERE")]);
+      DialogReportMode(), [SentryHandler(SentryClient(dsn: "YOUR_DSN_HERE"))]);
   CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
     EmailManualHandler(["recipient@email.com"])
   ]);

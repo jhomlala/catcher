@@ -4,31 +4,27 @@ import 'package:logging/logging.dart';
 import 'package:sentry/sentry.dart';
 
 class SentryHandler extends ReportHandler {
+  final SentryClient sentryClient;
   final bool enableDeviceParameters;
   final bool enableApplicationParameters;
   final bool enableCustomParameters;
   final bool printLogs;
   final Logger _logger = Logger("SentryHandler");
-  SentryClient sentry;
 
-  SentryHandler(String dsn,
-      {this.enableDeviceParameters = true,
+
+  SentryHandler(
+      this.sentryClient,{
+      this.enableDeviceParameters = true,
       this.enableApplicationParameters = true,
       this.enableCustomParameters = true,
       this.printLogs = true}) {
-    try {
-      assert(dsn != null && dsn.isNotEmpty, "DSN can't be null or empty");
-      sentry = SentryClient(dsn: dsn);
-    } catch (exception) {
-      _printLog("Exception in sentry handler init: $exception");
-    }
   }
 
   @override
   Future<bool> handle(Report error) async {
     try {
       _printLog("Logging to sentry...");
-      await sentry.captureException(
+      await sentryClient.captureException(
           exception: error.error, stackTrace: error.stackTrace);
       var tags = Map<String, dynamic>();
       if (enableApplicationParameters) {
@@ -42,7 +38,7 @@ class SentryHandler extends ReportHandler {
       }
 
       var event = buildEvent(error, tags);
-      await sentry.capture(event: event);
+      await sentryClient.capture(event: event);
       _printLog("Logged to sentry!");
       return true;
     } catch (exception) {

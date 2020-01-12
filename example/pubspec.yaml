@@ -17,6 +17,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   permission_handler: '^2.2.0'
   flutter_local_notifications: ^0.8.4
+  sentry: ^3.0.0+1
 
 dev_dependencies:
 

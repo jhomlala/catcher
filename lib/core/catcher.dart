@@ -312,8 +312,6 @@ class Catcher with ReportModeAction {
 
     if (reportMode.isContextRequired()) {
       if (_isContextValid()) {
-        print("REPORT :::" + _isContextValid().toString());
-
         reportMode.requestAction(report, _getContext());
       } else {
         _logger.warning(
@@ -388,7 +386,6 @@ class Catcher with ReportModeAction {
   }
 
   bool _isContextValid() {
-    print("Current state: " + navigatorKey.currentState.toString());
     return navigatorKey.currentState != null &&
         navigatorKey.currentState.overlay != null;
   }
