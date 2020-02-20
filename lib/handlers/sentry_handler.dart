@@ -24,8 +24,7 @@ class SentryHandler extends ReportHandler {
   Future<bool> handle(Report error) async {
     try {
       _printLog("Logging to sentry...");
-      await sentryClient.captureException(
-          exception: error.error, stackTrace: error.stackTrace);
+
       var tags = Map<String, dynamic>();
       if (enableApplicationParameters) {
         tags.addAll(error.applicationParameters);
@@ -38,7 +37,11 @@ class SentryHandler extends ReportHandler {
       }
 
       var event = buildEvent(error, tags);
-      await sentryClient.capture(event: event);
+      final sentryResult = await sentryClient.capture(event: event);
+      
+      if (!sentryResult.isSuccessful) {
+        throw Exception(sentryResult.error);
+      }
       _printLog("Logged to sentry!");
       return true;
     } catch (exception) {
