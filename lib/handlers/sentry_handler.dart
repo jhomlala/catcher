@@ -15,7 +15,7 @@ class SentryHandler extends ReportHandler {
       {this.enableDeviceParameters = true,
       this.enableApplicationParameters = true,
       this.enableCustomParameters = true,
-      this.printLogs = true}) {}
+      this.printLogs = true});
 
   @override
   Future<bool> handle(Report error) async {

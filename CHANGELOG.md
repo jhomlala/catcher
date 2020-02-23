@@ -1,3 +1,6 @@
+## 0.3.2
+* Removed invalid import from error widget
+
 ## 0.3.1
 * Fixed sentry handler reporting by David Martos (https://github.com/davidmartos96)
 * Fixed stack trace displaying in error widget by Andrious Solutions (https://github.com/Andrious)
