@@ -11,14 +11,11 @@ class SentryHandler extends ReportHandler {
   final bool printLogs;
   final Logger _logger = Logger("SentryHandler");
 
-
-  SentryHandler(
-      this.sentryClient,{
-      this.enableDeviceParameters = true,
+  SentryHandler(this.sentryClient,
+      {this.enableDeviceParameters = true,
       this.enableApplicationParameters = true,
       this.enableCustomParameters = true,
-      this.printLogs = true}) {
-  }
+      this.printLogs = true}) {}
 
   @override
   Future<bool> handle(Report error) async {
@@ -38,7 +35,7 @@ class SentryHandler extends ReportHandler {
 
       var event = buildEvent(error, tags);
       final sentryResult = await sentryClient.capture(event: event);
-      
+
       if (!sentryResult.isSuccessful) {
         throw Exception(sentryResult.error);
       }

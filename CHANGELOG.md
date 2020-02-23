@@ -1,3 +1,7 @@
+## 0.3.1
+* Fixed sentry handler reporting by David Martos (https://github.com/davidmartos96)
+* Fixed stack trace displaying in error widget by Andrious Solutions (https://github.com/Andrious)
+
 ## 0.3.0
 * Fixed AndroidX issues
 * Changed sentry handler to accept sentry client instead of dsn

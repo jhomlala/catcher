@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 
 class CatcherErrorWidget extends StatelessWidget {
@@ -64,13 +66,19 @@ class CatcherErrorWidget extends StatelessWidget {
 
   Widget _getStackTraceWidget() {
     if (showStacktrace) {
+      List<String> stackTrace = details.stack.toString().split("\n");
       return SizedBox(
         height: 200.0,
         child: ListView.builder(
           padding: EdgeInsets.all(8.0),
-          itemCount: 1,
+          itemCount: stackTrace.length,
           itemBuilder: (BuildContext context, int index) {
-            return Text(details.exceptionAsString());
+            String line = stackTrace[index];
+            if (line?.isNotEmpty == true) {
+              return Text(line);
+            } else {
+              return SizedBox();
+            }
           },
         ),
       );
