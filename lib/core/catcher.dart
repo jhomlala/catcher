@@ -60,9 +60,8 @@ class Catcher with ReportModeAction {
     _loadApplicationInfo();
 
     if (_currentConfig.handlers.isEmpty) {
-      _logger
-          .warning("Handlers list is empty. Configure at least one handler to "
-              "process error reports.");
+      _logger.warning("Handlers list is empty. Configure at least one handler to "
+          "process error reports.");
     } else {
       _logger.fine("Catcher configured successfully.");
     }
@@ -131,7 +130,7 @@ class Catcher with ReportModeAction {
 
   Future _setupErrorHooks() async {
     FlutterError.onError = (FlutterErrorDetails details) async {
-      _reportError(details.exception, details.stack);
+      await _reportError(details.exception, details.stack, errorDetails: details);
     };
 
     Isolate.current.addErrorListener(new RawReceivePort((dynamic pair) async {
@@ -199,8 +198,7 @@ class Catcher with ReportModeAction {
         androidDeviceInfo.version.previewSdkInt;
     _deviceParameters["versionRelease"] = androidDeviceInfo.version.release;
     _deviceParameters["versionSdk"] = androidDeviceInfo.version.sdkInt;
-    _deviceParameters["versionSecurityPatch"] =
-        androidDeviceInfo.version.securityPatch;
+    _deviceParameters["versionSecurityPatch"] = androidDeviceInfo.version.securityPatch;
   }
 
   void _loadIosParameters(IosDeviceInfo iosInfo) {
@@ -223,8 +221,7 @@ class Catcher with ReportModeAction {
       _applicationParameters["appName"] = packageInfo.appName;
       _applicationParameters["buildNumber"] = packageInfo.buildNumber;
       _applicationParameters["packageName"] = packageInfo.packageName;
-      _applicationParameters["environment"] =
-          ApplicationProfileManager.getApplicationProfile().toString();
+      _applicationParameters["environment"] = ApplicationProfileManager.getApplicationProfile().toString();
     });
   }
 
@@ -239,8 +236,7 @@ class Catcher with ReportModeAction {
       }
       if (_currentConfig.localizationOptions != null) {
         for (var options in _currentConfig.localizationOptions) {
-          if (options.languageCode.toLowerCase() ==
-              locale.languageCode.toLowerCase()) {
+          if (options.languageCode.toLowerCase() == locale.languageCode.toLowerCase()) {
             _localizationOptions = options;
           }
         }
@@ -248,14 +244,12 @@ class Catcher with ReportModeAction {
     }
 
     if (_localizationOptions == null) {
-      _localizationOptions =
-          _getDefaultLocalizationOptionsForLanguage(locale.languageCode);
+      _localizationOptions = _getDefaultLocalizationOptionsForLanguage(locale.languageCode);
     }
     _setupLocalizationsOptionsInReportMode();
   }
 
-  LocalizationOptions _getDefaultLocalizationOptionsForLanguage(
-      String language) {
+  LocalizationOptions _getDefaultLocalizationOptionsForLanguage(String language) {
     switch (language.toLowerCase()) {
       case "en":
         return LocalizationOptions.buildDefaultEnglishOptions();
@@ -294,17 +288,16 @@ class Catcher with ReportModeAction {
     _instance._reportError(error, stackTrace);
   }
 
-  void _reportError(dynamic error, dynamic stackTrace) async {
+  void _reportError(dynamic error, dynamic stackTrace, {FlutterErrorDetails errorDetails}) async {
     if (_localizationOptions == null) {
       print("Setup localization lazily!");
       _setupLocalization();
     }
 
-    Report report = Report(error, stackTrace, DateTime.now(), _deviceParameters,
-        _applicationParameters, _currentConfig.customParameters);
+    Report report = Report(error, stackTrace, DateTime.now(), _deviceParameters, _applicationParameters,
+        _currentConfig.customParameters, errorDetails);
     _cachedReports.add(report);
-    ReportMode reportMode =
-        _getReportModeFromExplicitExceptionReportModeMap(error);
+    ReportMode reportMode = _getReportModeFromExplicitExceptionReportModeMap(error);
     if (reportMode != null) {
       _logger.info("Using explicit report mode for error");
     } else {
@@ -335,8 +328,7 @@ class Catcher with ReportModeAction {
     return reportMode;
   }
 
-  ReportHandler _getReportHandlerFromExplicitExceptionHandlerMap(
-      dynamic error) {
+  ReportHandler _getReportHandlerFromExplicitExceptionHandlerMap(dynamic error) {
     var errorName = error != null ? error.toString().toLowerCase() : "";
     ReportHandler reportHandler;
     _currentConfig.explicitExceptionHandlersMap.forEach((key, value) {
@@ -350,8 +342,7 @@ class Catcher with ReportModeAction {
 
   @override
   void onActionConfirmed(Report report) {
-    ReportHandler reportHandler =
-        _getReportHandlerFromExplicitExceptionHandlerMap(report.error);
+    ReportHandler reportHandler = _getReportHandlerFromExplicitExceptionHandlerMap(report.error);
     if (reportHandler != null) {
       _logger.info("Using explicit report handler");
       reportHandler.handle(report);
@@ -360,8 +351,7 @@ class Catcher with ReportModeAction {
 
     for (ReportHandler handler in _currentConfig.handlers) {
       handler.handle(report).catchError((handlerError) {
-        _logger.warning(
-            "Error occured in ${handler.toString()}: ${handlerError.toString()}");
+        _logger.warning("Error occured in ${handler.toString()}: ${handlerError.toString()}");
       }).then((result) {
         print("Report result: " + result.toString());
         if (!result) {
@@ -369,10 +359,8 @@ class Catcher with ReportModeAction {
         } else {
           _cachedReports.remove(report);
         }
-      }).timeout(Duration(milliseconds: _currentConfig.handlerTimeout),
-          onTimeout: () {
-        _logger.warning(
-            "${handler.toString()} failed to report error because of timeout");
+      }).timeout(Duration(milliseconds: _currentConfig.handlerTimeout), onTimeout: () {
+        _logger.warning("${handler.toString()} failed to report error because of timeout");
       });
     }
   }
