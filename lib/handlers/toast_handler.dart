@@ -27,7 +27,7 @@ class ToastHandler extends ReportHandler {
         msg: _getErrorMessage(error),
         toastLength: _getLength(),
         gravity: _getGravity(),
-        timeInSecForIos: _getLengthIos(),
+        timeInSecForIosWeb: _getLengthIos(),
         backgroundColor: backgroundColor,
         textColor: textColor,
         fontSize: textSize);
