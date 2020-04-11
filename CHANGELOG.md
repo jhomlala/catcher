@@ -4,6 +4,7 @@
 * Added support for using error widget in small widgets.
 * Refactored classes and added proper input handling.
 * Fixed HttpHandler headers.
+* Fixed AndroidX support.
 
 ## 0.3.3
 * Updated dependencies
