@@ -18,6 +18,9 @@ import 'package:logging/logging.dart';
 import 'package:package_info/package_info.dart';
 
 class Catcher with ReportModeAction {
+  static Catcher _instance;
+  static GlobalKey<NavigatorState> _navigatorKey;
+
   final Widget rootWidget;
   final CatcherOptions releaseConfig;
   final CatcherOptions debugConfig;
@@ -32,9 +35,6 @@ class Catcher with ReportModeAction {
   LocalizationOptions _localizationOptions;
   bool enableLogger;
 
-  static Catcher _instance;
-  static GlobalKey<NavigatorState> _navigatorKey;
-
   static GlobalKey<NavigatorState> get navigatorKey {
     return _navigatorKey;
   }
@@ -45,10 +45,11 @@ class Catcher with ReportModeAction {
       this.profileConfig,
       this.enableLogger = true,
       GlobalKey<NavigatorState> navigatorKey}) {
+    assert(this.rootWidget != null);
     _configure(navigatorKey);
   }
 
-  _configure(GlobalKey<NavigatorState> navigatorKey) {
+  void _configure(GlobalKey<NavigatorState> navigatorKey) {
     _instance = this;
     _configureNavigatorKey(navigatorKey);
     _configureLogger();
@@ -67,7 +68,7 @@ class Catcher with ReportModeAction {
     }
   }
 
-  _configureNavigatorKey(GlobalKey<NavigatorState> navigatorKey) {
+  void _configureNavigatorKey(GlobalKey<NavigatorState> navigatorKey) {
     if (navigatorKey != null) {
       _navigatorKey = navigatorKey;
     } else {
@@ -75,7 +76,7 @@ class Catcher with ReportModeAction {
     }
   }
 
-  _setupCurrentConfig() {
+  void _setupCurrentConfig() {
     switch (ApplicationProfileManager.getApplicationProfile()) {
       case ApplicationProfile.release:
         {
@@ -112,32 +113,30 @@ class Catcher with ReportModeAction {
 
   void _setupReportModeActionInReportMode() {
     this._currentConfig.reportMode.setReportModeAction(this);
-    this
-        ._currentConfig
-        .explicitExceptionReportModesMap
-        .forEach((error, reportMode) {
-      reportMode.setReportModeAction(this);
-    });
+    this._currentConfig.explicitExceptionReportModesMap.forEach(
+      (error, reportMode) {
+        reportMode.setReportModeAction(this);
+      },
+    );
   }
 
   void _setupLocalizationsOptionsInReportMode() {
     this._currentConfig.reportMode.setLocalizationOptions(_localizationOptions);
-    this
-        ._currentConfig
-        .explicitExceptionReportModesMap
-        .forEach((error, reportMode) {
-      reportMode.setLocalizationOptions(_localizationOptions);
-    });
+    this._currentConfig.explicitExceptionReportModesMap.forEach(
+      (error, reportMode) {
+        reportMode.setLocalizationOptions(_localizationOptions);
+      },
+    );
   }
 
-  _setupErrorHooks() {
+  Future _setupErrorHooks() async {
     FlutterError.onError = (FlutterErrorDetails details) async {
-      await _reportError(details.exception, details.stack);
+      _reportError(details.exception, details.stack);
     };
 
     Isolate.current.addErrorListener(new RawReceivePort((dynamic pair) async {
       var isolateError = pair as List<dynamic>;
-      await _reportError(
+      _reportError(
         isolateError.first.toString(),
         isolateError.last.toString(),
       );
@@ -146,21 +145,23 @@ class Catcher with ReportModeAction {
     runZoned(() async {
       runApp(rootWidget);
     }, onError: (error, stackTrace) async {
-      await _reportError(error, stackTrace);
+      _reportError(error, stackTrace);
     });
   }
 
   void _configureLogger() {
     if (enableLogger) {
       Logger.root.level = Level.ALL;
-      Logger.root.onRecord.listen((LogRecord rec) {
-        print(
-            '[${rec.time} | ${rec.loggerName} | ${rec.level.name}] ${rec.message}');
-      });
+      Logger.root.onRecord.listen(
+        (LogRecord rec) {
+          print(
+              '[${rec.time} | ${rec.loggerName} | ${rec.level.name}] ${rec.message}');
+        },
+      );
     }
   }
 
-  _loadDeviceInfo() {
+  void _loadDeviceInfo() {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     if (Platform.isAndroid) {
       deviceInfo.androidInfo.then((androidInfo) {
@@ -229,7 +230,7 @@ class Catcher with ReportModeAction {
 
   ///We need to setup localizations lazily because context needed to setup these
   ///localizations can be used after app was build for the first time.
-  _setupLocalization() {
+  void _setupLocalization() {
     Locale locale = Locale("en", "US");
     if (_isContextValid()) {
       BuildContext context = _getContext();
@@ -283,7 +284,7 @@ class Catcher with ReportModeAction {
     }
   }
 
-  static reportCheckedError(dynamic error, dynamic stackTrace) {
+  static void reportCheckedError(dynamic error, dynamic stackTrace) {
     if (error == null) {
       error = "undefined error";
     }
@@ -293,7 +294,7 @@ class Catcher with ReportModeAction {
     _instance._reportError(error, stackTrace);
   }
 
-  _reportError(dynamic error, dynamic stackTrace) async {
+  void _reportError(dynamic error, dynamic stackTrace) async {
     if (_localizationOptions == null) {
       print("Setup localization lazily!");
       _setupLocalization();
@@ -386,8 +387,7 @@ class Catcher with ReportModeAction {
   }
 
   bool _isContextValid() {
-    return navigatorKey.currentState != null &&
-        navigatorKey.currentState.overlay != null;
+    return navigatorKey?.currentState?.overlay != null;
   }
 
   CatcherOptions getCurrentConfig() {
@@ -395,14 +395,15 @@ class Catcher with ReportModeAction {
   }
 
   static void sendTestException() {
-    throw FormatException("Test");
+    throw FormatException("Test exception generated by Catcher");
   }
 
   static void addDefaultErrorWidget(
       {bool showStacktrace = true,
       String title = "An application error has occurred",
       String description =
-          "There was unexepcted situation in application. Application has been able to recover from error state.",
+          "There was unexepcted situation in application. Application has been "
+              "able to recover from error state.",
       double maxWidthForSmallMode = 150}) {
     ErrorWidget.builder = (FlutterErrorDetails details) {
       return CatcherErrorWidget(

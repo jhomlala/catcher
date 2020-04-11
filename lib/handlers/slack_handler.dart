@@ -26,18 +26,46 @@ class SlackHandler extends ReportHandler {
       this.enableDeviceParameters = false,
       this.enableApplicationParameters = false,
       this.enableStackTrace = false,
-      this.enableCustomParameters = false}) {
-    assert(webhookUrl != null, "Webhook can't be null");
-    assert(channel != null, "Channel can't be null");
-  }
+      this.enableCustomParameters = false})
+      : assert(webhookUrl != null, "webhookUrl can't be null"),
+        assert(channel != null, "channel can't be null"),
+        assert(username != null, "username can't be null"),
+        assert(enableDeviceParameters != null,
+            "enableDeviceParameters can't be null"),
+        assert(enableApplicationParameters != null,
+            "enableApplicationParameters can't be null"),
+        assert(enableStackTrace != null, "enableStackTrace can't be null"),
+        assert(enableCustomParameters != null,
+            "enableCustomParameters can't be null"),
+        assert(printLogs != null, "printLogs can't be null");
 
   @override
   Future<bool> handle(Report report) async {
-    if (!(await CatcherUtils.isInternetConnectionAvailable())) {
-      _printLog("No internet connection available");
+    try {
+      if (!(await CatcherUtils.isInternetConnectionAvailable())) {
+        _printLog("No internet connection available");
+        return false;
+      }
+
+      String message = _buildMessage(report);
+      var data = {
+        "text": message,
+        "channel": channel,
+        "username": username,
+        "icon_emoji": iconEmoji
+      };
+      _printLog("Sending request to Slack server...");
+      Response response = await _dio.post(webhookUrl, data: data);
+      _printLog(
+          "Server responded with code: ${response.statusCode} and message: ${response.statusMessage}");
+      return response.statusCode >= 200 && response.statusCode < 300;
+    } catch (exception) {
+      _printLog("Failed to send slack message: $exception");
       return false;
     }
+  }
 
+  String _buildMessage(Report report) {
     StringBuffer stringBuffer = new StringBuffer();
     stringBuffer.write("*Error:* ```${report.error}```\n");
     if (enableStackTrace) {
@@ -67,22 +95,10 @@ class SlackHandler extends ReportHandler {
       }
       stringBuffer.write("```\n");
     }
-
-    String message = stringBuffer.toString();
-    var data = {
-      "text": message,
-      "channel": channel,
-      "username": username,
-      "icon_emoji": iconEmoji
-    };
-    _printLog("Sending request to Slack server...");
-    Response response = await _dio.post(webhookUrl, data: data);
-    _printLog(
-        "Server responded with code: ${response.statusCode} and message: ${response.statusMessage}");
-    return response.statusCode >= 200 && response.statusCode < 300;
+    return stringBuffer.toString();
   }
 
-  _printLog(String log) {
+  void _printLog(String log) {
     if (printLogs) {
       _logger.info(log);
     }

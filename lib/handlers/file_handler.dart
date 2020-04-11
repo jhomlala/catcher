@@ -23,9 +23,16 @@ class FileHandler extends ReportHandler {
       this.enableApplicationParameters = true,
       this.enableStackTrace = true,
       this.enableCustomParameters = true,
-      this.printLogs = false}) {
-    assert(this.file != null, "File can't be null");
-  }
+      this.printLogs = false})
+      : assert(file != null, "File can't be null"),
+        assert(enableDeviceParameters != null,
+            "enableDeviceParameters can't be null"),
+        assert(enableApplicationParameters != null,
+            "enableApplicationParameters can't be null"),
+        assert(enableStackTrace != null, "enableStackTrace can't be null"),
+        assert(enableCustomParameters != null,
+            "enableCustomParameters can't be null"),
+        assert(printLogs != null, "printLogs can't be null");
 
   @override
   Future<bool> handle(Report report) async {
@@ -41,7 +48,7 @@ class FileHandler extends ReportHandler {
     }
   }
 
-  _processReport(Report report) async {
+  Future<bool> _processReport(Report report) async {
     if (_fileValidationResult) {
       await _openFile();
       _writeReportToFile(report);
@@ -69,22 +76,22 @@ class FileHandler extends ReportHandler {
     }
   }
 
-  _openFile() async {
+  Future _openFile() async {
     _sink = file.openWrite(mode: FileMode.append);
     _printLog("Opened file");
   }
 
-  _writeLineToFile(String text) {
+  void _writeLineToFile(String text) {
     _sink.add(utf8.encode('$text\n'));
   }
 
-  _closeFile() async {
+  Future _closeFile() async {
     await _sink.flush();
     await _sink.close();
     _printLog("Closed file");
   }
 
-  _writeReportToFile(Report report) async {
+  void _writeReportToFile(Report report) async {
     _printLog("Writing report to file");
     _writeLineToFile(
         "============================== CATCHER LOG ==============================");
@@ -112,14 +119,14 @@ class FileHandler extends ReportHandler {
         "======================================================================");
   }
 
-  _logDeviceParametersFormatted(Map<String, dynamic> deviceParameters) {
+  void _logDeviceParametersFormatted(Map<String, dynamic> deviceParameters) {
     _writeLineToFile("------- DEVICE INFO -------");
     for (var entry in deviceParameters.entries) {
       _writeLineToFile("${entry.key}: ${entry.value}");
     }
   }
 
-  _logApplicationParametersFormatted(
+  void _logApplicationParametersFormatted(
       Map<String, dynamic> applicationParameters) {
     _writeLineToFile("------- APP INFO -------");
     for (var entry in applicationParameters.entries) {
@@ -127,14 +134,14 @@ class FileHandler extends ReportHandler {
     }
   }
 
-  _logCustomParametersFormatted(Map<String, dynamic> customParameters) {
+  void _logCustomParametersFormatted(Map<String, dynamic> customParameters) {
     _writeLineToFile("------- CUSTOM INFO -------");
     for (var entry in customParameters.entries) {
       _writeLineToFile("${entry.key}: ${entry.value}");
     }
   }
 
-  _printLog(String log) {
+  void _printLog(String log) {
     if (printLogs) {
       _logger.info(log);
     }

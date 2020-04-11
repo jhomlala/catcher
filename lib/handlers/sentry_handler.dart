@@ -15,7 +15,15 @@ class SentryHandler extends ReportHandler {
       {this.enableDeviceParameters = true,
       this.enableApplicationParameters = true,
       this.enableCustomParameters = true,
-      this.printLogs = true});
+      this.printLogs = true})
+      : assert(sentryClient != null, "sentryClient can't be null"),
+        assert(enableDeviceParameters != null,
+            "enableDeviceParameters can't be null"),
+        assert(enableApplicationParameters != null,
+            "enableApplicationParameters can't be null"),
+        assert(enableCustomParameters != null,
+            "enableCustomParameters can't be null"),
+        assert(printLogs != null, "printLogs can't be null");
 
   @override
   Future<bool> handle(Report error) async {
