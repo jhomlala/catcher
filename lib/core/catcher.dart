@@ -399,13 +399,18 @@ class Catcher with ReportModeAction {
   }
 
   static void addDefaultErrorWidget(
-      {bool showStacktrace, String customTitle, String customDescription}) {
+      {bool showStacktrace = true,
+      String title = "An application error has occurred",
+      String description =
+          "There was unexepcted situation in application. Application has been able to recover from error state.",
+      double maxWidthForSmallMode = 150}) {
     ErrorWidget.builder = (FlutterErrorDetails details) {
       return CatcherErrorWidget(
         details: details,
         showStacktrace: showStacktrace,
-        customTitle: customTitle,
-        customDescription: customDescription,
+        title: title,
+        description: description,
+        maxWidthForSmallMode: maxWidthForSmallMode,
       );
     };
   }
