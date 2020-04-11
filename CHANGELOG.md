@@ -2,6 +2,8 @@
 * Fixed typos by Rob Halff (https://github.com/rhalff)
 * [BREAKING CHANGE] Changed customTitle to title and customDescription to description in error widget.
 * Added support for using error widget in small widgets.
+* Refactored classes and added proper input handling.
+* Fixed HttpHandler headers.
 
 ## 0.3.3
 * Updated dependencies
