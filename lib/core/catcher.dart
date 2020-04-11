@@ -184,7 +184,7 @@ class Catcher with ReportModeAction {
     _deviceParameters["fingerprint"] = androidDeviceInfo.fingerprint;
     _deviceParameters["hardware"] = androidDeviceInfo.hardware;
     _deviceParameters["host"] = androidDeviceInfo.host;
-    _deviceParameters["isPsychicalDevice"] = androidDeviceInfo.isPhysicalDevice;
+    _deviceParameters["isPhysicalDevice"] = androidDeviceInfo.isPhysicalDevice;
     _deviceParameters["manufacturer"] = androidDeviceInfo.manufacturer;
     _deviceParameters["model"] = androidDeviceInfo.model;
     _deviceParameters["product"] = androidDeviceInfo.product;
@@ -196,7 +196,7 @@ class Catcher with ReportModeAction {
         androidDeviceInfo.version.incremental;
     _deviceParameters["versionPreviewSdk"] =
         androidDeviceInfo.version.previewSdkInt;
-    _deviceParameters["versionRelase"] = androidDeviceInfo.version.release;
+    _deviceParameters["versionRelease"] = androidDeviceInfo.version.release;
     _deviceParameters["versionSdk"] = androidDeviceInfo.version.sdkInt;
     _deviceParameters["versionSecurityPatch"] =
         androidDeviceInfo.version.securityPatch;
@@ -204,7 +204,7 @@ class Catcher with ReportModeAction {
 
   void _loadIosParameters(IosDeviceInfo iosInfo) {
     _deviceParameters["model"] = iosInfo.model;
-    _deviceParameters["isPsychicalDevice"] = iosInfo.isPhysicalDevice;
+    _deviceParameters["isPhysicalDevice"] = iosInfo.isPhysicalDevice;
     _deviceParameters["name"] = iosInfo.name;
     _deviceParameters["identifierForVendor"] = iosInfo.identifierForVendor;
     _deviceParameters["localizedModel"] = iosInfo.localizedModel;
@@ -315,7 +315,7 @@ class Catcher with ReportModeAction {
         reportMode.requestAction(report, _getContext());
       } else {
         _logger.warning(
-            "Couldn't use report mode becuase you didn't provide navigator key. Add navigator key to use this report mode.");
+            "Couldn't use report mode because you didn't provide navigator key. Add navigator key to use this report mode.");
       }
     } else {
       reportMode.requestAction(report, null);
