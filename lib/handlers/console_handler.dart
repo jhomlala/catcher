@@ -13,7 +13,14 @@ class ConsoleHandler extends ReportHandler {
       {this.enableDeviceParameters = true,
       this.enableApplicationParameters = true,
       this.enableStackTrace = true,
-      this.enableCustomParameters = false});
+      this.enableCustomParameters = false})
+      : assert(enableDeviceParameters != null,
+            "enableDeviceParameters can't be null"),
+        assert(enableApplicationParameters != null,
+            "enableApplicationParameters can't be null"),
+        assert(enableStackTrace != null, "enableStackTrace can't be null"),
+        assert(enableCustomParameters != null,
+            "enableCustomParameters can't be null");
 
   @override
   Future<bool> handle(Report error) {
@@ -43,14 +50,14 @@ class ConsoleHandler extends ReportHandler {
     return Future.value(true);
   }
 
-  _printDeviceParametersFormatted(Map<String, dynamic> deviceParameters) {
+  void _printDeviceParametersFormatted(Map<String, dynamic> deviceParameters) {
     _logger.info("------- DEVICE INFO -------");
     for (var entry in deviceParameters.entries) {
       _logger.info("${entry.key}: ${entry.value}");
     }
   }
 
-  _printApplicationParametersFormatted(
+  void _printApplicationParametersFormatted(
       Map<String, dynamic> applicationParameters) {
     _logger.info("------- APP INFO -------");
     for (var entry in applicationParameters.entries) {
@@ -58,14 +65,14 @@ class ConsoleHandler extends ReportHandler {
     }
   }
 
-  _printCustomParametersFormatted(Map<String, dynamic> customParameters) {
+  void _printCustomParametersFormatted(Map<String, dynamic> customParameters) {
     _logger.info("------- CUSTOM INFO -------");
     for (var entry in customParameters.entries) {
       _logger.info("${entry.key}: ${entry.value}");
     }
   }
 
-  _printStackTraceFormatted(StackTrace stackTrace) {
+  void _printStackTraceFormatted(StackTrace stackTrace) {
     _logger.info("------- STACK TRACE -------");
     for (var entry in stackTrace.toString().split("\n")) {
       _logger.info("$entry");

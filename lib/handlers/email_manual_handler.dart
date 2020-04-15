@@ -23,10 +23,18 @@ class EmailManualHandler extends ReportHandler {
       this.emailTitle,
       this.emailHeader,
       this.sendHtml = true,
-      this.printLogs = false}) {
-    assert(this.recipients != null && this.recipients.isNotEmpty,
-        "Recipients can't be null or empty");
-  }
+      this.printLogs = false})
+      : assert(recipients != null && recipients.isNotEmpty,
+            "Recipients can't be null or empty"),
+        assert(enableDeviceParameters != null,
+            "enableDeviceParameters can't be null"),
+        assert(enableApplicationParameters != null,
+            "enableApplicationParameters can't be null"),
+        assert(enableStackTrace != null, "enableStackTrace can't be null"),
+        assert(enableCustomParameters != null,
+            "enableCustomParameters can't be null"),
+        assert(sendHtml != null, "sendHtml can't be null"),
+        assert(printLogs != null, "printLogs can't be null");
 
   @override
   Future<bool> handle(Report error) async {
@@ -147,7 +155,7 @@ class EmailManualHandler extends ReportHandler {
     return buffer.toString();
   }
 
-  _printLog(String log) {
+  void _printLog(String log) {
     if (printLogs) {
       _logger.info(log);
     }

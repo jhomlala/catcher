@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:catcher/handlers/report_handler.dart';
 import 'package:catcher/model/http_request_type.dart';
 import 'package:catcher/model/report.dart';
@@ -21,10 +23,12 @@ class HttpHandler extends ReportHandler {
       {this.headers = const {},
       this.requestTimeout = 5000,
       this.responseTimeout = 5000,
-      this.printLogs = false}) {
-    assert(this.requestType != null, "Request type can't be null");
-    assert(this.endpointUri != null, "Endpoint uri can't be null");
-  }
+      this.printLogs = false})
+      : assert(requestType != null, "requestType can't be null"),
+        assert(endpointUri != null, "endpointUri can't be null"),
+        assert(requestTimeout != null, "requestTimeout can't be null"),
+        assert(responseTimeout != null, "responseTimeout can't be null"),
+        assert(printLogs != null, "printLogs can't be null");
 
   @override
   Future<bool> handle(Report error) async {
@@ -42,10 +46,14 @@ class HttpHandler extends ReportHandler {
   Future<bool> _sendPost(Report error) async {
     try {
       var json = error.toJson();
+      HashMap<String, dynamic> mutableHeaders = HashMap();
+      if (headers != null) {
+        mutableHeaders.addAll(headers);
+      }
       Options options = Options(
           sendTimeout: requestTimeout,
           receiveTimeout: responseTimeout,
-          headers: headers);
+          headers: mutableHeaders);
       _printLog("Calling: ${endpointUri.toString()}");
       Response response =
           await _dio.post(endpointUri.toString(), data: json, options: options);
@@ -58,7 +66,7 @@ class HttpHandler extends ReportHandler {
     }
   }
 
-  _printLog(String log) {
+  void _printLog(String log) {
     if (printLogs) {
       _logger.info(log);
     }

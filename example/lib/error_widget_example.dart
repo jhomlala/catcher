@@ -29,17 +29,34 @@ class _MyAppState extends State<MyApp> {
       navigatorKey: Catcher.navigatorKey,
       builder: (BuildContext context, Widget widget) {
         Catcher.addDefaultErrorWidget(
-            showStacktrace: true,
-            customTitle: "Custom error title",
-            customDescription: "Custom error description");
+          showStacktrace: true,
+          title: "Custom title",
+          description: "Custom description",
+          maxWidthForSmallMode: 150
+        );
         return widget;
       },
       home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Plugin example app'),
-          ),
-          body: ChildWidget()),
+        appBar: AppBar(
+          title: const Text('Plugin example app'),
+        ),
+        body: _buildSmallErrorWidget(),
+      ),
     );
+  }
+
+  ///Trigger "normal" mode
+  Widget _buildNormalErrorWidget() {
+    return ChildWidget();
+  }
+
+  ///Trigger "small" mode
+  Widget _buildSmallErrorWidget() {
+    return GridView.count(crossAxisCount: 3, children: [
+      ChildWidget(),
+      ChildWidget(),
+      ChildWidget(),
+    ]);
   }
 }
 
@@ -47,10 +64,10 @@ class ChildWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: FlatButton(child: Text(null), onPressed: () => generateError()));
+        child: FlatButton(child: Text(null), onPressed: generateError));
   }
 
-  generateError() async {
+  void generateError() async {
     Catcher.sendTestException();
   }
 }

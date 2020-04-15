@@ -21,7 +21,7 @@ your own backend where you're storing application logs, so you can manipulate it
 Add this line to your **pubspec.yaml**:
 ```yaml
 dependencies:
-  catcher: ^0.3.2
+  catcher: ^0.3.4
 ```
 
 Then run this command:
@@ -837,8 +837,9 @@ You can add error widget which will replace red screen of death. To add this int
       builder: (BuildContext context, Widget widget) {
         Catcher.addDefaultErrorWidget(
             showStacktrace: true,
-            customTitle: "Custom error title",
-            customDescription: "Custom error description");
+            title: "Custom error title",
+            description: "Custom error description",
+            maxWidthForSmallMode: 150);
         return widget;
       },
       //********************************************
@@ -854,8 +855,11 @@ You need to add in your MaterialApp or CupertinoApp builder method with ```Catch
 
 You can provide optional parameters:
 * showStacktrace - show/hide stacktrace
-* customTitle - custom title for error widget
-* customDescription - custom description for error widget
+* title - custom title for error widget
+* description - custom description for error widget
+* maxWidthForSmallMode - max width for "small" mode, default is 150
+
+Error widget will replace your widget if he fails to render. If width of widget is less than maxWidthForSmallMode then "small" mode will be enabled, which will show only error icon
 
 <p align="center">
 <table>

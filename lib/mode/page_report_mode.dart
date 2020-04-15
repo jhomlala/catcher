@@ -8,18 +8,20 @@ class PageReportMode extends ReportMode {
 
   PageReportMode({
     this.showStackTrace = true,
-  });
+  }) : assert(showStackTrace != null, "showStackTrace can't be null");
 
   @override
   void requestAction(Report report, BuildContext context) {
     _navigateToPageWidget(report, context);
   }
 
-  _navigateToPageWidget(Report report, BuildContext context) async {
+  void _navigateToPageWidget(Report report, BuildContext context) async {
     await Future.delayed(Duration.zero);
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => PageWidget(this, report)),
+      MaterialPageRoute(
+        builder: (context) => PageWidget(this, report),
+      ),
     );
   }
 
@@ -48,41 +50,43 @@ class PageWidgetState extends State<PageWidget> {
   Widget build(BuildContext context) {
     _context = context;
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-              widget.pageReportMode.localizationOptions.pageReportModeTitle),
-        ),
-        body: Container(
-            padding: EdgeInsets.only(left: 10, right: 10),
-            decoration: BoxDecoration(color: Colors.white),
-            child: Column(
-              children: [
-                Padding(padding: EdgeInsets.only(top: 10)),
-                Text(
-                  widget.pageReportMode.localizationOptions
-                      .pageReportModeDescription,
-                  style: _getTextStyle(15),
-                  textAlign: TextAlign.center,
+      appBar: AppBar(
+        title:
+            Text(widget.pageReportMode.localizationOptions.pageReportModeTitle),
+      ),
+      body: Container(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        decoration: BoxDecoration(color: Colors.white),
+        child: Column(
+          children: [
+            Padding(padding: const EdgeInsets.only(top: 10)),
+            Text(
+              widget
+                  .pageReportMode.localizationOptions.pageReportModeDescription,
+              style: _getTextStyle(15),
+              textAlign: TextAlign.center,
+            ),
+            Padding(padding: const EdgeInsets.only(top: 20)),
+            _getStackTraceWidget(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                FlatButton(
+                  child: Text(widget
+                      .pageReportMode.localizationOptions.pageReportModeAccept),
+                  onPressed: () => _onAcceptClicked(),
                 ),
-                Padding(padding: EdgeInsets.only(top: 20)),
-                _getStackTraceWidget(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    FlatButton(
-                      child: Text(widget.pageReportMode.localizationOptions
-                          .pageReportModeAccept),
-                      onPressed: () => _acceptReport(),
-                    ),
-                    FlatButton(
-                      child: Text(widget.pageReportMode.localizationOptions
-                          .pageReportModeCancel),
-                      onPressed: () => _cancelReport(),
-                    ),
-                  ],
-                )
+                FlatButton(
+                  child: Text(widget
+                      .pageReportMode.localizationOptions.pageReportModeCancel),
+                  onPressed: () => _onCancelClicked(),
+                ),
               ],
-            )));
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   TextStyle _getTextStyle(double fontSize) {
@@ -113,17 +117,17 @@ class PageWidgetState extends State<PageWidget> {
     }
   }
 
-  _acceptReport() {
+  void _onAcceptClicked() {
     widget.pageReportMode.onActionConfirmed(widget.report);
     _closePage();
   }
 
-  _cancelReport() {
+  void _onCancelClicked() {
     widget.pageReportMode.onActionRejected(widget.report);
     _closePage();
   }
 
-  _closePage() {
+  void _closePage() {
     Navigator.of(_context).pop();
   }
 }

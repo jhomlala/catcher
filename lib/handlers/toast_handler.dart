@@ -19,7 +19,12 @@ class ToastHandler extends ReportHandler {
       this.backgroundColor = Colors.black87,
       this.textColor = Colors.white,
       this.textSize = 12,
-      this.customMessage});
+      this.customMessage})
+      : assert(gravity != null, "gravity can't be null"),
+        assert(length != null, "length can't be null"),
+        assert(backgroundColor != null, "backgroundColor can't be null"),
+        assert(textColor != null, "textColor can't be null"),
+        assert(textSize != null, "textSize can't be null");
 
   @override
   Future<bool> handle(Report error) async {
@@ -27,7 +32,7 @@ class ToastHandler extends ReportHandler {
         msg: _getErrorMessage(error),
         toastLength: _getLength(),
         gravity: _getGravity(),
-        timeInSecForIos: _getLengthIos(),
+        timeInSecForIosWeb: _getLengthIos(),
         backgroundColor: backgroundColor,
         textColor: textColor,
         fontSize: textSize);

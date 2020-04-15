@@ -7,8 +7,10 @@ import 'package:catcher/catcher_plugin.dart';
 import 'package:path_provider/path_provider.dart';
 //import 'package:permission_handler/permission_handler.dart';
 
-main() async {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   Directory externalDir = await getExternalStorageDirectory();
+
   String path = externalDir.path.toString() + "/log.txt";
   print("Path: " + path);
 

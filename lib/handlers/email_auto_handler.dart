@@ -32,15 +32,24 @@ class EmailAutoHandler extends ReportHandler {
       this.emailTitle,
       this.emailHeader,
       this.sendHtml = true,
-      this.printLogs = false}) {
-    assert(this.smtpHost != null, "SMTP host can't be null");
-    assert(this.smtpPort != null, "SMTP port can't be null");
-    assert(this.senderEmail != null, "Sender email can't be null");
-    assert(this.senderName != null, "Sender name can't be null");
-    assert(this.senderPassword != null, "Sender password can't be null");
-    assert(this.recipients != null && this.recipients.isNotEmpty,
-        "Recipients can't be null or empty");
-  }
+      this.printLogs = false})
+      : assert(smtpHost != null, "SMTP host can't be null"),
+        assert(smtpPort != null, "SMTP port can't be null"),
+        assert(senderEmail != null, "Sender email can't be null"),
+        assert(senderName != null, "Sender name can't be null"),
+        assert(senderPassword != null, "Sender password can't be null"),
+        assert(recipients != null && recipients.isNotEmpty,
+            "Recipients can't be null or empty"),
+        assert(enableSsl != null, "enableSSL can't be null"),
+        assert(enableDeviceParameters != null,
+            "enableDeviceParameters can't be null"),
+        assert(enableApplicationParameters != null,
+            "enableApplicationParameters can't be null"),
+        assert(enableStackTrace != null, "enableStackTrace can't be null"),
+        assert(enableCustomParameters != null,
+            "enableCustomParameters can't be null"),
+        assert(sendHtml != null, "sendHtml can't be null"),
+        assert(printLogs != null, "printLogs can't be null");
 
   @override
   Future<bool> handle(Report error) {
@@ -172,7 +181,7 @@ class EmailAutoHandler extends ReportHandler {
     return buffer.toString();
   }
 
-  _printLog(String log) {
+  void _printLog(String log) {
     if (printLogs) {
       _logger.info(log);
     }

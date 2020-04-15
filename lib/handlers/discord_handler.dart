@@ -23,9 +23,15 @@ class DiscordHandler extends ReportHandler {
     this.enableApplicationParameters = false,
     this.enableStackTrace = false,
     this.enableCustomParameters = false,
-  }) {
-    assert(webhookUrl != null, "Webhook must be specified");
-  }
+  })  : assert(webhookUrl != null, "webhookUrl can't be null"),
+        assert(printLogs != null, "printLogs can't be null"),
+        assert(enableDeviceParameters != null,
+            "enableDeviceParameters can't be null"),
+        assert(enableApplicationParameters != null,
+            "enableApplicationParameters can't be null"),
+        assert(enableStackTrace != null, "enableStackTrace can't be null"),
+        assert(enableCustomParameters != null,
+            "enableCustomParameters can't be null");
 
   @override
   Future<bool> handle(Report report) async {
@@ -96,17 +102,23 @@ class DiscordHandler extends ReportHandler {
   }
 
   Future<bool> _sendContent(String content) async {
-    var data = {
-      "content": content,
-    };
-    _printLog("Sending request to Discord server...");
-    Response response = await _dio.post(webhookUrl, data: data);
-    _printLog(
-        "Server responded with code: ${response.statusCode} and message: ${response.statusMessage}");
-    return response.statusCode >= 200 && response.statusCode < 300;
+    try {
+      var data = {
+        "content": content,
+      };
+      _printLog("Sending request to Discord server...");
+      Response response = await _dio.post(webhookUrl, data: data);
+      _printLog(
+          "Server responded with code: ${response
+              .statusCode} and message: ${response.statusMessage}");
+      return response.statusCode >= 200 && response.statusCode < 300;
+    } catch (exception){
+      _printLog("Failed to send data to Discord server: $exception");
+      return false;
+    }
   }
 
-  _printLog(String log) {
+  void _printLog(String log) {
     if (printLogs) {
       _logger.info(log);
     }
