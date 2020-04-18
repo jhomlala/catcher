@@ -131,7 +131,7 @@ class Catcher with ReportModeAction {
 
   Future _setupErrorHooks() async {
     FlutterError.onError = (FlutterErrorDetails details) async {
-      _reportError(details.exception, details.stack);
+      _reportError(details.exception, details.stack, errorDetails: details);
     };
 
     Isolate.current.addErrorListener(new RawReceivePort((dynamic pair) async {
@@ -294,14 +294,14 @@ class Catcher with ReportModeAction {
     _instance._reportError(error, stackTrace);
   }
 
-  void _reportError(dynamic error, dynamic stackTrace) async {
+  void _reportError(dynamic error, dynamic stackTrace, {FlutterErrorDetails errorDetails}) async {
     if (_localizationOptions == null) {
       print("Setup localization lazily!");
       _setupLocalization();
     }
 
     Report report = Report(error, stackTrace, DateTime.now(), _deviceParameters,
-        _applicationParameters, _currentConfig.customParameters);
+        _applicationParameters, _currentConfig.customParameters, errorDetails);
     _cachedReports.add(report);
     ReportMode reportMode =
         _getReportModeFromExplicitExceptionReportModeMap(error);
