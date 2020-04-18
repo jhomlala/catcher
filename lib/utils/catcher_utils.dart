@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
+
 class CatcherUtils {
   static Future<bool> isInternetConnectionAvailable() async {
     try {
@@ -12,5 +14,9 @@ class CatcherUtils {
     } catch (_) {
       return Future.value(false);
     }
+  }
+
+  static bool isCupertinoAppAncestor(BuildContext context) {
+    return context.findAncestorWidgetOfExactType<CupertinoApp>() != null;
   }
 }

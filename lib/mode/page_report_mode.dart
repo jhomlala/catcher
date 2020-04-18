@@ -1,5 +1,7 @@
 import 'package:catcher/catcher_plugin.dart';
 import 'package:catcher/model/report_mode.dart';
+import 'package:catcher/utils/catcher_utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -44,47 +46,63 @@ class PageWidget extends StatefulWidget {
 }
 
 class PageWidgetState extends State<PageWidget> {
-  BuildContext _context;
-
   @override
   Widget build(BuildContext context) {
-    _context = context;
+    return CatcherUtils.isCupertinoAppAncestor(context)
+        ? _buildCupertinoPage()
+        : _buildMaterialPage();
+  }
+
+  Widget _buildMaterialPage() {
     return Scaffold(
       appBar: AppBar(
         title:
             Text(widget.pageReportMode.localizationOptions.pageReportModeTitle),
       ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        decoration: BoxDecoration(color: Colors.white),
-        child: Column(
-          children: [
-            Padding(padding: const EdgeInsets.only(top: 10)),
-            Text(
-              widget
-                  .pageReportMode.localizationOptions.pageReportModeDescription,
-              style: _getTextStyle(15),
-              textAlign: TextAlign.center,
-            ),
-            Padding(padding: const EdgeInsets.only(top: 20)),
-            _getStackTraceWidget(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                FlatButton(
-                  child: Text(widget
-                      .pageReportMode.localizationOptions.pageReportModeAccept),
-                  onPressed: () => _onAcceptClicked(),
-                ),
-                FlatButton(
-                  child: Text(widget
-                      .pageReportMode.localizationOptions.pageReportModeCancel),
-                  onPressed: () => _onCancelClicked(),
-                ),
-              ],
-            )
-          ],
-        ),
+      body: _buildInnerWidget(),
+    );
+  }
+
+  Widget _buildCupertinoPage() {
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        middle:
+            Text(widget.pageReportMode.localizationOptions.pageReportModeTitle),
+      ),
+      child: SafeArea(child: _buildInnerWidget()),
+    );
+  }
+
+  Widget _buildInnerWidget() {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(color: Colors.white),
+      child: Column(
+        children: [
+          Padding(padding: const EdgeInsets.only(top: 10)),
+          Text(
+            widget.pageReportMode.localizationOptions.pageReportModeDescription,
+            style: _getTextStyle(15),
+            textAlign: TextAlign.center,
+          ),
+          Padding(padding: const EdgeInsets.only(top: 20)),
+          _getStackTraceWidget(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              FlatButton(
+                child: Text(widget
+                    .pageReportMode.localizationOptions.pageReportModeAccept),
+                onPressed: () => _onAcceptClicked(),
+              ),
+              FlatButton(
+                child: Text(widget
+                    .pageReportMode.localizationOptions.pageReportModeCancel),
+                onPressed: () => _onCancelClicked(),
+              ),
+            ],
+          )
+        ],
       ),
     );
   }
@@ -128,6 +146,6 @@ class PageWidgetState extends State<PageWidget> {
   }
 
   void _closePage() {
-    Navigator.of(_context).pop();
+    Navigator.of(context).pop();
   }
 }

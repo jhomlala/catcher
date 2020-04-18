@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:catcher/catcher_plugin.dart';
 
@@ -29,13 +30,16 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return CupertinoApp(
       navigatorKey: Catcher.navigatorKey,
-      home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Plugin example app'),
-          ),
-          body: ChildWidget()),
+      home: CupertinoPageScaffold(
+        navigationBar: CupertinoNavigationBar(
+          middle: const Text('Cupertino example'),
+        ),
+        child: SafeArea(
+          child: ChildWidget(),
+        ),
+      ),
     );
   }
 }
@@ -44,8 +48,12 @@ class ChildWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: FlatButton(
-            child: Text("Generate error"), onPressed: () => generateError()));
+      color: Colors.orange,
+      child: FlatButton(
+        child: Text("Generate error"),
+        onPressed: () => generateError(),
+      ),
+    );
   }
 
   generateError() async {

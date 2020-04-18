@@ -1,5 +1,7 @@
 import 'package:catcher/model/report_mode.dart';
 import 'package:catcher/model/report.dart';
+import 'package:catcher/utils/catcher_utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DialogReportMode extends ReportMode {
@@ -10,24 +12,49 @@ class DialogReportMode extends ReportMode {
 
   Future _showDialog(Report report, BuildContext context) async {
     await Future.delayed(Duration.zero);
-    showDialog(
-      context: context,
-      builder: (BuildContext build) {
-        return AlertDialog(
-          title: Text(localizationOptions.dialogReportModeTitle),
-          content: Text(localizationOptions.dialogReportModeDescription),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(localizationOptions.dialogReportModeAccept),
-              onPressed: () => _onAcceptReportClicked(context, report),
-            ),
-            FlatButton(
-              child: Text(localizationOptions.dialogReportModeCancel),
-              onPressed: () => _onCancelReportClicked(context, report),
-            ),
-          ],
-        );
-      },
+    if (CatcherUtils.isCupertinoAppAncestor(context)) {
+      return showCupertinoDialog(
+          context: context,
+          builder: (context) => _buildCupertinoDialog(report, context));
+    } else {
+      return showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => _buildMaterialDialog(report, context));
+    }
+  }
+
+  Widget _buildCupertinoDialog(Report report, BuildContext context) {
+    return CupertinoAlertDialog(
+      title: Text(localizationOptions.dialogReportModeTitle),
+      content: Text(localizationOptions.dialogReportModeDescription),
+      actions: <Widget>[
+        CupertinoDialogAction(
+          child: Text(localizationOptions.dialogReportModeAccept),
+          onPressed: () => _onAcceptReportClicked(context, report),
+        ),
+        CupertinoDialogAction(
+          child: Text(localizationOptions.dialogReportModeCancel),
+          onPressed: () => _onCancelReportClicked(context, report),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildMaterialDialog(Report report, BuildContext context) {
+    return AlertDialog(
+      title: Text(localizationOptions.dialogReportModeTitle),
+      content: Text(localizationOptions.dialogReportModeDescription),
+      actions: <Widget>[
+        FlatButton(
+          child: Text(localizationOptions.dialogReportModeAccept),
+          onPressed: () => _onAcceptReportClicked(context, report),
+        ),
+        FlatButton(
+          child: Text(localizationOptions.dialogReportModeCancel),
+          onPressed: () => _onCancelReportClicked(context, report),
+        ),
+      ],
     );
   }
 
