@@ -1,3 +1,8 @@
+## 0.3.5
+* Use Android Lifecycle flutter_plugin_android_lifecycle by Dlani (https://github.com/dlanileonardo)
+* Pass ErrorDetails for Report, to use in CustomErrorHandler by Dlani (https://github.com/dlanileonardo)
+* Added support for cupertino apps
+
 ## 0.3.4
 * Fixed typos by Rob Halff (https://github.com/rhalff)
 * [BREAKING CHANGE] Changed customTitle to title and customDescription to description in error widget.

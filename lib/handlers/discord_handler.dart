@@ -109,10 +109,9 @@ class DiscordHandler extends ReportHandler {
       _printLog("Sending request to Discord server...");
       Response response = await _dio.post(webhookUrl, data: data);
       _printLog(
-          "Server responded with code: ${response
-              .statusCode} and message: ${response.statusMessage}");
+          "Server responded with code: ${response.statusCode} and message: ${response.statusMessage}");
       return response.statusCode >= 200 && response.statusCode < 300;
-    } catch (exception){
+    } catch (exception) {
       _printLog("Failed to send data to Discord server: $exception");
       return false;
     }
