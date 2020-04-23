@@ -294,7 +294,8 @@ class Catcher with ReportModeAction {
     _instance._reportError(error, stackTrace);
   }
 
-  void _reportError(dynamic error, dynamic stackTrace, {FlutterErrorDetails errorDetails}) async {
+  void _reportError(dynamic error, dynamic stackTrace,
+      {FlutterErrorDetails errorDetails}) async {
     if (_localizationOptions == null) {
       print("Setup localization lazily!");
       _setupLocalization();
