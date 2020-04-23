@@ -1,3 +1,7 @@
+## 0.3.6
+* Removed Android lifecycle plugin
+* Fixed Android class (support for v2 FlutterPlugin)
+
 ## 0.3.5
 * Use Android Lifecycle flutter_plugin_android_lifecycle by Dlani (https://github.com/dlanileonardo)
 * Pass ErrorDetails for Report, to use in CustomErrorHandler by Dlani (https://github.com/dlanileonardo)
