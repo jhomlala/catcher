@@ -1,19 +1,23 @@
 import 'package:catcher/model/application_profile.dart';
+import 'package:flutter/foundation.dart';
 
 class ApplicationProfileManager {
   static ApplicationProfile getApplicationProfile() {
-    if (bool.fromEnvironment("dart.vm.product") == true) {
+    if (kReleaseMode) {
       return ApplicationProfile.release;
-    } else if (_isDebug()) {
+    }
+    if (kDebugMode) {
       return ApplicationProfile.debug;
-    } else {
+    }
+    if (kProfileMode) {
       return ApplicationProfile.profile;
     }
+
+    ///Fallback
+    return ApplicationProfile.debug;
   }
 
-  static bool _isDebug() {
-    bool debugFlag = false;
-    assert(debugFlag = true);
-    return debugFlag;
+  static bool isWeb() {
+    return kIsWeb;
   }
 }

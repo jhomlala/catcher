@@ -1,6 +1,6 @@
 import 'dart:async';
+
 import 'dart:io';
-import 'dart:isolate';
 
 import 'package:catcher/core/application_profile_manager.dart';
 import 'package:catcher/handlers/report_handler.dart';
@@ -14,12 +14,14 @@ import 'package:catcher/utils/catcher_error_widget.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 import 'package:package_info/package_info.dart';
 
 class Catcher with ReportModeAction {
   static Catcher _instance;
   static GlobalKey<NavigatorState> _navigatorKey;
+  static const _platform = const MethodChannel('jhomlala/catcherweb');
 
   final Widget rootWidget;
   final CatcherOptions releaseConfig;
@@ -56,6 +58,7 @@ class Catcher with ReportModeAction {
     _setupCurrentConfig();
     _setupErrorHooks();
     _setupReportModeActionInReportMode();
+
     _loadDeviceInfo();
     _loadApplicationInfo();
 
@@ -134,13 +137,13 @@ class Catcher with ReportModeAction {
       _reportError(details.exception, details.stack, errorDetails: details);
     };
 
-    Isolate.current.addErrorListener(new RawReceivePort((dynamic pair) async {
+    /*Isolate.current.addErrorListener(new RawReceivePort((dynamic pair) async {
       var isolateError = pair as List<dynamic>;
       _reportError(
         isolateError.first.toString(),
         isolateError.last.toString(),
       );
-    }).sendPort);
+    }).sendPort);*/
 
     runZoned(() async {
       runApp(rootWidget);
@@ -162,16 +165,33 @@ class Catcher with ReportModeAction {
   }
 
   void _loadDeviceInfo() {
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    if (Platform.isAndroid) {
-      deviceInfo.androidInfo.then((androidInfo) {
-        _loadAndroidParameters(androidInfo);
-      });
+    if (ApplicationProfileManager.isWeb()) {
+      _loadWebParameters();
     } else {
-      deviceInfo.iosInfo.then((iosInfo) {
-        _loadIosParameters(iosInfo);
-      });
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      if (Platform.isAndroid) {
+        deviceInfo.androidInfo.then((androidInfo) {
+          _loadAndroidParameters(androidInfo);
+        });
+      } else {
+        deviceInfo.iosInfo.then((iosInfo) {
+          _loadIosParameters(iosInfo);
+        });
+      }
     }
+  }
+
+  void _loadWebParameters() async {
+    String userAgent = await _platform.invokeMethod("getUserAgent");
+    String language = await _platform.invokeMethod("getLanguage");
+    String vendor = await _platform.invokeMethod("getVendor");
+    String platform = await _platform.invokeMethod("getPlatform");
+    bool cookieEnabled = await _platform.invokeMethod("getCookieEnabled");
+    _deviceParameters["userAgent"] = userAgent;
+    _deviceParameters["language"] = language;
+    _deviceParameters["vendor"] = vendor;
+    _deviceParameters["platform"] = platform;
+    _deviceParameters["cookieEnabled"] = cookieEnabled.toString();
   }
 
   void _loadAndroidParameters(AndroidDeviceInfo androidDeviceInfo) {

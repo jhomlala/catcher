@@ -1,3 +1,5 @@
+
+
 import 'package:catcher/handlers/console_handler.dart';
 import 'package:catcher/handlers/report_handler.dart';
 import 'package:catcher/mode/dialog_report_mode.dart';

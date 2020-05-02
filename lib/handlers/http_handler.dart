@@ -32,10 +32,10 @@ class HttpHandler extends ReportHandler {
 
   @override
   Future<bool> handle(Report error) async {
-    if (!(await CatcherUtils.isInternetConnectionAvailable())) {
+    /*if (!(await CatcherUtils.isInternetConnectionAvailable())) {
       _printLog("No internet connection available");
       return false;
-    }
+    }*/
 
     if (requestType == HttpRequestType.post) {
       return _sendPost(error);
