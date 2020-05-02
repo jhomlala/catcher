@@ -3,8 +3,7 @@ import 'dart:io';
 
 import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
-import 'package:catcher/handlers/report_handler.dart';
-import 'package:flutter/foundation.dart';
+import 'package:catcher/model/report_handler.dart';
 import 'package:logging/logging.dart';
 
 class FileHandler extends ReportHandler {

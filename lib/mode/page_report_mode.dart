@@ -1,4 +1,5 @@
 import 'package:catcher/catcher_plugin.dart';
+import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report_mode.dart';
 import 'package:catcher/utils/catcher_utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -31,6 +32,10 @@ class PageReportMode extends ReportMode {
   bool isContextRequired() {
     return true;
   }
+
+  @override
+  List<PlatformType> getSupportedPlatforms() =>
+      [PlatformType.Web, PlatformType.Android, PlatformType.iOS];
 }
 
 class PageWidget extends StatefulWidget {

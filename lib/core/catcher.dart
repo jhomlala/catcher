@@ -4,7 +4,7 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:catcher/core/application_profile_manager.dart';
-import 'package:catcher/handlers/report_handler.dart';
+import 'package:catcher/model/report_handler.dart';
 import 'package:catcher/model/application_profile.dart';
 import 'package:catcher/model/catcher_options.dart';
 import 'package:catcher/mode/report_mode_action_confirmed.dart';
@@ -342,6 +342,10 @@ class Catcher with ReportModeAction {
     } else {
       reportMode = _currentConfig.reportMode;
     }
+    if (!isReportModeSupportedInPlatform(report, reportMode)) {
+      _logger.warning(
+          "Couldn't use $reportMode because ${report.platformType} is unsupported");
+    }
 
     if (reportMode.isContextRequired()) {
       if (_isContextValid()) {
@@ -353,6 +357,17 @@ class Catcher with ReportModeAction {
     } else {
       reportMode.requestAction(report, null);
     }
+  }
+
+  bool isReportModeSupportedInPlatform(Report report, ReportMode reportMode) {
+    if (reportMode == null) {
+      return false;
+    }
+    if (reportMode.getSupportedPlatforms() == null ||
+        reportMode.getSupportedPlatforms().isEmpty) {
+      return false;
+    }
+    return reportMode.getSupportedPlatforms().contains(report.platformType);
   }
 
   ReportMode _getReportModeFromExplicitExceptionReportModeMap(dynamic error) {

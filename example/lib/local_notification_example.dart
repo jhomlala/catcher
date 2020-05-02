@@ -1,4 +1,5 @@
 import 'package:catcher/mode/report_mode_action_confirmed.dart';
+import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report_mode.dart';
 import 'package:catcher/model/report.dart';
 import 'package:flutter/material.dart';
@@ -66,9 +67,9 @@ class NotificationReportMode extends ReportMode {
 
   NotificationReportMode(
       {this.channelId = "Catcher",
-        this.channelName = "Catcher",
-        this.channelDescription = "Catcher default channel",
-        this.icon = "@mipmap/ic_launcher"});
+      this.channelName = "Catcher",
+      this.channelDescription = "Catcher default channel",
+      this.icon = "@mipmap/ic_launcher"});
 
   @override
   setReportModeAction(ReportModeAction reportModeAction) {
@@ -116,4 +117,8 @@ class NotificationReportMode extends ReportMode {
         platformChannelSpecifics,
         payload: "");
   }
+
+  @override
+  List<PlatformType> getSupportedPlatforms() =>
+      [PlatformType.Android, PlatformType.iOS];
 }
