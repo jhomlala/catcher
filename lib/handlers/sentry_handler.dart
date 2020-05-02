@@ -1,4 +1,5 @@
 import 'package:catcher/handlers/report_handler.dart';
+import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
 import 'package:logging/logging.dart';
 import 'package:sentry/sentry.dart';
@@ -90,4 +91,8 @@ class SentryHandler extends ReportHandler {
       _logger.info(message);
     }
   }
+
+  @override
+  List<PlatformType> getSupportedPlatforms() =>
+      [PlatformType.Web, PlatformType.Android, PlatformType.iOS];
 }

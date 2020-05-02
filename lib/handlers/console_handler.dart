@@ -1,5 +1,7 @@
+import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
 import 'package:catcher/handlers/report_handler.dart';
+import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
 
 class ConsoleHandler extends ReportHandler {
@@ -24,6 +26,11 @@ class ConsoleHandler extends ReportHandler {
 
   @override
   Future<bool> handle(Report error) {
+    if (!isReportHandlerSupportedInPlatform(error)) {
+      print(
+          "Console handler in not supported for ${describeEnum(error.platformType)} platform");
+      return Future.value(false);
+    }
     _logger.info(
         "============================== CATCHER LOG ==============================");
     _logger.info("Crash occured on ${error.dateTime}");
@@ -78,4 +85,8 @@ class ConsoleHandler extends ReportHandler {
       _logger.info("$entry");
     }
   }
+
+  @override
+  List<PlatformType> getSupportedPlatforms() =>
+      [ PlatformType.Android, PlatformType.iOS];
 }

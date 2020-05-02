@@ -1,4 +1,5 @@
 import 'package:catcher/handlers/report_handler.dart';
+import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
 import 'package:catcher/utils/catcher_utils.dart';
 import 'package:dio/dio.dart';
@@ -122,4 +123,8 @@ class DiscordHandler extends ReportHandler {
       _logger.info(log);
     }
   }
+
+  @override
+  List<PlatformType> getSupportedPlatforms() =>
+      [PlatformType.Web, PlatformType.Android, PlatformType.iOS];
 }

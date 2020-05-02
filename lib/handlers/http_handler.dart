@@ -79,4 +79,8 @@ class HttpHandler extends ReportHandler {
   String toString() {
     return 'HttpHandler';
   }
+
+  @override
+  List<PlatformType> getSupportedPlatforms() =>
+      [PlatformType.Web, PlatformType.Android, PlatformType.iOS];
 }

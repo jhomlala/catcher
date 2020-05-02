@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
 import 'package:catcher/handlers/report_handler.dart';
 import 'package:logging/logging.dart';
@@ -146,4 +147,8 @@ class FileHandler extends ReportHandler {
       _logger.info(log);
     }
   }
+
+  @override
+  List<PlatformType> getSupportedPlatforms() =>
+      [PlatformType.Web, PlatformType.Android, PlatformType.iOS];
 }
