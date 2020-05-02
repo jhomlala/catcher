@@ -25,32 +25,28 @@ class ConsoleHandler extends ReportHandler {
             "enableCustomParameters can't be null");
 
   @override
-  Future<bool> handle(Report error) {
-    if (!isReportHandlerSupportedInPlatform(error)) {
-      print(
-          "Console handler in not supported for ${describeEnum(error.platformType)} platform");
-      return Future.value(false);
-    }
+  Future<bool> handle(Report report) {
+
     _logger.info(
         "============================== CATCHER LOG ==============================");
-    _logger.info("Crash occured on ${error.dateTime}");
+    _logger.info("Crash occured on ${report.dateTime}");
     _logger.info("");
     if (enableDeviceParameters) {
-      _printDeviceParametersFormatted(error.deviceParameters);
+      _printDeviceParametersFormatted(report.deviceParameters);
       _logger.info("");
     }
     if (enableApplicationParameters) {
-      _printApplicationParametersFormatted(error.applicationParameters);
+      _printApplicationParametersFormatted(report.applicationParameters);
       _logger.info("");
     }
     _logger.info("---------- ERROR ----------");
-    _logger.info("${error.error}");
+    _logger.info("${report.error}");
     _logger.info("");
     if (enableStackTrace) {
-      _printStackTraceFormatted(error.stackTrace);
+      _printStackTraceFormatted(report.stackTrace);
     }
     if (enableCustomParameters) {
-      _printCustomParametersFormatted(error.customParameters);
+      _printCustomParametersFormatted(report.customParameters);
     }
     _logger.info(
         "======================================================================");
@@ -88,5 +84,5 @@ class ConsoleHandler extends ReportHandler {
 
   @override
   List<PlatformType> getSupportedPlatforms() =>
-      [ PlatformType.Android, PlatformType.iOS];
+      [PlatformType.Android, PlatformType.iOS, PlatformType.Web];
 }

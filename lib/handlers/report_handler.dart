@@ -7,7 +7,4 @@ abstract class ReportHandler {
   Future<bool> handle(Report error);
 
   List<PlatformType> getSupportedPlatforms();
-
-  bool isReportHandlerSupportedInPlatform(Report report) =>
-      getSupportedPlatforms().contains(report.platformType);
 }

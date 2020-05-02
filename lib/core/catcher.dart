@@ -386,27 +386,49 @@ class Catcher with ReportModeAction {
         _getReportHandlerFromExplicitExceptionHandlerMap(report.error);
     if (reportHandler != null) {
       _logger.info("Using explicit report handler");
-      reportHandler.handle(report);
+      _handleReport(report, reportHandler);
       return;
     }
 
     for (ReportHandler handler in _currentConfig.handlers) {
-      handler.handle(report).catchError((handlerError) {
-        _logger.warning(
-            "Error occured in ${handler.toString()}: ${handlerError.toString()}");
-      }).then((result) {
-        print("Report result: " + result.toString());
-        if (!result) {
-          _logger.warning("${handler.toString()} failed to report error");
-        } else {
-          _cachedReports.remove(report);
-        }
-      }).timeout(Duration(milliseconds: _currentConfig.handlerTimeout),
-          onTimeout: () {
-        _logger.warning(
-            "${handler.toString()} failed to report error because of timeout");
-      });
+      _handleReport(report, handler);
     }
+  }
+
+  void _handleReport(Report report, ReportHandler reportHandler) {
+    if (!isReportHandlerSupportedInPlatform(report, reportHandler)) {
+      _logger.warning(
+          "File handler in not supported for ${describeEnum(report.platformType)} platform");
+      return;
+    }
+
+    reportHandler.handle(report).catchError((handlerError) {
+      _logger.warning(
+          "Error occured in ${reportHandler.toString()}: ${handlerError.toString()}");
+    }).then((result) {
+      print("Report result: $result");
+      if (!result) {
+        _logger.warning("${reportHandler.toString()} failed to report error");
+      } else {
+        _cachedReports.remove(report);
+      }
+    }).timeout(Duration(milliseconds: _currentConfig.handlerTimeout),
+        onTimeout: () {
+      _logger.warning(
+          "${reportHandler.toString()} failed to report error because of timeout");
+    });
+  }
+
+  bool isReportHandlerSupportedInPlatform(
+      Report report, ReportHandler reportHandler) {
+    if (reportHandler == null) {
+      return false;
+    }
+    if (reportHandler.getSupportedPlatforms() == null ||
+        reportHandler.getSupportedPlatforms().isEmpty) {
+      return false;
+    }
+    return reportHandler.getSupportedPlatforms().contains(report.platformType);
   }
 
   @override

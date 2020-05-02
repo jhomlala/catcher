@@ -14,6 +14,7 @@ class CatcherWeb {
   }
 
   Future<dynamic> handleMethodCall(MethodCall call) async {
+
     switch (call.method) {
       case "getUserAgent":
         return window.navigator.userAgent;
