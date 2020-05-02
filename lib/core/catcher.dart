@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:catcher/core/application_profile_manager.dart';
 import 'package:catcher/handlers/report_handler.dart';
@@ -8,6 +9,7 @@ import 'package:catcher/model/application_profile.dart';
 import 'package:catcher/model/catcher_options.dart';
 import 'package:catcher/mode/report_mode_action_confirmed.dart';
 import 'package:catcher/model/localization_options.dart';
+import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
 import 'package:catcher/model/report_mode.dart';
 import 'package:catcher/utils/catcher_error_widget.dart';
@@ -136,14 +138,15 @@ class Catcher with ReportModeAction {
     FlutterError.onError = (FlutterErrorDetails details) async {
       _reportError(details.exception, details.stack, errorDetails: details);
     };
-
-    /*Isolate.current.addErrorListener(new RawReceivePort((dynamic pair) async {
-      var isolateError = pair as List<dynamic>;
-      _reportError(
-        isolateError.first.toString(),
-        isolateError.last.toString(),
-      );
-    }).sendPort);*/
+    if (!ApplicationProfileManager.isWeb()) {
+      Isolate.current.addErrorListener(new RawReceivePort((dynamic pair) async {
+        var isolateError = pair as List<dynamic>;
+        _reportError(
+          isolateError.first.toString(),
+          isolateError.last.toString(),
+        );
+      }).sendPort);
+    }
 
     runZoned(() async {
       runApp(rootWidget);
@@ -238,13 +241,14 @@ class Catcher with ReportModeAction {
   }
 
   void _loadApplicationInfo() {
+    _applicationParameters["environment"] =
+        describeEnum(ApplicationProfileManager.getApplicationProfile());
+
     PackageInfo.fromPlatform().then((packageInfo) {
       _applicationParameters["version"] = packageInfo.version;
       _applicationParameters["appName"] = packageInfo.appName;
       _applicationParameters["buildNumber"] = packageInfo.buildNumber;
       _applicationParameters["packageName"] = packageInfo.packageName;
-      _applicationParameters["environment"] =
-          ApplicationProfileManager.getApplicationProfile().toString();
     });
   }
 
@@ -321,8 +325,15 @@ class Catcher with ReportModeAction {
       _setupLocalization();
     }
 
-    Report report = Report(error, stackTrace, DateTime.now(), _deviceParameters,
-        _applicationParameters, _currentConfig.customParameters, errorDetails);
+    Report report = Report(
+        error,
+        stackTrace,
+        DateTime.now(),
+        _deviceParameters,
+        _applicationParameters,
+        _currentConfig.customParameters,
+        errorDetails,
+        _getPlatformType());
     _cachedReports.add(report);
     ReportMode reportMode =
         _getReportModeFromExplicitExceptionReportModeMap(error);
@@ -435,5 +446,18 @@ class Catcher with ReportModeAction {
         maxWidthForSmallMode: maxWidthForSmallMode,
       );
     };
+  }
+
+  PlatformType _getPlatformType() {
+    if (ApplicationProfileManager.isWeb()) {
+      return PlatformType.Web;
+    }
+    if (ApplicationProfileManager.isAndroid()) {
+      return PlatformType.Android;
+    }
+    if (ApplicationProfileManager.isIos()) {
+      return PlatformType.iOS;
+    }
+    return PlatformType.Unknown;
   }
 }

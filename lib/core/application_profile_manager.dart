@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:catcher/model/application_profile.dart';
 import 'package:flutter/foundation.dart';
 
@@ -17,7 +19,9 @@ class ApplicationProfileManager {
     return ApplicationProfile.debug;
   }
 
-  static bool isWeb() {
-    return kIsWeb;
-  }
+  static bool isWeb() => kIsWeb;
+
+  static bool isAndroid() => Platform.isAndroid;
+
+  static bool isIos() => Platform.isIOS;
 }
