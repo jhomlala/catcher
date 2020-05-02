@@ -24,4 +24,4 @@ flutter:
     platforms:
       web:
         pluginClass: CatcherWeb
-        fileName: catcher_web.dart
+        fileName: core/catcher_web.dart

@@ -1,7 +1,6 @@
 import 'package:catcher/handlers/report_handler.dart';
 import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
-import 'package:flutter/foundation.dart';
 import 'package:logging/logging.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
@@ -54,8 +53,8 @@ class EmailAutoHandler extends ReportHandler {
         assert(printLogs != null, "printLogs can't be null");
 
   @override
-  Future<bool> handle(Report report) {
-    return _sendMail(report);
+  Future<bool> handle(Report error) {
+    return _sendMail(error);
   }
 
   Future<bool> _sendMail(Report report) async {
@@ -191,5 +190,5 @@ class EmailAutoHandler extends ReportHandler {
 
   @override
   List<PlatformType> getSupportedPlatforms() =>
-      [PlatformType.Web, PlatformType.Android, PlatformType.iOS];
+      [PlatformType.Android, PlatformType.iOS];
 }

@@ -43,11 +43,9 @@ class SlackHandler extends ReportHandler {
   @override
   Future<bool> handle(Report report) async {
     try {
-      if (report.platformType != PlatformType.Web) {
-        if (!(await CatcherUtils.isInternetConnectionAvailable())) {
-          _printLog("No internet connection available");
-          return false;
-        }
+      if (!(await CatcherUtils.isInternetConnectionAvailable())) {
+        _printLog("No internet connection available");
+        return false;
       }
 
       String message = _buildMessage(report);
@@ -109,5 +107,5 @@ class SlackHandler extends ReportHandler {
 
   @override
   List<PlatformType> getSupportedPlatforms() =>
-      [PlatformType.Web, PlatformType.Android, PlatformType.iOS];
+      [PlatformType.Android, PlatformType.iOS];
 }
