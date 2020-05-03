@@ -23,7 +23,7 @@ import 'package:package_info/package_info.dart';
 class Catcher with ReportModeAction {
   static Catcher _instance;
   static GlobalKey<NavigatorState> _navigatorKey;
-  static const _platform = const MethodChannel('jhomlala/catcherweb');
+  static const _methodChannel = const MethodChannel('com.jhomlala/catcher/web');
 
   final Widget rootWidget;
   final CatcherOptions releaseConfig;
@@ -138,6 +138,8 @@ class Catcher with ReportModeAction {
     FlutterError.onError = (FlutterErrorDetails details) async {
       _reportError(details.exception, details.stack, errorDetails: details);
     };
+
+    ///Web doesn't have Isolate error listener support
     if (!ApplicationProfileManager.isWeb()) {
       Isolate.current.addErrorListener(new RawReceivePort((dynamic pair) async {
         var isolateError = pair as List<dynamic>;
@@ -171,6 +173,7 @@ class Catcher with ReportModeAction {
     if (ApplicationProfileManager.isWeb()) {
       _loadWebParameters();
     } else {
+      ///There is no device info web implementation
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
       if (Platform.isAndroid) {
         deviceInfo.androidInfo.then((androidInfo) {
@@ -185,11 +188,11 @@ class Catcher with ReportModeAction {
   }
 
   void _loadWebParameters() async {
-    String userAgent = await _platform.invokeMethod("getUserAgent");
-    String language = await _platform.invokeMethod("getLanguage");
-    String vendor = await _platform.invokeMethod("getVendor");
-    String platform = await _platform.invokeMethod("getPlatform");
-    bool cookieEnabled = await _platform.invokeMethod("getCookieEnabled");
+    String userAgent = await _methodChannel.invokeMethod("getUserAgent");
+    String language = await _methodChannel.invokeMethod("getLanguage");
+    String vendor = await _methodChannel.invokeMethod("getVendor");
+    String platform = await _methodChannel.invokeMethod("getPlatform");
+    bool cookieEnabled = await _methodChannel.invokeMethod("getCookieEnabled");
     _deviceParameters["userAgent"] = userAgent;
     _deviceParameters["language"] = language;
     _deviceParameters["vendor"] = vendor;
@@ -244,12 +247,15 @@ class Catcher with ReportModeAction {
     _applicationParameters["environment"] =
         describeEnum(ApplicationProfileManager.getApplicationProfile());
 
-    PackageInfo.fromPlatform().then((packageInfo) {
-      _applicationParameters["version"] = packageInfo.version;
-      _applicationParameters["appName"] = packageInfo.appName;
-      _applicationParameters["buildNumber"] = packageInfo.buildNumber;
-      _applicationParameters["packageName"] = packageInfo.packageName;
-    });
+    ///There is no package info web implementation
+    if (!ApplicationProfileManager.isWeb()) {
+      PackageInfo.fromPlatform().then((packageInfo) {
+        _applicationParameters["version"] = packageInfo.version;
+        _applicationParameters["appName"] = packageInfo.appName;
+        _applicationParameters["buildNumber"] = packageInfo.buildNumber;
+        _applicationParameters["packageName"] = packageInfo.packageName;
+      });
+    }
   }
 
   ///We need to setup localizations lazily because context needed to setup these
@@ -321,7 +327,7 @@ class Catcher with ReportModeAction {
   void _reportError(dynamic error, dynamic stackTrace,
       {FlutterErrorDetails errorDetails}) async {
     if (_localizationOptions == null) {
-      print("Setup localization lazily!");
+      _logger.info("Setup localization lazily!");
       _setupLocalization();
     }
 
@@ -344,7 +350,8 @@ class Catcher with ReportModeAction {
     }
     if (!isReportModeSupportedInPlatform(report, reportMode)) {
       _logger.warning(
-          "Couldn't use $reportMode because ${report.platformType} is unsupported");
+          "$reportMode in not supported for ${describeEnum(report.platformType)} platform");
+      return;
     }
 
     if (reportMode.isContextRequired()) {
@@ -413,7 +420,7 @@ class Catcher with ReportModeAction {
   void _handleReport(Report report, ReportHandler reportHandler) {
     if (!isReportHandlerSupportedInPlatform(report, reportHandler)) {
       _logger.warning(
-          "File handler in not supported for ${describeEnum(report.platformType)} platform");
+          "$reportHandler in not supported for ${describeEnum(report.platformType)} platform");
       return;
     }
 
@@ -421,7 +428,7 @@ class Catcher with ReportModeAction {
       _logger.warning(
           "Error occured in ${reportHandler.toString()}: ${handlerError.toString()}");
     }).then((result) {
-      print("Report result: $result");
+      _logger.info("Report result: $result");
       if (!result) {
         _logger.warning("${reportHandler.toString()} failed to report error");
       } else {

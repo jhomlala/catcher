@@ -12,7 +12,6 @@ void main() async {
   Directory externalDir = await getExternalStorageDirectory();
 
   String path = externalDir.path.toString() + "/log.txt";
-  print("Path: " + path);
 
   CatcherOptions debugOptions =
       CatcherOptions(DialogReportMode(), [FileHandler(File(path))]);
