@@ -1,3 +1,8 @@
+## 0.3.7
+* Added Web support
+* [BREAKING CHANGE] Added new abstract method (getSupportPlatform) for ReportHandler and ReportMode
+* General refactor
+
 ## 0.3.6
 * Removed Android lifecycle plugin
 * Fixed Android class (support for v2 FlutterPlugin)
