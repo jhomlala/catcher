@@ -35,7 +35,7 @@ import 'package:catcher/catcher_plugin.dart';
 ```
 
 ## Table of contents
-[Platform support](#platform-support)
+[Platform support](#platform-support)   
 [Basic example](#basic-example)  
 [Catcher usage](#catcher-usage)  
 [Adding navigator key](#adding-navigator-key)  
