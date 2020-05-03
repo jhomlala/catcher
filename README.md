@@ -234,7 +234,7 @@ I/flutter ( 7457): [2019-02-09 12:40:21.536375 | ConsoleHandler | INFO]
 I/flutter ( 7457): [2019-02-09 12:40:21.536539 | ConsoleHandler | INFO] ======================================================================
 ```
 <p align="center">
-  <i>Console handler output/i>
+  <i>Console handler output</i>
 </p>
 
 ## Catcher usage
