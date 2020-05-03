@@ -12,8 +12,8 @@
 
 Catcher is Flutter plugin which automatically catches error/exceptions and handle them. Catcher offers mutliple way to handle errors.
 Catcher is heavily inspired from ACRA: https://github.com/ACRA/acra
-Catcher is solution for developers which want to get errors informations without using Crashlytics or Sentry product. It's also great if you have
-your own backend where you're storing application logs, so you can manipulate it anyway you want.  
+Catcher is solution for developers which want to get errors informations without using Crashlytics or Sentry product. It's also great if you have your own backend where you're storing application logs, so you can manipulate it anyway you want.  
+Catcher supports Android, iOS and Web platforms.
 
 
 ## Install
@@ -35,6 +35,7 @@ import 'package:catcher/catcher_plugin.dart';
 ```
 
 ## Table of contents
+[Platform support](#platform-support)
 [Basic example](#basic-example)  
 [AndroidX](#androidx)  
 [Catcher usage](#catcher-usage)  
@@ -65,6 +66,29 @@ import 'package:catcher/catcher_plugin.dart';
 [Explicit exception report mode map](#explicit-exception-report-mode-map)  
 [Error widget](#error-widget)  
 [Current config](#current-config)
+
+## Platform support
+Catcher supports Android, iOS and Web platforms. Due to issues with web framework state and missing plugins, web implementation offers less features than mobile. Here is features support table:
+|           Feature           | Android | iOS | Web |
+|:---------------------------:|:-------:|:---:|:---:|
+|  Application data in report |    ✔️    |  ✔️  |  ❌  |
+|       Console handler       |    ✔️    |  ✔️  |  ✔️  |
+|       Discord handler       |    ✔️    |  ✔️  |  ✔️  |
+|      Email auto handler     |    ✔️    |  ✔️  |  ❌  |
+|         File handler        |    ✔️    |  ✔️  |  ❌  |
+|         Http handler        |    ✔️    |  ✔️  |  ✔️  |
+|        Sentry handler       |    ✔️    |  ✔️  |  ✔️  |
+|        Slack handler        |    ✔️    |  ✔️  |  ❌  |
+|        Toast handler        |    ✔️    |  ✔️  |  ✔️  |
+|      Dialog report mode     |    ✔️    |  ✔️  |  ✔️  |
+|       Page report mode      |    ✔️    |  ✔️  |  ✔️  |
+|      Silent report mode     |    ✔️    |  ✔️  |  ✔️  |
+|   Explicit report mode map  |    ✔️    |  ✔️  |  ✔️  |
+| Explicit report handler map |    ✔️    |  ✔️  |  ✔️  |
+|         Error widget        |    ✔️    |  ✔️  |  ✔️  |
+
+Features supported may change in future, due to web framework and plugins intensive development.
+
 
 ## Basic example
 
