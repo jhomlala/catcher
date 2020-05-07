@@ -1,3 +1,4 @@
+import 'package:catcher/model/platform_type.dart';
 import 'package:flutter/material.dart';
 import 'package:catcher/catcher_plugin.dart';
 
@@ -68,6 +69,9 @@ class CustomPageReportMode extends ReportMode {
   bool isContextRequired() {
     return true;
   }
+
+  @override
+  List<PlatformType> getSupportedPlatforms() => [PlatformType.Web,PlatformType.Android,PlatformType.iOS];
 }
 
 class CustomPage extends StatelessWidget {

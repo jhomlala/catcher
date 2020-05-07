@@ -1,4 +1,5 @@
-import 'package:catcher/handlers/report_handler.dart';
+import 'package:catcher/model/report_handler.dart';
+import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
 import 'package:logging/logging.dart';
 import 'package:sentry/sentry.dart';
@@ -55,18 +56,30 @@ class SentryHandler extends ReportHandler {
     }
   }
 
-  Event buildEvent(Report error, Map<String, dynamic> tags) {
-    String applicationVersion = error.applicationParameters["appName"] +
-        " " +
-        error.applicationParameters["version"];
+  String _getApplicationVersion(Report report) {
+    String applicationVersion = "";
+    var applicationParameters = report.applicationParameters;
+    if (applicationParameters.containsKey("appName")) {
+      applicationVersion += applicationParameters["appName"];
+    }
+    if (applicationParameters.containsKey("version")) {
+      applicationVersion += " ${applicationParameters["version"]}";
+    }
+    if (applicationVersion.isEmpty) {
+      applicationVersion = "?";
+    }
+    return applicationVersion;
+  }
+
+  Event buildEvent(Report report, Map<String, dynamic> tags) {
     return Event(
       loggerName: "Catcher",
       serverName: "Catcher",
-      release: applicationVersion,
-      environment: error.applicationParameters["environment"],
+      release: _getApplicationVersion(report),
+      environment: report.applicationParameters["environment"],
       message: "Error handled by Catcher",
-      exception: error.error,
-      stackTrace: error.stackTrace,
+      exception: report.error,
+      stackTrace: report.stackTrace,
       level: SeverityLevel.error,
       culprit: "",
       tags: changeToSentryMap(tags),
@@ -90,4 +103,8 @@ class SentryHandler extends ReportHandler {
       _logger.info(message);
     }
   }
+
+  @override
+  List<PlatformType> getSupportedPlatforms() =>
+      [PlatformType.Web, PlatformType.Android, PlatformType.iOS];
 }

@@ -12,8 +12,8 @@
 
 Catcher is Flutter plugin which automatically catches error/exceptions and handle them. Catcher offers mutliple way to handle errors.
 Catcher is heavily inspired from ACRA: https://github.com/ACRA/acra
-Catcher is solution for developers which want to get errors informations without using Crashlytics or Sentry product. It's also great if you have
-your own backend where you're storing application logs, so you can manipulate it anyway you want.  
+Catcher is solution for developers which want to get errors informations without using Crashlytics or Sentry product. It's also great if you have your own backend where you're storing application logs, so you can manipulate it anyway you want.  
+Catcher supports Android, iOS and Web platforms.
 
 
 ## Install
@@ -21,7 +21,7 @@ your own backend where you're storing application logs, so you can manipulate it
 Add this line to your **pubspec.yaml**:
 ```yaml
 dependencies:
-  catcher: ^0.3.6
+  catcher: ^0.3.7
 ```
 
 Then run this command:
@@ -35,8 +35,8 @@ import 'package:catcher/catcher_plugin.dart';
 ```
 
 ## Table of contents
+[Platform support](#platform-support)   
 [Basic example](#basic-example)  
-[AndroidX](#androidx)  
 [Catcher usage](#catcher-usage)  
 [Adding navigator key](#adding-navigator-key)  
 [Catcher configuration](#catcher-configuration)    
@@ -66,21 +66,55 @@ import 'package:catcher/catcher_plugin.dart';
 [Error widget](#error-widget)  
 [Current config](#current-config)
 
-## Basic example
+## Platform support
+Catcher supports Android, iOS and Web platforms. Due to issues with web framework state and missing plugins, web implementation offers less features than mobile. Here is features support table:
+|           Feature           | Android | iOS | Web |
+|:---------------------------:|:-------:|:---:|:---:|
+|  Application data in report |    ✔️    |  ✔️  |  ❌  |
+|       Console handler       |    ✔️    |  ✔️  |  ✔️  |
+|       Discord handler       |    ✔️    |  ✔️  |  ✔️  |
+|      Email auto handler     |    ✔️    |  ✔️  |  ❌  |
+|         File handler        |    ✔️    |  ✔️  |  ❌  |
+|         Http handler        |    ✔️    |  ✔️  |  ✔️  |
+|        Sentry handler       |    ✔️    |  ✔️  |  ✔️  |
+|        Slack handler        |    ✔️    |  ✔️  |  ❌  |
+|        Toast handler        |    ✔️    |  ✔️  |  ✔️  |
+|      Dialog report mode     |    ✔️    |  ✔️  |  ✔️  |
+|       Page report mode      |    ✔️    |  ✔️  |  ✔️  |
+|      Silent report mode     |    ✔️    |  ✔️  |  ✔️  |
+|   Explicit report mode map  |    ✔️    |  ✔️  |  ✔️  |
+| Explicit report handler map |    ✔️    |  ✔️  |  ✔️  |
+|         Error widget        |    ✔️    |  ✔️  |  ✔️  |
 
+Features supported may change in future, due to web framework and plugins intensive development.
+
+
+## Basic example
 Basic example utilizes debug config with Dialog Report Mode and Console Handler and release config with Dialog Report Mode and Email Manual Handler.
+
+To start using Catcher, you have to:   
+1. Create Catcher configuration (you can use only debug config at start)   
+2. Create Catcher instance and pass your root widget along with catcher configuration   
+3. Add navigator key to MaterialApp or CupertinoApp   
+   
+Here is complete example:   
 
 ```dart
 import 'package:flutter/material.dart';
 import 'package:catcher/catcher_plugin.dart';
 
 main() {
+  /// STEP 1. Create catcher configuration. 
+  /// Debug configuration with dialog report mode and console handler. It will show dialog and once user accepts it, error will be shown   /// in console.
   CatcherOptions debugOptions =
       CatcherOptions(DialogReportMode(), [ConsoleHandler()]);
+      
+  /// Release configuration. Same as above, but once user accepts dialog, user will be propmpted to send email with crash to support.
   CatcherOptions releaseOptions = CatcherOptions(DialogReportMode(), [
-    EmailManualHandler(["recipient@email.com"])
+    EmailManualHandler(["support@email.com"])
   ]);
 
+  /// STEP 2. Pass your root widget (MyApp) along with Catcher configuration:
   Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
 }
 
@@ -98,6 +132,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      /// STEP 3. Add navigator key from Catcher. It will be used to navigate user to report page or to show dialog.
       navigatorKey: Catcher.navigatorKey,
       home: Scaffold(
           appBar: AppBar(
@@ -123,9 +158,7 @@ class ChildWidget extends StatelessWidget {
 }
 
 ```
-Here in this code, Catcher will be initiated with 3 parameters: root widget which is MyApp, debug configuration and release configuration. 
-Debug configuration has dialog report mode and console handler, release configuration has dialog report mode and manual email handler.
-If you run this code you will see screen with "Generate error" button on middle of the screen. 
+If you run this code you will see screen with "Generate error" button on the screen. 
 After clicking on it, it will generate test exception, which will be handled by Catcher. Before Catcher process exception to handler, it will
 show dialog with information for user. This dialog is shown because we have used DialogReportHandler. Once user confirms action in this dialog,
 report will be send to console handler which will log to console error informations.
@@ -200,8 +233,9 @@ I/flutter ( 7457): [2019-02-09 12:40:21.536271 | ConsoleHandler | INFO] #19     
 I/flutter ( 7457): [2019-02-09 12:40:21.536375 | ConsoleHandler | INFO] 
 I/flutter ( 7457): [2019-02-09 12:40:21.536539 | ConsoleHandler | INFO] ======================================================================
 ```
-## AndroidX
-Catcher starting from version 0.0.11 uses libraries which utilizes AndroidX. If you're using version greater than 0.0.11, please set your compileSdkVersion and targetSdkVersion to 28. If you're want use Catcher without AndroidX, please use Catcher 0.0.10.
+<p align="center">
+  <i>Console handler output</i>
+</p>
 
 ## Catcher usage
 

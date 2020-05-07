@@ -4,7 +4,7 @@ export "package:catcher/handlers/console_handler.dart";
 export "package:catcher/handlers/email_auto_handler.dart";
 export "package:catcher/handlers/file_handler.dart";
 export "package:catcher/handlers/http_handler.dart";
-export "package:catcher/handlers/report_handler.dart";
+export 'package:catcher/model/report_handler.dart';
 export "package:catcher/handlers/toast_handler.dart";
 export "package:catcher/handlers/email_manual_handler.dart";
 export "package:catcher/handlers/sentry_handler.dart";

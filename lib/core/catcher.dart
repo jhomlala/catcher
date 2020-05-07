@@ -1,25 +1,29 @@
 import 'dart:async';
+
 import 'dart:io';
 import 'dart:isolate';
 
 import 'package:catcher/core/application_profile_manager.dart';
-import 'package:catcher/handlers/report_handler.dart';
+import 'package:catcher/model/report_handler.dart';
 import 'package:catcher/model/application_profile.dart';
 import 'package:catcher/model/catcher_options.dart';
 import 'package:catcher/mode/report_mode_action_confirmed.dart';
 import 'package:catcher/model/localization_options.dart';
+import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
 import 'package:catcher/model/report_mode.dart';
 import 'package:catcher/utils/catcher_error_widget.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 import 'package:package_info/package_info.dart';
 
 class Catcher with ReportModeAction {
   static Catcher _instance;
   static GlobalKey<NavigatorState> _navigatorKey;
+  static const _methodChannel = const MethodChannel('com.jhomlala/catcher/web');
 
   final Widget rootWidget;
   final CatcherOptions releaseConfig;
@@ -56,6 +60,7 @@ class Catcher with ReportModeAction {
     _setupCurrentConfig();
     _setupErrorHooks();
     _setupReportModeActionInReportMode();
+
     _loadDeviceInfo();
     _loadApplicationInfo();
 
@@ -134,13 +139,16 @@ class Catcher with ReportModeAction {
       _reportError(details.exception, details.stack, errorDetails: details);
     };
 
-    Isolate.current.addErrorListener(new RawReceivePort((dynamic pair) async {
-      var isolateError = pair as List<dynamic>;
-      _reportError(
-        isolateError.first.toString(),
-        isolateError.last.toString(),
-      );
-    }).sendPort);
+    ///Web doesn't have Isolate error listener support
+    if (!ApplicationProfileManager.isWeb()) {
+      Isolate.current.addErrorListener(new RawReceivePort((dynamic pair) async {
+        var isolateError = pair as List<dynamic>;
+        _reportError(
+          isolateError.first.toString(),
+          isolateError.last.toString(),
+        );
+      }).sendPort);
+    }
 
     runZoned(() async {
       runApp(rootWidget);
@@ -162,16 +170,34 @@ class Catcher with ReportModeAction {
   }
 
   void _loadDeviceInfo() {
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    if (Platform.isAndroid) {
-      deviceInfo.androidInfo.then((androidInfo) {
-        _loadAndroidParameters(androidInfo);
-      });
+    if (ApplicationProfileManager.isWeb()) {
+      _loadWebParameters();
     } else {
-      deviceInfo.iosInfo.then((iosInfo) {
-        _loadIosParameters(iosInfo);
-      });
+      ///There is no device info web implementation
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      if (Platform.isAndroid) {
+        deviceInfo.androidInfo.then((androidInfo) {
+          _loadAndroidParameters(androidInfo);
+        });
+      } else {
+        deviceInfo.iosInfo.then((iosInfo) {
+          _loadIosParameters(iosInfo);
+        });
+      }
     }
+  }
+
+  void _loadWebParameters() async {
+    String userAgent = await _methodChannel.invokeMethod("getUserAgent");
+    String language = await _methodChannel.invokeMethod("getLanguage");
+    String vendor = await _methodChannel.invokeMethod("getVendor");
+    String platform = await _methodChannel.invokeMethod("getPlatform");
+    bool cookieEnabled = await _methodChannel.invokeMethod("getCookieEnabled");
+    _deviceParameters["userAgent"] = userAgent;
+    _deviceParameters["language"] = language;
+    _deviceParameters["vendor"] = vendor;
+    _deviceParameters["platform"] = platform;
+    _deviceParameters["cookieEnabled"] = cookieEnabled.toString();
   }
 
   void _loadAndroidParameters(AndroidDeviceInfo androidDeviceInfo) {
@@ -218,14 +244,18 @@ class Catcher with ReportModeAction {
   }
 
   void _loadApplicationInfo() {
-    PackageInfo.fromPlatform().then((packageInfo) {
-      _applicationParameters["version"] = packageInfo.version;
-      _applicationParameters["appName"] = packageInfo.appName;
-      _applicationParameters["buildNumber"] = packageInfo.buildNumber;
-      _applicationParameters["packageName"] = packageInfo.packageName;
-      _applicationParameters["environment"] =
-          ApplicationProfileManager.getApplicationProfile().toString();
-    });
+    _applicationParameters["environment"] =
+        describeEnum(ApplicationProfileManager.getApplicationProfile());
+
+    ///There is no package info web implementation
+    if (!ApplicationProfileManager.isWeb()) {
+      PackageInfo.fromPlatform().then((packageInfo) {
+        _applicationParameters["version"] = packageInfo.version;
+        _applicationParameters["appName"] = packageInfo.appName;
+        _applicationParameters["buildNumber"] = packageInfo.buildNumber;
+        _applicationParameters["packageName"] = packageInfo.packageName;
+      });
+    }
   }
 
   ///We need to setup localizations lazily because context needed to setup these
@@ -297,12 +327,19 @@ class Catcher with ReportModeAction {
   void _reportError(dynamic error, dynamic stackTrace,
       {FlutterErrorDetails errorDetails}) async {
     if (_localizationOptions == null) {
-      print("Setup localization lazily!");
+      _logger.info("Setup localization lazily!");
       _setupLocalization();
     }
 
-    Report report = Report(error, stackTrace, DateTime.now(), _deviceParameters,
-        _applicationParameters, _currentConfig.customParameters, errorDetails);
+    Report report = Report(
+        error,
+        stackTrace,
+        DateTime.now(),
+        _deviceParameters,
+        _applicationParameters,
+        _currentConfig.customParameters,
+        errorDetails,
+        _getPlatformType());
     _cachedReports.add(report);
     ReportMode reportMode =
         _getReportModeFromExplicitExceptionReportModeMap(error);
@@ -310,6 +347,11 @@ class Catcher with ReportModeAction {
       _logger.info("Using explicit report mode for error");
     } else {
       reportMode = _currentConfig.reportMode;
+    }
+    if (!isReportModeSupportedInPlatform(report, reportMode)) {
+      _logger.warning(
+          "$reportMode in not supported for ${describeEnum(report.platformType)} platform");
+      return;
     }
 
     if (reportMode.isContextRequired()) {
@@ -322,6 +364,17 @@ class Catcher with ReportModeAction {
     } else {
       reportMode.requestAction(report, null);
     }
+  }
+
+  bool isReportModeSupportedInPlatform(Report report, ReportMode reportMode) {
+    if (reportMode == null) {
+      return false;
+    }
+    if (reportMode.getSupportedPlatforms() == null ||
+        reportMode.getSupportedPlatforms().isEmpty) {
+      return false;
+    }
+    return reportMode.getSupportedPlatforms().contains(report.platformType);
   }
 
   ReportMode _getReportModeFromExplicitExceptionReportModeMap(dynamic error) {
@@ -355,27 +408,49 @@ class Catcher with ReportModeAction {
         _getReportHandlerFromExplicitExceptionHandlerMap(report.error);
     if (reportHandler != null) {
       _logger.info("Using explicit report handler");
-      reportHandler.handle(report);
+      _handleReport(report, reportHandler);
       return;
     }
 
     for (ReportHandler handler in _currentConfig.handlers) {
-      handler.handle(report).catchError((handlerError) {
-        _logger.warning(
-            "Error occured in ${handler.toString()}: ${handlerError.toString()}");
-      }).then((result) {
-        print("Report result: " + result.toString());
-        if (!result) {
-          _logger.warning("${handler.toString()} failed to report error");
-        } else {
-          _cachedReports.remove(report);
-        }
-      }).timeout(Duration(milliseconds: _currentConfig.handlerTimeout),
-          onTimeout: () {
-        _logger.warning(
-            "${handler.toString()} failed to report error because of timeout");
-      });
+      _handleReport(report, handler);
     }
+  }
+
+  void _handleReport(Report report, ReportHandler reportHandler) {
+    if (!isReportHandlerSupportedInPlatform(report, reportHandler)) {
+      _logger.warning(
+          "$reportHandler in not supported for ${describeEnum(report.platformType)} platform");
+      return;
+    }
+
+    reportHandler.handle(report).catchError((handlerError) {
+      _logger.warning(
+          "Error occured in ${reportHandler.toString()}: ${handlerError.toString()}");
+    }).then((result) {
+      _logger.info("Report result: $result");
+      if (!result) {
+        _logger.warning("${reportHandler.toString()} failed to report error");
+      } else {
+        _cachedReports.remove(report);
+      }
+    }).timeout(Duration(milliseconds: _currentConfig.handlerTimeout),
+        onTimeout: () {
+      _logger.warning(
+          "${reportHandler.toString()} failed to report error because of timeout");
+    });
+  }
+
+  bool isReportHandlerSupportedInPlatform(
+      Report report, ReportHandler reportHandler) {
+    if (reportHandler == null) {
+      return false;
+    }
+    if (reportHandler.getSupportedPlatforms() == null ||
+        reportHandler.getSupportedPlatforms().isEmpty) {
+      return false;
+    }
+    return reportHandler.getSupportedPlatforms().contains(report.platformType);
   }
 
   @override
@@ -415,5 +490,18 @@ class Catcher with ReportModeAction {
         maxWidthForSmallMode: maxWidthForSmallMode,
       );
     };
+  }
+
+  PlatformType _getPlatformType() {
+    if (ApplicationProfileManager.isWeb()) {
+      return PlatformType.Web;
+    }
+    if (ApplicationProfileManager.isAndroid()) {
+      return PlatformType.Android;
+    }
+    if (ApplicationProfileManager.isIos()) {
+      return PlatformType.iOS;
+    }
+    return PlatformType.Unknown;
   }
 }

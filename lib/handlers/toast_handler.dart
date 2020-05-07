@@ -1,5 +1,7 @@
+import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
-import 'package:catcher/handlers/report_handler.dart';
+import 'package:catcher/model/report_handler.dart';
+
 import 'package:catcher/model/toast_handler_gravity.dart';
 import 'package:catcher/model/toast_handler_length.dart';
 import 'package:flutter/material.dart';
@@ -75,4 +77,8 @@ class ToastHandler extends ReportHandler {
       return "Error occurred: ${error.error}";
     }
   }
+
+  @override
+  List<PlatformType> getSupportedPlatforms() =>
+      [PlatformType.Web, PlatformType.Android, PlatformType.iOS];
 }

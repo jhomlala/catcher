@@ -1,4 +1,5 @@
-import 'package:catcher/handlers/report_handler.dart';
+import 'package:catcher/model/report_handler.dart';
+import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
 import 'package:catcher/utils/catcher_utils.dart';
 import 'package:dio/dio.dart';
@@ -35,9 +36,12 @@ class DiscordHandler extends ReportHandler {
 
   @override
   Future<bool> handle(Report report) async {
-    if (!(await CatcherUtils.isInternetConnectionAvailable())) {
-      _printLog("No internet connection available");
-      return false;
+
+    if (report.platformType != PlatformType.Web) {
+      if (!(await CatcherUtils.isInternetConnectionAvailable())) {
+        _printLog("No internet connection available");
+        return false;
+      }
     }
 
     String message = _setupMessage(report);
@@ -122,4 +126,8 @@ class DiscordHandler extends ReportHandler {
       _logger.info(log);
     }
   }
+
+  @override
+  List<PlatformType> getSupportedPlatforms() =>
+      [PlatformType.Web, PlatformType.Android, PlatformType.iOS];
 }

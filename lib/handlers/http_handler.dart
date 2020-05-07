@@ -1,7 +1,8 @@
 import 'dart:collection';
 
-import 'package:catcher/handlers/report_handler.dart';
+import 'package:catcher/model/report_handler.dart';
 import 'package:catcher/model/http_request_type.dart';
+import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
 import 'package:catcher/utils/catcher_utils.dart';
 import 'package:dio/dio.dart';
@@ -32,9 +33,11 @@ class HttpHandler extends ReportHandler {
 
   @override
   Future<bool> handle(Report error) async {
-    if (!(await CatcherUtils.isInternetConnectionAvailable())) {
-      _printLog("No internet connection available");
-      return false;
+    if (error.platformType != PlatformType.Web) {
+      if (!(await CatcherUtils.isInternetConnectionAvailable())) {
+        _printLog("No internet connection available");
+        return false;
+      }
     }
 
     if (requestType == HttpRequestType.post) {
@@ -76,4 +79,8 @@ class HttpHandler extends ReportHandler {
   String toString() {
     return 'HttpHandler';
   }
+
+  @override
+  List<PlatformType> getSupportedPlatforms() =>
+      [PlatformType.Web, PlatformType.Android, PlatformType.iOS];
 }
