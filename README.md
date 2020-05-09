@@ -109,7 +109,7 @@ main() {
   CatcherOptions debugOptions =
       CatcherOptions(DialogReportMode(), [ConsoleHandler()]);
       
-  /// Release configuration. Same as above, but once user accepts dialog, user will be propmpted to send email with crash to support.
+  /// Release configuration. Same as above, but once user accepts dialog, user will be prompted to send email with crash to support.
   CatcherOptions releaseOptions = CatcherOptions(DialogReportMode(), [
     EmailManualHandler(["support@email.com"])
   ]);
