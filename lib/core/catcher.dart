@@ -150,9 +150,9 @@ class Catcher with ReportModeAction {
       }).sendPort);
     }
 
-    runZoned(() async {
+    runZonedGuarded<Future<void>>(() async {
       runApp(rootWidget);
-    }, onError: (error, stackTrace) async {
+    }, (dynamic error, StackTrace stackTrace) {
       _reportError(error, stackTrace);
     });
   }

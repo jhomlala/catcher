@@ -4,17 +4,17 @@ import 'package:catcher/mode/dialog_report_mode.dart';
 import 'package:catcher/model/catcher_options.dart';
 import 'package:flutter/material.dart';
 import 'package:catcher/catcher_plugin.dart';
-import 'package:path_provider/path_provider.dart';
-//import 'package:permission_handler/permission_handler.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  Directory externalDir = await getExternalStorageDirectory();
-
-  String path = externalDir.path.toString() + "/log.txt";
-
-  CatcherOptions debugOptions =
-      CatcherOptions(DialogReportMode(), [FileHandler(File(path))]);
+  ///After Flutter 1.17.0 update ensureInitialized causes to not catching errors by Catcher...
+  //WidgetsFlutterBinding.ensureInitialized();
+  //Directory externalDir = await getExternalStorageDirectory();
+  //String path = externalDir.path.toString() + "/log.txt";
+  ///We need to specify path manually
+  String path = "/storage/emulated/0/log.txt";
+  CatcherOptions debugOptions = CatcherOptions(
+      DialogReportMode(), [FileHandler(File(path), printLogs: true)]);
   CatcherOptions releaseOptions =
       CatcherOptions(DialogReportMode(), [FileHandler(File(path))]);
 
@@ -48,16 +48,27 @@ class _MyAppState extends State<MyApp> {
 class ChildWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    permission();
     return Container(
-        child: FlatButton(
-            child: Text("Generate error"), onPressed: () => generateError()));
+      child: Column(
+        children: [
+          FlatButton(
+            child: Text("Check permission"),
+            onPressed:  checkPermissions,
+          ),
+          FlatButton(
+            child: Text("Generate error"),
+            onPressed: () => generateError(),
+          )
+        ],
+      ),
+    );
   }
 
-  permission() async {
-    /*Map<PermissionGroup, PermissionStatus> permissions =
-        await PermissionHandler().requestPermissions([PermissionGroup.storage]);*/
-    //bool isShown = await PermissionHandler().shouldShowRequestPermissionRationale(PermissionGroup.storage);
+  void checkPermissions() async {
+    Map<PermissionGroup, PermissionStatus> permissions =
+        await PermissionHandler().requestPermissions([PermissionGroup.storage]);
+    bool isShown = await PermissionHandler()
+        .shouldShowRequestPermissionRationale(PermissionGroup.storage);
   }
 
   generateError() async {
