@@ -1,3 +1,6 @@
+## 0.3.10
+* Fixed pub dev score error
+
 ## 0.3.9
 * Fixed pub dev score error
 
