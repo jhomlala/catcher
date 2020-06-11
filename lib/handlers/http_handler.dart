@@ -21,7 +21,7 @@ class HttpHandler extends ReportHandler {
   final bool printLogs;
 
   HttpHandler(this.requestType, this.endpointUri,
-      {this.headers = const {},
+      {Map<String, dynamic> headers,
       this.requestTimeout = 5000,
       this.responseTimeout = 5000,
       this.printLogs = false})
@@ -29,7 +29,8 @@ class HttpHandler extends ReportHandler {
         assert(endpointUri != null, "endpointUri can't be null"),
         assert(requestTimeout != null, "requestTimeout can't be null"),
         assert(responseTimeout != null, "responseTimeout can't be null"),
-        assert(printLogs != null, "printLogs can't be null");
+        assert(printLogs != null, "printLogs can't be null"),
+        this.headers = headers != null ? headers : Map();
 
   @override
   Future<bool> handle(Report error) async {
