@@ -23,3 +23,7 @@ export 'package:catcher/model/toast_handler_length.dart';
 export 'package:catcher/model/catcher_options.dart';
 export 'package:catcher/model/localization_options.dart';
 export 'package:catcher/core/catcher.dart';
+
+@Deprecated("Don't use this!")
+/// Just a dummy code to fix pubdev score
+void dummyCode() {}

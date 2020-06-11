@@ -1,3 +1,6 @@
+## 0.3.9
+* Fixed pub dev score error
+
 ## 0.3.8
 * Updated file handler example
 * Allowed to update headers of http handler in runtime
