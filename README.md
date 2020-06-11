@@ -693,22 +693,14 @@ Note: Remeber to add Internet permission in Android Manifest:
 File handler allows to store logs in file. Minimal example:
 
 ```dart
-Future<File> getFile() async {
-  final directory = await getApplicationDocumentsDirectory();
-  return File(directory.path+"/logs.txt");
-}
+main() {
+  String path = "/storage/emulated/0/log.txt";
+  CatcherOptions debugOptions = CatcherOptions(
+      DialogReportMode(), [FileHandler(File(path), printLogs: true)]);
+  CatcherOptions releaseOptions =
+      CatcherOptions(DialogReportMode(), [FileHandler(File(path))]);
 
-void main() async{
-
-  File file = await getFile();
-
-  Catcher(
-      application: MyApp(),
-      handlers: [
-        ConsoleHandler(),
-        FileHandler(file),
-      ],
-      reportModeType: ReportModeType.silent);
+  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
 }
 ```
 
