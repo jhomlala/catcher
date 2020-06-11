@@ -36,7 +36,6 @@ class DiscordHandler extends ReportHandler {
 
   @override
   Future<bool> handle(Report report) async {
-
     if (report.platformType != PlatformType.Web) {
       if (!(await CatcherUtils.isInternetConnectionAvailable())) {
         _printLog("No internet connection available");

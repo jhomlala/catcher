@@ -14,7 +14,7 @@ class CatcherWeb {
   }
 
   Future<dynamic> handleMethodCall(MethodCall call) async {
-    assert(call != null,"Call can't be null!");
+    assert(call != null, "Call can't be null!");
     switch (call.method) {
       case "getUserAgent":
         return window.navigator.userAgent;

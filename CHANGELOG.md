@@ -1,3 +1,8 @@
+## 0.3.8
+* Updated file handler example
+* Allowed to update headers of http handler in runtime
+* Updated flutter_html dependency
+
 ## 0.3.7
 * Added Web support
 * [BREAKING CHANGE] Added new abstract method (getSupportPlatform) for ReportHandler and ReportMode
