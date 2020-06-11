@@ -705,7 +705,7 @@ main() {
 ```
 
 All parameters list:  
-* file (required) - the file where you want to store your logs  
+* file (required) - the file where you want to store your logs
 * enableDeviceParameters (optional) - please look in console handler description   
 * enableApplicationParameters (optional) - please look in console handler description  
 * enableStackTrace (optional) - please look in console handler description  
