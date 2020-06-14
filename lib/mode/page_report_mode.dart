@@ -1,4 +1,4 @@
-import 'package:catcher/catcher_plugin.dart';
+import 'package:catcher/catcher.dart';
 import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report_mode.dart';
 import 'package:catcher/utils/catcher_utils.dart';
