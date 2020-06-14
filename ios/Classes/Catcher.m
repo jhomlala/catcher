@@ -1,11 +1,11 @@
-#import "CatcherPlugin.h"
+#import "Catcher.h"
 
-@implementation CatcherPlugin
+@implementation Catcher
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
   FlutterMethodChannel* channel = [FlutterMethodChannel
       methodChannelWithName:@"catcher"
             binaryMessenger:[registrar messenger]];
-  CatcherPlugin* instance = [[CatcherPlugin alloc] init];
+  Catcher* instance = [[Catcher alloc] init];
   [registrar addMethodCallDelegate:instance channel:channel];
 }
 

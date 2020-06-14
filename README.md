@@ -21,7 +21,7 @@ Catcher supports Android, iOS and Web platforms.
 Add this line to your **pubspec.yaml**:
 ```yaml
 dependencies:
-  catcher: ^0.3.13
+  catcher: ^0.3.14
 ```
 
 Then run this command:
@@ -31,7 +31,7 @@ $ flutter packages get
 
 Then add this import:
 ```dart
-import 'package:catcher/catcher_plugin.dart';
+import 'package:catcher/catcher.dart';
 ```
 
 ## Table of contents
@@ -101,7 +101,7 @@ Here is complete example:
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:catcher/catcher_plugin.dart';
+import 'package:catcher/catcher.dart';
 
 main() {
   /// STEP 1. Create catcher configuration. 
@@ -402,7 +402,7 @@ LocalizationOptions.buildDefaultKoreanOptions();
 Complete Example:
 ```dart
 import 'package:flutter/material.dart';
-import 'package:catcher/catcher_plugin.dart';
+import 'package:catcher/catcher.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 main() {

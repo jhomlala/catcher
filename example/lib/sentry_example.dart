@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:catcher/catcher_plugin.dart';
+import 'package:catcher/catcher.dart';
 import 'package:sentry/sentry.dart';
 
 main() {

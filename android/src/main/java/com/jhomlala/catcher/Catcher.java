@@ -8,14 +8,14 @@ import io.flutter.plugin.common.EventChannel;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
-public class CatcherPlugin implements FlutterPlugin {
+public class Catcher implements FlutterPlugin {
 
     private MethodChannel methodChannel;
     private EventChannel eventChannel;
 
     public static void registerWith(Registrar registrar) {
-        CatcherPlugin catcherPlugin = new CatcherPlugin();
-        catcherPlugin.setupChannels(registrar.messenger(), registrar.context());
+        Catcher catcher = new Catcher();
+        catcher.setupChannels(registrar.messenger(), registrar.context());
     }
 
     @Override
