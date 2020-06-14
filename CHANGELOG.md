@@ -1,4 +1,8 @@
-### 0.3.11
+## 0.3.12
+* Fixed pub dev score error
+* Fixed min dart version
+
+## 0.3.11
 * Fixed pub dev score error
 
 ## 0.3.10
