@@ -6,6 +6,7 @@ import 'package:sentry/sentry.dart';
 
 class SentryHandler extends ReportHandler {
   final SentryClient sentryClient;
+  final User userContext;
   final bool enableDeviceParameters;
   final bool enableApplicationParameters;
   final bool enableCustomParameters;
@@ -13,7 +14,8 @@ class SentryHandler extends ReportHandler {
   final Logger _logger = Logger("SentryHandler");
 
   SentryHandler(this.sentryClient,
-      {this.enableDeviceParameters = true,
+      {this.userContext,
+      this.enableDeviceParameters = true,
       this.enableApplicationParameters = true,
       this.enableCustomParameters = true,
       this.printLogs = true})
@@ -83,6 +85,7 @@ class SentryHandler extends ReportHandler {
       level: SeverityLevel.error,
       culprit: "",
       tags: changeToSentryMap(tags),
+      userContext: this.userContext
     );
   }
 
