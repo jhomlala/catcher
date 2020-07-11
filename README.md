@@ -59,7 +59,7 @@ import 'package:catcher/catcher.dart';
 * [Sentry Handler](#sentry-handler)
 * [Slack Handler](#slack-handler)
 * [Discord Handler](#discord-handler)
-* [Crashlytics Handler(#crashlytics-handler)
+* [Crashlytics Handler](#crashlytics-handler)
 
 [Test Exception](#test-exception)  
 [Explicit exception report handler map](#explicit-exception-report-handler-map)  
@@ -80,7 +80,7 @@ Catcher supports Android, iOS and Web platforms. Due to issues with web framewor
 |        Sentry handler       |    ✔️    |  ✔️  |  ✔️  |
 |        Slack handler        |    ✔️    |  ✔️  |  ❌  |
 |        Toast handler        |    ✔️    |  ✔️  |  ✔️  |
-|     Crashlytics handler     |    ✔️    |  ✔️  |  ✔️  |
+|     Crashlytics handler     |    ✔️    |  ✔️  |  ❌️  |
 |      Dialog report mode     |    ✔️    |  ✔️  |  ✔️  |
 |       Page report mode      |    ✔️    |  ✔️  |  ✔️  |
 |      Silent report mode     |    ✔️    |  ✔️  |  ✔️  |
@@ -821,8 +821,7 @@ All parameters list:
 #### Crashlytics Handler
 Crashlytics Handler allows to send crash reports to Firebase service. You need to setup your project
 with firebase libraries first. Follow instructions from here:
-https://pub.dev/packages/firebase_crashlytics
-https://firebase.google.com/docs/crashlytics/get-started
+https://pub.dev/packages/firebase_crashlytics and https://firebase.google.com/docs/crashlytics/get-started
 
 ```dart
 main() {
