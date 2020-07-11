@@ -3,7 +3,6 @@ import 'package:catcher/catcher.dart';
 
 main() {
   CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
-    //EmailManualHandler(["recipient@email.com"]),
     CrashlyticsHandler(),
     ConsoleHandler()
   ]);
