@@ -48,6 +48,7 @@ class CrashlyticsHandler extends ReportHandler {
       return true;
     } catch (exception) {
       _printLog("Failed to send crashlytics report: " + exception);
+      return false;
     }
   }
 
