@@ -34,7 +34,7 @@ class CrashlyticsHandler extends ReportHandler {
   Future<bool> handle(Report report) async {
     try {
       _printLog("Sending crashlytics report");
-      var crashlytics = Crashlytics.instance;
+      var crashlytics = Crashlytics.instance; 
       crashlytics.enableInDevMode = true;
       crashlytics.log(_getLogMessage(report));
 
