@@ -21,7 +21,7 @@ Catcher supports Android, iOS and Web platforms.
 Add this line to your **pubspec.yaml**:
 ```yaml
 dependencies:
-  catcher: ^0.3.14
+  catcher: ^0.3.15
 ```
 
 Then run this command:
@@ -59,6 +59,7 @@ import 'package:catcher/catcher.dart';
 * [Sentry Handler](#sentry-handler)
 * [Slack Handler](#slack-handler)
 * [Discord Handler](#discord-handler)
+* [Crashlytics Handler(#crashlytics-handler)
 
 [Test Exception](#test-exception)  
 [Explicit exception report handler map](#explicit-exception-report-handler-map)  
@@ -79,6 +80,7 @@ Catcher supports Android, iOS and Web platforms. Due to issues with web framewor
 |        Sentry handler       |    ✔️    |  ✔️  |  ✔️  |
 |        Slack handler        |    ✔️    |  ✔️  |  ❌  |
 |        Toast handler        |    ✔️    |  ✔️  |  ✔️  |
+|     Crashlytics handler     |    ✔️    |  ✔️  |  ✔️  |
 |      Dialog report mode     |    ✔️    |  ✔️  |  ✔️  |
 |       Page report mode      |    ✔️    |  ✔️  |  ✔️  |
 |      Silent report mode     |    ✔️    |  ✔️  |  ✔️  |
@@ -816,8 +818,31 @@ All parameters list:
 * enableStackTrace (optional) - please look in console handler description
 * printLogs (optional) - enable/disable debug logs
 
+#### Crashlytics Handler
+Crashlytics Handler allows to send crash reports to Firebase service. You need to setup your project
+with firebase libraries first. Follow instructions from here:
+https://pub.dev/packages/firebase_crashlytics
+https://firebase.google.com/docs/crashlytics/get-started
 
+```dart
+main() {
+ CatcherOptions debugOptions = CatcherOptions(SilentReportMode(), [
+     CrashlyticsHandler(
+         enableDeviceParameters: true,
+         enableApplicationParameters: true,
+         enableCustomParameters: true,
+         printLogs: true),
+   ]);
 
+   Catcher(MyApp(), debugConfig: debugOptions);
+}
+```
+
+All parameters list:
+* enableDeviceParameters (optional) - please look in console handler description
+* enableApplicationParameters (optional) - please look in console handler description
+* enableCustomParameters (optional) - please look in console handler description
+* printLogs (optional) - enable/disable debug logs
 
 ### Explicit exception report handler map
 Explicit exception report handler map allows you to setup report handler for specific exception. For example if you want to setup Console Handler for FormatException, you can write:
