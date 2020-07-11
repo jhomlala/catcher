@@ -1,3 +1,7 @@
+## 0.3.15
+* Added user context in sentry handler by Roman Muratov (https://github.com/kasl)
+* Added crashlytics handler
+
 ## 0.3.14
 * General refactor
 * [BREAKING_CHANGE] You should use import "import 'package:catcher/catcher.dart';" instead import 'package:catcher/catcher_plugin.dart';
