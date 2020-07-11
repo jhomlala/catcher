@@ -11,6 +11,7 @@ main() {
   ]);
 
   Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
+  
 }
 
 class MyApp extends StatefulWidget {
