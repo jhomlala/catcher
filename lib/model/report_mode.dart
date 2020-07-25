@@ -12,6 +12,7 @@ abstract class ReportMode {
   void setReportModeAction(ReportModeAction reportModeAction) {
     this._reportModeAction = reportModeAction;
   }
+
   /// Set localization options (translations) to this report mode
   void setLocalizationOptions(LocalizationOptions localizationOptions) {
     this._localizationOptions = localizationOptions;

@@ -71,7 +71,8 @@ class CustomPageReportMode extends ReportMode {
   }
 
   @override
-  List<PlatformType> getSupportedPlatforms() => [PlatformType.Web,PlatformType.Android,PlatformType.iOS];
+  List<PlatformType> getSupportedPlatforms() =>
+      [PlatformType.Web, PlatformType.Android, PlatformType.iOS];
 }
 
 class CustomPage extends StatelessWidget {

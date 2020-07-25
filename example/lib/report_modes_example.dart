@@ -16,8 +16,7 @@ main() {
       cancelText: "Back");*/
 
   //page:
-  ReportMode reportMode = PageReportMode(
-      showStackTrace: false);
+  ReportMode reportMode = PageReportMode(showStackTrace: false);
 
   CatcherOptions debugOptions = CatcherOptions(reportMode, [ConsoleHandler()]);
 

@@ -1,11 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:catcher/catcher.dart';
 
 main() {
   CatcherOptions debugOptions = CatcherOptions(SilentReportMode(), [
-    DiscordHandler(
-        "<web_hook_url>",
+    DiscordHandler("<web_hook_url>",
         enableDeviceParameters: true,
         enableApplicationParameters: true,
         enableCustomParameters: true,

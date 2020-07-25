@@ -2,22 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:catcher/catcher.dart';
 
 main() {
-  CatcherOptions debugOptions = CatcherOptions( DialogReportMode(), [
-    EmailManualHandler(
-      ["email1@email.com", "email2@email.com"],
-      enableDeviceParameters: true,
-      enableStackTrace: true,
-      enableCustomParameters: true,
-      enableApplicationParameters: true,
-      sendHtml: true,
-      emailTitle: "Sample Title",
-      emailHeader: "Sample Header",
-      printLogs: true)
+  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
+    EmailManualHandler(["email1@email.com", "email2@email.com"],
+        enableDeviceParameters: true,
+        enableStackTrace: true,
+        enableCustomParameters: true,
+        enableApplicationParameters: true,
+        sendHtml: true,
+        emailTitle: "Sample Title",
+        emailHeader: "Sample Header",
+        printLogs: true)
+  ], customParameters: {
+    "Test": "Test12345",
+    "Test2": "Test54321"
+  });
 
-  ], customParameters: {"Test": "Test12345","Test2": "Test54321"});
-
-  Catcher(MyApp(),
-      debugConfig: debugOptions,);
+  Catcher(
+    MyApp(),
+    debugConfig: debugOptions,
+  );
 }
 
 class MyApp extends StatefulWidget {

@@ -6,6 +6,7 @@ main() {
   var httpHandler = HttpHandler(HttpRequestType.post,
       Uri.parse("https://jsonplaceholder.typicode.com/posts"),
       printLogs: true);
+
   ///Init catcher
   CatcherOptions debugOptions =
       CatcherOptions(DialogReportMode(), [httpHandler, ConsoleHandler()]);
@@ -14,6 +15,7 @@ main() {
   ]);
 
   Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
+
   ///At some point of time, you're updating headers:
 
   httpHandler.headers.clear();

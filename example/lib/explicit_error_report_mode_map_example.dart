@@ -5,13 +5,14 @@ import 'package:flutter/material.dart';
 main() {
   var explicitReportModesMap = {"FormatException": PageReportMode()};
   CatcherOptions debugOptions = CatcherOptions(
-      DialogReportMode(),
-      [
-        ConsoleHandler(),
-        HttpHandler(HttpRequestType.post, Uri.parse("https://httpstat.us/200"),
-            printLogs: true)
-      ],
-      explicitExceptionReportModesMap: explicitReportModesMap,);
+    DialogReportMode(),
+    [
+      ConsoleHandler(),
+      HttpHandler(HttpRequestType.post, Uri.parse("https://httpstat.us/200"),
+          printLogs: true)
+    ],
+    explicitExceptionReportModesMap: explicitReportModesMap,
+  );
   CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
     EmailManualHandler(["recipient@email.com"])
   ]);
@@ -49,9 +50,11 @@ class ChildWidget extends StatelessWidget {
     return Container(
         child: Column(children: <Widget>[
       FlatButton(
-          child: Text("Generate first error"), onPressed: () => generateFirstError()),
+          child: Text("Generate first error"),
+          onPressed: () => generateFirstError()),
       FlatButton(
-          child: Text("Generate second error"), onPressed: () => generateSecondError())
+          child: Text("Generate second error"),
+          onPressed: () => generateSecondError())
     ]));
   }
 
