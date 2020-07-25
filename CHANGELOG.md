@@ -1,3 +1,7 @@
+## 0.3.16
+* Reverted crashlytics handler from core package
+* Updated dependencies
+
 ## 0.3.15
 * Added user context in sentry handler by Roman Muratov (https://github.com/kasl)
 * Added crashlytics handler
@@ -51,7 +55,7 @@
 
 ## 0.3.3
 * Updated dependencies
-* Prepare for 1.0.0 version of sensors and package_info. ([dart_lsc](http://github.com/amirh/dart_lsc))
+* Prepare for 1.0.0 version of sensors and package_info. ([dart_lsc](https://github.com/amirh/dart_lsc))
 
 ## 0.3.2
 * Removed invalid import from error widget

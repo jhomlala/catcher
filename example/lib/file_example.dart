@@ -53,7 +53,7 @@ class ChildWidget extends StatelessWidget {
         children: [
           FlatButton(
             child: Text("Check permission"),
-            onPressed:  checkPermissions,
+            onPressed: checkPermissions,
           ),
           FlatButton(
             child: Text("Generate error"),
@@ -65,10 +65,13 @@ class ChildWidget extends StatelessWidget {
   }
 
   void checkPermissions() async {
-    Map<PermissionGroup, PermissionStatus> permissions =
-        await PermissionHandler().requestPermissions([PermissionGroup.storage]);
-    bool isShown = await PermissionHandler()
-        .shouldShowRequestPermissionRationale(PermissionGroup.storage);
+    var status = await Permission.storage.status;
+    print("Status: $status");
+    if (!status.isGranted) {
+      Map<Permission, PermissionStatus> statuses =
+          await [Permission.storage].request();
+      print("Requested");
+    }
   }
 
   generateError() async {
