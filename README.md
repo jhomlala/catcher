@@ -80,6 +80,7 @@ Catcher supports Android, iOS and Web platforms. Due to issues with web framewor
 |        Sentry handler       |    ✔️    |  ✔️  |  ✔️  |
 |        Slack handler        |    ✔️    |  ✔️  |  ❌  |
 |        Toast handler        |    ✔️    |  ✔️  |  ✔️  |
+|    Notifications handler    |    ✔️    |  ✔️  |  ❌️  |
 |     Crashlytics handler     |    ✔️    |  ✔️  |  ❌️  |
 |      Dialog report mode     |    ✔️    |  ✔️  |  ✔️  |
 |       Page report mode      |    ✔️    |  ✔️  |  ✔️  |
