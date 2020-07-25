@@ -1,3 +1,7 @@
+## 0.3.16
+* Reverted crashlytics handler from core package
+* Updated dependencies
+
 ## 0.3.15
 * Added user context in sentry handler by Roman Muratov (https://github.com/kasl)
 * Added crashlytics handler
