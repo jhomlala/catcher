@@ -13,7 +13,6 @@ dependencies:
     sdk: flutter
   flutter_web_plugins:
      sdk: flutter
-  fluttertoast: ^7.0.1+1
   device_info: ^0.4.2+1
   package_info: '>=0.4.0+16 <2.0.0'
   mailer: ^3.0.4
