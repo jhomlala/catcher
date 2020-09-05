@@ -21,7 +21,7 @@ Catcher supports Android, iOS and Web platforms.
 Add this line to your **pubspec.yaml**:
 ```yaml
 dependencies:
-  catcher: ^0.3.17
+  catcher: ^0.3.18
 ```
 
 Then run this command:
@@ -717,6 +717,12 @@ All parameters list:
 
 Example of logging to file in external directory: https://github.com/jhomlala/catcher/blob/master/example/lib/file_example.dart
 
+If you want to get file path with path_provider lib, you need to call Catcher constructor with
+ensureInitialized = true. Then you need to pass your catcher config with updateConfig.
+This is required because WidgetBindings ensureInitialized must be called first before accessing
+path_provider methods.
+See example here: https://github.com/jhomlala/catcher/blob/master/example/lib/file_example.dart  
+
 #### Toast Handler
 Toast handler allows to show short message in toast. Minimal example:
 
@@ -919,12 +925,12 @@ Catcher.sendTestException();
 ### Update config
 You can update Catcher config during runtime:
 ```dart
- ///Catcher instance initialized
- Catcher catcher;
- catcher.updateConfig(
-      debugConfig: CatcherOptions(
-        PageReportMode(),
-        [ConsoleHandler()],
-      ),
-    );
+///Catcher instance initialized
+Catcher catcher;
+catcher.updateConfig(
+     debugConfig: CatcherOptions(
+       PageReportMode(),
+       [ConsoleHandler()],
+     ),
+   );
 ```

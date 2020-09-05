@@ -4,21 +4,20 @@ import 'package:catcher/mode/dialog_report_mode.dart';
 import 'package:catcher/model/catcher_options.dart';
 import 'package:flutter/material.dart';
 import 'package:catcher/catcher.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() async {
-  ///After Flutter 1.17.0 update ensureInitialized causes to not catching errors by Catcher...
-  //WidgetsFlutterBinding.ensureInitialized();
-  //Directory externalDir = await getExternalStorageDirectory();
-  //String path = externalDir.path.toString() + "/log.txt";
-  ///We need to specify path manually
-  String path = "/storage/emulated/0/log.txt";
+  var catcher = Catcher(MyApp(), ensureInitialized: true);
+  Directory externalDir = await getExternalStorageDirectory();
+  String path = externalDir.path.toString() + "/log.txt";
+
   CatcherOptions debugOptions = CatcherOptions(
       DialogReportMode(), [FileHandler(File(path), printLogs: true)]);
   CatcherOptions releaseOptions =
       CatcherOptions(DialogReportMode(), [FileHandler(File(path))]);
-
-  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
+  catcher.updateConfig(
+      debugConfig: debugOptions, releaseConfig: releaseOptions);
 }
 
 class MyApp extends StatefulWidget {
