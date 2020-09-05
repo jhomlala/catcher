@@ -1,5 +1,6 @@
 ## 0.3.18
 * Added ensureInitialized flag in Catcher constructor
+* Added updateConfig method to update configuration in runtime
 
 ## 0.3.17
 * Updated documentation

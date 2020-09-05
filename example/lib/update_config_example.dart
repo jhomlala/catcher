@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:catcher/catcher.dart';
 
+Catcher catcher;
+
 main() {
   CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
     //EmailManualHandler(["recipient@email.com"]),
@@ -13,7 +15,8 @@ main() {
     EmailManualHandler(["recipient@email.com"])
   ]);
 
-  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
+  catcher = Catcher(MyApp(),
+      debugConfig: debugOptions, releaseConfig: releaseOptions);
 }
 
 class MyApp extends StatefulWidget {
@@ -44,16 +47,29 @@ class ChildWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: FlatButton(
-        child: Text("Generate error"),
-        onPressed: () => generateError(),
-      ),
+      child: Row(children: [
+        FlatButton(
+          child: Text("Change config"),
+          onPressed: () => changeConfig(),
+        ),
+        FlatButton(
+          child: Text("Generate error"),
+          onPressed: () => generateError(),
+        ),
+      ]),
     );
   }
 
   void generateError() async {
     Catcher.sendTestException();
+  }
 
-
+  void changeConfig() {
+    catcher.updateConfig(
+      debugConfig: CatcherOptions(
+        PageReportMode(),
+        [ConsoleHandler()],
+      ),
+    );
   }
 }

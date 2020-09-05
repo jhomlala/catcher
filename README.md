@@ -66,7 +66,7 @@ import 'package:catcher/catcher.dart';
 [Explicit exception report mode map](#explicit-exception-report-mode-map)  
 [Error widget](#error-widget)  
 [Current config](#current-config)
-
+[Update config](#update-config)
 ## Platform support
 Catcher supports Android, iOS and Web platforms. Due to issues with web framework state and missing plugins, web implementation offers less features than mobile. Here is features support table:
 |           Feature           | Android | iOS | Web |
@@ -914,4 +914,17 @@ Send test exception:
 
 ```dart
 Catcher.sendTestException();
+```
+
+### Update config
+You can update Catcher config during runtime:
+```dart
+ ///Catcher instance initialized
+ Catcher catcher;
+ catcher.updateConfig(
+      debugConfig: CatcherOptions(
+        PageReportMode(),
+        [ConsoleHandler()],
+      ),
+    );
 ```

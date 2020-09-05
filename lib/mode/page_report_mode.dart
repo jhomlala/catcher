@@ -74,7 +74,9 @@ class PageWidgetState extends State<PageWidget> {
         middle:
             Text(widget.pageReportMode.localizationOptions.pageReportModeTitle),
       ),
-      child: SafeArea(child: _buildInnerWidget()),
+      child: SafeArea(
+        child: _buildInnerWidget(),
+      ),
     );
   }
 
@@ -84,14 +86,25 @@ class PageWidgetState extends State<PageWidget> {
       decoration: BoxDecoration(color: Colors.white),
       child: Column(
         children: [
-          Padding(padding: const EdgeInsets.only(top: 10)),
-          Text(
-            widget.pageReportMode.localizationOptions.pageReportModeDescription,
-            style: _getTextStyle(15),
-            textAlign: TextAlign.center,
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
           ),
-          Padding(padding: const EdgeInsets.only(top: 20)),
-          _getStackTraceWidget(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              widget
+                  .pageReportMode.localizationOptions.pageReportModeDescription,
+              style: _getTextStyle(15),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: _getStackTraceWidget(),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[

@@ -29,13 +29,13 @@ class Catcher with ReportModeAction {
   final Widget rootWidget;
 
   /// Instance of catcher config used in release mode
-  final CatcherOptions releaseConfig;
+  CatcherOptions releaseConfig;
 
   /// Instance of catcher config used in debug mode
-  final CatcherOptions debugConfig;
+  CatcherOptions debugConfig;
 
   /// Instance of catcher config used in profile mode
-  final CatcherOptions profileConfig;
+  CatcherOptions profileConfig;
 
   /// Should catcher logs be enabled
   final bool enableLogger;
@@ -129,6 +129,26 @@ class Catcher with ReportModeAction {
           break;
         }
     }
+  }
+
+  ///Update config after initialization
+  void updateConfig({
+    CatcherOptions debugConfig,
+    CatcherOptions profileConfig,
+    CatcherOptions releaseConfig,
+  }) {
+    if (debugConfig != null) {
+      this.debugConfig = debugConfig;
+    }
+    if (profileConfig != null) {
+      this.profileConfig = profileConfig;
+    }
+    if (releaseConfig != null) {
+      this.releaseConfig = releaseConfig;
+    }
+    _setupCurrentConfig();
+    _setupReportModeActionInReportMode();
+    _localizationOptions = null;
   }
 
   void _setupReportModeActionInReportMode() {
