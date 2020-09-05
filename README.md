@@ -21,7 +21,7 @@ Catcher supports Android, iOS and Web platforms.
 Add this line to your **pubspec.yaml**:
 ```yaml
 dependencies:
-  catcher: ^0.3.18
+  catcher: ^0.3.19
 ```
 
 Then run this command:
@@ -721,7 +721,7 @@ If you want to get file path with path_provider lib, you need to call Catcher co
 ensureInitialized = true. Then you need to pass your catcher config with updateConfig.
 This is required because WidgetBindings ensureInitialized must be called first before accessing
 path_provider methods.
-See example here: https://github.com/jhomlala/catcher/blob/master/example/lib/file_example.dart  
+See example here: https://github.com/jhomlala/catcher/blob/master/example/lib/file_example.dart
 
 #### Toast Handler
 Toast handler allows to show short message in toast. Minimal example:

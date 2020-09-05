@@ -1,3 +1,6 @@
+## 0.3.19
+* Added detailed logs for sentry handler
+
 ## 0.3.18
 * Added ensureInitialized flag in Catcher constructor
 * Added updateConfig method to update configuration in runtime

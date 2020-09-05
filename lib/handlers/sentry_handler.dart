@@ -52,8 +52,8 @@ class SentryHandler extends ReportHandler {
       }
       _printLog("Logged to sentry!");
       return true;
-    } catch (exception) {
-      _printLog("Failed to send sentry event: $exception");
+    } catch (exception, stackTrace) {
+      _printLog("Failed to send sentry event: $exception $stackTrace");
       return false;
     }
   }

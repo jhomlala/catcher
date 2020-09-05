@@ -3,8 +3,14 @@ import 'package:catcher/catcher.dart';
 import 'package:sentry/sentry.dart';
 
 main() {
-  CatcherOptions debugOptions = CatcherOptions(
-      DialogReportMode(), [SentryHandler(SentryClient(dsn: "YOUR_DSN_HERE"))]);
+  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
+    SentryHandler(
+      SentryClient(
+          dsn:
+              'YOUR DSN HERE'),
+      printLogs: true,
+    )
+  ]);
   CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
     EmailManualHandler(["recipient@email.com"])
   ]);
