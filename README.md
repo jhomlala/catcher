@@ -273,7 +273,7 @@ Catcher instance needs 1 required and 3 optional parameters.
 * profileConfig (optional) - config used when Catcher detects that application runs in profile mode
 * enableLogger (optional) - enable/disable internal Catcher logs
 * navigatorKey (optional) - provide optional navigator key from outside of Catcher
-
+* ensureInitialized (optional) - should Catcher run WidgetsFlutterBinding.ensureInitialized() during initialization
 
 ```dart
 main() {

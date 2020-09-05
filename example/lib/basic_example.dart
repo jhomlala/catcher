@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:catcher/catcher.dart';
 
-main() {
-  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
-    //EmailManualHandler(["recipient@email.com"]),
-    HttpHandler(HttpRequestType.post,
-        Uri.parse("https://jsonplaceholder.typicode.com/posts"),
-        printLogs: true),
-    ConsoleHandler()
-  ]);
-  CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
-    EmailManualHandler(["recipient@email.com"])
+main() async {
+  /// STEP 1. Create catcher configuration.
+  /// Debug configuration with dialog report mode and console handler. It will show dialog and once user accepts it, error will be shown /// in console.
+  CatcherOptions debugOptions =
+      CatcherOptions(DialogReportMode(), [ConsoleHandler()]);
+
+  /// Release configuration. Same as above, but once user accepts dialog, user will be prompted to send email with crash to support.
+  CatcherOptions releaseOptions = CatcherOptions(DialogReportMode(), [
+    EmailManualHandler(["support@email.com"])
   ]);
 
-  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
+  /// STEP 2. Pass your root widget (MyApp) along with Catcher configuration:
+  Catcher(
+    MyApp(),
+    debugConfig: debugOptions,
+    releaseConfig: releaseOptions,
+    ensureInitialized: true,
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -21,7 +26,7 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State {
   @override
   void initState() {
     super.initState();
@@ -30,6 +35,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      /// STEP 3. Add navigator key from Catcher. It will be used to navigate user to report page or to show dialog.
       navigatorKey: Catcher.navigatorKey,
       home: Scaffold(
           appBar: AppBar(
@@ -45,10 +51,12 @@ class ChildWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         child: FlatButton(
-            child: Text("Generate error"), onPressed: () => generateError()));
+      child: Text("Generate error"),
+      onPressed: generateError,
+    ));
   }
 
   generateError() async {
-    Catcher.sendTestException();
+    throw "Test exception";
   }
 }

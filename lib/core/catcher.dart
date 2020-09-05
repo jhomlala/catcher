@@ -40,6 +40,9 @@ class Catcher with ReportModeAction {
   /// Should catcher logs be enabled
   final bool enableLogger;
 
+  /// Should catcher run WidgetsFlutterBinding.ensureInitialized() during initialization.
+  final bool ensureInitialized;
+
   final Logger _logger = Logger("Catcher");
   CatcherOptions _currentConfig;
   Map<String, dynamic> _deviceParameters = Map();
@@ -59,6 +62,7 @@ class Catcher with ReportModeAction {
     this.debugConfig,
     this.profileConfig,
     this.enableLogger = true,
+    this.ensureInitialized = false,
     GlobalKey<NavigatorState> navigatorKey,
   }) : assert(rootWidget != null) {
     _configure(navigatorKey);
@@ -162,6 +166,9 @@ class Catcher with ReportModeAction {
     }
 
     runZonedGuarded<Future<void>>(() async {
+      if (ensureInitialized) {
+        WidgetsFlutterBinding.ensureInitialized();
+      }
       runApp(rootWidget);
     }, (dynamic error, StackTrace stackTrace) {
       _reportError(error, stackTrace);

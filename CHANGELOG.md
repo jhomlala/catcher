@@ -1,3 +1,6 @@
+## 0.3.18
+* Added ensureInitialized flag in Catcher constructor
+
 ## 0.3.17
 * Updated documentation
 
