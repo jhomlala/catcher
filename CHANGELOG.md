@@ -1,3 +1,8 @@
+## 0.3.20
+* Added customEnvironment and customRelease settings for Sentry Handler
+* Updated documentation
+* Fixed dependencies declaration (now it'
+
 ## 0.3.19
 * Added detailed logs for sentry handler
 

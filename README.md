@@ -10,9 +10,8 @@
 [![pub package](https://img.shields.io/badge/Awesome-Flutter-blue.svg?longCache=true&style=flat-square)](https://github.com/Solido/awesome-flutter)
 
 
-Catcher is Flutter plugin which automatically catches error/exceptions and handle them. Catcher offers mutliple way to handle errors.
-Catcher is heavily inspired from ACRA: https://github.com/ACRA/acra
-Catcher is solution for developers which want to get errors informations without using Crashlytics or Sentry product. It's also great if you have your own backend where you're storing application logs, so you can manipulate it anyway you want.  
+Catcher is Flutter plugin which automatically catches error/exceptions and handle them. Catcher offers multiple way to handle errors.
+Catcher is heavily inspired from ACRA: https://github.com/ACRA/acra.
 Catcher supports Android, iOS and Web platforms.
 
 
@@ -21,7 +20,7 @@ Catcher supports Android, iOS and Web platforms.
 Add this line to your **pubspec.yaml**:
 ```yaml
 dependencies:
-  catcher: ^0.3.19
+  catcher: ^0.3.20
 ```
 
 Then run this command:
@@ -760,6 +759,8 @@ All parameters list:
 * enableDeviceParameters (optional) - please look in console handler description
 * enableApplicationParameters (optional) - please look in console handler description
 * enableCustomParameters (optional) - please look in console handler description
+* customEnvironment (optional) - custom environment string, if null, Catcher will generate it
+* customRelease (optional) - custom release string , if null, Catcher will generate it
 * printLogs (optional) - enable/disable debug logs
 
 #### Slack Handler
