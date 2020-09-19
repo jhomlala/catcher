@@ -64,7 +64,7 @@ import 'package:catcher/catcher.dart';
 [Explicit exception report handler map](#explicit-exception-report-handler-map)  
 [Explicit exception report mode map](#explicit-exception-report-mode-map)  
 [Error widget](#error-widget)  
-[Current config](#current-config)
+[Current config](#current-config)  
 [Update config](#update-config)  
 ## Platform support
 Catcher supports Android, iOS and Web platforms. Due to issues with web framework state and missing plugins, web implementation offers less features than mobile. Here is features support table:
