@@ -5,9 +5,7 @@ import 'package:sentry/sentry.dart';
 main() {
   CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
     SentryHandler(
-      SentryClient(
-          dsn:
-              'YOUR DSN HERE'),
+      SentryClient(dsn: 'YOUR DSN HERE'),
       printLogs: true,
     )
   ]);

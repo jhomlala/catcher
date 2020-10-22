@@ -63,10 +63,10 @@ class HttpHandler extends ReportHandler {
           await _dio.post(endpointUri.toString(), data: json, options: options);
       _printLog(
           "HttpHandler response status: ${response.statusCode} body: ${response.data}");
-      return SynchronousFuture(true);
+      return true;
     } catch (error, stackTrace) {
       _printLog("HttpHandler error: $error, stackTrace: $stackTrace");
-      return SynchronousFuture(false);
+      return false;
     }
   }
 

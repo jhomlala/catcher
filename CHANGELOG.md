@@ -1,7 +1,12 @@
+## 0.3.21
+* Added Dutch language by EpicOkapi (https://github.com/EpicOkapi)
+* Modified SentryHandler's userContext parameter by Mari Thorsteinsen (https://github.com/marantho)
+* Updated dependencies
+
 ## 0.3.20
 * Added customEnvironment and customRelease settings for Sentry Handler
 * Updated documentation
-* Fixed dependencies declaration (now it'
+* Fixed dependencies declaration
 
 ## 0.3.19
 * Added detailed logs for sentry handler
