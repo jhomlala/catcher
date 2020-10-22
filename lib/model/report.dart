@@ -39,13 +39,30 @@ class Report {
       this.platformType);
 
   /// Creates json from current instance
-  Map<String, dynamic> toJson() => {
-        "error": error.toString(),
-        "stackTrace": stackTrace.toString(),
-        "deviceParameters": deviceParameters,
-        "applicationParameters": applicationParameters,
-        "customParameters": customParameters,
-        "dateTime": dateTime.toIso8601String(),
-        "platformType": describeEnum(platformType),
-      };
+  Map<String, dynamic> toJson({
+    bool enableDeviceParameters = true,
+    bool enableApplicationParameters = true,
+    bool enableStackTrace = true,
+    bool enableCustomParameters = false,
+  }) {
+    Map<String, dynamic> json = {
+      "error": error.toString(),
+      "customParameters": customParameters,
+      "dateTime": dateTime.toIso8601String(),
+      "platformType": describeEnum(platformType),
+    };
+    if (enableDeviceParameters) {
+      json["deviceParameters"] = deviceParameters;
+    }
+    if (enableApplicationParameters) {
+      json["applicationParameters"] = applicationParameters;
+    }
+    if (enableStackTrace) {
+      json["stackTrace"] = stackTrace.toString();
+    }
+    if (enableCustomParameters) {
+      json["customParameters"] = customParameters;
+    }
+    return json;
+  }
 }

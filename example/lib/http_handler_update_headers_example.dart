@@ -3,9 +3,15 @@ import 'package:catcher/catcher.dart';
 
 main() {
   ///Http handler instance
-  var httpHandler = HttpHandler(HttpRequestType.post,
-      Uri.parse("https://jsonplaceholder.typicode.com/posts"),
-      printLogs: true);
+  var httpHandler = HttpHandler(
+    HttpRequestType.post,
+    Uri.parse("https://jsonplaceholder.typicode.com/posts"),
+    printLogs: true,
+    enableCustomParameters: false,
+    enableStackTrace: false,
+    enableApplicationParameters: false,
+    enableDeviceParameters: false,
+  );
 
   ///Init catcher
   CatcherOptions debugOptions =

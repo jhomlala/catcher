@@ -1,3 +1,6 @@
+## 0.3.22
+* Added enableCustomParameters, enableStackTrace, enableApplicationParameters, enableDeviceParameters to HttpHandler
+
 ## 0.3.21
 * Added Dutch language by EpicOkapi (https://github.com/EpicOkapi)
 * Modified SentryHandler's userContext parameter by Mari Thorsteinsen (https://github.com/marantho)

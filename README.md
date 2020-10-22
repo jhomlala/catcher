@@ -20,7 +20,7 @@ Catcher supports Android, iOS and Web platforms.
 Add this line to your **pubspec.yaml**:
 ```yaml
 dependencies:
-  catcher: ^0.3.21
+  catcher: ^0.3.22
 ```
 
 Then run this command:
@@ -681,7 +681,11 @@ All parameters list:
 * endpointUri (required) - uri address of server  
 * headers (optional) - map of additional headers that can be send in http request  
 * requestTimeout (optional) - request time in milliseconds  
-* printLogs (optional) - show debug logs  
+* printLogs (optional) - show debug logs
+* enableDeviceParameters (optional) - please look in console handler description
+* enableApplicationParameters (optional) - please look in console handler description
+* enableStackTrace (optional) - please look in console handler description
+* enableCustomParameters (optional) - please look in console handler description
 
 You can try using example backend server which handles logs. It's written in Java 8 and Spring Framework and uses material design.
 You can find code of backend server here: https://github.com/jhomlala/catcher/tree/master/backend
