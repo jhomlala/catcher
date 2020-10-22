@@ -347,6 +347,8 @@ class Catcher with ReportModeAction {
         return LocalizationOptions.buildDefaultItalianOptions();
       case "ko":
         return LocalizationOptions.buildDefaultKoreanOptions();
+      case "nl":
+        return LocalizationOptions.buildDefaultDutchOptions();
       default:
         return LocalizationOptions.buildDefaultEnglishOptions();
     }

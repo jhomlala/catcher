@@ -400,6 +400,10 @@ LocalizationOptions.buildDefaultItalianOptions();
 ```dart
 LocalizationOptions.buildDefaultKoreanOptions();
 ```
+* dutch
+```dart
+LocalizationOptions.buildDefaultDutchOptions();
+```
 
 Complete Example:
 ```dart

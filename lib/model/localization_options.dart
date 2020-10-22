@@ -201,4 +201,21 @@ class LocalizationOptions {
         pageReportModeAccept: "수락",
         pageReportModeCancel: "취소");
   }
+
+  static LocalizationOptions buildDefaultDutchOptions() {
+    return LocalizationOptions("nl",
+        notificationReportModeTitle: "Er is een fout opgetreden",
+        notificationReportModeContent:
+            "Klik hier om het foutrapport te versturen naar het ondersteuningsteam.",
+        dialogReportModeTitle: "Error",
+        dialogReportModeDescription:
+            "Er is een onverwachte fout opgetreden in de applicatie. Het foutrapport is klaar om naar het ondersteuningsteam te worden verstuurd. Druk op accepteer om het rapport te versturen of op annuleer om het rapport te verwijderen.",
+        dialogReportModeAccept: "Accepteer",
+        dialogReportModeCancel: "Annuleer",
+        pageReportModeTitle: "Error",
+        pageReportModeDescription:
+            "Er is een onverwachte fout opgetreden in de applicatie. Het foutrapport is klaar om naar het ondersteuningsteam te worden verstuurd. Druk op accepteer om het rapport te versturen of op annuleer om het rapport te verwijderen.",
+        pageReportModeAccept: "Accepteer",
+        pageReportModeCancel: "Annuleer");
+  }
 }
