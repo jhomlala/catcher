@@ -1,3 +1,6 @@
+## 0.3.23
+* Updated device_info version
+
 ## 0.3.22
 * Added enableCustomParameters, enableStackTrace, enableApplicationParameters, enableDeviceParameters to HttpHandler
 
