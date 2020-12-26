@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:catcher/catcher.dart';
+import 'package:flutter/material.dart';
 
 main() {
   CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
@@ -19,6 +19,7 @@ main() {
 
 class MyApp extends StatefulWidget {
   final GlobalKey<NavigatorState> navigatorKey;
+
   const MyApp(this.navigatorKey);
 
   @override

@@ -1,16 +1,15 @@
 import 'dart:async';
-
 import 'dart:io';
 import 'dart:isolate';
 
 import 'package:catcher/core/application_profile_manager.dart';
-import 'package:catcher/model/report_handler.dart';
+import 'package:catcher/mode/report_mode_action_confirmed.dart';
 import 'package:catcher/model/application_profile.dart';
 import 'package:catcher/model/catcher_options.dart';
-import 'package:catcher/mode/report_mode_action_confirmed.dart';
 import 'package:catcher/model/localization_options.dart';
 import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
+import 'package:catcher/model/report_handler.dart';
 import 'package:catcher/model/report_mode.dart';
 import 'package:catcher/utils/catcher_error_widget.dart';
 import 'package:device_info/device_info.dart';
