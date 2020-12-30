@@ -1,6 +1,6 @@
-import 'package:catcher/model/report_handler.dart';
 import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
+import 'package:catcher/model/report_handler.dart';
 import 'package:logging/logging.dart';
 import 'package:sentry/sentry.dart';
 
@@ -65,11 +65,8 @@ class SentryHandler extends ReportHandler {
       }
 
       var event = buildEvent(error, tags);
-      final sentryResult = await sentryClient.capture(event: event);
+      await sentryClient.captureEvent(event);
 
-      if (!sentryResult.isSuccessful) {
-        throw Exception(sentryResult.error);
-      }
       _printLog("Logged to sentry!");
       return true;
     } catch (exception, stackTrace) {
@@ -93,9 +90,9 @@ class SentryHandler extends ReportHandler {
     return applicationVersion;
   }
 
-  Event buildEvent(Report report, Map<String, dynamic> tags) {
-    return Event(
-        loggerName: "Catcher",
+  SentryEvent buildEvent(Report report, Map<String, dynamic> tags) {
+    return SentryEvent(
+        logger: "Catcher",
         serverName: "Catcher",
         release: customRelease != null
             ? customRelease
@@ -103,13 +100,13 @@ class SentryHandler extends ReportHandler {
         environment: customEnvironment != null
             ? customEnvironment
             : report.applicationParameters["environment"],
-        message: "Error handled by Catcher",
+        message: Message("Error handled by Catcher"),
         exception: report.error,
         stackTrace: report.stackTrace,
-        level: SeverityLevel.error,
+        level: SentryLevel.error,
         culprit: "",
         tags: changeToSentryMap(tags),
-        userContext: this.userContext);
+        user: this.userContext);
   }
 
   Map<String, String> changeToSentryMap(Map<String, dynamic> map) {

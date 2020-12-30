@@ -1,8 +1,8 @@
 import 'package:catcher/handlers/console_handler.dart';
-import 'package:catcher/model/report_handler.dart';
 import 'package:catcher/mode/dialog_report_mode.dart';
 import 'package:catcher/mode/silent_report_mode.dart';
 import 'package:catcher/model/localization_options.dart';
+import 'package:catcher/model/report_handler.dart';
 import 'package:catcher/model/report_mode.dart';
 
 class CatcherOptions {

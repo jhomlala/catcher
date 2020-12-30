@@ -1,6 +1,6 @@
-import 'package:catcher/model/report_handler.dart';
 import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
+import 'package:catcher/model/report_handler.dart';
 import 'package:logging/logging.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';

@@ -1,6 +1,6 @@
+import 'package:catcher/catcher.dart';
 import 'package:catcher/model/platform_type.dart';
 import 'package:flutter/material.dart';
-import 'package:catcher/catcher.dart';
 
 main() {
   CatcherOptions debugOptions = CatcherOptions(CustomPageReportMode(), [

@@ -20,7 +20,7 @@ dependencies:
   dio: ^3.0.10
   flutter_mailer: ^1.0.0
   logging: ^0.11.4
-  sentry: ^3.0.0+1
+  sentry: ^4.0.0
 
 flutter:
   plugin:
