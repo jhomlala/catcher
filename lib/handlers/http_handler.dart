@@ -79,8 +79,8 @@ class HttpHandler extends ReportHandler {
           receiveTimeout: responseTimeout,
           headers: mutableHeaders);
       _printLog("Calling: ${endpointUri.toString()}");
-      Response response =
-          await _dio.post<dynamic>(endpointUri.toString(), data: json, options: options);
+      Response response = await _dio.post<dynamic>(endpointUri.toString(),
+          data: json, options: options);
       _printLog(
           "HttpHandler response status: ${response.statusCode} body: ${response.data}");
       return true;

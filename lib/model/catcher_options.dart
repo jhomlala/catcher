@@ -32,7 +32,7 @@ class CatcherOptions {
   /// Builds catcher options instance
   CatcherOptions(this.reportMode, this.handlers,
       {this.handlerTimeout = 5000,
-      this.customParameters = const <String,dynamic>{},
+      this.customParameters = const <String, dynamic>{},
       this.localizationOptions = const [],
       this.explicitExceptionReportModesMap = const {},
       this.explicitExceptionHandlersMap = const {}});
@@ -42,7 +42,7 @@ class CatcherOptions {
       : this.handlers = [ConsoleHandler()],
         this.reportMode = DialogReportMode(),
         handlerTimeout = 5000,
-        customParameters = <String,dynamic>{},
+        customParameters = <String, dynamic>{},
         localizationOptions = [],
         this.explicitExceptionReportModesMap = {},
         explicitExceptionHandlersMap = {};
@@ -52,7 +52,7 @@ class CatcherOptions {
       : this.handlers = [ConsoleHandler()],
         this.reportMode = SilentReportMode(),
         handlerTimeout = 10000,
-        customParameters = <String,dynamic>{},
+        customParameters = <String, dynamic>{},
         localizationOptions = [],
         this.explicitExceptionReportModesMap = {},
         explicitExceptionHandlersMap = {};
@@ -62,7 +62,7 @@ class CatcherOptions {
       : this.handlers = [ConsoleHandler()],
         this.reportMode = SilentReportMode(),
         handlerTimeout = 10000,
-        customParameters = <String,dynamic>{},
+        customParameters = <String, dynamic>{},
         localizationOptions = [],
         this.explicitExceptionReportModesMap = {},
         explicitExceptionHandlersMap = {};
