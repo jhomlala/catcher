@@ -56,7 +56,7 @@ class SlackHandler extends ReportHandler {
         "icon_emoji": iconEmoji
       };
       _printLog("Sending request to Slack server...");
-      Response response = await _dio.post(webhookUrl, data: data);
+      Response response = await _dio.post<dynamic>(webhookUrl, data: data);
       _printLog(
           "Server responded with code: ${response.statusCode} and message: ${response.statusMessage}");
       return response.statusCode >= 200 && response.statusCode < 300;

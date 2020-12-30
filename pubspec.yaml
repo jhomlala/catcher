@@ -1,6 +1,6 @@
 name: catcher
 description: Plugin for error catching. Allows handling errors when they're not catched by developer. Plugin provides multiple handlers for errors.
-version: 0.3.23
+version: 0.4.0
 author: Jakub Homlala <jhomlala@gmail.com>
 homepage: https://github.com/jhomlala/catcher
 
@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
   flutter_web_plugins:
      sdk: flutter
-  fluttertoast: ^7.0.1+1
+  fluttertoast: ^7.1.6
   device_info: ^1.0.0
   package_info: ^0.4.3
   mailer: ^3.2.1
@@ -21,6 +21,9 @@ dependencies:
   flutter_mailer: ^1.0.0
   logging: ^0.11.4
   sentry: ^4.0.0
+
+dev_dependencies:
+  lint: ^1.0.0
 
 flutter:
   plugin:

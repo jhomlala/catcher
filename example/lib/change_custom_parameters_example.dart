@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 Catcher catcher;
 
-main() {
+void main() {
   Map<String, dynamic> customParameters = new Map<String, dynamic>();
   customParameters["First"] = "First parameter";
   CatcherOptions debugOptions = CatcherOptions(
@@ -16,8 +16,11 @@ main() {
     EmailManualHandler(["recipient@email.com"])
   ]);
 
-  catcher = Catcher(MyApp(),
-      debugConfig: debugOptions, releaseConfig: releaseOptions);
+  catcher = Catcher(
+    rootWidget: MyApp(),
+    debugConfig: debugOptions,
+    releaseConfig: releaseOptions,
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -57,7 +60,7 @@ class ChildWidget extends StatelessWidget {
     ]));
   }
 
-  generateError() async {
+  void generateError() async {
     Catcher.sendTestException();
   }
 

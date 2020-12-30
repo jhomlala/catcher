@@ -27,6 +27,9 @@ class Catcher with ReportModeAction {
   /// Root widget which will be ran
   final Widget rootWidget;
 
+  ///Run app function which will be ran
+  final void Function() runAppFunction;
+
   /// Instance of catcher config used in release mode
   CatcherOptions releaseConfig;
 
@@ -44,9 +47,9 @@ class Catcher with ReportModeAction {
 
   final Logger _logger = Logger("Catcher");
   CatcherOptions _currentConfig;
-  Map<String, dynamic> _deviceParameters = Map();
-  Map<String, dynamic> _applicationParameters = Map();
-  List<Report> _cachedReports = List();
+  Map<String, dynamic> _deviceParameters = <String, dynamic>{};
+  Map<String, dynamic> _applicationParameters = <String, dynamic>{};
+  List<Report> _cachedReports = [];
   LocalizationOptions _localizationOptions;
 
   /// Instance of navigator key
@@ -55,15 +58,17 @@ class Catcher with ReportModeAction {
   }
 
   /// Builds catcher instance
-  Catcher(
-    this.rootWidget, {
+  Catcher({
+    this.rootWidget,
+    this.runAppFunction,
     this.releaseConfig,
     this.debugConfig,
     this.profileConfig,
     this.enableLogger = true,
     this.ensureInitialized = false,
     GlobalKey<NavigatorState> navigatorKey,
-  }) : assert(rootWidget != null) {
+  }) : assert(rootWidget != null || runAppFunction != null,
+            "You need to provide rootWidget or runAppFunction") {
     _configure(navigatorKey);
   }
 
@@ -184,11 +189,23 @@ class Catcher with ReportModeAction {
       }).sendPort);
     }
 
+    if (rootWidget != null) {
+      _runZonedGuarded(() {
+        runApp(rootWidget);
+      });
+    } else {
+      _runZonedGuarded(() {
+        runAppFunction();
+      });
+    }
+  }
+
+  void _runZonedGuarded(void Function() callback) {
     runZonedGuarded<Future<void>>(() async {
       if (ensureInitialized) {
         WidgetsFlutterBinding.ensureInitialized();
       }
-      runApp(rootWidget);
+      callback();
     }, (dynamic error, StackTrace stackTrace) {
       _reportError(error, stackTrace);
     });
@@ -467,7 +484,7 @@ class Catcher with ReportModeAction {
       return;
     }
 
-    reportHandler.handle(report).catchError((handlerError) {
+    reportHandler.handle(report).catchError((dynamic handlerError) {
       _logger.warning(
           "Error occured in ${reportHandler.toString()}: ${handlerError.toString()}");
     }).then((result) {

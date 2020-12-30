@@ -1,7 +1,7 @@
 import 'package:catcher/catcher.dart';
 import 'package:flutter/material.dart';
 
-main() {
+void main() {
   //silent:
   //ReportMode reportMode = SilentReportMode();
 
@@ -20,7 +20,7 @@ main() {
 
   CatcherOptions debugOptions = CatcherOptions(reportMode, [ConsoleHandler()]);
 
-  Catcher(MyApp(), debugConfig: debugOptions);
+  Catcher(rootWidget: MyApp(), debugConfig: debugOptions);
 }
 
 class MyApp extends StatefulWidget {
@@ -55,7 +55,7 @@ class ChildWidget extends StatelessWidget {
             child: Text("Generate error"), onPressed: () => generateError()));
   }
 
-  generateError() async {
+  void generateError() async {
     throw "Test exception";
   }
 }

@@ -1,7 +1,7 @@
 import 'package:catcher/catcher.dart';
 import 'package:flutter/material.dart';
 
-main() {
+void main() {
   CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
     EmailManualHandler(["recipient@email.com"]),
     ConsoleHandler()
@@ -11,10 +11,12 @@ main() {
   ]);
 
   GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
-  Catcher(MyApp(navigatorKey),
-      debugConfig: debugOptions,
-      releaseConfig: releaseOptions,
-      navigatorKey: navigatorKey);
+  Catcher(
+    rootWidget: MyApp(navigatorKey),
+    debugConfig: debugOptions,
+    releaseConfig: releaseOptions,
+    navigatorKey: navigatorKey,
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -53,7 +55,7 @@ class ChildWidget extends StatelessWidget {
             child: Text("Generate error"), onPressed: () => generateError()));
   }
 
-  generateError() async {
+  void generateError() async {
     Catcher.sendTestException();
   }
 }

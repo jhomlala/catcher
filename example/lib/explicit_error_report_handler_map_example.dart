@@ -2,7 +2,7 @@ import 'package:catcher/catcher.dart';
 import 'package:catcher/model/catcher_options.dart';
 import 'package:flutter/material.dart';
 
-main() {
+void main() {
   var explicitMap = {"FormatException": ConsoleHandler()};
   CatcherOptions debugOptions = CatcherOptions(
       DialogReportMode(),
@@ -16,7 +16,11 @@ main() {
     EmailManualHandler(["recipient@email.com"])
   ]);
 
-  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
+  Catcher(
+    rootWidget: MyApp(),
+    debugConfig: debugOptions,
+    releaseConfig: releaseOptions,
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -47,11 +51,14 @@ class ChildWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: FlatButton(
-            child: Text("Generate error"), onPressed: () => generateError()));
+      child: FlatButton(
+        child: Text("Generate error"),
+        onPressed: () => generateError(),
+      ),
+    );
   }
 
-  generateError() async {
+  void generateError() async {
     throw new FormatException("Example Error");
   }
 }

@@ -2,7 +2,7 @@ import 'package:catcher/catcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-main() {
+void main() {
   CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
     ConsoleHandler(),
     HttpHandler(HttpRequestType.post, Uri.parse("https://httpstat.us/200"),
@@ -34,7 +34,10 @@ main() {
     EmailManualHandler(["recipient@email.com"])
   ]);
 
-  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
+  Catcher(
+      rootWidget: MyApp(),
+      debugConfig: debugOptions,
+      releaseConfig: releaseOptions);
 }
 
 class MyApp extends StatefulWidget {
@@ -77,7 +80,7 @@ class ChildWidget extends StatelessWidget {
             child: Text("Generate error"), onPressed: () => generateError()));
   }
 
-  generateError() async {
+  void generateError() async {
     throw "Test exception";
   }
 }

@@ -57,7 +57,7 @@ class DiscordHandler extends ReportHandler {
   }
 
   List<String> _setupMessages(String message) {
-    List<String> messages = List();
+    List<String> messages = [];
     int splits = (message.length / 2000).ceil();
     int messageLength = message.length;
     for (int index = 0; index < splits; index++) {
@@ -110,7 +110,7 @@ class DiscordHandler extends ReportHandler {
         "content": content,
       };
       _printLog("Sending request to Discord server...");
-      Response response = await _dio.post(webhookUrl, data: data);
+      Response response = await _dio.post<dynamic>(webhookUrl, data: data);
       _printLog(
           "Server responded with code: ${response.statusCode} and message: ${response.statusMessage}");
       return response.statusCode >= 200 && response.statusCode < 300;

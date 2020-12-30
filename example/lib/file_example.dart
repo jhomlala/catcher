@@ -8,7 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() async {
-  var catcher = Catcher(MyApp(), ensureInitialized: true);
+  var catcher = Catcher(rootWidget: MyApp(), ensureInitialized: true);
   Directory externalDir = await getExternalStorageDirectory();
   String path = externalDir.path.toString() + "/log.txt";
 
@@ -67,13 +67,11 @@ class ChildWidget extends StatelessWidget {
     var status = await Permission.storage.status;
     print("Status: $status");
     if (!status.isGranted) {
-      Map<Permission, PermissionStatus> statuses =
-          await [Permission.storage].request();
       print("Requested");
     }
   }
 
-  generateError() async {
+  void generateError() async {
     throw "Test exception";
   }
 }

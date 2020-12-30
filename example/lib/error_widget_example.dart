@@ -1,7 +1,7 @@
 import 'package:catcher/catcher.dart';
 import 'package:flutter/material.dart';
 
-main() {
+void main() {
   CatcherOptions debugOptions = CatcherOptions(SilentReportMode(), [
     ConsoleHandler(),
   ]);
@@ -9,7 +9,11 @@ main() {
     EmailManualHandler(["recipient@email.com"])
   ]);
 
-  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
+  Catcher(
+    rootWidget: MyApp(),
+    debugConfig: debugOptions,
+    releaseConfig: releaseOptions,
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -45,9 +49,9 @@ class _MyAppState extends State<MyApp> {
   }
 
   ///Trigger "normal" mode
-  Widget _buildNormalErrorWidget() {
+  /*Widget _buildNormalErrorWidget() {
     return ChildWidget();
-  }
+  }*/
 
   ///Trigger "small" mode
   Widget _buildSmallErrorWidget() {

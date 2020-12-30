@@ -1,7 +1,7 @@
 import 'package:catcher/catcher.dart';
 import 'package:flutter/material.dart';
 
-main() {
+void main() {
   ///Http handler instance
   var httpHandler = HttpHandler(
     HttpRequestType.post,
@@ -20,7 +20,11 @@ main() {
     EmailManualHandler(["recipient@email.com"])
   ]);
 
-  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
+  Catcher(
+    rootWidget: MyApp(),
+    debugConfig: debugOptions,
+    releaseConfig: releaseOptions,
+  );
 
   ///At some point of time, you're updating headers:
 
@@ -60,7 +64,7 @@ class ChildWidget extends StatelessWidget {
             child: Text("Generate error"), onPressed: () => generateError()));
   }
 
-  generateError() async {
+  void generateError() async {
     Catcher.sendTestException();
   }
 }

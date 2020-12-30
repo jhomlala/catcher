@@ -1,7 +1,7 @@
 import 'package:catcher/catcher.dart';
 import 'package:flutter/material.dart';
 
-main() {
+void main() {
   CatcherOptions debugOptions = CatcherOptions(SilentReportMode(), [
     SlackHandler("<web_hook_url>", "#catcher",
         username: "CatcherTest",
@@ -17,7 +17,11 @@ main() {
     EmailManualHandler(["recipient@email.com"])
   ]);
 
-  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
+  Catcher(
+    rootWidget: MyApp(),
+    debugConfig: debugOptions,
+    releaseConfig: releaseOptions,
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -52,7 +56,7 @@ class ChildWidget extends StatelessWidget {
             child: Text("Generate error"), onPressed: () => generateError()));
   }
 
-  generateError() async {
+  void generateError() async {
     Catcher.sendTestException();
   }
 }

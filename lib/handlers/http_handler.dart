@@ -46,7 +46,7 @@ class HttpHandler extends ReportHandler {
         assert(enableStackTrace != null, "enableStackTrace can't be null"),
         assert(enableCustomParameters != null,
             "enableCustomParameters can't be null"),
-        this.headers = headers != null ? headers : Map();
+        this.headers = headers != null ? headers : <String, dynamic>{};
 
   @override
   Future<bool> handle(Report error) async {
@@ -70,7 +70,7 @@ class HttpHandler extends ReportHandler {
           enableApplicationParameters: enableApplicationParameters,
           enableStackTrace: enableStackTrace,
           enableCustomParameters: enableCustomParameters);
-      HashMap<String, dynamic> mutableHeaders = HashMap();
+      HashMap<String, dynamic> mutableHeaders = HashMap<String, dynamic>();
       if (headers != null) {
         mutableHeaders.addAll(headers);
       }
@@ -80,7 +80,7 @@ class HttpHandler extends ReportHandler {
           headers: mutableHeaders);
       _printLog("Calling: ${endpointUri.toString()}");
       Response response =
-          await _dio.post(endpointUri.toString(), data: json, options: options);
+          await _dio.post<dynamic>(endpointUri.toString(), data: json, options: options);
       _printLog(
           "HttpHandler response status: ${response.statusCode} body: ${response.data}");
       return true;
