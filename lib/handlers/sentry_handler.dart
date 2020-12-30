@@ -92,21 +92,21 @@ class SentryHandler extends ReportHandler {
 
   SentryEvent buildEvent(Report report, Map<String, dynamic> tags) {
     return SentryEvent(
-        logger: "Catcher",
-        serverName: "Catcher",
-        release: customRelease != null
-            ? customRelease
-            : _getApplicationVersion(report),
-        environment: customEnvironment != null
-            ? customEnvironment
-            : report.applicationParameters["environment"],
-        message: Message("Error handled by Catcher"),
-        exception: report.error,
-        stackTrace: report.stackTrace,
-        level: SentryLevel.error,
-        culprit: "",
-        tags: changeToSentryMap(tags),
-        user: this.userContext);
+      logger: "Catcher",
+      serverName: "Catcher",
+      release: customRelease != null
+          ? customRelease
+          : _getApplicationVersion(report),
+      environment: customEnvironment != null
+          ? customEnvironment
+          : report.applicationParameters["environment"],
+      message: Message("Error handled by Catcher"),
+      throwable: report.error,
+      level: SentryLevel.error,
+      culprit: "",
+      tags: changeToSentryMap(tags),
+      user: this.userContext,
+    );
   }
 
   Map<String, String> changeToSentryMap(Map<String, dynamic> map) {
