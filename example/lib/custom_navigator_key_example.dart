@@ -11,14 +11,17 @@ main() {
   ]);
 
   GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
-  Catcher(MyApp(navigatorKey),
-      debugConfig: debugOptions,
-      releaseConfig: releaseOptions,
-      navigatorKey: navigatorKey);
+  Catcher(
+    rootWidget: MyApp(navigatorKey),
+    debugConfig: debugOptions,
+    releaseConfig: releaseOptions,
+    navigatorKey: navigatorKey,
+  );
 }
 
 class MyApp extends StatefulWidget {
   final GlobalKey<NavigatorState> navigatorKey;
+
   const MyApp(this.navigatorKey);
 
   @override

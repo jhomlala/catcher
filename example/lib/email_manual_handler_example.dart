@@ -18,7 +18,7 @@ main() {
   });
 
   Catcher(
-    MyApp(),
+    rootWidget: MyApp(),
     debugConfig: debugOptions,
   );
 }

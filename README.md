@@ -36,7 +36,7 @@ import 'package:catcher/catcher.dart';
 ## Table of contents
 [Platform support](#platform-support)   
 [Basic example](#basic-example)  
-[Catcher usage](#catcher-usage)  
+[Catcher usage](#catcher-usage)
 [Adding navigator key](#adding-navigator-key)  
 [Catcher configuration](#catcher-configuration)    
 [Report catched exception](#report-catched-exception)   
@@ -117,7 +117,7 @@ main() {
   ]);
 
   /// STEP 2. Pass your root widget (MyApp) along with Catcher configuration:
-  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
+  Catcher(rootWidget: MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
 }
 
 class MyApp extends StatefulWidget {
@@ -264,9 +264,10 @@ You need to provide this key, because Catcher needs context of navigator to show
 You can also provide your own navigator key if need to. You can provide it with Catcher constructor (see below). Please check custom navigator key example to see basic example.
 
 ### Catcher configuration
-Catcher instance needs 1 required and 3 optional parameters.
+Catcher instance needs rootWidget or runAppFunction in setup time. Please provide one of it.
 
-* rootWidget (required) - instance of your root application widget
+* rootWidget (optional) - instance of your root application widget
+* runAppFunction (optional) - function where runApp() will be called
 * debugConfig (optional) - config used when Catcher detects that application runs in debug mode
 * releaseConfig (optional) - config used when Catcher detects that application runs in release mode
 * profileConfig (optional) - config used when Catcher detects that application runs in profile mode
@@ -284,7 +285,7 @@ main() {
   CatcherOptions profileOptions = CatcherOptions(
     NotificationReportMode(), [ConsoleHandler(), ToastHandler()],
     handlerTimeout: 10000, customParameters: {"example": "example_parameter"},);
-  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions, profileConfig: profileOptions, enableLogger: false, navigatorKey: navigatorKey);
+  Catcher(rootWidget: MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions, profileConfig: profileOptions, enableLogger: false, navigatorKey: navigatorKey);
 }
 ```
 CatcherOptions parameters:
@@ -436,7 +437,7 @@ main() {
     EmailManualHandler(["recipient@email.com"])
   ]);
 
-  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
+  Catcher(rootWidget: MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
 }
 
 class MyApp extends StatefulWidget {
@@ -710,7 +711,7 @@ main() {
   CatcherOptions releaseOptions =
       CatcherOptions(DialogReportMode(), [FileHandler(File(path))]);
 
-  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
+  Catcher(rootWidget: MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
 }
 ```
 
@@ -758,7 +759,7 @@ main() {
     EmailManualHandler(["recipient@email.com"])
   ]);
 
-  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
+  Catcher(rootWidget: MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
 }
 ```
 
@@ -791,7 +792,7 @@ main() {
          enableStackTrace: true,
          printLogs: true),
    ]);
-   Catcher(MyApp(), debugConfig: debugOptions);
+   Catcher(rootWidget: MyApp(), debugConfig: debugOptions);
 }
 ```
 
@@ -822,7 +823,7 @@ main() {
          printLogs: true),
    ]);
 
-   Catcher(MyApp(), debugConfig: debugOptions);
+   Catcher(rootWidget: MyApp(), debugConfig: debugOptions);
 }
 ```
 

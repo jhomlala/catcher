@@ -15,8 +15,11 @@ main() {
     EmailManualHandler(["recipient@email.com"])
   ]);
 
-  catcher = Catcher(MyApp(),
-      debugConfig: debugOptions, releaseConfig: releaseOptions);
+  catcher = Catcher(
+    rootWidget: MyApp(),
+    debugConfig: debugOptions,
+    releaseConfig: releaseOptions,
+  );
 }
 
 class MyApp extends StatefulWidget {

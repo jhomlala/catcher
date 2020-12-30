@@ -20,7 +20,7 @@ main() {
 
   CatcherOptions debugOptions = CatcherOptions(reportMode, [ConsoleHandler()]);
 
-  Catcher(MyApp(), debugConfig: debugOptions);
+  Catcher(rootWidget: MyApp(), debugConfig: debugOptions);
 }
 
 class MyApp extends StatefulWidget {

@@ -1,3 +1,7 @@
+## 0.4.0
+* [BREAKING_CHANGE]: rootWidget parameter has been moved to optional parameter
+* Catcher requires now rootWidget or runAppFunction in setup
+
 ## 0.3.23
 * Updated device_info version
 
