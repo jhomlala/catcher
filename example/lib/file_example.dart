@@ -67,13 +67,11 @@ class ChildWidget extends StatelessWidget {
     var status = await Permission.storage.status;
     print("Status: $status");
     if (!status.isGranted) {
-      Map<Permission, PermissionStatus> statuses =
-          await [Permission.storage].request();
       print("Requested");
     }
   }
 
-  generateError() async {
+  void generateError() async {
     throw "Test exception";
   }
 }

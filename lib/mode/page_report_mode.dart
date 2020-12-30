@@ -19,8 +19,8 @@ class PageReportMode extends ReportMode {
   }
 
   void _navigateToPageWidget(Report report, BuildContext context) async {
-    await Future.delayed(Duration.zero);
-    Navigator.push(
+    await Future<void>.delayed(Duration.zero);
+    Navigator.push<void>(
       context,
       MaterialPageRoute(
         builder: (context) => PageWidget(this, report),

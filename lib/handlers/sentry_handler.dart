@@ -114,7 +114,7 @@ class SentryHandler extends ReportHandler {
 
   Map<String, String> changeToSentryMap(Map<String, dynamic> map) {
     var sentryMap = Map<String, String>();
-    map.forEach((key, value) {
+    map.forEach((key, dynamic value) {
       if (value.toString() == null || value.toString().isEmpty) {
         sentryMap[key] = "none";
       } else {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:catcher/catcher.dart';
 
-main() {
+void main() {
   CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
     EmailManualHandler(["email1@email.com", "email2@email.com"],
         enableDeviceParameters: true,
@@ -12,7 +12,7 @@ main() {
         emailTitle: "Sample Title",
         emailHeader: "Sample Header",
         printLogs: true)
-  ], customParameters: {
+  ], customParameters: <String, dynamic>{
     "Test": "Test12345",
     "Test2": "Test54321"
   });
@@ -51,11 +51,14 @@ class ChildWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: FlatButton(
-            child: Text("Generate error"), onPressed: () => generateError()));
+      child: FlatButton(
+        child: Text("Generate error"),
+        onPressed: () => generateError(),
+      ),
+    );
   }
 
-  generateError() async {
+  void generateError() async {
     throw "Test exception";
   }
 }

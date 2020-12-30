@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:catcher/catcher.dart';
 
-main() {
+void main() {
   ///Http handler instance
   var httpHandler = HttpHandler(
     HttpRequestType.post,
@@ -64,7 +64,7 @@ class ChildWidget extends StatelessWidget {
             child: Text("Generate error"), onPressed: () => generateError()));
   }
 
-  generateError() async {
+  void generateError() async {
     Catcher.sendTestException();
   }
 }

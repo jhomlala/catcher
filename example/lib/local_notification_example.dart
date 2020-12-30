@@ -7,7 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:catcher/catcher.dart';
 
-main() {
+void main() {
   CatcherOptions debugOptions = CatcherOptions(NotificationReportMode(), [
     EmailManualHandler(["recipient@email.com"]),
     ConsoleHandler()
@@ -55,7 +55,7 @@ class ChildWidget extends StatelessWidget {
             child: Text("Generate error"), onPressed: () => generateError()));
   }
 
-  generateError() async {
+  void generateError() async {
     Catcher.sendTestException();
   }
 }
@@ -103,7 +103,7 @@ class NotificationReportMode extends ReportMode {
 
   Future onSelectedNotification(String payload) {
     onActionConfirmed(_lastReport);
-    return Future.value(null);
+    return null;
   }
 
   void _sendNotification() async {

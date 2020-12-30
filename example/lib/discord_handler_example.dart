@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:catcher/catcher.dart';
 
-main() {
+void main() {
   CatcherOptions debugOptions = CatcherOptions(SilentReportMode(), [
     DiscordHandler("<web_hook_url>",
         enableDeviceParameters: true,
@@ -53,7 +53,7 @@ class ChildWidget extends StatelessWidget {
             child: Text("Generate error"), onPressed: () => generateError()));
   }
 
-  generateError() async {
+  void generateError() async {
     Catcher.sendTestException();
   }
 }

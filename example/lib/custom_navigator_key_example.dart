@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:catcher/catcher.dart';
 
-main() {
+void main() {
   CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
     EmailManualHandler(["recipient@email.com"]),
     ConsoleHandler()
@@ -55,7 +55,7 @@ class ChildWidget extends StatelessWidget {
             child: Text("Generate error"), onPressed: () => generateError()));
   }
 
-  generateError() async {
+  void generateError() async {
     Catcher.sendTestException();
   }
 }

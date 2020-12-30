@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:catcher/catcher.dart';
 import 'package:sentry/sentry.dart';
 
-main() {
+void main() {
   CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
     SentryHandler(
       SentryClient(dsn: 'YOUR DSN HERE'),
@@ -52,7 +52,7 @@ class ChildWidget extends StatelessWidget {
             child: Text("Generate error"), onPressed: () => generateError()));
   }
 
-  generateError() async {
+  void generateError() async {
     Catcher.sendTestException();
   }
 }

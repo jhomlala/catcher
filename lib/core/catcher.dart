@@ -48,8 +48,8 @@ class Catcher with ReportModeAction {
 
   final Logger _logger = Logger("Catcher");
   CatcherOptions _currentConfig;
-  Map<String, dynamic> _deviceParameters = Map();
-  Map<String, dynamic> _applicationParameters = Map();
+  Map<String, dynamic> _deviceParameters = <String, dynamic>{};
+  Map<String, dynamic> _applicationParameters = <String, dynamic>{};
   List<Report> _cachedReports = [];
   LocalizationOptions _localizationOptions;
 
@@ -68,7 +68,8 @@ class Catcher with ReportModeAction {
     this.enableLogger = true,
     this.ensureInitialized = false,
     GlobalKey<NavigatorState> navigatorKey,
-  }) : assert(rootWidget != null || runAppFunction != null, "You need to provide rootWidget or runAppFunction") {
+  }) : assert(rootWidget != null || runAppFunction != null,
+            "You need to provide rootWidget or runAppFunction") {
     _configure(navigatorKey);
   }
 
@@ -484,7 +485,7 @@ class Catcher with ReportModeAction {
       return;
     }
 
-    reportHandler.handle(report).catchError((handlerError) {
+    reportHandler.handle(report).catchError((dynamic handlerError) {
       _logger.warning(
           "Error occured in ${reportHandler.toString()}: ${handlerError.toString()}");
     }).then((result) {

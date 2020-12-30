@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:catcher/catcher.dart';
 
-main() {
+void main() {
   CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
     //EmailManualHandler(["recipient@email.com"]),
     HttpHandler(HttpRequestType.post,

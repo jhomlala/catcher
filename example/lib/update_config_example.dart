@@ -3,7 +3,7 @@ import 'package:catcher/catcher.dart';
 
 Catcher catcher;
 
-main() {
+void main() {
   CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
     //EmailManualHandler(["recipient@email.com"]),
     HttpHandler(HttpRequestType.post,

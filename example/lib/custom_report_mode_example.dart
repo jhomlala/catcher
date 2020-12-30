@@ -2,7 +2,7 @@ import 'package:catcher/model/platform_type.dart';
 import 'package:flutter/material.dart';
 import 'package:catcher/catcher.dart';
 
-main() {
+void main() {
   CatcherOptions debugOptions = CatcherOptions(CustomPageReportMode(), [
     EmailManualHandler(["recipient@email.com"]),
     ConsoleHandler()
@@ -46,11 +46,14 @@ class ChildWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: FlatButton(
-            child: Text("Generate error"), onPressed: () => generateError()));
+      child: FlatButton(
+        child: Text("Generate error"),
+        onPressed: () => generateError(),
+      ),
+    );
   }
 
-  generateError() async {
+  void generateError() async {
     Catcher.sendTestException();
   }
 }
@@ -61,9 +64,9 @@ class CustomPageReportMode extends ReportMode {
     _navigateToPageWidget(report, context);
   }
 
-  _navigateToPageWidget(Report report, BuildContext context) async {
-    await Future.delayed(Duration.zero);
-    Navigator.push(
+  void _navigateToPageWidget(Report report, BuildContext context) async {
+    await Future<void>.delayed(Duration.zero);
+    Navigator.push<void>(
       context,
       MaterialPageRoute(builder: (context) => CustomPage(this, report)),
     );

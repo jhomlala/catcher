@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:catcher/catcher.dart';
 
-main() {
+void main() {
   CatcherOptions debugOptions = CatcherOptions(SilentReportMode(), [
     ConsoleHandler(),
   ]);
@@ -49,9 +49,9 @@ class _MyAppState extends State<MyApp> {
   }
 
   ///Trigger "normal" mode
-  Widget _buildNormalErrorWidget() {
+  /*Widget _buildNormalErrorWidget() {
     return ChildWidget();
-  }
+  }*/
 
   ///Trigger "small" mode
   Widget _buildSmallErrorWidget() {

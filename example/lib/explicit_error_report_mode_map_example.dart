@@ -2,7 +2,7 @@ import 'package:catcher/catcher.dart';
 import 'package:catcher/model/catcher_options.dart';
 import 'package:flutter/material.dart';
 
-main() {
+void main() {
   var explicitReportModesMap = {"FormatException": PageReportMode()};
   CatcherOptions debugOptions = CatcherOptions(
     DialogReportMode(),
@@ -52,21 +52,23 @@ class ChildWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Column(children: <Widget>[
-      FlatButton(
-          child: Text("Generate first error"),
-          onPressed: () => generateFirstError()),
-      FlatButton(
+      child: Column(children: <Widget>[
+        FlatButton(
+            child: Text("Generate first error"),
+            onPressed: () => generateFirstError()),
+        FlatButton(
           child: Text("Generate second error"),
-          onPressed: () => generateSecondError())
-    ]));
+          onPressed: () => generateSecondError(),
+        )
+      ]),
+    );
   }
 
-  generateFirstError() async {
+  void generateFirstError() async {
     throw new FormatException("Example Error");
   }
 
-  generateSecondError() async {
+  void generateSecondError() async {
     throw new ArgumentError("Normal error");
   }
 }
