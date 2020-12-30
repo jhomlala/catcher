@@ -5,10 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 class CatcherWeb {
+  static const String _channelName = "com.jhomlala/catcher/web";
+
   ///Register web method channel
   static void registerWith(Registrar registrar) {
-    final MethodChannel channel = MethodChannel("com.jhomlala/catcher/web",
-        const StandardMethodCodec(), registrar.messenger);
+    final MethodChannel channel = MethodChannel(
+        _channelName, const StandardMethodCodec(), registrar);
     final CatcherWeb instance = CatcherWeb();
     channel.setMethodCallHandler(instance.handleMethodCall);
   }
