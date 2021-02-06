@@ -48,15 +48,16 @@ class SlackHandler extends ReportHandler {
         return false;
       }
 
-      String message = _buildMessage(report);
-      var data = {
+      final String message = _buildMessage(report);
+      final data = {
         "text": message,
         "channel": channel,
         "username": username,
         "icon_emoji": iconEmoji
       };
       _printLog("Sending request to Slack server...");
-      Response response = await _dio.post<dynamic>(webhookUrl, data: data);
+      final Response response =
+          await _dio.post<dynamic>(webhookUrl, data: data);
       _printLog(
           "Server responded with code: ${response.statusCode} and message: ${response.statusMessage}");
       return response.statusCode >= 200 && response.statusCode < 300;
@@ -67,31 +68,31 @@ class SlackHandler extends ReportHandler {
   }
 
   String _buildMessage(Report report) {
-    StringBuffer stringBuffer = new StringBuffer();
+    final StringBuffer stringBuffer = StringBuffer();
     stringBuffer.write("*Error:* ```${report.error}```\n");
     if (enableStackTrace) {
       stringBuffer.write("*Stack trace:* ```${report.stackTrace}```\n");
     }
-    if (enableDeviceParameters && report.deviceParameters.length > 0) {
+    if (enableDeviceParameters && report.deviceParameters.isNotEmpty) {
       stringBuffer.write("*Device parameters:* ```");
-      for (var entry in report.deviceParameters.entries) {
+      for (final entry in report.deviceParameters.entries) {
         stringBuffer.write("${entry.key}: ${entry.value}\n");
       }
       stringBuffer.write("```\n");
     }
 
     if (enableApplicationParameters &&
-        report.applicationParameters.length > 0) {
+        report.applicationParameters.isNotEmpty) {
       stringBuffer.write("*Application parameters:* ```");
-      for (var entry in report.applicationParameters.entries) {
+      for (final entry in report.applicationParameters.entries) {
         stringBuffer.write("${entry.key}: ${entry.value}\n");
       }
       stringBuffer.write("```\n");
     }
 
-    if (enableCustomParameters && report.customParameters.length > 0) {
+    if (enableCustomParameters && report.customParameters.isNotEmpty) {
       stringBuffer.write("*Custom parameters:* ```");
-      for (var entry in report.customParameters.entries) {
+      for (final entry in report.customParameters.entries) {
         stringBuffer.write("${entry.key}: ${entry.value}\n");
       }
       stringBuffer.write("```\n");
@@ -107,5 +108,5 @@ class SlackHandler extends ReportHandler {
 
   @override
   List<PlatformType> getSupportedPlatforms() =>
-      [PlatformType.Android, PlatformType.iOS];
+      [PlatformType.android, PlatformType.iOS];
 }

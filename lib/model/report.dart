@@ -46,7 +46,7 @@ class Report {
     bool enableStackTrace = true,
     bool enableCustomParameters = false,
   }) {
-    Map<String, dynamic> json = <String, dynamic>{
+    final Map<String, dynamic> json = <String, dynamic>{
       "error": error.toString(),
       "customParameters": customParameters,
       "dateTime": dateTime.toIso8601String(),

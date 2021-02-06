@@ -62,11 +62,11 @@ class FileHandler extends ReportHandler {
 
   Future<bool> _checkFile() async {
     try {
-      bool exists = await file.exists();
+      final bool exists = await file.exists();
       if (!exists) {
         file.createSync();
       }
-      IOSink sink = file.openWrite(mode: FileMode.append);
+      final IOSink sink = file.openWrite(mode: FileMode.append);
       sink.write("");
       await sink.flush();
       await sink.close();
@@ -122,7 +122,7 @@ class FileHandler extends ReportHandler {
 
   void _logDeviceParametersFormatted(Map<String, dynamic> deviceParameters) {
     _writeLineToFile("------- DEVICE INFO -------");
-    for (var entry in deviceParameters.entries) {
+    for (final entry in deviceParameters.entries) {
       _writeLineToFile("${entry.key}: ${entry.value}");
     }
   }
@@ -130,14 +130,14 @@ class FileHandler extends ReportHandler {
   void _logApplicationParametersFormatted(
       Map<String, dynamic> applicationParameters) {
     _writeLineToFile("------- APP INFO -------");
-    for (var entry in applicationParameters.entries) {
+    for (final entry in applicationParameters.entries) {
       _writeLineToFile("${entry.key}: ${entry.value}");
     }
   }
 
   void _logCustomParametersFormatted(Map<String, dynamic> customParameters) {
     _writeLineToFile("------- CUSTOM INFO -------");
-    for (var entry in customParameters.entries) {
+    for (final entry in customParameters.entries) {
       _writeLineToFile("${entry.key}: ${entry.value}");
     }
   }
@@ -150,5 +150,5 @@ class FileHandler extends ReportHandler {
 
   @override
   List<PlatformType> getSupportedPlatforms() =>
-      [PlatformType.Android, PlatformType.iOS];
+      [PlatformType.android, PlatformType.iOS];
 }

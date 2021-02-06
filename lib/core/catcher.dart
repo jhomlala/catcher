@@ -22,7 +22,7 @@ import 'package:package_info/package_info.dart';
 class Catcher with ReportModeAction {
   static Catcher _instance;
   static GlobalKey<NavigatorState> _navigatorKey;
-  static const _methodChannel = const MethodChannel('com.jhomlala/catcher/web');
+  static const _methodChannel = MethodChannel('com.jhomlala/catcher/web');
 
   /// Root widget which will be ran
   final Widget rootWidget;
@@ -47,9 +47,9 @@ class Catcher with ReportModeAction {
 
   final Logger _logger = Logger("Catcher");
   CatcherOptions _currentConfig;
-  Map<String, dynamic> _deviceParameters = <String, dynamic>{};
-  Map<String, dynamic> _applicationParameters = <String, dynamic>{};
-  List<Report> _cachedReports = [];
+  final Map<String, dynamic> _deviceParameters = <String, dynamic>{};
+  final Map<String, dynamic> _applicationParameters = <String, dynamic>{};
+  final List<Report> _cachedReports = [];
   LocalizationOptions _localizationOptions;
 
   /// Instance of navigator key
@@ -156,8 +156,8 @@ class Catcher with ReportModeAction {
   }
 
   void _setupReportModeActionInReportMode() {
-    this._currentConfig.reportMode.setReportModeAction(this);
-    this._currentConfig.explicitExceptionReportModesMap.forEach(
+    _currentConfig.reportMode.setReportModeAction(this);
+    _currentConfig.explicitExceptionReportModesMap.forEach(
       (error, reportMode) {
         reportMode.setReportModeAction(this);
       },
@@ -165,8 +165,8 @@ class Catcher with ReportModeAction {
   }
 
   void _setupLocalizationsOptionsInReportMode() {
-    this._currentConfig.reportMode.setLocalizationOptions(_localizationOptions);
-    this._currentConfig.explicitExceptionReportModesMap.forEach(
+    _currentConfig.reportMode.setLocalizationOptions(_localizationOptions);
+    _currentConfig.explicitExceptionReportModesMap.forEach(
       (error, reportMode) {
         reportMode.setLocalizationOptions(_localizationOptions);
       },
@@ -174,7 +174,7 @@ class Catcher with ReportModeAction {
   }
 
   void _setupLocalizationsOptionsInReportsHandler() {
-    this._currentConfig.handlers.forEach((handler) {
+    _currentConfig.handlers.forEach((handler) {
       handler.setLocalizationOptions(_localizationOptions);
     });
   }
@@ -186,8 +186,8 @@ class Catcher with ReportModeAction {
 
     ///Web doesn't have Isolate error listener support
     if (!ApplicationProfileManager.isWeb()) {
-      Isolate.current.addErrorListener(new RawReceivePort((dynamic pair) async {
-        var isolateError = pair as List<dynamic>;
+      Isolate.current.addErrorListener(RawReceivePort((dynamic pair) async {
+        final isolateError = pair as List<dynamic>;
         _reportError(
           isolateError.first.toString(),
           isolateError.last.toString(),
@@ -222,6 +222,7 @@ class Catcher with ReportModeAction {
       Logger.root.level = Level.ALL;
       Logger.root.onRecord.listen(
         (LogRecord rec) {
+          // ignore: avoid_print
           print(
               '[${rec.time} | ${rec.loggerName} | ${rec.level.name}] ${rec.message}');
         },
@@ -234,7 +235,7 @@ class Catcher with ReportModeAction {
       _loadWebParameters();
     } else {
       ///There is no device info web implementation
-      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
       if (Platform.isAndroid) {
         deviceInfo.androidInfo.then((androidInfo) {
           _loadAndroidParameters(androidInfo);
@@ -248,11 +249,12 @@ class Catcher with ReportModeAction {
   }
 
   void _loadWebParameters() async {
-    String userAgent = await _methodChannel.invokeMethod("getUserAgent");
-    String language = await _methodChannel.invokeMethod("getLanguage");
-    String vendor = await _methodChannel.invokeMethod("getVendor");
-    String platform = await _methodChannel.invokeMethod("getPlatform");
-    bool cookieEnabled = await _methodChannel.invokeMethod("getCookieEnabled");
+    final String userAgent = await _methodChannel.invokeMethod("getUserAgent");
+    final String language = await _methodChannel.invokeMethod("getLanguage");
+    final String vendor = await _methodChannel.invokeMethod("getVendor");
+    final String platform = await _methodChannel.invokeMethod("getPlatform");
+    final bool cookieEnabled =
+        await _methodChannel.invokeMethod("getCookieEnabled");
     _deviceParameters["userAgent"] = userAgent;
     _deviceParameters["language"] = language;
     _deviceParameters["vendor"] = vendor;
@@ -321,14 +323,14 @@ class Catcher with ReportModeAction {
   ///We need to setup localizations lazily because context needed to setup these
   ///localizations can be used after app was build for the first time.
   void _setupLocalization() {
-    Locale locale = Locale("en", "US");
+    Locale locale = const Locale("en", "US");
     if (_isContextValid()) {
-      BuildContext context = _getContext();
+      final BuildContext context = _getContext();
       if (context != null) {
         locale = Localizations.localeOf(context);
       }
       if (_currentConfig.localizationOptions != null) {
-        for (var options in _currentConfig.localizationOptions) {
+        for (final options in _currentConfig.localizationOptions) {
           if (options.languageCode.toLowerCase() ==
               locale.languageCode.toLowerCase()) {
             _localizationOptions = options;
@@ -337,10 +339,8 @@ class Catcher with ReportModeAction {
       }
     }
 
-    if (_localizationOptions == null) {
-      _localizationOptions =
-          _getDefaultLocalizationOptionsForLanguage(locale.languageCode);
-    }
+    _localizationOptions ??=
+        _getDefaultLocalizationOptionsForLanguage(locale.languageCode);
     _setupLocalizationsOptionsInReportMode();
     _setupLocalizationsOptionsInReportsHandler();
   }
@@ -380,12 +380,10 @@ class Catcher with ReportModeAction {
   /// Report checked error (error catched in try-catch block). Catcher will treat
   /// this as normal exception and pass it to handlers.
   static void reportCheckedError(dynamic error, dynamic stackTrace) {
-    if (error == null) {
-      error = "undefined error";
-    }
-    if (stackTrace == null) {
-      stackTrace = StackTrace.current;
-    }
+    dynamic errorValue = error;
+    dynamic stackTraceValue = stackTrace;
+    errorValue ??= "undefined error";
+    stackTraceValue ??= StackTrace.current;
     _instance._reportError(error, stackTrace);
   }
 
@@ -405,7 +403,7 @@ class Catcher with ReportModeAction {
       _setupLocalization();
     }
 
-    Report report = Report(
+    final Report report = Report(
       error,
       stackTrace,
       DateTime.now(),
@@ -456,7 +454,7 @@ class Catcher with ReportModeAction {
   }
 
   ReportMode _getReportModeFromExplicitExceptionReportModeMap(dynamic error) {
-    var errorName = error != null ? error.toString().toLowerCase() : "";
+    final errorName = error != null ? error.toString().toLowerCase() : "";
     ReportMode reportMode;
     _currentConfig.explicitExceptionReportModesMap.forEach((key, value) {
       if (errorName.contains(key.toLowerCase())) {
@@ -469,7 +467,7 @@ class Catcher with ReportModeAction {
 
   ReportHandler _getReportHandlerFromExplicitExceptionHandlerMap(
       dynamic error) {
-    var errorName = error != null ? error.toString().toLowerCase() : "";
+    final errorName = error != null ? error.toString().toLowerCase() : "";
     ReportHandler reportHandler;
     _currentConfig.explicitExceptionHandlersMap.forEach((key, value) {
       if (errorName.contains(key.toLowerCase())) {
@@ -482,7 +480,7 @@ class Catcher with ReportModeAction {
 
   @override
   void onActionConfirmed(Report report) {
-    ReportHandler reportHandler =
+    final ReportHandler reportHandler =
         _getReportHandlerFromExplicitExceptionHandlerMap(report.error);
     if (reportHandler != null) {
       _logger.info("Using explicit report handler");
@@ -490,7 +488,7 @@ class Catcher with ReportModeAction {
       return;
     }
 
-    for (ReportHandler handler in _currentConfig.handlers) {
+    for (final ReportHandler handler in _currentConfig.handlers) {
       _handleReport(report, handler);
     }
   }
@@ -553,7 +551,7 @@ class Catcher with ReportModeAction {
 
   /// Send text exception. Used to test Catcher configuration.
   static void sendTestException() {
-    throw FormatException("Test exception generated by Catcher");
+    throw const FormatException("Test exception generated by Catcher");
   }
 
   /// Add default error widget which replaces red screen of death (RSOD).
@@ -561,7 +559,7 @@ class Catcher with ReportModeAction {
       {bool showStacktrace = true,
       String title = "An application error has occurred",
       String description =
-          "There was unexepcted situation in application. Application has been "
+          "There was unexpected situation in application. Application has been "
               "able to recover from error state.",
       double maxWidthForSmallMode = 150}) {
     ErrorWidget.builder = (FlutterErrorDetails details) {
@@ -577,14 +575,14 @@ class Catcher with ReportModeAction {
 
   PlatformType _getPlatformType() {
     if (ApplicationProfileManager.isWeb()) {
-      return PlatformType.Web;
+      return PlatformType.web;
     }
     if (ApplicationProfileManager.isAndroid()) {
-      return PlatformType.Android;
+      return PlatformType.android;
     }
     if (ApplicationProfileManager.isIos()) {
       return PlatformType.iOS;
     }
-    return PlatformType.Unknown;
+    return PlatformType.unknown;
   }
 }

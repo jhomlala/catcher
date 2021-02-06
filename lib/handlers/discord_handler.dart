@@ -36,18 +36,18 @@ class DiscordHandler extends ReportHandler {
 
   @override
   Future<bool> handle(Report report) async {
-    if (report.platformType != PlatformType.Web) {
+    if (report.platformType != PlatformType.web) {
       if (!(await CatcherUtils.isInternetConnectionAvailable())) {
         _printLog("No internet connection available");
         return false;
       }
     }
 
-    String message = _setupMessage(report);
-    List<String> messages = _setupMessages(message);
+    final String message = _setupMessage(report);
+    final List<String> messages = _setupMessages(message);
 
-    for (var value in messages) {
-      bool result = await _sendContent(value);
+    for (final value in messages) {
+      final bool result = await _sendContent(value);
       if (!result) {
         return result;
       }
@@ -57,11 +57,11 @@ class DiscordHandler extends ReportHandler {
   }
 
   List<String> _setupMessages(String message) {
-    List<String> messages = [];
-    int splits = (message.length / 2000).ceil();
-    int messageLength = message.length;
+    final List<String> messages = [];
+    final int splits = (message.length / 2000).ceil();
+    final int messageLength = message.length;
     for (int index = 0; index < splits; index++) {
-      int startIndex = index * 2000;
+      final int startIndex = index * 2000;
       int endIndex = startIndex + 2000;
       if (endIndex > messageLength) {
         endIndex = messageLength;
@@ -72,31 +72,31 @@ class DiscordHandler extends ReportHandler {
   }
 
   String _setupMessage(Report report) {
-    StringBuffer stringBuffer = new StringBuffer();
+    final StringBuffer stringBuffer = StringBuffer();
     stringBuffer.write("**Error:**\n${report.error}\n\n");
     if (enableStackTrace) {
       stringBuffer.write("**Stack trace:**\n${report.stackTrace}\n\n");
     }
-    if (enableDeviceParameters && report.deviceParameters.length > 0) {
+    if (enableDeviceParameters && report.deviceParameters.isNotEmpty) {
       stringBuffer.write("**Device parameters:**\n");
-      for (var entry in report.deviceParameters.entries) {
+      for (final entry in report.deviceParameters.entries) {
         stringBuffer.write("${entry.key}: ${entry.value}\n");
       }
       stringBuffer.write("\n\n");
     }
 
     if (enableApplicationParameters &&
-        report.applicationParameters.length > 0) {
+        report.applicationParameters.isNotEmpty) {
       stringBuffer.write("**Application parameters:**\n");
-      for (var entry in report.applicationParameters.entries) {
+      for (final entry in report.applicationParameters.entries) {
         stringBuffer.write("${entry.key}: ${entry.value}\n");
       }
       stringBuffer.write("\n\n");
     }
 
-    if (enableCustomParameters && report.customParameters.length > 0) {
+    if (enableCustomParameters && report.customParameters.isNotEmpty) {
       stringBuffer.write("**Custom parameters:**\n");
-      for (var entry in report.customParameters.entries) {
+      for (final entry in report.customParameters.entries) {
         stringBuffer.write("${entry.key}: ${entry.value}\n");
       }
       stringBuffer.write("\n\n");
@@ -106,11 +106,12 @@ class DiscordHandler extends ReportHandler {
 
   Future<bool> _sendContent(String content) async {
     try {
-      var data = {
+      final data = {
         "content": content,
       };
       _printLog("Sending request to Discord server...");
-      Response response = await _dio.post<dynamic>(webhookUrl, data: data);
+      final Response response =
+          await _dio.post<dynamic>(webhookUrl, data: data);
       _printLog(
           "Server responded with code: ${response.statusCode} and message: ${response.statusMessage}");
       return response.statusCode >= 200 && response.statusCode < 300;
@@ -128,5 +129,5 @@ class DiscordHandler extends ReportHandler {
 
   @override
   List<PlatformType> getSupportedPlatforms() =>
-      [PlatformType.Web, PlatformType.Android, PlatformType.iOS];
+      [PlatformType.web, PlatformType.android, PlatformType.iOS];
 }

@@ -31,12 +31,12 @@ class DialogReportMode extends ReportMode {
       content: Text(localizationOptions.dialogReportModeDescription),
       actions: <Widget>[
         CupertinoDialogAction(
-          child: Text(localizationOptions.dialogReportModeAccept),
           onPressed: () => _onAcceptReportClicked(context, report),
+          child: Text(localizationOptions.dialogReportModeAccept),
         ),
         CupertinoDialogAction(
-          child: Text(localizationOptions.dialogReportModeCancel),
           onPressed: () => _onCancelReportClicked(context, report),
+          child: Text(localizationOptions.dialogReportModeCancel),
         ),
       ],
     );
@@ -48,12 +48,12 @@ class DialogReportMode extends ReportMode {
       content: Text(localizationOptions.dialogReportModeDescription),
       actions: <Widget>[
         FlatButton(
-          child: Text(localizationOptions.dialogReportModeAccept),
           onPressed: () => _onAcceptReportClicked(context, report),
+          child: Text(localizationOptions.dialogReportModeAccept),
         ),
         FlatButton(
-          child: Text(localizationOptions.dialogReportModeCancel),
           onPressed: () => _onCancelReportClicked(context, report),
+          child: Text(localizationOptions.dialogReportModeCancel),
         ),
       ],
     );
@@ -76,5 +76,5 @@ class DialogReportMode extends ReportMode {
 
   @override
   List<PlatformType> getSupportedPlatforms() =>
-      [PlatformType.Web, PlatformType.Android, PlatformType.iOS];
+      [PlatformType.web, PlatformType.android, PlatformType.iOS];
 }

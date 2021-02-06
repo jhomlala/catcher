@@ -16,9 +16,9 @@ abstract class ReportHandler {
   /// Get currently used localization options
   LocalizationOptions get localizationOptions => _localizationOptions;
 
+  // ignore: use_setters_to_change_properties
   /// Set localization options (translations) to this report mode
   void setLocalizationOptions(LocalizationOptions localizationOptions) {
-    assert(localizationOptions != null, "LocalizationOptions can't be null");
-    this._localizationOptions = localizationOptions;
+    _localizationOptions = localizationOptions;
   }
 }

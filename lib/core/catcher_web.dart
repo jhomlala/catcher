@@ -9,8 +9,8 @@ class CatcherWeb {
 
   ///Register web method channel
   static void registerWith(Registrar registrar) {
-    final MethodChannel channel =
-        MethodChannel(_channelName, const StandardMethodCodec(), registrar);
+    final MethodChannel channel = MethodChannel(_channelName,
+        const StandardMethodCodec(), registrar as BinaryMessenger);
     final CatcherWeb instance = CatcherWeb();
     channel.setMethodCallHandler(instance.handleMethodCall);
   }

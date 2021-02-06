@@ -46,34 +46,34 @@ class CatcherOptions {
 
   /// Builds default catcher options release instance
   CatcherOptions.getDefaultReleaseOptions()
-      : this.handlers = [ConsoleHandler()],
-        this.reportMode = DialogReportMode(),
+      : handlers = [ConsoleHandler()],
+        reportMode = DialogReportMode(),
         handlerTimeout = 5000,
         customParameters = <String, dynamic>{},
         localizationOptions = [],
-        this.explicitExceptionReportModesMap = {},
+        explicitExceptionReportModesMap = {},
         explicitExceptionHandlersMap = {},
         handleSilentError = true;
 
   /// Builds default catcher options rdebug instance
   CatcherOptions.getDefaultDebugOptions()
-      : this.handlers = [ConsoleHandler()],
-        this.reportMode = SilentReportMode(),
+      : handlers = [ConsoleHandler()],
+        reportMode = SilentReportMode(),
         handlerTimeout = 10000,
         customParameters = <String, dynamic>{},
         localizationOptions = [],
-        this.explicitExceptionReportModesMap = {},
+        explicitExceptionReportModesMap = {},
         explicitExceptionHandlersMap = {},
         handleSilentError = true;
 
   /// Builds default catcher options profile instance
   CatcherOptions.getDefaultProfileOptions()
-      : this.handlers = [ConsoleHandler()],
-        this.reportMode = SilentReportMode(),
+      : handlers = [ConsoleHandler()],
+        reportMode = SilentReportMode(),
         handlerTimeout = 10000,
         customParameters = <String, dynamic>{},
         localizationOptions = [],
-        this.explicitExceptionReportModesMap = {},
+        explicitExceptionReportModesMap = {},
         explicitExceptionHandlersMap = {},
         handleSilentError = true;
 }

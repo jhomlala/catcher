@@ -124,5 +124,5 @@ class NotificationReportMode extends ReportMode {
 
   @override
   List<PlatformType> getSupportedPlatforms() =>
-      [PlatformType.Android, PlatformType.iOS];
+      [PlatformType.android, PlatformType.iOS];
 }
