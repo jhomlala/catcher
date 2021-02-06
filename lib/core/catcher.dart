@@ -298,9 +298,10 @@ class Catcher with ReportModeAction {
     _applicationParameters["environment"] =
         describeEnum(ApplicationProfileManager.getApplicationProfile());
 
-    ///There is no package info web and windows implementation
-    if (!ApplicationProfileManager.isWeb() &&
-        !ApplicationProfileManager.isWindows()) {
+    ///Only android, iOS and macOS are implemented
+    if (ApplicationProfileManager.isAndroid() ||
+        ApplicationProfileManager.isIos() ||
+        ApplicationProfileManager.isMacOS()) {
       PackageInfo.fromPlatform().then((packageInfo) {
         _applicationParameters["version"] = packageInfo.version;
         _applicationParameters["appName"] = packageInfo.appName;
