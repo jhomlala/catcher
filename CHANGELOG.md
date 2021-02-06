@@ -1,7 +1,7 @@
 ## 0.4.1
 * Added localization text in toast handler.
 * Fixed page report mode UI issues by Don Coleman (https://github.com/drcdev)
-
+* Added handleSilentError parameter in CatcherOptions.
 
 ## 0.4.0
 * [BREAKING_CHANGE]: rootWidget parameter has been moved to optional parameter

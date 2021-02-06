@@ -29,13 +29,20 @@ class CatcherOptions {
   /// Custom parameters which will be used in report handler
   final Map<String, dynamic> customParameters;
 
+  ///Should catcher handle silent errors
+  final bool handleSilentError;
+
   /// Builds catcher options instance
-  CatcherOptions(this.reportMode, this.handlers,
-      {this.handlerTimeout = 5000,
-      this.customParameters = const <String, dynamic>{},
-      this.localizationOptions = const [],
-      this.explicitExceptionReportModesMap = const {},
-      this.explicitExceptionHandlersMap = const {}});
+  CatcherOptions(
+    this.reportMode,
+    this.handlers, {
+    this.handlerTimeout = 5000,
+    this.customParameters = const <String, dynamic>{},
+    this.localizationOptions = const [],
+    this.explicitExceptionReportModesMap = const {},
+    this.explicitExceptionHandlersMap = const {},
+    this.handleSilentError = true,
+  });
 
   /// Builds default catcher options release instance
   CatcherOptions.getDefaultReleaseOptions()
@@ -45,7 +52,8 @@ class CatcherOptions {
         customParameters = <String, dynamic>{},
         localizationOptions = [],
         this.explicitExceptionReportModesMap = {},
-        explicitExceptionHandlersMap = {};
+        explicitExceptionHandlersMap = {},
+        handleSilentError = true;
 
   /// Builds default catcher options rdebug instance
   CatcherOptions.getDefaultDebugOptions()
@@ -55,7 +63,8 @@ class CatcherOptions {
         customParameters = <String, dynamic>{},
         localizationOptions = [],
         this.explicitExceptionReportModesMap = {},
-        explicitExceptionHandlersMap = {};
+        explicitExceptionHandlersMap = {},
+        handleSilentError = true;
 
   /// Builds default catcher options profile instance
   CatcherOptions.getDefaultProfileOptions()
@@ -65,5 +74,6 @@ class CatcherOptions {
         customParameters = <String, dynamic>{},
         localizationOptions = [],
         this.explicitExceptionReportModesMap = {},
-        explicitExceptionHandlersMap = {};
+        explicitExceptionHandlersMap = {},
+        handleSilentError = true;
 }

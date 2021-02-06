@@ -29,14 +29,15 @@ class Report {
 
   /// Creates report instance
   Report(
-      this.error,
-      this.stackTrace,
-      this.dateTime,
-      this.deviceParameters,
-      this.applicationParameters,
-      this.customParameters,
-      this.errorDetails,
-      this.platformType);
+    this.error,
+    this.stackTrace,
+    this.dateTime,
+    this.deviceParameters,
+    this.applicationParameters,
+    this.customParameters,
+    this.errorDetails,
+    this.platformType,
+  );
 
   /// Creates json from current instance
   Map<String, dynamic> toJson({

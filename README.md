@@ -289,10 +289,14 @@ main() {
 }
 ```
 CatcherOptions parameters:
-reportMode - describes how error report will be shown to user, see report modes to get more informations
-handlers - list of handlers, which will process report, see handlers to get more informations
+handlers - list of handlers, which will process report, see handlers to get more information
 handlerTimeout - timeout in milliseconds, this parameter describes max time of handling report by handler
+reportMode - describes how error report will be shown to user, see report modes to get more information
+localizationOptions - translations used by report modes nad report handlers
+explicitExceptionReportModesMap - explicit report modes map which will be used to trigger specific report mode for specific error
+explicitExceptionHandlersMap - Explicit report handler map which will be used to trigger specific report report handler for specific error
 customParameters - map of additional parameters that will be included in report (for example user id or user name)
+handleSilentError - should handle silent errors reported, see FlutterErrorDetails.silent for more details
 
 
 ### Report catched exception

@@ -172,9 +172,9 @@ class Catcher with ReportModeAction {
       },
     );
   }
-  
-  void _setupLocalizationsOptionsInReportsHandler(){
-    this._currentConfig.handlers.forEach((handler) { 
+
+  void _setupLocalizationsOptionsInReportsHandler() {
+    this._currentConfig.handlers.forEach((handler) {
       handler.setLocalizationOptions(_localizationOptions);
     });
   }
@@ -389,22 +389,33 @@ class Catcher with ReportModeAction {
     _instance._reportError(error, stackTrace);
   }
 
-  void _reportError(dynamic error, dynamic stackTrace,
-      {FlutterErrorDetails errorDetails}) async {
+  void _reportError(
+    dynamic error,
+    dynamic stackTrace, {
+    FlutterErrorDetails errorDetails,
+  }) async {
+    if (errorDetails?.silent == true && !_currentConfig.handleSilentError) {
+      _logger.info(
+          "Report error skipped for error: $error. HandleSilentError is false.");
+      return;
+    }
+
     if (_localizationOptions == null) {
       _logger.info("Setup localization lazily!");
       _setupLocalization();
     }
 
     Report report = Report(
-        error,
-        stackTrace,
-        DateTime.now(),
-        _deviceParameters,
-        _applicationParameters,
-        _currentConfig.customParameters,
-        errorDetails,
-        _getPlatformType());
+      error,
+      stackTrace,
+      DateTime.now(),
+      _deviceParameters,
+      _applicationParameters,
+      _currentConfig.customParameters,
+      errorDetails,
+      _getPlatformType(),
+    );
+
     _cachedReports.add(report);
     ReportMode reportMode =
         _getReportModeFromExplicitExceptionReportModeMap(error);
