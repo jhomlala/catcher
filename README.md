@@ -149,7 +149,7 @@ class ChildWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-            child: FlatButton(
+            child: TextButton(
                 child: Text("Generate error"),
                 onPressed: () => generateError()));
   }
@@ -480,7 +480,7 @@ class ChildWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: FlatButton(
+        child: TextButton(
             child: Text("Generate error"), onPressed: () => generateError()));
   }
 

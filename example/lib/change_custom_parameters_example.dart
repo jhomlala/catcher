@@ -52,10 +52,10 @@ class ChildWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         child: Column(children: [
-      RaisedButton(
+      ElevatedButton(
           child: Text("Change custom parameters"),
           onPressed: _changeCustomParameters),
-      RaisedButton(
+      ElevatedButton(
           child: Text("Generate error"), onPressed: () => generateError())
     ]));
   }

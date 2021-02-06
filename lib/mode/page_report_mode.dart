@@ -112,12 +112,12 @@ class PageWidgetState extends State<PageWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              FlatButton(
+              TextButton(
                 onPressed: () => _onAcceptClicked(),
                 child: Text(widget
                     .pageReportMode.localizationOptions.pageReportModeAccept),
               ),
-              FlatButton(
+              TextButton(
                 onPressed: () => _onCancelClicked(),
                 child: Text(widget
                     .pageReportMode.localizationOptions.pageReportModeCancel),
