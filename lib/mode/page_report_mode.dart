@@ -4,7 +4,6 @@ import 'package:catcher/model/report_mode.dart';
 import 'package:catcher/utils/catcher_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class PageReportMode extends ReportMode {
   final bool showStackTrace;
@@ -34,8 +33,13 @@ class PageReportMode extends ReportMode {
   }
 
   @override
-  List<PlatformType> getSupportedPlatforms() =>
-      [PlatformType.Web, PlatformType.Android, PlatformType.iOS];
+  List<PlatformType> getSupportedPlatforms() => [
+        PlatformType.Web,
+        PlatformType.Android,
+        PlatformType.iOS,
+        PlatformType.MacOS,
+        PlatformType.Windows
+      ];
 }
 
 class PageWidget extends StatefulWidget {

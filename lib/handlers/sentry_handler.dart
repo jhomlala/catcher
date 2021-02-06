@@ -128,6 +128,11 @@ class SentryHandler extends ReportHandler {
   }
 
   @override
-  List<PlatformType> getSupportedPlatforms() =>
-      [PlatformType.Web, PlatformType.Android, PlatformType.iOS];
+  List<PlatformType> getSupportedPlatforms() => [
+        PlatformType.Web,
+        PlatformType.Android,
+        PlatformType.iOS,
+        PlatformType.MacOS,
+        PlatformType.Windows
+      ];
 }

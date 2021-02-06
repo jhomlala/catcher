@@ -81,6 +81,11 @@ class ConsoleHandler extends ReportHandler {
   }
 
   @override
-  List<PlatformType> getSupportedPlatforms() =>
-      [PlatformType.Android, PlatformType.iOS, PlatformType.Web];
+  List<PlatformType> getSupportedPlatforms() => [
+        PlatformType.Android,
+        PlatformType.iOS,
+        PlatformType.Web,
+        PlatformType.MacOS,
+        PlatformType.Windows
+      ];
 }

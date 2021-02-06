@@ -106,6 +106,12 @@ class SlackHandler extends ReportHandler {
   }
 
   @override
-  List<PlatformType> getSupportedPlatforms() =>
-      [PlatformType.Android, PlatformType.iOS];
+  List<PlatformType> getSupportedPlatforms() => [
+        // should also support web since only use dio
+        PlatformType.Web,
+        PlatformType.Android,
+        PlatformType.iOS,
+        PlatformType.MacOS,
+        PlatformType.Windows
+      ];
 }

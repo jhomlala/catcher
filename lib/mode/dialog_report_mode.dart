@@ -75,6 +75,11 @@ class DialogReportMode extends ReportMode {
   }
 
   @override
-  List<PlatformType> getSupportedPlatforms() =>
-      [PlatformType.Web, PlatformType.Android, PlatformType.iOS];
+  List<PlatformType> getSupportedPlatforms() => [
+        PlatformType.Web,
+        PlatformType.Android,
+        PlatformType.iOS,
+        PlatformType.MacOS,
+        PlatformType.Windows
+      ];
 }
