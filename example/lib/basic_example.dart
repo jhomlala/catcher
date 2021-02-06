@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 void main() {
   CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
     //EmailManualHandler(["recipient@email.com"]),
+    ToastHandler(),
     HttpHandler(HttpRequestType.post,
         Uri.parse("https://jsonplaceholder.typicode.com/posts"),
         printLogs: true),

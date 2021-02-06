@@ -172,6 +172,12 @@ class Catcher with ReportModeAction {
       },
     );
   }
+  
+  void _setupLocalizationsOptionsInReportsHandler(){
+    this._currentConfig.handlers.forEach((handler) { 
+      handler.setLocalizationOptions(_localizationOptions);
+    });
+  }
 
   Future _setupErrorHooks() async {
     FlutterError.onError = (FlutterErrorDetails details) async {
@@ -336,6 +342,7 @@ class Catcher with ReportModeAction {
           _getDefaultLocalizationOptionsForLanguage(locale.languageCode);
     }
     _setupLocalizationsOptionsInReportMode();
+    _setupLocalizationsOptionsInReportsHandler();
   }
 
   LocalizationOptions _getDefaultLocalizationOptionsForLanguage(

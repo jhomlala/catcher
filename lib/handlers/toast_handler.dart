@@ -73,7 +73,8 @@ class ToastHandler extends ReportHandler {
     if (customMessage != null && customMessage.length > 0) {
       return customMessage;
     } else {
-      return "Error occurred: ${error.error}";
+
+      return "${localizationOptions.toastHandlerDescription} ${error.error}";
     }
   }
 
