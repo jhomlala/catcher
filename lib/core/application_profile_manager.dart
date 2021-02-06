@@ -28,4 +28,10 @@ class ApplicationProfileManager {
 
   /// Check if current platform is ios
   static bool isIos() => Platform.isIOS;
+
+  /// Check if current platform is ios
+  static bool isMacOS() => Platform.isMacOS;
+
+  /// Check if current platform is ios
+  static bool isWindows() => Platform.isWindows;
 }

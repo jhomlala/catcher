@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:isolate';
 
 import 'package:catcher/core/application_profile_manager.dart';
@@ -226,18 +225,16 @@ class Catcher with ReportModeAction {
   void _loadDeviceInfo() {
     if (ApplicationProfileManager.isWeb()) {
       _loadWebParameters();
+    } else if (ApplicationProfileManager.isAndroid()) {
+      DeviceInfoPlugin().androidInfo.then((androidInfo) {
+        _loadAndroidParameters(androidInfo);
+      });
+    } else if (ApplicationProfileManager.isIos()) {
+      DeviceInfoPlugin().iosInfo.then((iosInfo) {
+        _loadIosParameters(iosInfo);
+      });
     } else {
-      ///There is no device info web implementation
-      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-      if (Platform.isAndroid) {
-        deviceInfo.androidInfo.then((androidInfo) {
-          _loadAndroidParameters(androidInfo);
-        });
-      } else {
-        deviceInfo.iosInfo.then((iosInfo) {
-          _loadIosParameters(iosInfo);
-        });
-      }
+      // To be implemented
     }
   }
 
@@ -301,8 +298,9 @@ class Catcher with ReportModeAction {
     _applicationParameters["environment"] =
         describeEnum(ApplicationProfileManager.getApplicationProfile());
 
-    ///There is no package info web implementation
-    if (!ApplicationProfileManager.isWeb()) {
+    ///There is no package info web and windows implementation
+    if (!ApplicationProfileManager.isWeb() &&
+        !ApplicationProfileManager.isWindows()) {
       PackageInfo.fromPlatform().then((packageInfo) {
         _applicationParameters["version"] = packageInfo.version;
         _applicationParameters["appName"] = packageInfo.appName;
@@ -566,6 +564,12 @@ class Catcher with ReportModeAction {
     }
     if (ApplicationProfileManager.isIos()) {
       return PlatformType.iOS;
+    }
+    if (ApplicationProfileManager.isMacOS()) {
+      return PlatformType.MacOS;
+    }
+    if (ApplicationProfileManager.isWindows()) {
+      return PlatformType.Windows;
     }
     return PlatformType.Unknown;
   }
