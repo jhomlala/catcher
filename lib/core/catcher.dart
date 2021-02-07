@@ -406,7 +406,6 @@ class Catcher with ReportModeAction {
       _setupLocalization();
     }
 
-    _currentConfig.customParameters;
     final Report report = Report(
       error,
       stackTrace,

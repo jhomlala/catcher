@@ -17,3 +17,4 @@ linter:
     sized_box_for_whitespace: false
     invalid_dependency: false
     sort_pub_dependencies: false
+    import_of_legacy_library_into_null_safe: false
