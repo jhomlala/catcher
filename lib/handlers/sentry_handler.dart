@@ -89,13 +89,13 @@ class SentryHandler extends ReportHandler {
       serverName: "Catcher",
       release: customRelease ?? _getApplicationVersion(report),
       environment: customEnvironment ??
-          (report.applicationParameters["environment"] as String?)!,
+          (report.applicationParameters["environment"] as String?),
       message: const Message("Error handled by Catcher"),
       throwable: report.error,
       level: SentryLevel.error,
       culprit: "",
       tags: changeToSentryMap(tags),
-      user: userContext!,
+      user: userContext,
     );
   }
 

@@ -37,7 +37,7 @@ class EmailManualHandler extends ReportHandler {
     try {
       final MailOptions mailOptions = MailOptions(
         body: _getBody(report),
-        subject: _getTitle(report)!,
+        subject: _getTitle(report) ?? "",
         recipients: recipients,
         isHTML: sendHtml,
       );
@@ -46,7 +46,7 @@ class EmailManualHandler extends ReportHandler {
       _printLog("Creating mail request success");
       return true;
     } catch (exc, stackTrace) {
-      _printLog("Exception occured: $exc stack: $stackTrace");
+      _printLog("Exception occurred: $exc stack: $stackTrace");
       return false;
     }
   }

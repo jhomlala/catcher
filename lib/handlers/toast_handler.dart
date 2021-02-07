@@ -26,7 +26,7 @@ class ToastHandler extends ReportHandler {
   @override
   Future<bool> handle(Report error) async {
     Fluttertoast.showToast(
-        msg: _getErrorMessage(error)!,
+        msg: _getErrorMessage(error),
         toastLength: _getLength(),
         gravity: _getGravity(),
         timeInSecForIosWeb: _getLengthIos(),
@@ -64,9 +64,9 @@ class ToastHandler extends ReportHandler {
     }
   }
 
-  String? _getErrorMessage(Report error) {
+  String _getErrorMessage(Report error) {
     if (customMessage?.isNotEmpty == true) {
-      return customMessage;
+      return customMessage!;
     } else {
       return "${localizationOptions.toastHandlerDescription} ${error.error}";
     }

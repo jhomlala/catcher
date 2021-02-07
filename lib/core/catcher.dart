@@ -199,10 +199,12 @@ class Catcher with ReportModeAction {
       _runZonedGuarded(() {
         runApp(rootWidget!);
       });
-    } else {
+    } else if (runAppFunction != null) {
       _runZonedGuarded(() {
         runAppFunction!();
       });
+    } else {
+      throw ArgumentError("Provide rootWidget or runAppFunction to Catcher.");
     }
   }
 
@@ -519,8 +521,7 @@ class Catcher with ReportModeAction {
   /// report handlers in given platform can be used.
   bool isReportHandlerSupportedInPlatform(
       Report report, ReportHandler reportHandler) {
-    if (
-        reportHandler.getSupportedPlatforms().isEmpty == true) {
+    if (reportHandler.getSupportedPlatforms().isEmpty == true) {
       return false;
     }
     return reportHandler.getSupportedPlatforms().contains(report.platformType);

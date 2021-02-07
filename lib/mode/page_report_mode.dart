@@ -15,7 +15,9 @@ class PageReportMode extends ReportMode {
 
   @override
   void requestAction(Report report, BuildContext? context) {
-    _navigateToPageWidget(report, context!);
+    if (context != null) {
+      _navigateToPageWidget(report, context);
+    }
   }
 
   void _navigateToPageWidget(Report report, BuildContext context) async {
@@ -34,8 +36,11 @@ class PageReportMode extends ReportMode {
   }
 
   @override
-  List<PlatformType> getSupportedPlatforms() =>
-      [PlatformType.web, PlatformType.android, PlatformType.iOS];
+  List<PlatformType> getSupportedPlatforms() => [
+        PlatformType.web,
+        PlatformType.android,
+        PlatformType.iOS,
+      ];
 }
 
 class PageWidget extends StatefulWidget {
