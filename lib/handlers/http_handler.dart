@@ -26,7 +26,7 @@ class HttpHandler extends ReportHandler {
   HttpHandler(
     this.requestType,
     this.endpointUri, {
-    Map<String, dynamic> headers,
+    Map<String, dynamic>? headers,
     this.requestTimeout = 5000,
     this.responseTimeout = 5000,
     this.printLogs = false,
@@ -34,19 +34,7 @@ class HttpHandler extends ReportHandler {
     this.enableApplicationParameters = true,
     this.enableStackTrace = true,
     this.enableCustomParameters = false,
-  })  : assert(requestType != null, "requestType can't be null"),
-        assert(endpointUri != null, "endpointUri can't be null"),
-        assert(requestTimeout != null, "requestTimeout can't be null"),
-        assert(responseTimeout != null, "responseTimeout can't be null"),
-        assert(printLogs != null, "printLogs can't be null"),
-        assert(enableDeviceParameters != null,
-            "enableDeviceParameters can't be null"),
-        assert(enableApplicationParameters != null,
-            "enableApplicationParameters can't be null"),
-        assert(enableStackTrace != null, "enableStackTrace can't be null"),
-        assert(enableCustomParameters != null,
-            "enableCustomParameters can't be null"),
-        headers = headers ?? <String, dynamic>{};
+  }) : headers = headers ?? <String, dynamic>{};
 
   @override
   Future<bool> handle(Report error) async {
@@ -72,7 +60,7 @@ class HttpHandler extends ReportHandler {
           enableCustomParameters: enableCustomParameters);
       final HashMap<String, dynamic> mutableHeaders =
           HashMap<String, dynamic>();
-      if (headers != null) {
+      if (headers.isNotEmpty == true) {
         mutableHeaders.addAll(headers);
       }
       final Options options = Options(

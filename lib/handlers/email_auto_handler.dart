@@ -17,40 +17,29 @@ class EmailAutoHandler extends ReportHandler {
   final bool enableApplicationParameters;
   final bool enableStackTrace;
   final bool enableCustomParameters;
-  final String emailTitle;
-  final String emailHeader;
+  final String? emailTitle;
+  final String? emailHeader;
   final bool sendHtml;
   final bool printLogs;
   final Logger _logger = Logger("EmailAutoHandler");
 
-  EmailAutoHandler(this.smtpHost, this.smtpPort, this.senderEmail,
-      this.senderName, this.senderPassword, this.recipients,
-      {this.enableSsl = false,
-      this.enableDeviceParameters = true,
-      this.enableApplicationParameters = true,
-      this.enableStackTrace = true,
-      this.enableCustomParameters = true,
-      this.emailTitle,
-      this.emailHeader,
-      this.sendHtml = true,
-      this.printLogs = false})
-      : assert(smtpHost != null, "SMTP host can't be null"),
-        assert(smtpPort != null, "SMTP port can't be null"),
-        assert(senderEmail != null, "Sender email can't be null"),
-        assert(senderName != null, "Sender name can't be null"),
-        assert(senderPassword != null, "Sender password can't be null"),
-        assert(recipients != null && recipients.isNotEmpty,
-            "Recipients can't be null or empty"),
-        assert(enableSsl != null, "enableSSL can't be null"),
-        assert(enableDeviceParameters != null,
-            "enableDeviceParameters can't be null"),
-        assert(enableApplicationParameters != null,
-            "enableApplicationParameters can't be null"),
-        assert(enableStackTrace != null, "enableStackTrace can't be null"),
-        assert(enableCustomParameters != null,
-            "enableCustomParameters can't be null"),
-        assert(sendHtml != null, "sendHtml can't be null"),
-        assert(printLogs != null, "printLogs can't be null");
+  EmailAutoHandler(
+    this.smtpHost,
+    this.smtpPort,
+    this.senderEmail,
+    this.senderName,
+    this.senderPassword,
+    this.recipients, {
+    this.enableSsl = false,
+    this.enableDeviceParameters = true,
+    this.enableApplicationParameters = true,
+    this.enableStackTrace = true,
+    this.enableCustomParameters = true,
+    this.emailTitle,
+    this.emailHeader,
+    this.sendHtml = true,
+    this.printLogs = false,
+  }) : assert(recipients.isNotEmpty, "Recipients can't be null or empty");
 
   @override
   Future<bool> handle(Report error) {
@@ -62,7 +51,7 @@ class EmailAutoHandler extends ReportHandler {
       final message = Message()
         ..from = Address(senderEmail, senderName)
         ..recipients.addAll(recipients)
-        ..subject = _getEmailTitle(report)
+        ..subject = _getEmailTitle(report)!
         ..text = _setupRawMessageText(report);
 
       if (sendHtml) {
@@ -71,10 +60,10 @@ class EmailAutoHandler extends ReportHandler {
       _printLog("Sending email...");
 
       final result = await send(message, _setupSmtpServer());
-      if (result != null) {
+      if (result.mail != null) {
         _printLog("Email result: mail: ${result.mail} "
             "sending start time: ${result.messageSendingStart} "
-            "sending end time: ${result?.messageSendingEnd}");
+            "sending end time: ${result.messageSendingEnd}");
       } else {
         _printLog("Result is empty - failed to send email");
       }
@@ -94,7 +83,7 @@ class EmailAutoHandler extends ReportHandler {
         password: senderPassword);
   }
 
-  String _getEmailTitle(Report report) {
+  String? _getEmailTitle(Report report) {
     if (emailTitle?.isNotEmpty == true) {
       return emailTitle;
     } else {

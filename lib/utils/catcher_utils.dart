@@ -6,7 +6,7 @@ class CatcherUtils {
   static Future<bool> isInternetConnectionAvailable() async {
     try {
       final result = await InternetAddress.lookup('google.com');
-      if (result?.isNotEmpty == true && result[0].rawAddress.isNotEmpty) {
+      if (result.isNotEmpty == true && result[0].rawAddress.isNotEmpty) {
         return Future.value(true);
       } else {
         return Future.value(false);

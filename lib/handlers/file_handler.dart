@@ -15,25 +15,18 @@ class FileHandler extends ReportHandler {
   final bool printLogs;
 
   final Logger _logger = Logger("FileHandler");
-  IOSink _sink;
+  late IOSink _sink;
   bool _fileValidated = false;
   bool _fileValidationResult = false;
 
-  FileHandler(this.file,
-      {this.enableDeviceParameters = true,
-      this.enableApplicationParameters = true,
-      this.enableStackTrace = true,
-      this.enableCustomParameters = true,
-      this.printLogs = false})
-      : assert(file != null, "File can't be null"),
-        assert(enableDeviceParameters != null,
-            "enableDeviceParameters can't be null"),
-        assert(enableApplicationParameters != null,
-            "enableApplicationParameters can't be null"),
-        assert(enableStackTrace != null, "enableStackTrace can't be null"),
-        assert(enableCustomParameters != null,
-            "enableCustomParameters can't be null"),
-        assert(printLogs != null, "printLogs can't be null");
+  FileHandler(
+    this.file, {
+    this.enableDeviceParameters = true,
+    this.enableApplicationParameters = true,
+    this.enableStackTrace = true,
+    this.enableCustomParameters = true,
+    this.printLogs = false,
+  });
 
   @override
   Future<bool> handle(Report report) async {
@@ -44,7 +37,7 @@ class FileHandler extends ReportHandler {
       }
       return await _processReport(report);
     } catch (exc, stackTrace) {
-      _printLog("Exception occured: $exc stack: $stackTrace");
+      _printLog("Exception occurred: $exc stack: $stackTrace");
       return false;
     }
   }

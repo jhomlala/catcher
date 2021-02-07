@@ -11,11 +11,11 @@ class PageReportMode extends ReportMode {
 
   PageReportMode({
     this.showStackTrace = true,
-  }) : assert(showStackTrace != null, "showStackTrace can't be null");
+  });
 
   @override
-  void requestAction(Report report, BuildContext context) {
-    _navigateToPageWidget(report, context);
+  void requestAction(Report report, BuildContext? context) {
+    _navigateToPageWidget(report, context!);
   }
 
   void _navigateToPageWidget(Report report, BuildContext context) async {
@@ -45,7 +45,7 @@ class PageWidget extends StatefulWidget {
   const PageWidget(
     this.pageReportMode,
     this.report, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -67,8 +67,8 @@ class PageWidgetState extends State<PageWidget> {
   Widget _buildMaterialPage() {
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text(widget.pageReportMode.localizationOptions.pageReportModeTitle),
+        title: Text(
+            widget.pageReportMode.localizationOptions!.pageReportModeTitle),
       ),
       body: _buildInnerWidget(),
     );
@@ -77,8 +77,8 @@ class PageWidgetState extends State<PageWidget> {
   Widget _buildCupertinoPage() {
     return CupertinoPageScaffold(
       navigationBar: CupertinoNavigationBar(
-        middle:
-            Text(widget.pageReportMode.localizationOptions.pageReportModeTitle),
+        middle: Text(
+            widget.pageReportMode.localizationOptions!.pageReportModeTitle),
       ),
       child: SafeArea(
         child: _buildInnerWidget(),
@@ -98,8 +98,8 @@ class PageWidgetState extends State<PageWidget> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
-              widget
-                  .pageReportMode.localizationOptions.pageReportModeDescription,
+              widget.pageReportMode.localizationOptions!
+                  .pageReportModeDescription,
               style: _getTextStyle(15),
               textAlign: TextAlign.center,
             ),
@@ -119,12 +119,12 @@ class PageWidgetState extends State<PageWidget> {
               TextButton(
                 onPressed: () => _onAcceptClicked(),
                 child: Text(widget
-                    .pageReportMode.localizationOptions.pageReportModeAccept),
+                    .pageReportMode.localizationOptions!.pageReportModeAccept),
               ),
               TextButton(
                 onPressed: () => _onCancelClicked(),
                 child: Text(widget
-                    .pageReportMode.localizationOptions.pageReportModeCancel),
+                    .pageReportMode.localizationOptions!.pageReportModeCancel),
               ),
             ],
           )

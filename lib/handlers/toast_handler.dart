@@ -12,25 +12,21 @@ class ToastHandler extends ReportHandler {
   final Color backgroundColor;
   final Color textColor;
   final double textSize;
-  final String customMessage;
+  final String? customMessage;
 
-  ToastHandler(
-      {this.gravity = ToastHandlerGravity.bottom,
-      this.length = ToastHandlerLength.long,
-      this.backgroundColor = Colors.black87,
-      this.textColor = Colors.white,
-      this.textSize = 12,
-      this.customMessage})
-      : assert(gravity != null, "gravity can't be null"),
-        assert(length != null, "length can't be null"),
-        assert(backgroundColor != null, "backgroundColor can't be null"),
-        assert(textColor != null, "textColor can't be null"),
-        assert(textSize != null, "textSize can't be null");
+  ToastHandler({
+    this.gravity = ToastHandlerGravity.bottom,
+    this.length = ToastHandlerLength.long,
+    this.backgroundColor = Colors.black87,
+    this.textColor = Colors.white,
+    this.textSize = 12,
+    this.customMessage,
+  });
 
   @override
   Future<bool> handle(Report error) async {
     Fluttertoast.showToast(
-        msg: _getErrorMessage(error),
+        msg: _getErrorMessage(error)!,
         toastLength: _getLength(),
         gravity: _getGravity(),
         timeInSecForIosWeb: _getLengthIos(),
@@ -50,7 +46,6 @@ class ToastHandler extends ReportHandler {
       case ToastHandlerGravity.top:
         return ToastGravity.TOP;
     }
-    return ToastGravity.BOTTOM;
   }
 
   Toast _getLength() {
@@ -69,11 +64,11 @@ class ToastHandler extends ReportHandler {
     }
   }
 
-  String _getErrorMessage(Report error) {
+  String? _getErrorMessage(Report error) {
     if (customMessage?.isNotEmpty == true) {
       return customMessage;
     } else {
-      return "${localizationOptions.toastHandlerDescription} ${error.error}";
+      return "${localizationOptions?.toastHandlerDescription} ${error.error}";
     }
   }
 

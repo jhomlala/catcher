@@ -11,14 +11,14 @@ abstract class ReportHandler {
   List<PlatformType> getSupportedPlatforms();
 
   ///Location settings
-  LocalizationOptions _localizationOptions;
+  LocalizationOptions? _localizationOptions;
 
   /// Get currently used localization options
-  LocalizationOptions get localizationOptions => _localizationOptions;
+  LocalizationOptions? get localizationOptions => _localizationOptions;
 
   // ignore: use_setters_to_change_properties
   /// Set localization options (translations) to this report mode
-  void setLocalizationOptions(LocalizationOptions localizationOptions) {
+  void setLocalizationOptions(LocalizationOptions? localizationOptions) {
     _localizationOptions = localizationOptions;
   }
 }

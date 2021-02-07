@@ -10,18 +10,12 @@ class ConsoleHandler extends ReportHandler {
   final bool enableCustomParameters;
   final Logger _logger = Logger("ConsoleHandler");
 
-  ConsoleHandler(
-      {this.enableDeviceParameters = true,
-      this.enableApplicationParameters = true,
-      this.enableStackTrace = true,
-      this.enableCustomParameters = false})
-      : assert(enableDeviceParameters != null,
-            "enableDeviceParameters can't be null"),
-        assert(enableApplicationParameters != null,
-            "enableApplicationParameters can't be null"),
-        assert(enableStackTrace != null, "enableStackTrace can't be null"),
-        assert(enableCustomParameters != null,
-            "enableCustomParameters can't be null");
+  ConsoleHandler({
+    this.enableDeviceParameters = true,
+    this.enableApplicationParameters = true,
+    this.enableStackTrace = true,
+    this.enableCustomParameters = false,
+  });
 
   @override
   Future<bool> handle(Report report) {
@@ -41,7 +35,7 @@ class ConsoleHandler extends ReportHandler {
     _logger.info("${report.error}");
     _logger.info("");
     if (enableStackTrace) {
-      _printStackTraceFormatted(report.stackTrace as StackTrace);
+      _printStackTraceFormatted(report.stackTrace as StackTrace?);
     }
     if (enableCustomParameters) {
       _printCustomParametersFormatted(report.customParameters);
@@ -73,7 +67,7 @@ class ConsoleHandler extends ReportHandler {
     }
   }
 
-  void _printStackTraceFormatted(StackTrace stackTrace) {
+  void _printStackTraceFormatted(StackTrace? stackTrace) {
     _logger.info("------- STACK TRACE -------");
     for (final entry in stackTrace.toString().split("\n")) {
       _logger.info(entry);

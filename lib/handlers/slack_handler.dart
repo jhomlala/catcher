@@ -27,18 +27,7 @@ class SlackHandler extends ReportHandler {
       this.enableDeviceParameters = false,
       this.enableApplicationParameters = false,
       this.enableStackTrace = false,
-      this.enableCustomParameters = false})
-      : assert(webhookUrl != null, "webhookUrl can't be null"),
-        assert(channel != null, "channel can't be null"),
-        assert(username != null, "username can't be null"),
-        assert(enableDeviceParameters != null,
-            "enableDeviceParameters can't be null"),
-        assert(enableApplicationParameters != null,
-            "enableApplicationParameters can't be null"),
-        assert(enableStackTrace != null, "enableStackTrace can't be null"),
-        assert(enableCustomParameters != null,
-            "enableCustomParameters can't be null"),
-        assert(printLogs != null, "printLogs can't be null");
+      this.enableCustomParameters = false});
 
   @override
   Future<bool> handle(Report report) async {
