@@ -57,9 +57,11 @@ class PageWidget extends StatefulWidget {
 class PageWidgetState extends State<PageWidget> {
   @override
   Widget build(BuildContext context) {
-    return CatcherUtils.isCupertinoAppAncestor(context)
-        ? _buildCupertinoPage()
-        : _buildMaterialPage();
+    return Builder(
+      builder: (context) => CatcherUtils.isCupertinoAppAncestor(context)
+          ? _buildCupertinoPage()
+          : _buildMaterialPage(),
+    );
   }
 
   Widget _buildMaterialPage() {
@@ -105,9 +107,11 @@ class PageWidgetState extends State<PageWidget> {
           const Padding(
             padding: EdgeInsets.only(top: 20),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: _getStackTraceWidget(),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: _getStackTraceWidget(),
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -131,9 +135,9 @@ class PageWidgetState extends State<PageWidget> {
 
   TextStyle _getTextStyle(double fontSize) {
     return TextStyle(
-        fontSize: fontSize,
-        color: Colors.black,
-        decoration: TextDecoration.none);
+      fontSize: fontSize,
+      decoration: TextDecoration.none,
+    );
   }
 
   Widget _getStackTraceWidget() {
