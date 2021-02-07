@@ -10,11 +10,11 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  path_provider: ^0.5.0
-  dio: ^3.0.3
+  path_provider: ^2.0.0-nullsafety
+  dio: ^3.0.10
   permission_handler: ^5.0.1+1
-  flutter_local_notifications: ^0.8.4
   sentry: ^4.0.0
+  flutter_local_notifications: ^4.0.0
 
 
 dev_dependencies:
