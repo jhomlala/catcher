@@ -343,22 +343,18 @@ CatcherOptions(
 ```
 
 You can add translate for given parameters:
-```dart
-  final String notificationReportModeTitle; // notification report mode title
-  final String notificationReportModeContent; // notification report mode subtitle
+* notificationReportModeTitle - notification report mode title
+* notificationReportModeContent - notification report mode subtitle
+* dialogReportModeTitle - dialog report mode title
+* dialogReportModeDescription - dialog report mode description
+* dialogReportModeAccept - dialog report mode accept button
+* dialogReportModeCancel - dialog report mode cancel button
+* pageReportModeTitle - page report mode toolbar title
+* pageReportModeDescription - page report mode description
+* pageReportModeAccept - page report mode accept button
+* pageReportModeCancel - page report mode cancel button
+* toastHandlerDescription - toast handler message
 
-  final String dialogReportModeTitle; // dialog report mode title
-  final String dialogReportModeDescription; // dialog report mode description
-  final String dialogReportModeAccept; // dialog report mode accept button
-  final String dialogReportModeCancel; // dialog report mode cancel button
-
-  final String pageReportModeTitle; // page report mode toolbar title
-  final String pageReportModeDescription; // page report mode description
-  final String pageReportModeAccept; // page report mode accept button
-  final String pageReportModeCancel; // page report mode cancel button
-
-  final String toastHandlerDescription; // toast handler message
-```
 
 If you want to override default english texts, just add simply localization options for "en" language.
 
@@ -437,7 +433,9 @@ main() {
         pageReportModeDescription:
             "Wystąpił niespodziewany błąd aplikacji. Raport z błędem jest gotowy do wysłania do zespołu wsparcia. Naciśnij akceptuj aby wysłać raport lub odrzuć aby odrzucić raport.",
         pageReportModeAccept: "Akceptuj",
-        pageReportModeCancel: "Odrzuć")
+        pageReportModeCancel: "Odrzuć",
+        toastHandlerDescription: "Wystąpił błąd:",
+    ) 
   ]);
   CatcherOptions releaseOptions = CatcherOptions(NotificationReportMode(), [
     EmailManualHandler(["recipient@email.com"])
