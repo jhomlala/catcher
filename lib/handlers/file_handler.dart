@@ -89,7 +89,7 @@ class FileHandler extends ReportHandler {
     _printLog("Writing report to file");
     _writeLineToFile(
         "============================== CATCHER LOG ==============================");
-    _writeLineToFile("Crash occured on ${report.dateTime}");
+    _writeLineToFile("Crash occurred on ${report.dateTime}");
     _writeLineToFile("");
     if (enableDeviceParameters) {
       _logDeviceParametersFormatted(report.deviceParameters);

@@ -17,23 +17,17 @@ class CatcherWeb {
 
   /// Handle method call
   Future<dynamic> handleMethodCall(MethodCall call) async {
-    assert(call != null, "Call can't be null!");
     switch (call.method) {
       case "getUserAgent":
         return window.navigator.userAgent;
-        break;
       case "getLanguage":
         return window.navigator.language;
-        break;
       case "getVendor":
         return window.navigator.vendor;
-        break;
       case "getPlatform":
         return window.navigator.platform;
-        break;
       case "getCookieEnabled":
         return window.navigator.cookieEnabled;
-        break;
     }
   }
 }

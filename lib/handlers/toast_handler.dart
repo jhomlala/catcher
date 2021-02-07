@@ -68,7 +68,7 @@ class ToastHandler extends ReportHandler {
     if (customMessage?.isNotEmpty == true) {
       return customMessage;
     } else {
-      return "${localizationOptions?.toastHandlerDescription} ${error.error}";
+      return "${localizationOptions.toastHandlerDescription} ${error.error}";
     }
   }
 
