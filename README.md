@@ -12,7 +12,7 @@
 
 Catcher is Flutter plugin which automatically catches error/exceptions and handle them. Catcher offers multiple way to handle errors.
 Catcher is heavily inspired from ACRA: https://github.com/ACRA/acra.
-Catcher supports Android, iOS and Web platforms.
+Catcher supports Android, iOS and Web platform.
 
 
 ## Install
