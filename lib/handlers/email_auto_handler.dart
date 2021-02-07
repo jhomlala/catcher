@@ -59,8 +59,8 @@ class EmailAutoHandler extends ReportHandler {
 
   Future<bool> _sendMail(Report report) async {
     try {
-      final message = new Message()
-        ..from = new Address(this.senderEmail, this.senderName)
+      final message = Message()
+        ..from = Address(senderEmail, senderName)
         ..recipients.addAll(recipients)
         ..subject = _getEmailTitle(report)
         ..text = _setupRawMessageText(report);
@@ -70,7 +70,7 @@ class EmailAutoHandler extends ReportHandler {
       }
       _printLog("Sending email...");
 
-      var result = await send(message, _setupSmtpServer());
+      final result = await send(message, _setupSmtpServer());
       if (result != null) {
         _printLog("Email result: mail: ${result.mail} "
             "sending start time: ${result.messageSendingStart} "
@@ -95,7 +95,7 @@ class EmailAutoHandler extends ReportHandler {
   }
 
   String _getEmailTitle(Report report) {
-    if (emailTitle != null && emailTitle.length > 0) {
+    if (emailTitle?.isNotEmpty == true) {
       return emailTitle;
     } else {
       return "Error report: >> ${report.error} <<";
@@ -103,8 +103,8 @@ class EmailAutoHandler extends ReportHandler {
   }
 
   String _setupHtmlMessageText(Report report) {
-    StringBuffer buffer = StringBuffer("");
-    if (emailHeader != null && emailHeader.length > 0) {
+    final StringBuffer buffer = StringBuffer();
+    if (emailHeader?.isNotEmpty == true) {
       buffer.write(emailHeader);
       buffer.write("<hr><br>");
     }
@@ -119,14 +119,14 @@ class EmailAutoHandler extends ReportHandler {
     }
     if (enableDeviceParameters) {
       buffer.write("<h2>Device parameters:</h2>");
-      for (var entry in report.deviceParameters.entries) {
+      for (final entry in report.deviceParameters.entries) {
         buffer.write("<b>${entry.key}</b>: ${entry.value}<br>");
       }
       buffer.write("<hr><br>");
     }
     if (enableApplicationParameters) {
       buffer.write("<h2>Application parameters:</h2>");
-      for (var entry in report.applicationParameters.entries) {
+      for (final entry in report.applicationParameters.entries) {
         buffer.write("<b>${entry.key}</b>: ${entry.value}<br>");
       }
       buffer.write("<br><br>");
@@ -134,7 +134,7 @@ class EmailAutoHandler extends ReportHandler {
 
     if (enableCustomParameters) {
       buffer.write("<h2>Custom parameters:</h2>");
-      for (var entry in report.customParameters.entries) {
+      for (final entry in report.customParameters.entries) {
         buffer.write("<b>${entry.key}</b>: ${entry.value}<br>");
       }
       buffer.write("<br><br>");
@@ -144,8 +144,8 @@ class EmailAutoHandler extends ReportHandler {
   }
 
   String _setupRawMessageText(Report report) {
-    StringBuffer buffer = StringBuffer("");
-    if (emailHeader != null && emailHeader.length > 0) {
+    final StringBuffer buffer = StringBuffer();
+    if (emailHeader?.isNotEmpty == true) {
       buffer.write(emailHeader);
       buffer.write("\n\n");
     }
@@ -160,21 +160,21 @@ class EmailAutoHandler extends ReportHandler {
     }
     if (enableDeviceParameters) {
       buffer.write("Device parameters:\n");
-      for (var entry in report.deviceParameters.entries) {
+      for (final entry in report.deviceParameters.entries) {
         buffer.write("${entry.key}: ${entry.value}\n");
       }
       buffer.write("\n\n");
     }
     if (enableApplicationParameters) {
       buffer.write("Application parameters:\n");
-      for (var entry in report.applicationParameters.entries) {
+      for (final entry in report.applicationParameters.entries) {
         buffer.write("${entry.key}: ${entry.value}\n");
       }
       buffer.write("\n\n");
     }
     if (enableCustomParameters) {
       buffer.write("Custom parameters:\n");
-      for (var entry in report.customParameters.entries) {
+      for (final entry in report.customParameters.entries) {
         buffer.write("${entry.key}: ${entry.value}\n");
       }
       buffer.write("\n\n");
@@ -190,5 +190,5 @@ class EmailAutoHandler extends ReportHandler {
 
   @override
   List<PlatformType> getSupportedPlatforms() =>
-      [PlatformType.Android, PlatformType.iOS];
+      [PlatformType.android, PlatformType.iOS];
 }

@@ -50,11 +50,11 @@ class ChildWidget extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          FlatButton(
+          TextButton(
             child: Text("Check permission"),
             onPressed: checkPermissions,
           ),
-          FlatButton(
+          TextButton(
             child: Text("Generate error"),
             onPressed: () => generateError(),
           )

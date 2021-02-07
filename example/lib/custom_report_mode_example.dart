@@ -46,7 +46,7 @@ class ChildWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: FlatButton(
+      child: TextButton(
         child: Text("Generate error"),
         onPressed: () => generateError(),
       ),
@@ -79,7 +79,7 @@ class CustomPageReportMode extends ReportMode {
 
   @override
   List<PlatformType> getSupportedPlatforms() =>
-      [PlatformType.Web, PlatformType.Android, PlatformType.iOS];
+      [PlatformType.web, PlatformType.android, PlatformType.iOS];
 }
 
 class CustomPage extends StatelessWidget {
@@ -96,13 +96,13 @@ class CustomPage extends StatelessWidget {
         ),
         body: Container(
           child: Row(children: [
-            RaisedButton(
+            ElevatedButton(
               child: Text("Send report"),
               onPressed: () {
                 reportMode.onActionConfirmed(report);
               },
             ),
-            RaisedButton(
+            ElevatedButton(
               child: Text("Cancel report"),
               onPressed: () {
                 reportMode.onActionRejected(report);

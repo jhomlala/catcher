@@ -10,10 +10,10 @@ class CatcherErrorWidget extends StatelessWidget {
   const CatcherErrorWidget({
     Key key,
     this.details,
-    this.showStacktrace,
-    this.title,
-    this.description,
-    this.maxWidthForSmallMode,
+    @required this.showStacktrace,
+    @required this.title,
+    @required this.description,
+    @required this.maxWidthForSmallMode,
   })  : assert(showStacktrace != null),
         assert(title != null),
         assert(description != null),
@@ -34,7 +34,7 @@ class CatcherErrorWidget extends StatelessWidget {
   }
 
   Widget _buildSmallErrorWidget() {
-    return Center(
+    return const Center(
       child: Icon(
         Icons.error_outline,
         color: Colors.red,
@@ -51,7 +51,7 @@ class CatcherErrorWidget extends StatelessWidget {
           _buildIcon(),
           Text(
             title,
-            style: TextStyle(color: Colors.black, fontSize: 25),
+            style: const TextStyle(color: Colors.black, fontSize: 25),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 10),
@@ -67,7 +67,7 @@ class CatcherErrorWidget extends StatelessWidget {
   }
 
   Widget _buildIcon() {
-    return Icon(
+    return const Icon(
       Icons.announcement,
       color: Colors.red,
       size: 40,
@@ -76,14 +76,14 @@ class CatcherErrorWidget extends StatelessWidget {
 
   Widget _buildStackTraceWidget() {
     if (showStacktrace) {
-      List<String> stackTrace = details.stack.toString().split("\n");
+      final List<String> stackTrace = details.stack.toString().split("\n");
       return ListView.builder(
-        padding: EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
         shrinkWrap: true,
-        physics: ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         itemCount: stackTrace.length,
         itemBuilder: (BuildContext context, int index) {
-          String line = stackTrace[index];
+          final String line = stackTrace[index];
           if (line?.isNotEmpty == true) {
             return Text(line);
           } else {

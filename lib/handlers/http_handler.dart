@@ -46,11 +46,11 @@ class HttpHandler extends ReportHandler {
         assert(enableStackTrace != null, "enableStackTrace can't be null"),
         assert(enableCustomParameters != null,
             "enableCustomParameters can't be null"),
-        this.headers = headers != null ? headers : <String, dynamic>{};
+        headers = headers ?? <String, dynamic>{};
 
   @override
   Future<bool> handle(Report error) async {
-    if (error.platformType != PlatformType.Web) {
+    if (error.platformType != PlatformType.web) {
       if (!(await CatcherUtils.isInternetConnectionAvailable())) {
         _printLog("No internet connection available");
         return false;
@@ -65,21 +65,22 @@ class HttpHandler extends ReportHandler {
 
   Future<bool> _sendPost(Report error) async {
     try {
-      var json = error.toJson(
+      final json = error.toJson(
           enableDeviceParameters: enableDeviceParameters,
           enableApplicationParameters: enableApplicationParameters,
           enableStackTrace: enableStackTrace,
           enableCustomParameters: enableCustomParameters);
-      HashMap<String, dynamic> mutableHeaders = HashMap<String, dynamic>();
+      final HashMap<String, dynamic> mutableHeaders =
+          HashMap<String, dynamic>();
       if (headers != null) {
         mutableHeaders.addAll(headers);
       }
-      Options options = Options(
+      final Options options = Options(
           sendTimeout: requestTimeout,
           receiveTimeout: responseTimeout,
           headers: mutableHeaders);
       _printLog("Calling: ${endpointUri.toString()}");
-      Response response = await _dio.post<dynamic>(endpointUri.toString(),
+      final Response response = await _dio.post<dynamic>(endpointUri.toString(),
           data: json, options: options);
       _printLog(
           "HttpHandler response status: ${response.statusCode} body: ${response.data}");
@@ -103,5 +104,5 @@ class HttpHandler extends ReportHandler {
 
   @override
   List<PlatformType> getSupportedPlatforms() =>
-      [PlatformType.Web, PlatformType.Android, PlatformType.iOS];
+      [PlatformType.web, PlatformType.android, PlatformType.iOS];
 }

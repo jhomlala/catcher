@@ -12,7 +12,7 @@
 
 Catcher is Flutter plugin which automatically catches error/exceptions and handle them. Catcher offers multiple way to handle errors.
 Catcher is heavily inspired from ACRA: https://github.com/ACRA/acra.
-Catcher supports Android, iOS and Web platforms.
+Catcher supports Android, iOS and Web platform.
 
 
 ## Install
@@ -20,7 +20,7 @@ Catcher supports Android, iOS and Web platforms.
 Add this line to your **pubspec.yaml**:
 ```yaml
 dependencies:
-  catcher: ^0.4.0
+  catcher: ^0.4.1
 ```
 
 Then run this command:
@@ -149,7 +149,7 @@ class ChildWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-            child: FlatButton(
+            child: TextButton(
                 child: Text("Generate error"),
                 onPressed: () => generateError()));
   }
@@ -289,10 +289,14 @@ main() {
 }
 ```
 CatcherOptions parameters:
-reportMode - describes how error report will be shown to user, see report modes to get more informations
-handlers - list of handlers, which will process report, see handlers to get more informations
+handlers - list of handlers, which will process report, see handlers to get more information
 handlerTimeout - timeout in milliseconds, this parameter describes max time of handling report by handler
+reportMode - describes how error report will be shown to user, see report modes to get more information
+localizationOptions - translations used by report modes nad report handlers
+explicitExceptionReportModesMap - explicit report modes map which will be used to trigger specific report mode for specific error
+explicitExceptionHandlersMap - Explicit report handler map which will be used to trigger specific report report handler for specific error
 customParameters - map of additional parameters that will be included in report (for example user id or user name)
+handleSilentError - should handle silent errors reported, see FlutterErrorDetails.silent for more details
 
 
 ### Report catched exception
@@ -339,20 +343,18 @@ CatcherOptions(
 ```
 
 You can add translate for given parameters:
-```dart
-  final String notificationReportModeTitle; // notification report mode title
-  final String notificationReportModeContent; // notification report mode subtitle
+* notificationReportModeTitle - notification report mode title
+* notificationReportModeContent - notification report mode subtitle
+* dialogReportModeTitle - dialog report mode title
+* dialogReportModeDescription - dialog report mode description
+* dialogReportModeAccept - dialog report mode accept button
+* dialogReportModeCancel - dialog report mode cancel button
+* pageReportModeTitle - page report mode toolbar title
+* pageReportModeDescription - page report mode description
+* pageReportModeAccept - page report mode accept button
+* pageReportModeCancel - page report mode cancel button
+* toastHandlerDescription - toast handler message
 
-  final String dialogReportModeTitle; // dialog report mode title
-  final String dialogReportModeDescription; // dialog report mode description
-  final String dialogReportModeAccept; // dialog report mode accept button
-  final String dialogReportModeCancel; // dialog report mode cancel button
-
-  final String pageReportModeTitle; // page report mode toolbar title
-  final String pageReportModeDescription; // page report mode description
-  final String pageReportModeAccept; // page report mode accept button
-  final String pageReportModeCancel; // page report mode cancel button
-```
 
 If you want to override default english texts, just add simply localization options for "en" language.
 
@@ -431,7 +433,9 @@ main() {
         pageReportModeDescription:
             "Wystąpił niespodziewany błąd aplikacji. Raport z błędem jest gotowy do wysłania do zespołu wsparcia. Naciśnij akceptuj aby wysłać raport lub odrzuć aby odrzucić raport.",
         pageReportModeAccept: "Akceptuj",
-        pageReportModeCancel: "Odrzuć")
+        pageReportModeCancel: "Odrzuć",
+        toastHandlerDescription: "Wystąpił błąd:",
+    ) 
   ]);
   CatcherOptions releaseOptions = CatcherOptions(NotificationReportMode(), [
     EmailManualHandler(["recipient@email.com"])
@@ -476,7 +480,7 @@ class ChildWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: FlatButton(
+        child: TextButton(
             child: Text("Generate error"), onPressed: () => generateError()));
   }
 

@@ -53,10 +53,10 @@ class ChildWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Column(children: <Widget>[
-        FlatButton(
+        TextButton(
             child: Text("Generate first error"),
             onPressed: () => generateFirstError()),
-        FlatButton(
+        TextButton(
           child: Text("Generate second error"),
           onPressed: () => generateSecondError(),
         )

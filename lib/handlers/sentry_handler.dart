@@ -53,7 +53,7 @@ class SentryHandler extends ReportHandler {
     try {
       _printLog("Logging to sentry...");
 
-      var tags = Map<String, dynamic>();
+      final tags = <String, dynamic>{};
       if (enableApplicationParameters) {
         tags.addAll(error.applicationParameters);
       }
@@ -64,7 +64,7 @@ class SentryHandler extends ReportHandler {
         tags.addAll(error.customParameters);
       }
 
-      var event = buildEvent(error, tags);
+      final event = buildEvent(error, tags);
       await sentryClient.captureEvent(event);
 
       _printLog("Logged to sentry!");
@@ -77,9 +77,9 @@ class SentryHandler extends ReportHandler {
 
   String _getApplicationVersion(Report report) {
     String applicationVersion = "";
-    var applicationParameters = report.applicationParameters;
+    final applicationParameters = report.applicationParameters;
     if (applicationParameters.containsKey("appName")) {
-      applicationVersion += applicationParameters["appName"];
+      applicationVersion += applicationParameters["appName"] as String;
     }
     if (applicationParameters.containsKey("version")) {
       applicationVersion += " ${applicationParameters["version"]}";
@@ -94,23 +94,20 @@ class SentryHandler extends ReportHandler {
     return SentryEvent(
       logger: "Catcher",
       serverName: "Catcher",
-      release: customRelease != null
-          ? customRelease
-          : _getApplicationVersion(report),
-      environment: customEnvironment != null
-          ? customEnvironment
-          : report.applicationParameters["environment"],
-      message: Message("Error handled by Catcher"),
+      release: customRelease ?? _getApplicationVersion(report),
+      environment: customEnvironment ??
+          report.applicationParameters["environment"] as String,
+      message: const Message("Error handled by Catcher"),
       throwable: report.error,
       level: SentryLevel.error,
       culprit: "",
       tags: changeToSentryMap(tags),
-      user: this.userContext,
+      user: userContext,
     );
   }
 
   Map<String, String> changeToSentryMap(Map<String, dynamic> map) {
-    var sentryMap = Map<String, String>();
+    final sentryMap = <String, String>{};
     map.forEach((key, dynamic value) {
       if (value.toString() == null || value.toString().isEmpty) {
         sentryMap[key] = "none";
@@ -129,5 +126,5 @@ class SentryHandler extends ReportHandler {
 
   @override
   List<PlatformType> getSupportedPlatforms() =>
-      [PlatformType.Web, PlatformType.Android, PlatformType.iOS];
+      [PlatformType.web, PlatformType.android, PlatformType.iOS];
 }

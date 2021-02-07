@@ -35,18 +35,22 @@ class PageReportMode extends ReportMode {
 
   @override
   List<PlatformType> getSupportedPlatforms() =>
-      [PlatformType.Web, PlatformType.Android, PlatformType.iOS];
+      [PlatformType.web, PlatformType.android, PlatformType.iOS];
 }
 
 class PageWidget extends StatefulWidget {
   final PageReportMode pageReportMode;
   final Report report;
 
-  PageWidget(this.pageReportMode, this.report);
+  const PageWidget(
+    this.pageReportMode,
+    this.report, {
+    Key key,
+  }) : super(key: key);
 
   @override
   PageWidgetState createState() {
-    return new PageWidgetState();
+    return PageWidgetState();
   }
 }
 
@@ -84,10 +88,12 @@ class PageWidgetState extends State<PageWidget> {
 
   Widget _buildInnerWidget() {
     return Container(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      decoration: const BoxDecoration(color: Colors.white),
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 10),
+          const Padding(
+            padding: EdgeInsets.only(top: 10),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -98,8 +104,8 @@ class PageWidgetState extends State<PageWidget> {
               textAlign: TextAlign.center,
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
+          const Padding(
+            padding: EdgeInsets.only(top: 20),
           ),
           Expanded(
             child: Padding(
@@ -110,15 +116,15 @@ class PageWidgetState extends State<PageWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              FlatButton(
+              TextButton(
+                onPressed: () => _onAcceptClicked(),
                 child: Text(widget
                     .pageReportMode.localizationOptions.pageReportModeAccept),
-                onPressed: () => _onAcceptClicked(),
               ),
-              FlatButton(
+              TextButton(
+                onPressed: () => _onCancelClicked(),
                 child: Text(widget
                     .pageReportMode.localizationOptions.pageReportModeCancel),
-                onPressed: () => _onCancelClicked(),
               ),
             ],
           )
@@ -136,14 +142,15 @@ class PageWidgetState extends State<PageWidget> {
 
   Widget _getStackTraceWidget() {
     if (widget.pageReportMode.showStackTrace) {
-      var items = widget.report.stackTrace.toString().split("\n");
+      final items = widget.report.stackTrace.toString().split("\n");
       return SizedBox(
         height: 300.0,
         child: ListView.builder(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           itemCount: items.length,
           itemBuilder: (BuildContext context, int index) {
             return Text(
+              // ignore: unnecessary_string_interpolations
               '${items[index]}',
               style: _getTextStyle(10),
             );

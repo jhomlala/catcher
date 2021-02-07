@@ -10,12 +10,14 @@ abstract class ReportMode {
 
   /// Set report mode action.
   void setReportModeAction(ReportModeAction reportModeAction) {
-    this._reportModeAction = reportModeAction;
+    assert(reportModeAction != null);
+    _reportModeAction = reportModeAction;
   }
 
+  // ignore: use_setters_to_change_properties
   /// Set localization options (translations) to this report mode
   void setLocalizationOptions(LocalizationOptions localizationOptions) {
-    this._localizationOptions = localizationOptions;
+    _localizationOptions = localizationOptions;
   }
 
   /// Code which should be triggered if new error has been catched and core

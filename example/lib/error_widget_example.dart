@@ -67,7 +67,7 @@ class ChildWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: FlatButton(child: Text(null), onPressed: generateError));
+        child: TextButton(child: Text(null), onPressed: generateError));
   }
 
   void generateError() async {

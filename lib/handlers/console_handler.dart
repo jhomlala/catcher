@@ -8,7 +8,7 @@ class ConsoleHandler extends ReportHandler {
   final bool enableApplicationParameters;
   final bool enableStackTrace;
   final bool enableCustomParameters;
-  Logger _logger = Logger("ConsoleHandler");
+  final Logger _logger = Logger("ConsoleHandler");
 
   ConsoleHandler(
       {this.enableDeviceParameters = true,
@@ -41,7 +41,7 @@ class ConsoleHandler extends ReportHandler {
     _logger.info("${report.error}");
     _logger.info("");
     if (enableStackTrace) {
-      _printStackTraceFormatted(report.stackTrace);
+      _printStackTraceFormatted(report.stackTrace as StackTrace);
     }
     if (enableCustomParameters) {
       _printCustomParametersFormatted(report.customParameters);
@@ -53,7 +53,7 @@ class ConsoleHandler extends ReportHandler {
 
   void _printDeviceParametersFormatted(Map<String, dynamic> deviceParameters) {
     _logger.info("------- DEVICE INFO -------");
-    for (var entry in deviceParameters.entries) {
+    for (final entry in deviceParameters.entries) {
       _logger.info("${entry.key}: ${entry.value}");
     }
   }
@@ -61,26 +61,26 @@ class ConsoleHandler extends ReportHandler {
   void _printApplicationParametersFormatted(
       Map<String, dynamic> applicationParameters) {
     _logger.info("------- APP INFO -------");
-    for (var entry in applicationParameters.entries) {
+    for (final entry in applicationParameters.entries) {
       _logger.info("${entry.key}: ${entry.value}");
     }
   }
 
   void _printCustomParametersFormatted(Map<String, dynamic> customParameters) {
     _logger.info("------- CUSTOM INFO -------");
-    for (var entry in customParameters.entries) {
+    for (final entry in customParameters.entries) {
       _logger.info("${entry.key}: ${entry.value}");
     }
   }
 
   void _printStackTraceFormatted(StackTrace stackTrace) {
     _logger.info("------- STACK TRACE -------");
-    for (var entry in stackTrace.toString().split("\n")) {
-      _logger.info("$entry");
+    for (final entry in stackTrace.toString().split("\n")) {
+      _logger.info(entry);
     }
   }
 
   @override
   List<PlatformType> getSupportedPlatforms() =>
-      [PlatformType.Android, PlatformType.iOS, PlatformType.Web];
+      [PlatformType.android, PlatformType.iOS, PlatformType.web];
 }

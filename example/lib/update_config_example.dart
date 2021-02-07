@@ -51,11 +51,11 @@ class ChildWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Row(children: [
-        FlatButton(
+        TextButton(
           child: Text("Change config"),
           onPressed: () => changeConfig(),
         ),
-        FlatButton(
+        TextButton(
           child: Text("Generate error"),
           onPressed: () => generateError(),
         ),

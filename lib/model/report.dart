@@ -29,14 +29,15 @@ class Report {
 
   /// Creates report instance
   Report(
-      this.error,
-      this.stackTrace,
-      this.dateTime,
-      this.deviceParameters,
-      this.applicationParameters,
-      this.customParameters,
-      this.errorDetails,
-      this.platformType);
+    this.error,
+    this.stackTrace,
+    this.dateTime,
+    this.deviceParameters,
+    this.applicationParameters,
+    this.customParameters,
+    this.errorDetails,
+    this.platformType,
+  );
 
   /// Creates json from current instance
   Map<String, dynamic> toJson({
@@ -45,7 +46,7 @@ class Report {
     bool enableStackTrace = true,
     bool enableCustomParameters = false,
   }) {
-    Map<String, dynamic> json = <String, dynamic>{
+    final Map<String, dynamic> json = <String, dynamic>{
       "error": error.toString(),
       "customParameters": customParameters,
       "dateTime": dateTime.toIso8601String(),

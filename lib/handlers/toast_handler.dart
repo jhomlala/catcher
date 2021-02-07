@@ -70,14 +70,14 @@ class ToastHandler extends ReportHandler {
   }
 
   String _getErrorMessage(Report error) {
-    if (customMessage != null && customMessage.length > 0) {
+    if (customMessage?.isNotEmpty == true) {
       return customMessage;
     } else {
-      return "Error occurred: ${error.error}";
+      return "${localizationOptions.toastHandlerDescription} ${error.error}";
     }
   }
 
   @override
   List<PlatformType> getSupportedPlatforms() =>
-      [PlatformType.Web, PlatformType.Android, PlatformType.iOS];
+      [PlatformType.web, PlatformType.android, PlatformType.iOS];
 }

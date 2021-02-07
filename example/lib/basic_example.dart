@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 void main() {
   CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
     //EmailManualHandler(["recipient@email.com"]),
+    ToastHandler(),
     HttpHandler(HttpRequestType.post,
         Uri.parse("https://jsonplaceholder.typicode.com/posts"),
         printLogs: true),
@@ -49,7 +50,7 @@ class ChildWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: FlatButton(
+      child: TextButton(
         child: Text("Generate error"),
         onPressed: () => generateError(),
       ),

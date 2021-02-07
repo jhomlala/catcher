@@ -29,41 +29,51 @@ class CatcherOptions {
   /// Custom parameters which will be used in report handler
   final Map<String, dynamic> customParameters;
 
+  ///Should catcher handle silent errors
+  final bool handleSilentError;
+
   /// Builds catcher options instance
-  CatcherOptions(this.reportMode, this.handlers,
-      {this.handlerTimeout = 5000,
-      this.customParameters = const <String, dynamic>{},
-      this.localizationOptions = const [],
-      this.explicitExceptionReportModesMap = const {},
-      this.explicitExceptionHandlersMap = const {}});
+  CatcherOptions(
+    this.reportMode,
+    this.handlers, {
+    this.handlerTimeout = 5000,
+    this.customParameters = const <String, dynamic>{},
+    this.localizationOptions = const [],
+    this.explicitExceptionReportModesMap = const {},
+    this.explicitExceptionHandlersMap = const {},
+    this.handleSilentError = true,
+  });
 
   /// Builds default catcher options release instance
   CatcherOptions.getDefaultReleaseOptions()
-      : this.handlers = [ConsoleHandler()],
-        this.reportMode = DialogReportMode(),
+      : handlers = [ConsoleHandler()],
+        reportMode = DialogReportMode(),
         handlerTimeout = 5000,
         customParameters = <String, dynamic>{},
         localizationOptions = [],
-        this.explicitExceptionReportModesMap = {},
-        explicitExceptionHandlersMap = {};
+        explicitExceptionReportModesMap = {},
+        explicitExceptionHandlersMap = {},
+        handleSilentError = true;
 
   /// Builds default catcher options rdebug instance
   CatcherOptions.getDefaultDebugOptions()
-      : this.handlers = [ConsoleHandler()],
-        this.reportMode = SilentReportMode(),
+      : handlers = [ConsoleHandler()],
+        reportMode = SilentReportMode(),
         handlerTimeout = 10000,
         customParameters = <String, dynamic>{},
         localizationOptions = [],
-        this.explicitExceptionReportModesMap = {},
-        explicitExceptionHandlersMap = {};
+        explicitExceptionReportModesMap = {},
+        explicitExceptionHandlersMap = {},
+        handleSilentError = true;
 
   /// Builds default catcher options profile instance
   CatcherOptions.getDefaultProfileOptions()
-      : this.handlers = [ConsoleHandler()],
-        this.reportMode = SilentReportMode(),
+      : handlers = [ConsoleHandler()],
+        reportMode = SilentReportMode(),
         handlerTimeout = 10000,
         customParameters = <String, dynamic>{},
         localizationOptions = [],
-        this.explicitExceptionReportModesMap = {},
-        explicitExceptionHandlersMap = {};
+        explicitExceptionReportModesMap = {},
+        explicitExceptionHandlersMap = {},
+        handleSilentError = true;
 }

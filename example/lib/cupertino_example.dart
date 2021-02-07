@@ -52,7 +52,7 @@ class ChildWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.orange,
-      child: FlatButton(
+      child: TextButton(
         child: Text("Generate error"),
         onPressed: () => generateError(),
       ),
