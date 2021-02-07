@@ -39,10 +39,11 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       navigatorKey: Catcher.navigatorKey,
       home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Plugin example app'),
-          ),
-          body: ChildWidget()),
+        appBar: AppBar(
+          title: const Text('Plugin example app'),
+        ),
+        body: ChildWidget(),
+      ),
     );
   }
 }
@@ -61,8 +62,8 @@ class ChildWidget extends StatelessWidget {
 }
 
 class NotificationReportMode extends ReportMode {
-  FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin;
-  Report _lastReport;
+  late FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin;
+  late Report _lastReport;
 
   final String channelId;
   final String channelName;
@@ -92,16 +93,17 @@ class NotificationReportMode extends ReportMode {
     var initializationSettings = new InitializationSettings(
         initializationSettingsAndroid, initializationSettingsIOS);
     _flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: onSelectedNotification);
+        onSelectNotification:
+            onSelectedNotification as Future<dynamic> Function(String));
   }
 
   @override
-  void requestAction(Report report, BuildContext context) {
+  void requestAction(Report report, BuildContext? context) {
     _lastReport = report;
     _sendNotification();
   }
 
-  Future onSelectedNotification(String payload) {
+  Future? onSelectedNotification(String payload) {
     onActionConfirmed(_lastReport);
     return null;
   }

@@ -3,7 +3,7 @@ description: Demonstrates how to use the catcher plugin.
 publish_to: 'none'
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: '>=2.12.0-259.8.beta <3.0.0'
 
 dependencies:
   flutter:
