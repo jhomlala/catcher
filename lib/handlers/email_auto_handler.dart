@@ -95,7 +95,7 @@ class EmailAutoHandler extends ReportHandler {
   }
 
   String _getEmailTitle(Report report) {
-    if (emailTitle != null && emailTitle.isNotEmpty) {
+    if (emailTitle?.isNotEmpty == true) {
       return emailTitle;
     } else {
       return "Error report: >> ${report.error} <<";
@@ -104,7 +104,7 @@ class EmailAutoHandler extends ReportHandler {
 
   String _setupHtmlMessageText(Report report) {
     final StringBuffer buffer = StringBuffer();
-    if (emailHeader != null && emailHeader.isNotEmpty) {
+    if (emailHeader?.isNotEmpty == true) {
       buffer.write(emailHeader);
       buffer.write("<hr><br>");
     }
@@ -145,7 +145,7 @@ class EmailAutoHandler extends ReportHandler {
 
   String _setupRawMessageText(Report report) {
     final StringBuffer buffer = StringBuffer();
-    if (emailHeader != null && emailHeader.isNotEmpty) {
+    if (emailHeader?.isNotEmpty == true) {
       buffer.write(emailHeader);
       buffer.write("\n\n");
     }

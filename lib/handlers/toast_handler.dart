@@ -70,7 +70,7 @@ class ToastHandler extends ReportHandler {
   }
 
   String _getErrorMessage(Report error) {
-    if (customMessage != null && customMessage.isNotEmpty) {
+    if (customMessage?.isNotEmpty == true) {
       return customMessage;
     } else {
       return "${localizationOptions.toastHandlerDescription} ${error.error}";
