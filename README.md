@@ -356,6 +356,8 @@ You can add translate for given parameters:
   final String pageReportModeDescription; // page report mode description
   final String pageReportModeAccept; // page report mode accept button
   final String pageReportModeCancel; // page report mode cancel button
+
+  final String toastHandlerDescription; // toast handler message
 ```
 
 If you want to override default english texts, just add simply localization options for "en" language.
