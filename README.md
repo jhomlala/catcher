@@ -925,7 +925,8 @@ Error widget will replace your widget if he fails to render. If width of widget 
 ### Current config
 You can get currently used config by using:
 ```dart
-CatcherOptions options = catcher.getCurrentConfig();
+// Initialize catcher before calling `instance`
+CatcherOptions options = Catcher.instance.getCurrentConfig();
 ```
 This can be used for example to change custom parameters in runtime.
 
@@ -939,9 +940,8 @@ Catcher.sendTestException();
 ### Update config
 You can update Catcher config during runtime:
 ```dart
-///Catcher instance initialized
-Catcher catcher;
-catcher.updateConfig(
+// Initialize catcher before calling `instance`
+Catcher.instance.updateConfig(
      debugConfig: CatcherOptions(
        PageReportMode(),
        [ConsoleHandler()],

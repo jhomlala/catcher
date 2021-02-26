@@ -20,7 +20,7 @@ import 'package:logging/logging.dart';
 import 'package:package_info/package_info.dart';
 
 class Catcher with ReportModeAction {
-  static Catcher _instance;
+  static Catcher instance;
   static GlobalKey<NavigatorState> _navigatorKey;
   static const _methodChannel = MethodChannel('com.jhomlala/catcher/web');
 
@@ -73,7 +73,7 @@ class Catcher with ReportModeAction {
   }
 
   void _configure(GlobalKey<NavigatorState> navigatorKey) {
-    _instance = this;
+    instance = this;
     _configureNavigatorKey(navigatorKey);
     _configureLogger();
     _setupCurrentConfig();
@@ -384,7 +384,7 @@ class Catcher with ReportModeAction {
     dynamic stackTraceValue = stackTrace;
     errorValue ??= "undefined error";
     stackTraceValue ??= StackTrace.current;
-    _instance._reportError(error, stackTrace);
+    instance._reportError(error, stackTrace);
   }
 
   void _reportError(
