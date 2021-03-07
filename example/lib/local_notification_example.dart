@@ -95,8 +95,7 @@ class NotificationReportMode extends ReportMode {
       iOS: initializationSettingsIOS,
     );
     _flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification:
-            onSelectedNotification as Future<dynamic> Function(String));
+        onSelectNotification: onSelectedNotification);
   }
 
   @override
@@ -105,9 +104,9 @@ class NotificationReportMode extends ReportMode {
     _sendNotification();
   }
 
-  Future? onSelectedNotification(String payload) {
+  Future onSelectedNotification(String? payload) {
     onActionConfirmed(_lastReport);
-    return null;
+    return Future<int>.value(0);
   }
 
   void _sendNotification() async {

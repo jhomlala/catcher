@@ -60,13 +60,11 @@ class EmailAutoHandler extends ReportHandler {
       _printLog("Sending email...");
 
       final result = await send(message, _setupSmtpServer());
-      if (result.mail != null) {
-        _printLog("Email result: mail: ${result.mail} "
-            "sending start time: ${result.messageSendingStart} "
-            "sending end time: ${result.messageSendingEnd}");
-      } else {
-        _printLog("Result is empty - failed to send email");
-      }
+
+      _printLog("Email result: mail: ${result.mail} "
+          "sending start time: ${result.messageSendingStart} "
+          "sending end time: ${result.messageSendingEnd}");
+
       return true;
     } catch (stacktrace, exception) {
       _printLog(stacktrace.toString());

@@ -67,7 +67,8 @@ class ChildWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: TextButton(child: Text("Test"), onPressed: generateError));
+      child: TextButton(child: Text("Test"), onPressed: generateError),
+    );
   }
 
   void generateError() async {

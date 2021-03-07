@@ -13,11 +13,6 @@ public class Catcher implements FlutterPlugin {
     private MethodChannel methodChannel;
     private EventChannel eventChannel;
 
-    public static void registerWith(Registrar registrar) {
-        Catcher catcher = new Catcher();
-        catcher.setupChannels(registrar.messenger(), registrar.context());
-    }
-
     @Override
     public void onAttachedToEngine(FlutterPluginBinding binding) {
         setupChannels(binding.getBinaryMessenger(), binding.getApplicationContext());

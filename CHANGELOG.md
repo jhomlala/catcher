@@ -1,5 +1,6 @@
 ## 0.5.0
-* Added null safety.
+* [BREAKING_CHANGE] Added null safety.
+* Removed deprecated android code.
 
 ## 0.4.1
 * Added localization text in toast handler.
