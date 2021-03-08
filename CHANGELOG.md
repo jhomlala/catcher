@@ -2,6 +2,9 @@
 * [BREAKING_CHANGE] Added null safety.
 * Removed deprecated android code.
 
+## 0.4.2
+* Fixed BinaryRegistrar issue.
+
 ## 0.4.1
 * Added localization text in toast handler.
 * Fixed page report mode UI issues by Don Coleman (https://github.com/drcdev).
