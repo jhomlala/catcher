@@ -60,8 +60,10 @@ class ChildWidget extends StatelessWidget {
 
 class CustomPageReportMode extends ReportMode {
   @override
-  void requestAction(Report report, BuildContext context) {
-    _navigateToPageWidget(report, context);
+  void requestAction(Report report, BuildContext? context) {
+    if (context != null) {
+      _navigateToPageWidget(report, context);
+    }
   }
 
   void _navigateToPageWidget(Report report, BuildContext context) async {

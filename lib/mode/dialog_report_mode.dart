@@ -7,21 +7,23 @@ import 'package:flutter/material.dart';
 
 class DialogReportMode extends ReportMode {
   @override
-  void requestAction(Report report, BuildContext context) {
+  void requestAction(Report report, BuildContext? context) {
     _showDialog(report, context);
   }
 
-  Future _showDialog(Report report, BuildContext context) async {
+  Future _showDialog(Report report, BuildContext? context) async {
     await Future<void>.delayed(Duration.zero);
-    if (CatcherUtils.isCupertinoAppAncestor(context)) {
-      return showCupertinoDialog<void>(
-          context: context,
-          builder: (context) => _buildCupertinoDialog(report, context));
-    } else {
-      return showDialog<void>(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) => _buildMaterialDialog(report, context));
+    if (context != null) {
+      if (CatcherUtils.isCupertinoAppAncestor(context)) {
+        return showCupertinoDialog<void>(
+            context: context,
+            builder: (context) => _buildCupertinoDialog(report, context));
+      } else {
+        return showDialog<void>(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => _buildMaterialDialog(report, context));
+      }
     }
   }
 

@@ -9,8 +9,11 @@ import 'package:permission_handler/permission_handler.dart';
 
 void main() async {
   var catcher = Catcher(rootWidget: MyApp(), ensureInitialized: true);
-  Directory externalDir = await getExternalStorageDirectory();
-  String path = externalDir.path.toString() + "/log.txt";
+  Directory? externalDir = await getExternalStorageDirectory();
+  String path = "";
+  if (externalDir != null) {
+    path = externalDir.path.toString() + "/log.txt";
+  }
 
   CatcherOptions debugOptions = CatcherOptions(
       DialogReportMode(), [FileHandler(File(path), printLogs: true)]);

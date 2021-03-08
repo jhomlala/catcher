@@ -1,7 +1,7 @@
 import 'package:catcher/catcher.dart';
 import 'package:flutter/material.dart';
 
-Catcher catcher;
+late Catcher catcher;
 
 void main() {
   Map<String, dynamic> customParameters = new Map<String, dynamic>();
@@ -65,7 +65,7 @@ class ChildWidget extends StatelessWidget {
   }
 
   void _changeCustomParameters() {
-    CatcherOptions options = catcher.getCurrentConfig();
+    CatcherOptions options = catcher.getCurrentConfig()!;
     options.customParameters["Second"] = "Second parameter";
   }
 }

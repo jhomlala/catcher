@@ -1,3 +1,7 @@
+## 0.5.0
+* [BREAKING_CHANGE] Added null safety.
+* Removed deprecated android code.
+
 ## 0.4.2
 * Fixed BinaryRegistrar issue.
 

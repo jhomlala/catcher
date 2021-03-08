@@ -3,22 +3,19 @@ description: Demonstrates how to use the catcher plugin.
 publish_to: 'none'
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  path_provider: ^0.5.0
-  dio: ^3.0.3
-  permission_handler: ^5.0.1+1
-  flutter_local_notifications: ^0.8.4
-  sentry: ^4.0.0
-
+  path_provider: ^2.0.0-nullsafety
+  dio: ^4.0.0-beta6
+  permission_handler: ^6.0.1
+  flutter_local_notifications: ^5.0.0-nullsafety.1
 
 dev_dependencies:
-
 
   catcher:
     path: ../

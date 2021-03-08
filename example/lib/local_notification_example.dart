@@ -39,10 +39,11 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       navigatorKey: Catcher.navigatorKey,
       home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Plugin example app'),
-          ),
-          body: ChildWidget()),
+        appBar: AppBar(
+          title: const Text('Plugin example app'),
+        ),
+        body: ChildWidget(),
+      ),
     );
   }
 }
@@ -61,8 +62,8 @@ class ChildWidget extends StatelessWidget {
 }
 
 class NotificationReportMode extends ReportMode {
-  FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin;
-  Report _lastReport;
+  late FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin;
+  late Report _lastReport;
 
   final String channelId;
   final String channelName;
@@ -90,29 +91,33 @@ class NotificationReportMode extends ReportMode {
     var initializationSettingsAndroid = new AndroidInitializationSettings(icon);
     var initializationSettingsIOS = new IOSInitializationSettings();
     var initializationSettings = new InitializationSettings(
-        initializationSettingsAndroid, initializationSettingsIOS);
+      android: initializationSettingsAndroid,
+      iOS: initializationSettingsIOS,
+    );
     _flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: onSelectedNotification);
   }
 
   @override
-  void requestAction(Report report, BuildContext context) {
+  void requestAction(Report report, BuildContext? context) {
     _lastReport = report;
     _sendNotification();
   }
 
-  Future onSelectedNotification(String payload) {
+  Future onSelectedNotification(String? payload) {
     onActionConfirmed(_lastReport);
-    return null;
+    return Future<int>.value(0);
   }
 
   void _sendNotification() async {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
         channelId, channelName, channelDescription,
-        importance: Importance.Default, priority: Priority.Default);
+        importance: Importance.defaultImportance,
+        priority: Priority.defaultPriority);
     var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
     var platformChannelSpecifics = new NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
 
     await _flutterLocalNotificationsPlugin.show(
         0,

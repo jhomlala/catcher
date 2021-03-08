@@ -10,32 +10,23 @@ class EmailManualHandler extends ReportHandler {
   final bool enableApplicationParameters;
   final bool enableStackTrace;
   final bool enableCustomParameters;
-  final String emailTitle;
-  final String emailHeader;
+  final String? emailTitle;
+  final String? emailHeader;
   final bool sendHtml;
   final bool printLogs;
   final Logger _logger = Logger("EmailManualHandler");
 
-  EmailManualHandler(this.recipients,
-      {this.enableDeviceParameters = true,
-      this.enableApplicationParameters = true,
-      this.enableStackTrace = true,
-      this.enableCustomParameters = true,
-      this.emailTitle,
-      this.emailHeader,
-      this.sendHtml = true,
-      this.printLogs = false})
-      : assert(recipients != null && recipients.isNotEmpty,
-            "Recipients can't be null or empty"),
-        assert(enableDeviceParameters != null,
-            "enableDeviceParameters can't be null"),
-        assert(enableApplicationParameters != null,
-            "enableApplicationParameters can't be null"),
-        assert(enableStackTrace != null, "enableStackTrace can't be null"),
-        assert(enableCustomParameters != null,
-            "enableCustomParameters can't be null"),
-        assert(sendHtml != null, "sendHtml can't be null"),
-        assert(printLogs != null, "printLogs can't be null");
+  EmailManualHandler(
+    this.recipients, {
+    this.enableDeviceParameters = true,
+    this.enableApplicationParameters = true,
+    this.enableStackTrace = true,
+    this.enableCustomParameters = true,
+    this.emailTitle,
+    this.emailHeader,
+    this.sendHtml = true,
+    this.printLogs = false,
+  }) : assert(recipients.isNotEmpty, "Recipients can't be null or empty");
 
   @override
   Future<bool> handle(Report report) async {
@@ -46,7 +37,7 @@ class EmailManualHandler extends ReportHandler {
     try {
       final MailOptions mailOptions = MailOptions(
         body: _getBody(report),
-        subject: _getTitle(report),
+        subject: _getTitle(report) ?? "",
         recipients: recipients,
         isHTML: sendHtml,
       );
@@ -55,12 +46,12 @@ class EmailManualHandler extends ReportHandler {
       _printLog("Creating mail request success");
       return true;
     } catch (exc, stackTrace) {
-      _printLog("Exception occured: $exc stack: $stackTrace");
+      _printLog("Exception occurred: $exc stack: $stackTrace");
       return false;
     }
   }
 
-  String _getTitle(Report report) {
+  String? _getTitle(Report report) {
     if (emailTitle?.isNotEmpty == true) {
       return emailTitle;
     } else {

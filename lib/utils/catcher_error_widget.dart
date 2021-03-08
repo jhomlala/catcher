@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
 
 class CatcherErrorWidget extends StatelessWidget {
-  final FlutterErrorDetails details;
+  final FlutterErrorDetails? details;
   final bool showStacktrace;
   final String title;
   final String description;
   final double maxWidthForSmallMode;
 
   const CatcherErrorWidget({
-    Key key,
+    Key? key,
     this.details,
-    @required this.showStacktrace,
-    @required this.title,
-    @required this.description,
-    @required this.maxWidthForSmallMode,
-  })  : assert(showStacktrace != null),
-        assert(title != null),
-        assert(description != null),
-        assert(maxWidthForSmallMode != null && maxWidthForSmallMode > 0),
+    required this.showStacktrace,
+    required this.title,
+    required this.description,
+    required this.maxWidthForSmallMode,
+  })   : assert(maxWidthForSmallMode > 0),
         super(key: key);
 
   @override
@@ -76,7 +73,7 @@ class CatcherErrorWidget extends StatelessWidget {
 
   Widget _buildStackTraceWidget() {
     if (showStacktrace) {
-      final List<String> stackTrace = details.stack.toString().split("\n");
+      final List<String> stackTrace = details!.stack.toString().split("\n");
       return ListView.builder(
         padding: const EdgeInsets.all(8.0),
         shrinkWrap: true,
@@ -84,7 +81,7 @@ class CatcherErrorWidget extends StatelessWidget {
         itemCount: stackTrace.length,
         itemBuilder: (BuildContext context, int index) {
           final String line = stackTrace[index];
-          if (line?.isNotEmpty == true) {
+          if (line.isNotEmpty == true) {
             return Text(line);
           } else {
             return const SizedBox();

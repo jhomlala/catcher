@@ -5,24 +5,24 @@ import 'package:catcher/model/report.dart';
 import 'package:flutter/widgets.dart';
 
 abstract class ReportMode {
-  ReportModeAction _reportModeAction;
-  LocalizationOptions _localizationOptions;
+  late ReportModeAction _reportModeAction;
+  LocalizationOptions? _localizationOptions;
 
+  // ignore: use_setters_to_change_properties
   /// Set report mode action.
   void setReportModeAction(ReportModeAction reportModeAction) {
-    assert(reportModeAction != null);
     _reportModeAction = reportModeAction;
   }
 
   // ignore: use_setters_to_change_properties
   /// Set localization options (translations) to this report mode
-  void setLocalizationOptions(LocalizationOptions localizationOptions) {
+  void setLocalizationOptions(LocalizationOptions? localizationOptions) {
     _localizationOptions = localizationOptions;
   }
 
   /// Code which should be triggered if new error has been catched and core
   /// creates report about this.
-  void requestAction(Report report, BuildContext context);
+  void requestAction(Report report, BuildContext? context);
 
   /// On user has accepted report
   void onActionConfirmed(Report report) {
@@ -40,7 +40,8 @@ abstract class ReportMode {
   }
 
   /// Get currently used localization options
-  LocalizationOptions get localizationOptions => _localizationOptions;
+  LocalizationOptions get localizationOptions =>
+      _localizationOptions ?? LocalizationOptions.buildDefaultEnglishOptions();
 
   /// Get supported platform list
   List<PlatformType> getSupportedPlatforms();

@@ -11,11 +11,13 @@ class PageReportMode extends ReportMode {
 
   PageReportMode({
     this.showStackTrace = true,
-  }) : assert(showStackTrace != null, "showStackTrace can't be null");
+  });
 
   @override
-  void requestAction(Report report, BuildContext context) {
-    _navigateToPageWidget(report, context);
+  void requestAction(Report report, BuildContext? context) {
+    if (context != null) {
+      _navigateToPageWidget(report, context);
+    }
   }
 
   void _navigateToPageWidget(Report report, BuildContext context) async {
@@ -34,8 +36,11 @@ class PageReportMode extends ReportMode {
   }
 
   @override
-  List<PlatformType> getSupportedPlatforms() =>
-      [PlatformType.web, PlatformType.android, PlatformType.iOS];
+  List<PlatformType> getSupportedPlatforms() => [
+        PlatformType.web,
+        PlatformType.android,
+        PlatformType.iOS,
+      ];
 }
 
 class PageWidget extends StatefulWidget {
@@ -45,7 +50,7 @@ class PageWidget extends StatefulWidget {
   const PageWidget(
     this.pageReportMode,
     this.report, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

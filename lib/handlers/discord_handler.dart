@@ -24,15 +24,7 @@ class DiscordHandler extends ReportHandler {
     this.enableApplicationParameters = false,
     this.enableStackTrace = false,
     this.enableCustomParameters = false,
-  })  : assert(webhookUrl != null, "webhookUrl can't be null"),
-        assert(printLogs != null, "printLogs can't be null"),
-        assert(enableDeviceParameters != null,
-            "enableDeviceParameters can't be null"),
-        assert(enableApplicationParameters != null,
-            "enableApplicationParameters can't be null"),
-        assert(enableStackTrace != null, "enableStackTrace can't be null"),
-        assert(enableCustomParameters != null,
-            "enableCustomParameters can't be null");
+  });
 
   @override
   Future<bool> handle(Report report) async {
@@ -114,7 +106,8 @@ class DiscordHandler extends ReportHandler {
           await _dio.post<dynamic>(webhookUrl, data: data);
       _printLog(
           "Server responded with code: ${response.statusCode} and message: ${response.statusMessage}");
-      return response.statusCode >= 200 && response.statusCode < 300;
+      final statusCode = response.statusCode ?? 0;
+      return statusCode >= 200 && statusCode < 300;
     } catch (exception) {
       _printLog("Failed to send data to Discord server: $exception");
       return false;

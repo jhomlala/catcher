@@ -20,24 +20,24 @@ import 'package:logging/logging.dart';
 import 'package:package_info/package_info.dart';
 
 class Catcher with ReportModeAction {
-  static Catcher _instance;
-  static GlobalKey<NavigatorState> _navigatorKey;
+  static late Catcher _instance;
+  static GlobalKey<NavigatorState>? _navigatorKey;
   static const _methodChannel = MethodChannel('com.jhomlala/catcher/web');
 
   /// Root widget which will be ran
-  final Widget rootWidget;
+  final Widget? rootWidget;
 
   ///Run app function which will be ran
-  final void Function() runAppFunction;
+  final void Function()? runAppFunction;
 
   /// Instance of catcher config used in release mode
-  CatcherOptions releaseConfig;
+  CatcherOptions? releaseConfig;
 
   /// Instance of catcher config used in debug mode
-  CatcherOptions debugConfig;
+  CatcherOptions? debugConfig;
 
   /// Instance of catcher config used in profile mode
-  CatcherOptions profileConfig;
+  CatcherOptions? profileConfig;
 
   /// Should catcher logs be enabled
   final bool enableLogger;
@@ -46,14 +46,14 @@ class Catcher with ReportModeAction {
   final bool ensureInitialized;
 
   final Logger _logger = Logger("Catcher");
-  CatcherOptions _currentConfig;
+  late CatcherOptions _currentConfig;
   final Map<String, dynamic> _deviceParameters = <String, dynamic>{};
   final Map<String, dynamic> _applicationParameters = <String, dynamic>{};
   final List<Report> _cachedReports = [];
-  LocalizationOptions _localizationOptions;
+  LocalizationOptions? _localizationOptions;
 
   /// Instance of navigator key
-  static GlobalKey<NavigatorState> get navigatorKey {
+  static GlobalKey<NavigatorState>? get navigatorKey {
     return _navigatorKey;
   }
 
@@ -66,13 +66,13 @@ class Catcher with ReportModeAction {
     this.profileConfig,
     this.enableLogger = true,
     this.ensureInitialized = false,
-    GlobalKey<NavigatorState> navigatorKey,
+    GlobalKey<NavigatorState>? navigatorKey,
   }) : assert(rootWidget != null || runAppFunction != null,
             "You need to provide rootWidget or runAppFunction") {
     _configure(navigatorKey);
   }
 
-  void _configure(GlobalKey<NavigatorState> navigatorKey) {
+  void _configure(GlobalKey<NavigatorState>? navigatorKey) {
     _instance = this;
     _configureNavigatorKey(navigatorKey);
     _configureLogger();
@@ -92,7 +92,7 @@ class Catcher with ReportModeAction {
     }
   }
 
-  void _configureNavigatorKey(GlobalKey<NavigatorState> navigatorKey) {
+  void _configureNavigatorKey(GlobalKey<NavigatorState>? navigatorKey) {
     if (navigatorKey != null) {
       _navigatorKey = navigatorKey;
     } else {
@@ -106,7 +106,7 @@ class Catcher with ReportModeAction {
         {
           _logger.fine("Using release config");
           if (releaseConfig != null) {
-            _currentConfig = releaseConfig;
+            _currentConfig = releaseConfig!;
           } else {
             _currentConfig = CatcherOptions.getDefaultReleaseOptions();
           }
@@ -116,7 +116,7 @@ class Catcher with ReportModeAction {
         {
           _logger.fine("Using debug config");
           if (debugConfig != null) {
-            _currentConfig = debugConfig;
+            _currentConfig = debugConfig!;
           } else {
             _currentConfig = CatcherOptions.getDefaultDebugOptions();
           }
@@ -126,7 +126,7 @@ class Catcher with ReportModeAction {
         {
           _logger.fine("Using profile config");
           if (profileConfig != null) {
-            _currentConfig = profileConfig;
+            _currentConfig = profileConfig!;
           } else {
             _currentConfig = CatcherOptions.getDefaultProfileOptions();
           }
@@ -137,9 +137,9 @@ class Catcher with ReportModeAction {
 
   ///Update config after initialization
   void updateConfig({
-    CatcherOptions debugConfig,
-    CatcherOptions profileConfig,
-    CatcherOptions releaseConfig,
+    CatcherOptions? debugConfig,
+    CatcherOptions? profileConfig,
+    CatcherOptions? releaseConfig,
   }) {
     if (debugConfig != null) {
       this.debugConfig = debugConfig;
@@ -197,12 +197,14 @@ class Catcher with ReportModeAction {
 
     if (rootWidget != null) {
       _runZonedGuarded(() {
-        runApp(rootWidget);
+        runApp(rootWidget!);
+      });
+    } else if (runAppFunction != null) {
+      _runZonedGuarded(() {
+        runAppFunction!();
       });
     } else {
-      _runZonedGuarded(() {
-        runAppFunction();
-      });
+      throw ArgumentError("Provide rootWidget or runAppFunction to Catcher.");
     }
   }
 
@@ -249,11 +251,11 @@ class Catcher with ReportModeAction {
   }
 
   void _loadWebParameters() async {
-    final String userAgent = await _methodChannel.invokeMethod("getUserAgent");
-    final String language = await _methodChannel.invokeMethod("getLanguage");
-    final String vendor = await _methodChannel.invokeMethod("getVendor");
-    final String platform = await _methodChannel.invokeMethod("getPlatform");
-    final bool cookieEnabled =
+    final String? userAgent = await _methodChannel.invokeMethod("getUserAgent");
+    final String? language = await _methodChannel.invokeMethod("getLanguage");
+    final String? vendor = await _methodChannel.invokeMethod("getVendor");
+    final String? platform = await _methodChannel.invokeMethod("getPlatform");
+    final bool? cookieEnabled =
         await _methodChannel.invokeMethod("getCookieEnabled");
     _deviceParameters["userAgent"] = userAgent;
     _deviceParameters["language"] = language;
@@ -325,11 +327,11 @@ class Catcher with ReportModeAction {
   void _setupLocalization() {
     Locale locale = const Locale("en", "US");
     if (_isContextValid()) {
-      final BuildContext context = _getContext();
+      final BuildContext? context = _getContext();
       if (context != null) {
         locale = Localizations.localeOf(context);
       }
-      if (_currentConfig.localizationOptions != null) {
+      if (_currentConfig.localizationOptions.isNotEmpty == true) {
         for (final options in _currentConfig.localizationOptions) {
           if (options.languageCode.toLowerCase() ==
               locale.languageCode.toLowerCase()) {
@@ -390,9 +392,10 @@ class Catcher with ReportModeAction {
   void _reportError(
     dynamic error,
     dynamic stackTrace, {
-    FlutterErrorDetails errorDetails,
+    FlutterErrorDetails? errorDetails,
   }) async {
-    if (errorDetails?.silent == true && !_currentConfig.handleSilentError) {
+    if (errorDetails?.silent == true &&
+        _currentConfig.handleSilentError == false) {
       _logger.info(
           "Report error skipped for error: $error. HandleSilentError is false.");
       return;
@@ -415,7 +418,7 @@ class Catcher with ReportModeAction {
     );
 
     _cachedReports.add(report);
-    ReportMode reportMode =
+    ReportMode? reportMode =
         _getReportModeFromExplicitExceptionReportModeMap(error);
     if (reportMode != null) {
       _logger.info("Using explicit report mode for error");
@@ -443,19 +446,15 @@ class Catcher with ReportModeAction {
   /// Check if given report mode is enabled in current platform. Only supported
   /// handlers in given report mode can be used.
   bool isReportModeSupportedInPlatform(Report report, ReportMode reportMode) {
-    if (reportMode == null) {
-      return false;
-    }
-    if (reportMode.getSupportedPlatforms() == null ||
-        reportMode.getSupportedPlatforms().isEmpty) {
+    if (reportMode.getSupportedPlatforms().isEmpty) {
       return false;
     }
     return reportMode.getSupportedPlatforms().contains(report.platformType);
   }
 
-  ReportMode _getReportModeFromExplicitExceptionReportModeMap(dynamic error) {
+  ReportMode? _getReportModeFromExplicitExceptionReportModeMap(dynamic error) {
     final errorName = error != null ? error.toString().toLowerCase() : "";
-    ReportMode reportMode;
+    ReportMode? reportMode;
     _currentConfig.explicitExceptionReportModesMap.forEach((key, value) {
       if (errorName.contains(key.toLowerCase())) {
         reportMode = value;
@@ -465,10 +464,10 @@ class Catcher with ReportModeAction {
     return reportMode;
   }
 
-  ReportHandler _getReportHandlerFromExplicitExceptionHandlerMap(
+  ReportHandler? _getReportHandlerFromExplicitExceptionHandlerMap(
       dynamic error) {
     final errorName = error != null ? error.toString().toLowerCase() : "";
-    ReportHandler reportHandler;
+    ReportHandler? reportHandler;
     _currentConfig.explicitExceptionHandlersMap.forEach((key, value) {
       if (errorName.contains(key.toLowerCase())) {
         reportHandler = value;
@@ -480,7 +479,7 @@ class Catcher with ReportModeAction {
 
   @override
   void onActionConfirmed(Report report) {
-    final ReportHandler reportHandler =
+    final ReportHandler? reportHandler =
         _getReportHandlerFromExplicitExceptionHandlerMap(report.error);
     if (reportHandler != null) {
       _logger.info("Using explicit report handler");
@@ -502,7 +501,7 @@ class Catcher with ReportModeAction {
 
     reportHandler.handle(report).catchError((dynamic handlerError) {
       _logger.warning(
-          "Error occured in ${reportHandler.toString()}: ${handlerError.toString()}");
+          "Error occurred in ${reportHandler.toString()}: ${handlerError.toString()}");
     }).then((result) {
       _logger.info("Report result: $result");
       if (!result) {
@@ -521,11 +520,7 @@ class Catcher with ReportModeAction {
   /// report handlers in given platform can be used.
   bool isReportHandlerSupportedInPlatform(
       Report report, ReportHandler reportHandler) {
-    if (reportHandler == null) {
-      return false;
-    }
-    if (reportHandler.getSupportedPlatforms() == null ||
-        reportHandler.getSupportedPlatforms().isEmpty) {
+    if (reportHandler.getSupportedPlatforms().isEmpty == true) {
       return false;
     }
     return reportHandler.getSupportedPlatforms().contains(report.platformType);
@@ -536,8 +531,8 @@ class Catcher with ReportModeAction {
     _cachedReports.remove(report);
   }
 
-  BuildContext _getContext() {
-    return navigatorKey.currentState.overlay.context;
+  BuildContext? _getContext() {
+    return navigatorKey?.currentState?.overlay?.context;
   }
 
   bool _isContextValid() {
@@ -545,7 +540,7 @@ class Catcher with ReportModeAction {
   }
 
   /// Get currently used config.
-  CatcherOptions getCurrentConfig() {
+  CatcherOptions? getCurrentConfig() {
     return _currentConfig;
   }
 
