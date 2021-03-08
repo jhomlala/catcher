@@ -51,7 +51,7 @@ class EmailAutoHandler extends ReportHandler {
       final message = Message()
         ..from = Address(senderEmail, senderName)
         ..recipients.addAll(recipients)
-        ..subject = _getEmailTitle(report)!
+        ..subject = _getEmailTitle(report)
         ..text = _setupRawMessageText(report);
 
       if (sendHtml) {
