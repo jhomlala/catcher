@@ -1,4 +1,4 @@
-/*import 'package:catcher/catcher.dart';
+import 'package:catcher/catcher.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry/sentry.dart';
 
@@ -55,4 +55,4 @@ class ChildWidget extends StatelessWidget {
   void generateError() async {
     Catcher.sendTestException();
   }
-}*/
+}

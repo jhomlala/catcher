@@ -1,10 +1,10 @@
-/*import 'package:catcher/model/platform_type.dart';
+import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
 import 'package:catcher/model/report_handler.dart';
 import 'package:logging/logging.dart';
-import 'package:sentry/sentry.dart';*/
+import 'package:sentry/sentry.dart';
 
-/*class SentryHandler extends ReportHandler {
+class SentryHandler extends ReportHandler {
   ///Sentry Client instance
   final SentryClient sentryClient;
 
@@ -121,4 +121,3 @@ import 'package:sentry/sentry.dart';*/
   List<PlatformType> getSupportedPlatforms() =>
       [PlatformType.web, PlatformType.android, PlatformType.iOS];
 }
-*/

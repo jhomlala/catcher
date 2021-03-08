@@ -13,6 +13,7 @@ dependencies:
   path_provider: ^2.0.0-nullsafety
   dio: ^4.0.0-beta6
   permission_handler: ^6.0.1
+  sentry: 4.1.0-nullsafety.0
   flutter_local_notifications: ^5.0.0-nullsafety.1
 
 dev_dependencies:
