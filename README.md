@@ -20,7 +20,7 @@ Catcher supports Android, iOS and Web platform.
 Add this line to your **pubspec.yaml**:
 ```yaml
 dependencies:
-  catcher: ^0.4.2
+  catcher: ^0.5.0
 ```
 
 Then run this command:
