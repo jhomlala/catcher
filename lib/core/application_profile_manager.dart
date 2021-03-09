@@ -28,4 +28,13 @@ class ApplicationProfileManager {
 
   /// Check if current platform is ios
   static bool isIos() => Platform.isIOS;
+
+  ///Check if current platform is linux
+  static bool isLinux() => Platform.isLinux;
+
+  ///Check if current platform is windows
+  static bool isWindows() => Platform.isWindows;
+
+  ///Check if current platform is macOS
+  static bool isMacOS() => Platform.isMacOS;
 }

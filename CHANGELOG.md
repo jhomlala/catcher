@@ -1,3 +1,7 @@
+## 0.6.0
+* Added device_info_plus library instead of device_info.
+* Added desktop support.
+
 ## 0.5.0
 * [BREAKING_CHANGE] Added null safety.
 * Removed deprecated android code.

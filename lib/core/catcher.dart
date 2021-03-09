@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:isolate';
 
 import 'package:catcher/core/application_profile_manager.dart';
@@ -12,7 +11,7 @@ import 'package:catcher/model/report.dart';
 import 'package:catcher/model/report_handler.dart';
 import 'package:catcher/model/report_mode.dart';
 import 'package:catcher/utils/catcher_error_widget.dart';
-import 'package:device_info/device_info.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -233,35 +232,86 @@ class Catcher with ReportModeAction {
   }
 
   void _loadDeviceInfo() {
+    final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     if (ApplicationProfileManager.isWeb()) {
-      _loadWebParameters();
+      deviceInfo.webBrowserInfo.then((webBrowserInfo) {
+        _loadWebParameters(webBrowserInfo);
+      });
+    } else if (ApplicationProfileManager.isLinux()) {
+      deviceInfo.linuxInfo.then((linuxDeviceInfo) {
+        _loadLinuxParameters(linuxDeviceInfo);
+      });
+    } else if (ApplicationProfileManager.isWindows()) {
+      deviceInfo.windowsInfo.then((windowsInfo) {
+        _loadWindowsParameters(windowsInfo);
+      });
+    } else if (ApplicationProfileManager.isMacOS()) {
+      deviceInfo.macOsInfo.then((macOsDeviceInfo) {
+        _loadMacOSParameters(macOsDeviceInfo);
+      });
+    } else if (ApplicationProfileManager.isAndroid()){
+      deviceInfo.androidInfo.then((androidInfo) {
+        _loadAndroidParameters(androidInfo);
+      });
+    } else if (ApplicationProfileManager.isIos()){
+      deviceInfo.iosInfo.then((iosInfo) {
+        _loadIosParameters(iosInfo);
+      });
     } else {
-      ///There is no device info web implementation
-      final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-      if (Platform.isAndroid) {
-        deviceInfo.androidInfo.then((androidInfo) {
-          _loadAndroidParameters(androidInfo);
-        });
-      } else {
-        deviceInfo.iosInfo.then((iosInfo) {
-          _loadIosParameters(iosInfo);
-        });
-      }
+      _logger.info("Couldn't load device info for unsupported device type.");
     }
   }
 
-  void _loadWebParameters() async {
-    final String? userAgent = await _methodChannel.invokeMethod("getUserAgent");
-    final String? language = await _methodChannel.invokeMethod("getLanguage");
-    final String? vendor = await _methodChannel.invokeMethod("getVendor");
-    final String? platform = await _methodChannel.invokeMethod("getPlatform");
-    final bool? cookieEnabled =
-        await _methodChannel.invokeMethod("getCookieEnabled");
-    _deviceParameters["userAgent"] = userAgent;
-    _deviceParameters["language"] = language;
-    _deviceParameters["vendor"] = vendor;
-    _deviceParameters["platform"] = platform;
-    _deviceParameters["cookieEnabled"] = cookieEnabled.toString();
+  void _loadLinuxParameters(LinuxDeviceInfo linuxDeviceInfo) {
+    _deviceParameters["name"] = linuxDeviceInfo.name;
+    _deviceParameters["version"] = linuxDeviceInfo.version;
+    _deviceParameters["id"] = linuxDeviceInfo.id;
+    _deviceParameters["idLike"] = linuxDeviceInfo.idLike;
+    _deviceParameters["versionCodename"] = linuxDeviceInfo.versionCodename;
+    _deviceParameters["versionId"] = linuxDeviceInfo.versionId;
+    _deviceParameters["prettyName"] = linuxDeviceInfo.prettyName;
+    _deviceParameters["buildId"] = linuxDeviceInfo.buildId;
+    _deviceParameters["variant"] = linuxDeviceInfo.variant;
+    _deviceParameters["variantId"] = linuxDeviceInfo.variantId;
+    _deviceParameters["machineId"] = linuxDeviceInfo.machineId;
+  }
+
+  void _loadMacOSParameters(MacOsDeviceInfo macOsDeviceInfo) {
+    _deviceParameters["computerName"] = macOsDeviceInfo.computerName;
+    _deviceParameters["hostName"] = macOsDeviceInfo.hostName;
+    _deviceParameters["arch"] = macOsDeviceInfo.arch;
+    _deviceParameters["model"] = macOsDeviceInfo.model;
+    _deviceParameters["kernelVersion"] = macOsDeviceInfo.kernelVersion;
+    _deviceParameters["osRelease"] = macOsDeviceInfo.osRelease;
+    _deviceParameters["activeCPUs"] = macOsDeviceInfo.activeCPUs;
+    _deviceParameters["memorySize"] = macOsDeviceInfo.memorySize;
+    _deviceParameters["cpuFrequency"] = macOsDeviceInfo.cpuFrequency;
+  }
+
+  void _loadWindowsParameters(WindowsDeviceInfo windowsDeviceInfo) {
+    _deviceParameters["computerName"] = windowsDeviceInfo.computerName;
+    _deviceParameters["numberOfCores"] = windowsDeviceInfo.numberOfCores;
+    _deviceParameters["systemMemoryInMegabytes"] =
+        windowsDeviceInfo.systemMemoryInMegabytes;
+  }
+
+  void _loadWebParameters(WebBrowserInfo webBrowserInfo) async {
+    _deviceParameters["language"] = webBrowserInfo.language;
+    _deviceParameters["appCodeName"] = webBrowserInfo.appCodeName;
+    _deviceParameters["appName"] = webBrowserInfo.appName;
+    _deviceParameters["appVersion"] = webBrowserInfo.appVersion;
+    _deviceParameters["browserName"] = webBrowserInfo.browserName;
+    _deviceParameters["deviceMemory"] = webBrowserInfo.deviceMemory;
+    _deviceParameters["hardwareConcurrency"] =
+        webBrowserInfo.hardwareConcurrency;
+    _deviceParameters["languages"] = webBrowserInfo.languages;
+    _deviceParameters["maxTouchPoints"] = webBrowserInfo.maxTouchPoints;
+    _deviceParameters["platform"] = webBrowserInfo.platform;
+    _deviceParameters["product"] = webBrowserInfo.product;
+    _deviceParameters["productSub"] = webBrowserInfo.productSub;
+    _deviceParameters["userAgent"] = webBrowserInfo.userAgent;
+    _deviceParameters["vendor"] = webBrowserInfo.vendor;
+    _deviceParameters["vendorSub"] = webBrowserInfo.vendorSub;
   }
 
   void _loadAndroidParameters(AndroidDeviceInfo androidDeviceInfo) {
@@ -578,6 +628,16 @@ class Catcher with ReportModeAction {
     if (ApplicationProfileManager.isIos()) {
       return PlatformType.iOS;
     }
+    if (ApplicationProfileManager.isLinux()) {
+      return PlatformType.linux;
+    }
+    if (ApplicationProfileManager.isWindows()) {
+      return PlatformType.windows;
+    }
+    if (ApplicationProfileManager.isMacOS()) {
+      return PlatformType.macOS;
+    }
+
     return PlatformType.unknown;
   }
 }
