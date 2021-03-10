@@ -11,6 +11,11 @@ class SilentReportMode extends ReportMode {
   }
 
   @override
-  List<PlatformType> getSupportedPlatforms() =>
-      [PlatformType.web, PlatformType.android, PlatformType.iOS];
+  List<PlatformType> getSupportedPlatforms() => [
+        PlatformType.android,
+        PlatformType.iOS,
+        PlatformType.linux,
+        PlatformType.macOS,
+        PlatformType.windows,
+      ];
 }
