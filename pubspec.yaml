@@ -11,8 +11,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_web_plugins:
-     sdk: flutter
   fluttertoast: ^8.0.1-nullsafety.0
   device_info_plus: ^1.0.0
   package_info: ^2.0.0
@@ -24,15 +22,3 @@ dependencies:
 
 dev_dependencies:
   lint: ^1.5.3
-
-flutter:
-  plugin:
-    platforms:
-      web:
-        pluginClass: CatcherWeb
-        fileName: core/catcher_web.dart
-      android:
-        package: com.jhomlala.catcher
-        pluginClass: Catcher
-      ios:
-        pluginClass: Catcher

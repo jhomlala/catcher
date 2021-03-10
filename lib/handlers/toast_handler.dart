@@ -73,6 +73,9 @@ class ToastHandler extends ReportHandler {
   }
 
   @override
-  List<PlatformType> getSupportedPlatforms() =>
-      [PlatformType.web, PlatformType.android, PlatformType.iOS];
+  List<PlatformType> getSupportedPlatforms() => [
+        PlatformType.web,
+        PlatformType.android,
+        PlatformType.iOS,
+      ];
 }
