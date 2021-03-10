@@ -37,12 +37,12 @@ class PageReportMode extends ReportMode {
 
   @override
   List<PlatformType> getSupportedPlatforms() => [
-    PlatformType.android,
-    PlatformType.iOS,
-    PlatformType.linux,
-    PlatformType.macOS,
-    PlatformType.windows,
-  ];
+        PlatformType.android,
+        PlatformType.iOS,
+        PlatformType.linux,
+        PlatformType.macOS,
+        PlatformType.windows,
+      ];
 }
 
 class PageWidget extends StatefulWidget {

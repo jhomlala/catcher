@@ -92,10 +92,10 @@ class HttpHandler extends ReportHandler {
 
   @override
   List<PlatformType> getSupportedPlatforms() => [
-    PlatformType.android,
-    PlatformType.iOS,
-    PlatformType.linux,
-    PlatformType.macOS,
-    PlatformType.windows,
-  ];
+        PlatformType.android,
+        PlatformType.iOS,
+        PlatformType.linux,
+        PlatformType.macOS,
+        PlatformType.windows,
+      ];
 }

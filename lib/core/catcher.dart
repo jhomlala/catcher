@@ -14,14 +14,12 @@ import 'package:catcher/utils/catcher_error_widget.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:logging/logging.dart';
 import 'package:package_info/package_info.dart';
 
 class Catcher with ReportModeAction {
   static late Catcher _instance;
   static GlobalKey<NavigatorState>? _navigatorKey;
-  static const _methodChannel = MethodChannel('com.jhomlala/catcher/web');
 
   /// Root widget which will be ran
   final Widget? rootWidget;
@@ -249,11 +247,11 @@ class Catcher with ReportModeAction {
       deviceInfo.macOsInfo.then((macOsDeviceInfo) {
         _loadMacOSParameters(macOsDeviceInfo);
       });
-    } else if (ApplicationProfileManager.isAndroid()){
+    } else if (ApplicationProfileManager.isAndroid()) {
       deviceInfo.androidInfo.then((androidInfo) {
         _loadAndroidParameters(androidInfo);
       });
-    } else if (ApplicationProfileManager.isIos()){
+    } else if (ApplicationProfileManager.isIos()) {
       deviceInfo.iosInfo.then((iosInfo) {
         _loadIosParameters(iosInfo);
       });
