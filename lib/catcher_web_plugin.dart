@@ -20,7 +20,7 @@ class CatcherWebPlugin {
       default:
         throw PlatformException(
           code: 'Unimplemented',
-          details: 'catcher for web doesn\'t implement \'${call.method}\'',
+          details: call.method,
         );
     }
   }

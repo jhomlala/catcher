@@ -22,4 +22,3 @@ export 'package:catcher/model/report_handler.dart';
 export 'package:catcher/model/report_mode.dart';
 export 'package:catcher/model/toast_handler_gravity.dart';
 export 'package:catcher/model/toast_handler_length.dart';
-

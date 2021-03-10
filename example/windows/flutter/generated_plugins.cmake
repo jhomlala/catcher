@@ -3,6 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  catcher
 )
 
 set(PLUGIN_BUNDLED_LIBRARIES)
