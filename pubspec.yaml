@@ -22,3 +22,21 @@ dependencies:
 
 dev_dependencies:
   lint: ^1.5.3
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.jhomlala.catcher
+        pluginClass: CatcherPlugin
+      ios:
+        pluginClass: CatcherPlugin
+      web:
+        pluginClass: CatcherWeb
+        fileName: catcher_web_plugin.dart
+      macos:
+        pluginClass: CatcherPlugin
+      windows:
+        pluginClass: CatcherPlugin
+      linux:
+        pluginClass: CatcherPlugin
