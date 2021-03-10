@@ -12,7 +12,7 @@
 
 Catcher is Flutter plugin which automatically catches error/exceptions and handle them. Catcher offers multiple way to handle errors.
 Catcher is heavily inspired from ACRA: https://github.com/ACRA/acra.
-Catcher supports Android, iOS and Web platform.
+Catcher supports Android, iOS, Web, Linux, Windows and MacOS platforms.
 
 
 ## Install
@@ -67,29 +67,7 @@ import 'package:catcher/catcher.dart';
 [Current config](#current-config)  
 [Update config](#update-config)  
 ## Platform support
-Catcher supports Android, iOS and Web platforms. Due to issues with web framework state and missing plugins, web implementation offers less features than mobile. Here is features support table:
-|           Feature           | Android | iOS | Web |
-|:---------------------------:|:-------:|:---:|:---:|
-|  Application data in report |    ✔️    |  ✔️  |  ❌  |
-|       Console handler       |    ✔️    |  ✔️  |  ✔️  |
-|       Discord handler       |    ✔️    |  ✔️  |  ✔️  |
-|      Email auto handler     |    ✔️    |  ✔️  |  ❌  |
-|         File handler        |    ✔️    |  ✔️  |  ❌  |
-|         Http handler        |    ✔️    |  ✔️  |  ✔️  |
-|        Sentry handler       |    ✔️    |  ✔️  |  ✔️  |
-|        Slack handler        |    ✔️    |  ✔️  |  ❌  |
-|        Toast handler        |    ✔️    |  ✔️  |  ✔️  |
-|    Notifications handler    |    ✔️    |  ✔️  |  ❌️  |
-|     Crashlytics handler     |    ✔️    |  ✔️  |  ❌️  |
-|      Dialog report mode     |    ✔️    |  ✔️  |  ✔️  |
-|       Page report mode      |    ✔️    |  ✔️  |  ✔️  |
-|      Silent report mode     |    ✔️    |  ✔️  |  ✔️  |
-|   Explicit report mode map  |    ✔️    |  ✔️  |  ✔️  |
-| Explicit report handler map |    ✔️    |  ✔️  |  ✔️  |
-|         Error widget        |    ✔️    |  ✔️  |  ✔️  |
-
-Features supported may change in future, due to web framework and plugins intensive development.
-
+To check which features of Catcher are available in given platform visit this page: [Platform support](https://github.com/jhomlala/catcher/blob/master/platform_support.md)
 
 ## Basic example
 Basic example utilizes debug config with Dialog Report Mode and Console Handler and release config with Dialog Report Mode and Email Manual Handler.
