@@ -22,9 +22,3 @@ export 'package:catcher/model/report_handler.dart';
 export 'package:catcher/model/report_mode.dart';
 export 'package:catcher/model/toast_handler_gravity.dart';
 export 'package:catcher/model/toast_handler_length.dart';
-
-/// TODO:
-/// Just a dummy code to fix pubdev score
-/// This should be removed later
-@Deprecated("Don't use this!")
-void dummyCode() {}
