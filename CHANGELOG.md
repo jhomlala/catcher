@@ -1,3 +1,6 @@
+## 0.6.1
+* Refactored platforms to fix pub dev platforms score.
+
 ## 0.6.0
 * Added device_info_plus library instead of device_info.
 * Added desktop support.
