@@ -21,8 +21,11 @@ class CatcherScreenshotManager {
     _containerKey = GlobalKey();
   }
 
+  ///Unique global key used to create screenshot
   GlobalKey get containerKey => _containerKey;
 
+  ///Create screenshot and save it in file. File will be created in directory
+  ///specified in CatcherOptions.
   Future<File?> captureAndSave({
     double? pixelRatio,
     Duration delay = const Duration(milliseconds: 20),
@@ -97,6 +100,7 @@ class CatcherScreenshotManager {
     });
   }
 
+  ///Update screenshots directory path.
   // ignore: avoid_setters_without_getters
   set path(String path) {
     _path = path;

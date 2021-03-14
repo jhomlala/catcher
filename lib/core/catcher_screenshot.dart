@@ -1,6 +1,7 @@
 import 'package:catcher/core/catcher.dart';
 import 'package:flutter/material.dart';
 
+///Screenshot widget used to create screenshot of all child widgets.
 class CatcherScreenshot extends StatefulWidget {
   final Widget child;
   final Catcher catcher;
@@ -17,6 +18,7 @@ class CatcherScreenshot extends StatefulWidget {
   }
 }
 
+///State of screenshot widget.
 class CatcherScreenshotState extends State<CatcherScreenshot>
     with TickerProviderStateMixin {
   @override

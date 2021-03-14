@@ -2,7 +2,6 @@ library catcher;
 
 export 'package:catcher/core/catcher.dart';
 export 'package:catcher/core/catcher_screenshot.dart';
-export 'package:catcher/core/catcher_screenshot_manager.dart';
 export "package:catcher/handlers/console_handler.dart";
 export "package:catcher/handlers/discord_handler.dart";
 export "package:catcher/handlers/email_auto_handler.dart";

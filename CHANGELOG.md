@@ -9,6 +9,8 @@
 * Added screenshot feature. Screenshot will work for all platforms except Web. Screenshot is compatible
 with Http Handler, Email Auto Handler, Email Manual Handler, Discord Handler.
 * Added new field in CatcherOptions: screenshotsPath.
+* Added CatcherScreenshot widget.
+* Added screenshot example.
 
 ## 0.6.1
 * Refactored platforms to fix pub dev platforms score.

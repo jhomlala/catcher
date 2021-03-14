@@ -434,6 +434,7 @@ class Catcher with ReportModeAction {
     }
   }
 
+  ///Setup screenshot manager's screenshots path.
   void _setupScreenshotManager() {
     final String screenshotsPath = _currentConfig.screenshotsPath;
     if (!ApplicationProfileManager.isWeb() && screenshotsPath.isEmpty) {
