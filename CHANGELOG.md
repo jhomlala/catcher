@@ -4,6 +4,7 @@
 * Added getInstance method to Catcher.
 * Refactored email handlers. 
 * Added html escape in email handlers.
+* Fixed windows building.
 
 ## 0.6.1
 * Refactored platforms to fix pub dev platforms score.
