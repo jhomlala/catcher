@@ -78,11 +78,11 @@ class DialogReportMode extends ReportMode {
 
   @override
   List<PlatformType> getSupportedPlatforms() => [
-        PlatformType.web,
         PlatformType.android,
         PlatformType.iOS,
+        PlatformType.web,
         PlatformType.linux,
-        PlatformType.windows,
         PlatformType.macOS,
+        PlatformType.windows,
       ];
 }

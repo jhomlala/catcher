@@ -1,1 +1,5 @@
-enum ApplicationProfile { debug, release, profile }
+enum ApplicationProfile {
+  debug,
+  release,
+  profile,
+}

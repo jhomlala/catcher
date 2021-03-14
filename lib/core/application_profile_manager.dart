@@ -1,5 +1,5 @@
-import 'dart:io';
 
+import 'package:universal_io/io.dart';
 import 'package:catcher/model/application_profile.dart';
 import 'package:flutter/foundation.dart';
 

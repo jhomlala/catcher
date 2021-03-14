@@ -298,7 +298,7 @@ class Catcher with ReportModeAction {
     _deviceParameters["appCodeName"] = webBrowserInfo.appCodeName;
     _deviceParameters["appName"] = webBrowserInfo.appName;
     _deviceParameters["appVersion"] = webBrowserInfo.appVersion;
-    _deviceParameters["browserName"] = webBrowserInfo.browserName;
+    _deviceParameters["browserName"] = webBrowserInfo.browserName.toString();
     _deviceParameters["deviceMemory"] = webBrowserInfo.deviceMemory;
     _deviceParameters["hardwareConcurrency"] =
         webBrowserInfo.hardwareConcurrency;

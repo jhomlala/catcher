@@ -154,6 +154,8 @@ class EmailManualHandler extends ReportHandler {
   }
 
   @override
-  List<PlatformType> getSupportedPlatforms() =>
-      [PlatformType.android, PlatformType.iOS];
+  List<PlatformType> getSupportedPlatforms() => [
+        PlatformType.android,
+        PlatformType.iOS,
+      ];
 }

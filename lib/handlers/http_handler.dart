@@ -54,10 +54,11 @@ class HttpHandler extends ReportHandler {
   Future<bool> _sendPost(Report error) async {
     try {
       final json = error.toJson(
-          enableDeviceParameters: enableDeviceParameters,
-          enableApplicationParameters: enableApplicationParameters,
-          enableStackTrace: enableStackTrace,
-          enableCustomParameters: enableCustomParameters);
+        enableDeviceParameters: enableDeviceParameters,
+        enableApplicationParameters: enableApplicationParameters,
+        enableStackTrace: enableStackTrace,
+        enableCustomParameters: enableCustomParameters,
+      );
       final HashMap<String, dynamic> mutableHeaders =
           HashMap<String, dynamic>();
       if (headers.isNotEmpty == true) {
@@ -94,6 +95,7 @@ class HttpHandler extends ReportHandler {
   List<PlatformType> getSupportedPlatforms() => [
         PlatformType.android,
         PlatformType.iOS,
+        PlatformType.web,
         PlatformType.linux,
         PlatformType.macOS,
         PlatformType.windows,

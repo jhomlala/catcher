@@ -181,7 +181,7 @@ class EmailAutoHandler extends ReportHandler {
         PlatformType.iOS,
         PlatformType.web,
         PlatformType.linux,
+        PlatformType.macOS,
         PlatformType.windows,
-        PlatformType.macOS
       ];
 }
