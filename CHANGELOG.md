@@ -5,6 +5,7 @@
 * Refactored email handlers. 
 * Added html escape in email handlers.
 * Fixed windows building.
+* Added german translations by Nico Mexis (https://github.com/ThexXTURBOXx)
 
 ## 0.6.1
 * Refactored platforms to fix pub dev platforms score.
