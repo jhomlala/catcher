@@ -51,27 +51,41 @@ class HttpHandler extends ReportHandler {
     return true;
   }
 
-  Future<bool> _sendPost(Report error) async {
+  Future<bool> _sendPost(Report report) async {
     try {
-      final json = error.toJson(
-          enableDeviceParameters: enableDeviceParameters,
-          enableApplicationParameters: enableApplicationParameters,
-          enableStackTrace: enableStackTrace,
-          enableCustomParameters: enableCustomParameters);
+      final json = report.toJson(
+        enableDeviceParameters: enableDeviceParameters,
+        enableApplicationParameters: enableApplicationParameters,
+        enableStackTrace: enableStackTrace,
+        enableCustomParameters: enableCustomParameters,
+      );
       final HashMap<String, dynamic> mutableHeaders =
           HashMap<String, dynamic>();
       if (headers.isNotEmpty == true) {
         mutableHeaders.addAll(headers);
       }
+
       final Options options = Options(
           sendTimeout: requestTimeout,
           receiveTimeout: responseTimeout,
           headers: mutableHeaders);
+
+      Response? response;
       _printLog("Calling: ${endpointUri.toString()}");
-      final Response response = await _dio.post<dynamic>(endpointUri.toString(),
-          data: json, options: options);
+      if (report.screenshot != null) {
+        final screenshotPath = report.screenshot?.path ?? "";
+        final FormData formData = FormData.fromMap(<String, dynamic>{
+          "payload_json": json,
+          "file": await MultipartFile.fromFile(screenshotPath)
+        });
+        response = await _dio.post<dynamic>(endpointUri.toString(),
+            data: formData, options: options);
+      } else {
+        response = await _dio.post<dynamic>(endpointUri.toString(),
+            data: json, options: options);
+      }
       _printLog(
-          "HttpHandler response status: ${response.statusCode} body: ${response.data}");
+          "HttpHandler response status: ${response.statusCode!} body: ${response.data!}");
       return true;
     } catch (error, stackTrace) {
       _printLog("HttpHandler error: $error, stackTrace: $stackTrace");
@@ -94,6 +108,7 @@ class HttpHandler extends ReportHandler {
   List<PlatformType> getSupportedPlatforms() => [
         PlatformType.android,
         PlatformType.iOS,
+        PlatformType.web,
         PlatformType.linux,
         PlatformType.macOS,
         PlatformType.windows,

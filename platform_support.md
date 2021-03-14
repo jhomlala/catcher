@@ -26,3 +26,4 @@ Check table below to see which features are enabled in Platforms:
 |   Explicit report mode map  |    ✔    |  ✔  |  ✔  |   ✔   |    ✔    |   ✔   |
 | Explicit report handler map |    ✔    |  ✔  |  ✔  |   ✔   |    ✔    |   ✔   |
 |         Error widget        |    ✔    |  ✔  |  ✔  |   ✔   |    ✔    |   ✔   |
+|          Screenshots        |    ✔    |  ✔  |  ❌  |   ✔   |    ✔    |   ✔   |

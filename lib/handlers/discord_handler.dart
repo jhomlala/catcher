@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
 import 'package:catcher/model/report_handler.dart';
@@ -39,7 +41,9 @@ class DiscordHandler extends ReportHandler {
     final List<String> messages = _setupMessages(message);
 
     for (final value in messages) {
-      final bool result = await _sendContent(value);
+      final bool isLastMessage = messages.indexOf(value) == messages.length - 1;
+      final bool result =
+          await _sendContent(value, isLastMessage ? report.screenshot : null);
       if (!result) {
         return result;
       }
@@ -96,14 +100,24 @@ class DiscordHandler extends ReportHandler {
     return stringBuffer.toString();
   }
 
-  Future<bool> _sendContent(String content) async {
+  Future<bool> _sendContent(String content, File? screenshot) async {
     try {
-      final data = {
-        "content": content,
-      };
       _printLog("Sending request to Discord server...");
-      final Response response =
-          await _dio.post<dynamic>(webhookUrl, data: data);
+      Response? response;
+      if (screenshot != null) {
+        final screenshotPath = screenshot.path;
+        final FormData formData = FormData.fromMap(<String, dynamic>{
+          "content": content,
+          "file": await MultipartFile.fromFile(screenshotPath)
+        });
+        response = await _dio.post<dynamic>(webhookUrl, data: formData);
+      } else {
+        final data = {
+          "content": content,
+        };
+        response = await _dio.post<dynamic>(webhookUrl, data: data);
+      }
+
       _printLog(
           "Server responded with code: ${response.statusCode} and message: ${response.statusMessage}");
       final statusCode = response.statusCode ?? 0;

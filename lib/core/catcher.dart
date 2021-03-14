@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:isolate';
 
 import 'package:catcher/core/application_profile_manager.dart';
+import 'package:catcher/core/catcher_screenshot_manager.dart';
 import 'package:catcher/mode/report_mode_action_confirmed.dart';
 import 'package:catcher/model/application_profile.dart';
 import 'package:catcher/model/catcher_options.dart';
@@ -47,6 +49,7 @@ class Catcher with ReportModeAction {
   final Map<String, dynamic> _deviceParameters = <String, dynamic>{};
   final Map<String, dynamic> _applicationParameters = <String, dynamic>{};
   final List<Report> _cachedReports = [];
+  final CatcherScreenshotManager screenshotManager = CatcherScreenshotManager();
   LocalizationOptions? _localizationOptions;
 
   /// Instance of navigator key
@@ -76,6 +79,7 @@ class Catcher with ReportModeAction {
     _setupCurrentConfig();
     _setupErrorHooks();
     _setupReportModeActionInReportMode();
+    _setupScreenshotManager();
 
     _loadDeviceInfo();
     _loadApplicationInfo();
@@ -149,6 +153,7 @@ class Catcher with ReportModeAction {
     }
     _setupCurrentConfig();
     _setupReportModeActionInReportMode();
+    _setupScreenshotManager();
     _localizationOptions = null;
   }
 
@@ -298,7 +303,7 @@ class Catcher with ReportModeAction {
     _deviceParameters["appCodeName"] = webBrowserInfo.appCodeName;
     _deviceParameters["appName"] = webBrowserInfo.appName;
     _deviceParameters["appVersion"] = webBrowserInfo.appVersion;
-    _deviceParameters["browserName"] = webBrowserInfo.browserName;
+    _deviceParameters["browserName"] = webBrowserInfo.browserName.toString();
     _deviceParameters["deviceMemory"] = webBrowserInfo.deviceMemory;
     _deviceParameters["hardwareConcurrency"] =
         webBrowserInfo.hardwareConcurrency;
@@ -422,9 +427,20 @@ class Catcher with ReportModeAction {
         return LocalizationOptions.buildDefaultKoreanOptions();
       case "nl":
         return LocalizationOptions.buildDefaultDutchOptions();
+      case "de":
+        return LocalizationOptions.buildDefaultGermanOptions();
       default:
         return LocalizationOptions.buildDefaultEnglishOptions();
     }
+  }
+
+  ///Setup screenshot manager's screenshots path.
+  void _setupScreenshotManager() {
+    final String screenshotsPath = _currentConfig.screenshotsPath;
+    if (!ApplicationProfileManager.isWeb() && screenshotsPath.isEmpty) {
+      _logger.warning("Screenshots path is empty. Screenshots won't work.");
+    }
+    screenshotManager.path = screenshotsPath;
   }
 
   /// Report checked error (error catched in try-catch block). Catcher will treat
@@ -454,6 +470,11 @@ class Catcher with ReportModeAction {
       _setupLocalization();
     }
 
+    File? screenshot;
+    if (!ApplicationProfileManager.isWeb()) {
+      screenshot = await screenshotManager.captureAndSave();
+    }
+
     final Report report = Report(
       error,
       stackTrace,
@@ -463,6 +484,7 @@ class Catcher with ReportModeAction {
       _currentConfig.customParameters,
       errorDetails,
       _getPlatformType(),
+      screenshot,
     );
 
     _cachedReports.add(report);
@@ -637,5 +659,10 @@ class Catcher with ReportModeAction {
     }
 
     return PlatformType.unknown;
+  }
+
+  ///Get current Catcher instance.
+  static Catcher getInstance() {
+    return _instance;
   }
 }
