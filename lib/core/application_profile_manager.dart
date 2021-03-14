@@ -24,17 +24,17 @@ class ApplicationProfileManager {
   static bool isWeb() => kIsWeb;
 
   /// Check if current platform is android
-  static bool isAndroid() => Platform.isAndroid;
+  static bool isAndroid() => !kIsWeb && Platform.isAndroid;
 
   /// Check if current platform is ios
-  static bool isIos() => Platform.isIOS;
+  static bool isIos() => !kIsWeb && Platform.isIOS;
 
   ///Check if current platform is linux
-  static bool isLinux() => Platform.isLinux;
+  static bool isLinux() => !kIsWeb && Platform.isLinux;
 
   ///Check if current platform is windows
-  static bool isWindows() => Platform.isWindows;
+  static bool isWindows() => !kIsWeb && Platform.isWindows;
 
   ///Check if current platform is macOS
-  static bool isMacOS() => Platform.isMacOS;
+  static bool isMacOS() => !kIsWeb && Platform.isMacOS;
 }
