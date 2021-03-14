@@ -29,6 +29,7 @@ abstract class BaseEmailHandler extends ReportHandler {
       return "Error report: >> ${report.error} <<";
     }
   }
+
   ///Setup html email message from [report].
   String setupHtmlMessageText(Report report) {
     final StringBuffer buffer = StringBuffer();
