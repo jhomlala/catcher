@@ -260,15 +260,15 @@ class LocalizationOptions {
       "de",
       notificationReportModeTitle: "Ein Anwendungsfehler ist aufgetreten",
       notificationReportModeContent:
-      "Klicken Sie hier, um einen Fehlerbericht an das Support-Team zu senden.",
+          "Klicken Sie hier, um einen Fehlerbericht an das Support-Team zu senden.",
       dialogReportModeTitle: "Absturz",
       dialogReportModeDescription:
-      "Unerwarteter Fehler in der Anwendung aufgetreten. Der Fehlerbericht ist bereit zum Senden an das Support-Team. Bitte klicken Sie auf Akzeptieren, um den Fehlerbericht zu senden, oder auf Abbrechen, um den Bericht zu verwerfen.",
+          "Unerwarteter Fehler in der Anwendung aufgetreten. Der Fehlerbericht ist bereit zum Senden an das Support-Team. Bitte klicken Sie auf Akzeptieren, um den Fehlerbericht zu senden, oder auf Abbrechen, um den Bericht zu verwerfen.",
       dialogReportModeAccept: "Akzeptieren",
       dialogReportModeCancel: "Abbrechen",
       pageReportModeTitle: "Absturz",
       pageReportModeDescription:
-      "Unerwarteter Fehler in der Anwendung aufgetreten. Der Fehlerbericht ist bereit zum Senden an das Support-Team. Bitte klicken Sie auf Akzeptieren, um den Fehlerbericht zu senden, oder auf Abbrechen, um den Bericht zu verwerfen.",
+          "Unerwarteter Fehler in der Anwendung aufgetreten. Der Fehlerbericht ist bereit zum Senden an das Support-Team. Bitte klicken Sie auf Akzeptieren, um den Fehlerbericht zu senden, oder auf Abbrechen, um den Bericht zu verwerfen.",
       pageReportModeAccept: "Akzeptieren",
       pageReportModeCancel: "Abbrechen",
       toastHandlerDescription: "Es ist ein Fehler aufgetreten:",
