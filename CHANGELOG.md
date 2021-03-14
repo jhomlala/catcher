@@ -1,6 +1,7 @@
 ## 0.6.2
 * Fixed Platform.* code which couldn't be used in web.
 * Fixed issues where web couldn't use some of report mode or report handler.
+* Added getInstance method to Catcher.
 
 ## 0.6.1
 * Refactored platforms to fix pub dev platforms score.

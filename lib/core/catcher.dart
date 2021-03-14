@@ -638,4 +638,10 @@ class Catcher with ReportModeAction {
 
     return PlatformType.unknown;
   }
+
+  ///Get current Catcher instance.
+  static Catcher getInstance(){
+    return _instance;
+  }
+
 }
