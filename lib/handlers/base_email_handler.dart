@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:catcher/model/report.dart';
 import 'package:catcher/model/report_handler.dart';
 
+///Base class for all email handlers.
 abstract class BaseEmailHandler extends ReportHandler {
   final bool enableDeviceParameters;
   final bool enableApplicationParameters;
@@ -20,6 +21,7 @@ abstract class BaseEmailHandler extends ReportHandler {
       this.emailTitle,
       this.emailHeader);
 
+  ///Setup email title from [report].
   String getEmailTitle(Report report) {
     if (emailTitle?.isNotEmpty == true) {
       return emailTitle!;
@@ -27,7 +29,7 @@ abstract class BaseEmailHandler extends ReportHandler {
       return "Error report: >> ${report.error} <<";
     }
   }
-
+  ///Setup html email message from [report].
   String setupHtmlMessageText(Report report) {
     final StringBuffer buffer = StringBuffer();
     if (emailHeader?.isNotEmpty == true) {
@@ -77,6 +79,7 @@ abstract class BaseEmailHandler extends ReportHandler {
     return buffer.toString();
   }
 
+  ///Escape html value from [value].
   String _escapeHtmlValue(dynamic value) {
     if (value is String) {
       return _htmlEscape.convert(value);
@@ -85,6 +88,7 @@ abstract class BaseEmailHandler extends ReportHandler {
     }
   }
 
+  ///Setup raw text email message from [report].
   String setupRawMessageText(Report report) {
     final StringBuffer buffer = StringBuffer();
     if (emailHeader?.isNotEmpty == true) {

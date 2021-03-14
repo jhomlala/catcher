@@ -945,7 +945,7 @@ MaterialApp(
         ),
       ),
     );
-
+```
 Also you need to provide directory path, where Catcher will store screenshot files: 
 
 ```dart
