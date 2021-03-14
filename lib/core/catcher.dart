@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:isolate';
 
 import 'package:catcher/core/application_profile_manager.dart';
+import 'package:catcher/core/catcher_screenshot_manager.dart';
 import 'package:catcher/mode/report_mode_action_confirmed.dart';
 import 'package:catcher/model/application_profile.dart';
 import 'package:catcher/model/catcher_options.dart';
@@ -47,6 +49,7 @@ class Catcher with ReportModeAction {
   final Map<String, dynamic> _deviceParameters = <String, dynamic>{};
   final Map<String, dynamic> _applicationParameters = <String, dynamic>{};
   final List<Report> _cachedReports = [];
+  final CatcherScreenshotManager screenshotManager = CatcherScreenshotManager();
   LocalizationOptions? _localizationOptions;
 
   /// Instance of navigator key
@@ -76,6 +79,7 @@ class Catcher with ReportModeAction {
     _setupCurrentConfig();
     _setupErrorHooks();
     _setupReportModeActionInReportMode();
+    _setupScreenshotManager();
 
     _loadDeviceInfo();
     _loadApplicationInfo();
@@ -149,6 +153,7 @@ class Catcher with ReportModeAction {
     }
     _setupCurrentConfig();
     _setupReportModeActionInReportMode();
+    _setupScreenshotManager();
     _localizationOptions = null;
   }
 
@@ -423,10 +428,18 @@ class Catcher with ReportModeAction {
       case "nl":
         return LocalizationOptions.buildDefaultDutchOptions();
       case "de":
-        return LocalizationOptions.buildDefaultGermanOptions()
+        return LocalizationOptions.buildDefaultGermanOptions();
       default:
         return LocalizationOptions.buildDefaultEnglishOptions();
     }
+  }
+
+  void _setupScreenshotManager() {
+    final String screenshotsPath = _currentConfig.screenshotsPath;
+    if (!ApplicationProfileManager.isWeb() && screenshotsPath.isEmpty) {
+      _logger.warning("Screenshots path is empty. Screenshots won't work.");
+    }
+    screenshotManager.path = screenshotsPath;
   }
 
   /// Report checked error (error catched in try-catch block). Catcher will treat
@@ -456,6 +469,11 @@ class Catcher with ReportModeAction {
       _setupLocalization();
     }
 
+    File? screenshot;
+    if (!ApplicationProfileManager.isWeb()) {
+      screenshot = await screenshotManager.captureAndSave();
+    }
+
     final Report report = Report(
       error,
       stackTrace,
@@ -465,6 +483,7 @@ class Catcher with ReportModeAction {
       _currentConfig.customParameters,
       errorDetails,
       _getPlatformType(),
+      screenshot,
     );
 
     _cachedReports.add(report);
@@ -642,8 +661,7 @@ class Catcher with ReportModeAction {
   }
 
   ///Get current Catcher instance.
-  static Catcher getInstance(){
+  static Catcher getInstance() {
     return _instance;
   }
-
 }

@@ -32,6 +32,10 @@ class CatcherOptions {
   ///Should catcher handle silent errors
   final bool handleSilentError;
 
+  ///Path which will be used to save temp. screenshots. If not set, Catcher
+  ///will use temp directory.
+  final String screenshotsPath;
+
   /// Builds catcher options instance
   CatcherOptions(
     this.reportMode,
@@ -42,6 +46,7 @@ class CatcherOptions {
     this.explicitExceptionReportModesMap = const {},
     this.explicitExceptionHandlersMap = const {},
     this.handleSilentError = true,
+    this.screenshotsPath = "",
   });
 
   /// Builds default catcher options release instance
@@ -53,9 +58,10 @@ class CatcherOptions {
         localizationOptions = [],
         explicitExceptionReportModesMap = {},
         explicitExceptionHandlersMap = {},
-        handleSilentError = true;
+        handleSilentError = true,
+        screenshotsPath = "";
 
-  /// Builds default catcher options rdebug instance
+  /// Builds default catcher options debug instance
   CatcherOptions.getDefaultDebugOptions()
       : handlers = [ConsoleHandler()],
         reportMode = SilentReportMode(),
@@ -64,7 +70,8 @@ class CatcherOptions {
         localizationOptions = [],
         explicitExceptionReportModesMap = {},
         explicitExceptionHandlersMap = {},
-        handleSilentError = true;
+        handleSilentError = true,
+        screenshotsPath = "";
 
   /// Builds default catcher options profile instance
   CatcherOptions.getDefaultProfileOptions()
@@ -75,5 +82,6 @@ class CatcherOptions {
         localizationOptions = [],
         explicitExceptionReportModesMap = {},
         explicitExceptionHandlersMap = {},
-        handleSilentError = true;
+        handleSilentError = true,
+        screenshotsPath = "";
 }
