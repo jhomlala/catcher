@@ -13,12 +13,6 @@ class EmailAutoHandler extends BaseEmailHandler {
   final String senderPassword;
   final bool enableSsl;
   final List<String> recipients;
-  final bool enableDeviceParameters;
-  final bool enableApplicationParameters;
-  final bool enableStackTrace;
-  final bool enableCustomParameters;
-  final String? emailTitle;
-  final String? emailHeader;
   final bool sendHtml;
   final bool printLogs;
   final Logger _logger = Logger("EmailAutoHandler");
@@ -31,14 +25,14 @@ class EmailAutoHandler extends BaseEmailHandler {
     this.senderPassword,
     this.recipients, {
     this.enableSsl = false,
-    this.enableDeviceParameters = true,
-    this.enableApplicationParameters = true,
-    this.enableStackTrace = true,
-    this.enableCustomParameters = true,
-    this.emailTitle,
-    this.emailHeader,
     this.sendHtml = true,
     this.printLogs = false,
+    String? emailTitle,
+    String? emailHeader,
+    bool enableDeviceParameters = true,
+    bool enableApplicationParameters = true,
+    bool enableStackTrace = true,
+    bool enableCustomParameters = true,
   })  : assert(recipients.isNotEmpty, "Recipients can't be null or empty"),
         super(
           enableDeviceParameters,
@@ -61,6 +55,10 @@ class EmailAutoHandler extends BaseEmailHandler {
         ..recipients.addAll(recipients)
         ..subject = getEmailTitle(report)
         ..text = setupRawMessageText(report);
+
+      if (report.screenshot != null) {
+        message.attachments = [FileAttachment(report.screenshot!)];
+      }
 
       if (sendHtml) {
         message.html = setupHtmlMessageText(report);

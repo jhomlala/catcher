@@ -66,6 +66,8 @@ import 'package:catcher/catcher.dart';
 [Error widget](#error-widget)  
 [Current config](#current-config)  
 [Update config](#update-config)  
+[Screenshots](#screenshots) 
+
 ## Platform support
 To check which features of Catcher are available in given platform visit this page: [Platform support](https://github.com/jhomlala/catcher/blob/master/platform_support.md)
 
@@ -926,3 +928,37 @@ catcher.updateConfig(
      ),
    );
 ```
+
+### Screenshots
+Catcher can create screenshots automatically and include them in report handlers. To add screenshot
+support in your app, simply wrap your root widget with CatcherScreenshot widget:
+```dart
+MaterialApp(
+      navigatorKey: Catcher.navigatorKey,
+      home: CatcherScreenshot(
+        catcher: Catcher.getInstance(),
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text('Plugin example app'),
+          ),
+          body: ChildWidget(),
+        ),
+      ),
+    );
+
+Also you need to provide directory path, where Catcher will store screenshot files: 
+
+```dart
+  CatcherOptions debugOptions = CatcherOptions(
+    DialogReportMode(),
+    [
+      ToastHandler(),
+    ],
+    screenshotsPath: path,
+  );
+```
+Screenshots will work for all platforms, except Web. Screenshots will work in:
+* Http Handler
+* Email auto handler
+* Email manual handler
+* Discord

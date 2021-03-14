@@ -10,7 +10,7 @@ abstract class BaseEmailHandler extends ReportHandler {
   final bool enableCustomParameters;
   final String? emailTitle;
   final String? emailHeader;
-  final HtmlEscape _htmlEscape = HtmlEscape();
+  final HtmlEscape _htmlEscape = const HtmlEscape();
 
   BaseEmailHandler(
       this.enableDeviceParameters,
@@ -44,7 +44,7 @@ abstract class BaseEmailHandler extends ReportHandler {
       _escapeHtmlValue(report.stackTrace.toString())
           .split("\n")
           .forEach((element) {
-        buffer.write(element + "<br>");
+        buffer.write("$element<br>");
       });
       buffer.write("<hr><br>");
     }
@@ -74,7 +74,6 @@ abstract class BaseEmailHandler extends ReportHandler {
       buffer.write("<br><br>");
     }
 
-    print("EMAIL:" + buffer.toString());
     return buffer.toString();
   }
 

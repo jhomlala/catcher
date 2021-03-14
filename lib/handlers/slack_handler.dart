@@ -5,6 +5,7 @@ import 'package:catcher/utils/catcher_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:logging/logging.dart';
 
+//Slack webhook API doesn't allow file attachments
 class SlackHandler extends ReportHandler {
   final Dio _dio = Dio();
   final Logger _logger = Logger("SlackHandler");

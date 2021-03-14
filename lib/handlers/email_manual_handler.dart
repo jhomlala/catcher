@@ -6,26 +6,20 @@ import 'package:logging/logging.dart';
 
 class EmailManualHandler extends BaseEmailHandler {
   final List<String> recipients;
-  final bool enableDeviceParameters;
-  final bool enableApplicationParameters;
-  final bool enableStackTrace;
-  final bool enableCustomParameters;
-  final String? emailTitle;
-  final String? emailHeader;
   final bool sendHtml;
   final bool printLogs;
   final Logger _logger = Logger("EmailManualHandler");
 
   EmailManualHandler(
     this.recipients, {
-    this.enableDeviceParameters = true,
-    this.enableApplicationParameters = true,
-    this.enableStackTrace = true,
-    this.enableCustomParameters = true,
-    this.emailTitle,
-    this.emailHeader,
     this.sendHtml = true,
     this.printLogs = false,
+    String? emailTitle,
+    String? emailHeader,
+    bool enableDeviceParameters = true,
+    bool enableApplicationParameters = true,
+    bool enableStackTrace = true,
+    bool enableCustomParameters = true,
   })  : assert(recipients.isNotEmpty, "Recipients can't be null or empty"),
         super(
           enableDeviceParameters,
@@ -44,11 +38,13 @@ class EmailManualHandler extends BaseEmailHandler {
   Future<bool> _sendEmail(Report report) async {
     try {
       final MailOptions mailOptions = MailOptions(
-        body: _getEmailBody(report),
-        subject: getEmailTitle(report),
-        recipients: recipients,
-        isHTML: sendHtml,
-      );
+          body: _getEmailBody(report),
+          subject: getEmailTitle(report),
+          recipients: recipients,
+          isHTML: sendHtml,
+          attachments: [
+            report.screenshot?.path ?? "",
+          ]);
       _printLog("Creating mail request");
       await FlutterMailer.send(mailOptions);
       _printLog("Creating mail request success");

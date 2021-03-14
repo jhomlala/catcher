@@ -6,6 +6,9 @@
 * Added html escape in email handlers.
 * Fixed windows building.
 * Added german translations by Nico Mexis (https://github.com/ThexXTURBOXx)
+* Added screenshot feature. Screenshot will work for all platforms except Web. Screenshot is compatible
+with Http Handler, Email Auto Handler, Email Manual Handler, Discord Handler.
+* Added new field in CatcherOptions: screenshotsPath.
 
 ## 0.6.1
 * Refactored platforms to fix pub dev platforms score.
