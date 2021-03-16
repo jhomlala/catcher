@@ -278,23 +278,23 @@ class Catcher with ReportModeAction {
       _deviceParameters["variant"] = linuxDeviceInfo.variant;
       _deviceParameters["variantId"] = linuxDeviceInfo.variantId;
       _deviceParameters["machineId"] = linuxDeviceInfo.machineId;
-    } catch (exception){
+    } catch (exception) {
       _logger.warning("Load Linux parameters failed: $exception");
     }
   }
 
   void _loadMacOSParameters(MacOsDeviceInfo macOsDeviceInfo) {
-    try{
-    _deviceParameters["computerName"] = macOsDeviceInfo.computerName;
-    _deviceParameters["hostName"] = macOsDeviceInfo.hostName;
-    _deviceParameters["arch"] = macOsDeviceInfo.arch;
-    _deviceParameters["model"] = macOsDeviceInfo.model;
-    _deviceParameters["kernelVersion"] = macOsDeviceInfo.kernelVersion;
-    _deviceParameters["osRelease"] = macOsDeviceInfo.osRelease;
-    _deviceParameters["activeCPUs"] = macOsDeviceInfo.activeCPUs;
-    _deviceParameters["memorySize"] = macOsDeviceInfo.memorySize;
-    _deviceParameters["cpuFrequency"] = macOsDeviceInfo.cpuFrequency;
-    } catch (exception){
+    try {
+      _deviceParameters["computerName"] = macOsDeviceInfo.computerName;
+      _deviceParameters["hostName"] = macOsDeviceInfo.hostName;
+      _deviceParameters["arch"] = macOsDeviceInfo.arch;
+      _deviceParameters["model"] = macOsDeviceInfo.model;
+      _deviceParameters["kernelVersion"] = macOsDeviceInfo.kernelVersion;
+      _deviceParameters["osRelease"] = macOsDeviceInfo.osRelease;
+      _deviceParameters["activeCPUs"] = macOsDeviceInfo.activeCPUs;
+      _deviceParameters["memorySize"] = macOsDeviceInfo.memorySize;
+      _deviceParameters["cpuFrequency"] = macOsDeviceInfo.cpuFrequency;
+    } catch (exception) {
       _logger.warning("Load MacOS parameters failed: $exception");
     }
   }
@@ -305,7 +305,7 @@ class Catcher with ReportModeAction {
       _deviceParameters["numberOfCores"] = windowsDeviceInfo.numberOfCores;
       _deviceParameters["systemMemoryInMegabytes"] =
           windowsDeviceInfo.systemMemoryInMegabytes;
-    } catch (exception){
+    } catch (exception) {
       _logger.warning("Load Windows parameters failed: $exception");
     }
   }
@@ -328,7 +328,7 @@ class Catcher with ReportModeAction {
       _deviceParameters["userAgent"] = webBrowserInfo.userAgent;
       _deviceParameters["vendor"] = webBrowserInfo.vendor;
       _deviceParameters["vendorSub"] = webBrowserInfo.vendorSub;
-    } catch (exception){
+    } catch (exception) {
       _logger.warning("Load Web parameters failed: $exception");
     }
   }
@@ -362,7 +362,7 @@ class Catcher with ReportModeAction {
       _deviceParameters["versionSdk"] = androidDeviceInfo.version.sdkInt;
       _deviceParameters["versionSecurityPatch"] =
           androidDeviceInfo.version.securityPatch;
-    } catch (exception){
+    } catch (exception) {
       _logger.warning("Load Android parameters failed: $exception");
     }
   }
@@ -380,7 +380,7 @@ class Catcher with ReportModeAction {
       _deviceParameters["utsnameMachine"] = iosInfo.utsname.machine;
       _deviceParameters["utsnameNodename"] = iosInfo.utsname.nodename;
       _deviceParameters["utsnameSysname"] = iosInfo.utsname.sysname;
-    } catch (exception){
+    } catch (exception) {
       _logger.warning("Load iOS parameters failed: $exception");
     }
   }
