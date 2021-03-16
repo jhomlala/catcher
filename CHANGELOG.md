@@ -1,3 +1,8 @@
+## 0.6.3
+* Updated sentry version.
+* Fixed sentry compilation issues by cjacobs42 (https://github.com/cjacobs42)
+* Added additional error handling for device info parameters.
+
 ## 0.6.2
 * Fixed Platform.* code which couldn't be used in web.
 * Fixed issues where web couldn't use some of report mode or report handler.

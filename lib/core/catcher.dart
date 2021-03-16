@@ -266,20 +266,25 @@ class Catcher with ReportModeAction {
   }
 
   void _loadLinuxParameters(LinuxDeviceInfo linuxDeviceInfo) {
-    _deviceParameters["name"] = linuxDeviceInfo.name;
-    _deviceParameters["version"] = linuxDeviceInfo.version;
-    _deviceParameters["id"] = linuxDeviceInfo.id;
-    _deviceParameters["idLike"] = linuxDeviceInfo.idLike;
-    _deviceParameters["versionCodename"] = linuxDeviceInfo.versionCodename;
-    _deviceParameters["versionId"] = linuxDeviceInfo.versionId;
-    _deviceParameters["prettyName"] = linuxDeviceInfo.prettyName;
-    _deviceParameters["buildId"] = linuxDeviceInfo.buildId;
-    _deviceParameters["variant"] = linuxDeviceInfo.variant;
-    _deviceParameters["variantId"] = linuxDeviceInfo.variantId;
-    _deviceParameters["machineId"] = linuxDeviceInfo.machineId;
+    try {
+      _deviceParameters["name"] = linuxDeviceInfo.name;
+      _deviceParameters["version"] = linuxDeviceInfo.version;
+      _deviceParameters["id"] = linuxDeviceInfo.id;
+      _deviceParameters["idLike"] = linuxDeviceInfo.idLike;
+      _deviceParameters["versionCodename"] = linuxDeviceInfo.versionCodename;
+      _deviceParameters["versionId"] = linuxDeviceInfo.versionId;
+      _deviceParameters["prettyName"] = linuxDeviceInfo.prettyName;
+      _deviceParameters["buildId"] = linuxDeviceInfo.buildId;
+      _deviceParameters["variant"] = linuxDeviceInfo.variant;
+      _deviceParameters["variantId"] = linuxDeviceInfo.variantId;
+      _deviceParameters["machineId"] = linuxDeviceInfo.machineId;
+    } catch (exception){
+      _logger.warning("Load Linux parameters failed: $exception");
+    }
   }
 
   void _loadMacOSParameters(MacOsDeviceInfo macOsDeviceInfo) {
+    try{
     _deviceParameters["computerName"] = macOsDeviceInfo.computerName;
     _deviceParameters["hostName"] = macOsDeviceInfo.hostName;
     _deviceParameters["arch"] = macOsDeviceInfo.arch;
@@ -289,75 +294,95 @@ class Catcher with ReportModeAction {
     _deviceParameters["activeCPUs"] = macOsDeviceInfo.activeCPUs;
     _deviceParameters["memorySize"] = macOsDeviceInfo.memorySize;
     _deviceParameters["cpuFrequency"] = macOsDeviceInfo.cpuFrequency;
+    } catch (exception){
+      _logger.warning("Load MacOS parameters failed: $exception");
+    }
   }
 
   void _loadWindowsParameters(WindowsDeviceInfo windowsDeviceInfo) {
-    _deviceParameters["computerName"] = windowsDeviceInfo.computerName;
-    _deviceParameters["numberOfCores"] = windowsDeviceInfo.numberOfCores;
-    _deviceParameters["systemMemoryInMegabytes"] =
-        windowsDeviceInfo.systemMemoryInMegabytes;
+    try {
+      _deviceParameters["computerName"] = windowsDeviceInfo.computerName;
+      _deviceParameters["numberOfCores"] = windowsDeviceInfo.numberOfCores;
+      _deviceParameters["systemMemoryInMegabytes"] =
+          windowsDeviceInfo.systemMemoryInMegabytes;
+    } catch (exception){
+      _logger.warning("Load Windows parameters failed: $exception");
+    }
   }
 
   void _loadWebParameters(WebBrowserInfo webBrowserInfo) async {
-    _deviceParameters["language"] = webBrowserInfo.language;
-    _deviceParameters["appCodeName"] = webBrowserInfo.appCodeName;
-    _deviceParameters["appName"] = webBrowserInfo.appName;
-    _deviceParameters["appVersion"] = webBrowserInfo.appVersion;
-    _deviceParameters["browserName"] = webBrowserInfo.browserName.toString();
-    _deviceParameters["deviceMemory"] = webBrowserInfo.deviceMemory;
-    _deviceParameters["hardwareConcurrency"] =
-        webBrowserInfo.hardwareConcurrency;
-    _deviceParameters["languages"] = webBrowserInfo.languages;
-    _deviceParameters["maxTouchPoints"] = webBrowserInfo.maxTouchPoints;
-    _deviceParameters["platform"] = webBrowserInfo.platform;
-    _deviceParameters["product"] = webBrowserInfo.product;
-    _deviceParameters["productSub"] = webBrowserInfo.productSub;
-    _deviceParameters["userAgent"] = webBrowserInfo.userAgent;
-    _deviceParameters["vendor"] = webBrowserInfo.vendor;
-    _deviceParameters["vendorSub"] = webBrowserInfo.vendorSub;
+    try {
+      _deviceParameters["language"] = webBrowserInfo.language;
+      _deviceParameters["appCodeName"] = webBrowserInfo.appCodeName;
+      _deviceParameters["appName"] = webBrowserInfo.appName;
+      _deviceParameters["appVersion"] = webBrowserInfo.appVersion;
+      _deviceParameters["browserName"] = webBrowserInfo.browserName.toString();
+      _deviceParameters["deviceMemory"] = webBrowserInfo.deviceMemory;
+      _deviceParameters["hardwareConcurrency"] =
+          webBrowserInfo.hardwareConcurrency;
+      _deviceParameters["languages"] = webBrowserInfo.languages;
+      _deviceParameters["maxTouchPoints"] = webBrowserInfo.maxTouchPoints;
+      _deviceParameters["platform"] = webBrowserInfo.platform;
+      _deviceParameters["product"] = webBrowserInfo.product;
+      _deviceParameters["productSub"] = webBrowserInfo.productSub;
+      _deviceParameters["userAgent"] = webBrowserInfo.userAgent;
+      _deviceParameters["vendor"] = webBrowserInfo.vendor;
+      _deviceParameters["vendorSub"] = webBrowserInfo.vendorSub;
+    } catch (exception){
+      _logger.warning("Load Web parameters failed: $exception");
+    }
   }
 
   void _loadAndroidParameters(AndroidDeviceInfo androidDeviceInfo) {
-    _deviceParameters["id"] = androidDeviceInfo.id;
-    _deviceParameters["androidId"] = androidDeviceInfo.androidId;
-    _deviceParameters["board"] = androidDeviceInfo.board;
-    _deviceParameters["bootloader"] = androidDeviceInfo.bootloader;
-    _deviceParameters["brand"] = androidDeviceInfo.brand;
-    _deviceParameters["device"] = androidDeviceInfo.device;
-    _deviceParameters["display"] = androidDeviceInfo.display;
-    _deviceParameters["fingerprint"] = androidDeviceInfo.fingerprint;
-    _deviceParameters["hardware"] = androidDeviceInfo.hardware;
-    _deviceParameters["host"] = androidDeviceInfo.host;
-    _deviceParameters["isPhysicalDevice"] = androidDeviceInfo.isPhysicalDevice;
-    _deviceParameters["manufacturer"] = androidDeviceInfo.manufacturer;
-    _deviceParameters["model"] = androidDeviceInfo.model;
-    _deviceParameters["product"] = androidDeviceInfo.product;
-    _deviceParameters["tags"] = androidDeviceInfo.tags;
-    _deviceParameters["type"] = androidDeviceInfo.type;
-    _deviceParameters["versionBaseOs"] = androidDeviceInfo.version.baseOS;
-    _deviceParameters["versionCodename"] = androidDeviceInfo.version.codename;
-    _deviceParameters["versionIncremental"] =
-        androidDeviceInfo.version.incremental;
-    _deviceParameters["versionPreviewSdk"] =
-        androidDeviceInfo.version.previewSdkInt;
-    _deviceParameters["versionRelease"] = androidDeviceInfo.version.release;
-    _deviceParameters["versionSdk"] = androidDeviceInfo.version.sdkInt;
-    _deviceParameters["versionSecurityPatch"] =
-        androidDeviceInfo.version.securityPatch;
+    try {
+      _deviceParameters["id"] = androidDeviceInfo.id;
+      _deviceParameters["androidId"] = androidDeviceInfo.androidId;
+      _deviceParameters["board"] = androidDeviceInfo.board;
+      _deviceParameters["bootloader"] = androidDeviceInfo.bootloader;
+      _deviceParameters["brand"] = androidDeviceInfo.brand;
+      _deviceParameters["device"] = androidDeviceInfo.device;
+      _deviceParameters["display"] = androidDeviceInfo.display;
+      _deviceParameters["fingerprint"] = androidDeviceInfo.fingerprint;
+      _deviceParameters["hardware"] = androidDeviceInfo.hardware;
+      _deviceParameters["host"] = androidDeviceInfo.host;
+      _deviceParameters["isPhysicalDevice"] =
+          androidDeviceInfo.isPhysicalDevice;
+      _deviceParameters["manufacturer"] = androidDeviceInfo.manufacturer;
+      _deviceParameters["model"] = androidDeviceInfo.model;
+      _deviceParameters["product"] = androidDeviceInfo.product;
+      _deviceParameters["tags"] = androidDeviceInfo.tags;
+      _deviceParameters["type"] = androidDeviceInfo.type;
+      _deviceParameters["versionBaseOs"] = androidDeviceInfo.version.baseOS;
+      _deviceParameters["versionCodename"] = androidDeviceInfo.version.codename;
+      _deviceParameters["versionIncremental"] =
+          androidDeviceInfo.version.incremental;
+      _deviceParameters["versionPreviewSdk"] =
+          androidDeviceInfo.version.previewSdkInt;
+      _deviceParameters["versionRelease"] = androidDeviceInfo.version.release;
+      _deviceParameters["versionSdk"] = androidDeviceInfo.version.sdkInt;
+      _deviceParameters["versionSecurityPatch"] =
+          androidDeviceInfo.version.securityPatch;
+    } catch (exception){
+      _logger.warning("Load Android parameters failed: $exception");
+    }
   }
 
   void _loadIosParameters(IosDeviceInfo iosInfo) {
-    _deviceParameters["model"] = iosInfo.model;
-    _deviceParameters["isPhysicalDevice"] = iosInfo.isPhysicalDevice;
-    _deviceParameters["name"] = iosInfo.name;
-    _deviceParameters["identifierForVendor"] = iosInfo.identifierForVendor;
-    _deviceParameters["localizedModel"] = iosInfo.localizedModel;
-    _deviceParameters["systemName"] = iosInfo.systemName;
-    _deviceParameters["utsnameVersion"] = iosInfo.utsname.version;
-    _deviceParameters["utsnameRelease"] = iosInfo.utsname.release;
-    _deviceParameters["utsnameMachine"] = iosInfo.utsname.machine;
-    _deviceParameters["utsnameNodename"] = iosInfo.utsname.nodename;
-    _deviceParameters["utsnameSysname"] = iosInfo.utsname.sysname;
+    try {
+      _deviceParameters["model"] = iosInfo.model;
+      _deviceParameters["isPhysicalDevice"] = iosInfo.isPhysicalDevice;
+      _deviceParameters["name"] = iosInfo.name;
+      _deviceParameters["identifierForVendor"] = iosInfo.identifierForVendor;
+      _deviceParameters["localizedModel"] = iosInfo.localizedModel;
+      _deviceParameters["systemName"] = iosInfo.systemName;
+      _deviceParameters["utsnameVersion"] = iosInfo.utsname.version;
+      _deviceParameters["utsnameRelease"] = iosInfo.utsname.release;
+      _deviceParameters["utsnameMachine"] = iosInfo.utsname.machine;
+      _deviceParameters["utsnameNodename"] = iosInfo.utsname.nodename;
+      _deviceParameters["utsnameSysname"] = iosInfo.utsname.sysname;
+    } catch (exception){
+      _logger.warning("Load iOS parameters failed: $exception");
+    }
   }
 
   void _loadApplicationInfo() {
