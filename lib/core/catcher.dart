@@ -239,30 +239,43 @@ class Catcher with ReportModeAction {
     if (ApplicationProfileManager.isWeb()) {
       deviceInfo.webBrowserInfo.then((webBrowserInfo) {
         _loadWebParameters(webBrowserInfo);
+        _removeExcludedParameters();
       });
     } else if (ApplicationProfileManager.isLinux()) {
       deviceInfo.linuxInfo.then((linuxDeviceInfo) {
         _loadLinuxParameters(linuxDeviceInfo);
+        _removeExcludedParameters();
       });
     } else if (ApplicationProfileManager.isWindows()) {
       deviceInfo.windowsInfo.then((windowsInfo) {
         _loadWindowsParameters(windowsInfo);
+        _removeExcludedParameters();
       });
     } else if (ApplicationProfileManager.isMacOS()) {
       deviceInfo.macOsInfo.then((macOsDeviceInfo) {
         _loadMacOSParameters(macOsDeviceInfo);
+        _removeExcludedParameters();
       });
     } else if (ApplicationProfileManager.isAndroid()) {
       deviceInfo.androidInfo.then((androidInfo) {
         _loadAndroidParameters(androidInfo);
+        _removeExcludedParameters();
       });
     } else if (ApplicationProfileManager.isIos()) {
       deviceInfo.iosInfo.then((iosInfo) {
         _loadIosParameters(iosInfo);
+        _removeExcludedParameters();
       });
     } else {
       _logger.info("Couldn't load device info for unsupported device type.");
     }
+  }
+
+  ///Remove excluded parameters from device parameters.
+  void _removeExcludedParameters(){
+    _currentConfig.excludedParameters.forEach((parameter) {
+      _deviceParameters.remove(parameter);
+    });
   }
 
   void _loadLinuxParameters(LinuxDeviceInfo linuxDeviceInfo) {

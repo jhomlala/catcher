@@ -1,3 +1,7 @@
+## 0.6.4
+* Added excludedParameters in CatcherOptions.
+* Updated dependencies
+
 ## 0.6.3
 * Updated sentry version.
 * Fixed sentry compilation issues by cjacobs42 (https://github.com/cjacobs42)
