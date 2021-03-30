@@ -15,13 +15,14 @@ dependencies:
     sdk: flutter
   fluttertoast: ^8.0.1-nullsafety.0
   device_info_plus: ^1.0.0
+  device_info_plus_platform_interface: ^1.0.1
   package_info: ^2.0.0
   mailer: ^4.0.0
-  dio: ^4.0.0-beta6
+  dio: ^4.0.0
   flutter_mailer: ^2.0.0-null-safe
   logging: ^1.0.0
   sentry: ^4.1.0-nullsafety.1
-  universal_io: ^2.0.0
+  universal_io: ^2.0.3
 
 dev_dependencies:
   lint: ^1.5.3
