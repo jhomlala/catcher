@@ -1,6 +1,7 @@
 import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
 import 'package:catcher/model/report_handler.dart';
+import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:sentry/sentry.dart';
 
@@ -42,7 +43,7 @@ class SentryHandler extends ReportHandler {
   });
 
   @override
-  Future<bool> handle(Report error) async {
+  Future<bool> handle(Report error, BuildContext? context) async {
     try {
       _printLog("Logging to sentry...");
 

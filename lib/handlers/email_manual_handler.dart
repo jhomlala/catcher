@@ -1,6 +1,7 @@
 import 'package:catcher/handlers/base_email_handler.dart';
 import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_mailer/flutter_mailer.dart';
 import 'package:logging/logging.dart';
 
@@ -31,7 +32,7 @@ class EmailManualHandler extends BaseEmailHandler {
         );
 
   @override
-  Future<bool> handle(Report report) async {
+  Future<bool> handle(Report report, BuildContext? context) async {
     return _sendEmail(report);
   }
 

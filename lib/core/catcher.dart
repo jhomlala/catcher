@@ -272,7 +272,7 @@ class Catcher with ReportModeAction {
   }
 
   ///Remove excluded parameters from device parameters.
-  void _removeExcludedParameters(){
+  void _removeExcludedParameters() {
     _currentConfig.excludedParameters.forEach((parameter) {
       _deviceParameters.remove(parameter);
     });
@@ -607,7 +607,15 @@ class Catcher with ReportModeAction {
       return;
     }
 
-    reportHandler.handle(report).catchError((dynamic handlerError) {
+    if (reportHandler.isContextRequired() && !_isContextValid()) {
+      _logger.warning(
+          "Couldn't use report handler because you didn't provide navigator key. Add navigator key to use this report mode.");
+      return;
+    }
+
+    reportHandler
+        .handle(report, _getContext())
+        .catchError((dynamic handlerError) {
       _logger.warning(
           "Error occurred in ${reportHandler.toString()}: ${handlerError.toString()}");
     }).then((result) {
@@ -618,7 +626,7 @@ class Catcher with ReportModeAction {
         _cachedReports.remove(report);
       }
     }).timeout(Duration(milliseconds: _currentConfig.handlerTimeout),
-        onTimeout: () {
+            onTimeout: () {
       _logger.warning(
           "${reportHandler.toString()} failed to report error because of timeout");
     });
