@@ -64,7 +64,7 @@ class CatcherOptions {
         explicitExceptionHandlersMap = {},
         handleSilentError = true,
         screenshotsPath = "",
-        this.excludedParameters = const [];
+        excludedParameters = const [];
 
   /// Builds default catcher options debug instance
   CatcherOptions.getDefaultDebugOptions()
@@ -77,7 +77,7 @@ class CatcherOptions {
         explicitExceptionHandlersMap = {},
         handleSilentError = true,
         screenshotsPath = "",
-        this.excludedParameters = const [];
+        excludedParameters = const [];
 
   /// Builds default catcher options profile instance
   CatcherOptions.getDefaultProfileOptions()
@@ -90,5 +90,5 @@ class CatcherOptions {
         explicitExceptionHandlersMap = {},
         handleSilentError = true,
         screenshotsPath = "",
-        this.excludedParameters = const [];
+        excludedParameters = const [];
 }
