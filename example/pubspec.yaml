@@ -20,8 +20,6 @@ dev_dependencies:
   catcher:
     path: ../
 
-dependency_overrides:
-  async: ^2.5.0
 flutter:
 
   # The following line ensures that the Material Icons font is
