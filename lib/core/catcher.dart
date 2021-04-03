@@ -17,7 +17,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class Catcher with ReportModeAction {
   static late Catcher _instance;
@@ -402,15 +402,12 @@ class Catcher with ReportModeAction {
     _applicationParameters["environment"] =
         describeEnum(ApplicationProfileManager.getApplicationProfile());
 
-    ///There is no package info web implementation
-    if (!ApplicationProfileManager.isWeb()) {
-      PackageInfo.fromPlatform().then((packageInfo) {
-        _applicationParameters["version"] = packageInfo.version;
-        _applicationParameters["appName"] = packageInfo.appName;
-        _applicationParameters["buildNumber"] = packageInfo.buildNumber;
-        _applicationParameters["packageName"] = packageInfo.packageName;
-      });
-    }
+    PackageInfo.fromPlatform().then((packageInfo) {
+      _applicationParameters["version"] = packageInfo.version;
+      _applicationParameters["appName"] = packageInfo.appName;
+      _applicationParameters["buildNumber"] = packageInfo.buildNumber;
+      _applicationParameters["packageName"] = packageInfo.packageName;
+    });
   }
 
   ///We need to setup localizations lazily because context needed to setup these
