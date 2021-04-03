@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 void main() {
   CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
+    ConsoleHandler(),
     ToastHandler(),
   ]);
   CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
