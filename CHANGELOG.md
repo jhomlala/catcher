@@ -4,6 +4,7 @@
 * [BREAKING_CHANGE] Added isContextRequired parameter for ReportHandler.
 * [BREAKING_CHANGE] ReportHandler handle method requires additional BuildContext parameter.
 * [BREAKING_CHANGE] Toast handler supports now all platforms.
+* Added first error line for page report mode.
 
 ## 0.6.3
 * Updated sentry version.
