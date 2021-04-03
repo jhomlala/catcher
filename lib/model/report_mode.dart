@@ -45,4 +45,5 @@ abstract class ReportMode {
 
   /// Get supported platform list
   List<PlatformType> getSupportedPlatforms();
+
 }
