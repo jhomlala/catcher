@@ -10,22 +10,16 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  path_provider: ^2.0.0-nullsafety
+  path_provider: ^2.0.1
   path_provider_macos: ^2.0.0
-  dio: ^4.0.0-beta6
-  permission_handler: ^6.0.1
-  flutter_local_notifications: ^5.0.0-nullsafety.1
-
+  dio: ^4.0.0
+  permission_handler: ^6.1.1
+  flutter_local_notifications: ^5.0.0
 
 dev_dependencies:
-
   catcher:
     path: ../
 
-# For information on the generic Dart part of this file, see the
-# following page: https://www.dartlang.org/tools/pub/pubspec
-
-# The following section is specific to Flutter.
 flutter:
 
   # The following line ensures that the Material Icons font is

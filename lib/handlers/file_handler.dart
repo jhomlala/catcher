@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
 import 'package:catcher/model/report_handler.dart';
+import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 
 class FileHandler extends ReportHandler {
@@ -29,7 +30,7 @@ class FileHandler extends ReportHandler {
   });
 
   @override
-  Future<bool> handle(Report report) async {
+  Future<bool> handle(Report report, BuildContext? context) async {
     try {
       if (!_fileValidated) {
         _fileValidationResult = await _checkFile();

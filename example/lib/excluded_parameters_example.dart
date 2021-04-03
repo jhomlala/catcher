@@ -2,9 +2,20 @@ import 'package:catcher/catcher.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
-    ToastHandler(),
-  ]);
+  CatcherOptions debugOptions = CatcherOptions(
+    DialogReportMode(),
+    [
+      //EmailManualHandler(["recipient@email.com"]),
+      ToastHandler(),
+      HttpHandler(HttpRequestType.post,
+          Uri.parse("https://jsonplaceholder.typicode.com/posts"),
+          printLogs: true),
+      ConsoleHandler()
+    ],
+
+    //Exclude these parameters from report. These params are device info params.
+    excludedParameters: ["androidId", "model"],
+  );
   CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
     EmailManualHandler(["recipient@email.com"])
   ]);

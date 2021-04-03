@@ -1,6 +1,7 @@
 import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
 import 'package:catcher/model/report_handler.dart';
+import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 
 class ConsoleHandler extends ReportHandler {
@@ -18,7 +19,7 @@ class ConsoleHandler extends ReportHandler {
   });
 
   @override
-  Future<bool> handle(Report report) {
+  Future<bool> handle(Report report, BuildContext? context) {
     _logger.info(
         "============================== CATCHER LOG ==============================");
     _logger.info("Crash occured on ${report.dateTime}");

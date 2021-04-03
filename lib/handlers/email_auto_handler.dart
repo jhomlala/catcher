@@ -1,6 +1,7 @@
 import 'package:catcher/handlers/base_email_handler.dart';
 import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
+import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
@@ -44,7 +45,7 @@ class EmailAutoHandler extends BaseEmailHandler {
         );
 
   @override
-  Future<bool> handle(Report error) {
+  Future<bool> handle(Report error, BuildContext? context) {
     return _sendMail(error);
   }
 

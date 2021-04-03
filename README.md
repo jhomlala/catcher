@@ -20,7 +20,7 @@ Catcher supports Android, iOS, Web, Linux, Windows and MacOS platforms.
 Add this line to your **pubspec.yaml**:
 ```yaml
 dependencies:
-  catcher: ^0.6.3
+  catcher: ^0.6.4
 ```
 
 Then run this command:
@@ -277,6 +277,8 @@ explicitExceptionReportModesMap - explicit report modes map which will be used t
 explicitExceptionHandlersMap - Explicit report handler map which will be used to trigger specific report report handler for specific error
 customParameters - map of additional parameters that will be included in report (for example user id or user name)
 handleSilentError - should handle silent errors reported, see FlutterErrorDetails.silent for more details
+screenshotsPath - path where screenshots will be saved
+excludedParameters - parameters which will be excluded from report
 
 
 ### Report catched exception

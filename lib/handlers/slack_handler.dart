@@ -3,6 +3,7 @@ import 'package:catcher/model/report.dart';
 import 'package:catcher/model/report_handler.dart';
 import 'package:catcher/utils/catcher_utils.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 
 //Slack webhook API doesn't allow file attachments
@@ -31,7 +32,7 @@ class SlackHandler extends ReportHandler {
       this.enableCustomParameters = false});
 
   @override
-  Future<bool> handle(Report report) async {
+  Future<bool> handle(Report report, BuildContext? context) async {
     try {
       if (!(await CatcherUtils.isInternetConnectionAvailable())) {
         _printLog("No internet connection available");

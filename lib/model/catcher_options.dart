@@ -36,6 +36,9 @@ class CatcherOptions {
   ///will use temp directory.
   final String screenshotsPath;
 
+  ///Parameters which will be excluded from report
+  final List<String> excludedParameters;
+
   /// Builds catcher options instance
   CatcherOptions(
     this.reportMode,
@@ -47,6 +50,7 @@ class CatcherOptions {
     this.explicitExceptionHandlersMap = const {},
     this.handleSilentError = true,
     this.screenshotsPath = "",
+    this.excludedParameters = const [],
   });
 
   /// Builds default catcher options release instance
@@ -59,7 +63,8 @@ class CatcherOptions {
         explicitExceptionReportModesMap = {},
         explicitExceptionHandlersMap = {},
         handleSilentError = true,
-        screenshotsPath = "";
+        screenshotsPath = "",
+        excludedParameters = const [];
 
   /// Builds default catcher options debug instance
   CatcherOptions.getDefaultDebugOptions()
@@ -71,7 +76,8 @@ class CatcherOptions {
         explicitExceptionReportModesMap = {},
         explicitExceptionHandlersMap = {},
         handleSilentError = true,
-        screenshotsPath = "";
+        screenshotsPath = "",
+        excludedParameters = const [];
 
   /// Builds default catcher options profile instance
   CatcherOptions.getDefaultProfileOptions()
@@ -83,5 +89,6 @@ class CatcherOptions {
         explicitExceptionReportModesMap = {},
         explicitExceptionHandlersMap = {},
         handleSilentError = true,
-        screenshotsPath = "";
+        screenshotsPath = "",
+        excludedParameters = const [];
 }

@@ -17,7 +17,7 @@ Check table below to see which features are enabled in Platforms:
 |         Http handler        |    ✔    |  ✔  |  ✔  |   ✔   |    ✔    |   ✔   |
 |        Sentry handler       |    ✔    |  ✔  |  ✔  |   ✔   |    ✔    |   ✔   |
 |        Slack handler        |    ✔    |  ✔  |  ✔  |   ✔   |    ✔    |   ✔   |
-|        Toast handler        |    ✔    |  ✔  |  ✔  |   ❌   |    ❌    |   ❌   |
+|        Toast handler        |    ✔    |  ✔  |  ✔  |   ✔   |    ✔    |   ✔   |
 |        Custom handler       |    ✔    |  ✔  |  ✔  |   ✔   |    ✔    |   ✔   |
 |      Dialog report mode     |    ✔    |  ✔  |  ✔  |   ✔   |    ✔    |   ✔   |
 |       Page report mode      |    ✔    |  ✔  |  ✔  |   ✔   |    ✔    |   ✔   |

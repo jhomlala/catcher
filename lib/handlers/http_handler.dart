@@ -6,6 +6,7 @@ import 'package:catcher/model/report.dart';
 import 'package:catcher/model/report_handler.dart';
 import 'package:catcher/utils/catcher_utils.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 
 class HttpHandler extends ReportHandler {
@@ -37,7 +38,7 @@ class HttpHandler extends ReportHandler {
   }) : headers = headers ?? <String, dynamic>{};
 
   @override
-  Future<bool> handle(Report error) async {
+  Future<bool> handle(Report error, BuildContext? context) async {
     if (error.platformType != PlatformType.web) {
       if (!(await CatcherUtils.isInternetConnectionAvailable())) {
         _printLog("No internet connection available");

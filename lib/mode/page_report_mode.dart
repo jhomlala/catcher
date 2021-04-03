@@ -150,7 +150,17 @@ class PageWidgetState extends State<PageWidget> {
 
   Widget _getStackTraceWidget() {
     if (widget.pageReportMode.showStackTrace) {
-      final items = widget.report.stackTrace.toString().split("\n");
+      String error = "";
+      if (widget.report.error != null) {
+        error = widget.report.error.toString();
+      } else if (widget.report.errorDetails != null) {
+        error = widget.report.errorDetails.toString();
+      }
+
+      final List<String> items = [
+        error,
+        ...widget.report.stackTrace.toString().split("\n"),
+      ];
       return SizedBox(
         height: 300.0,
         child: ListView.builder(
