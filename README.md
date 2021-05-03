@@ -264,7 +264,7 @@ main() {
   ]);
   CatcherOptions profileOptions = CatcherOptions(
     NotificationReportMode(), [ConsoleHandler(), ToastHandler()],
-    handlerTimeout: 10000, customParameters: {"example": "example_parameter"},);
+    handlerTimeout: 10000, customParameters: {"example"c: "example_parameter"},);
   Catcher(rootWidget: MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions, profileConfig: profileOptions, enableLogger: false, navigatorKey: navigatorKey);
 }
 ```
@@ -279,6 +279,7 @@ customParameters - map of additional parameters that will be included in report 
 handleSilentError - should handle silent errors reported, see FlutterErrorDetails.silent for more details
 screenshotsPath - path where screenshots will be saved
 excludedParameters - parameters which will be excluded from report
+filterFunction - function used to filter errors which shouldn't be handled
 
 
 ### Report catched exception

@@ -1,6 +1,6 @@
 # catcher_example
 
-Demonstrates how to use the catcher plugin.
+A new Flutter application.
 
 ## Getting Started
 

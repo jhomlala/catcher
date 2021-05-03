@@ -1,6 +1,8 @@
 ## 0.6.6
 * Added copyWith method in LocalizationOptions.
 * Updated chinese translations in LocalizationOptions.
+* Updated example app codebase.
+* Added filterFunction to CatcherOptions.
 
 ## 0.6.5
 * Changed package_info to package_info_plus to support all platforms.

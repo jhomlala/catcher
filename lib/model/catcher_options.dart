@@ -2,6 +2,7 @@ import 'package:catcher/handlers/console_handler.dart';
 import 'package:catcher/mode/dialog_report_mode.dart';
 import 'package:catcher/mode/silent_report_mode.dart';
 import 'package:catcher/model/localization_options.dart';
+import 'package:catcher/model/report.dart';
 import 'package:catcher/model/report_handler.dart';
 import 'package:catcher/model/report_mode.dart';
 
@@ -39,6 +40,12 @@ class CatcherOptions {
   ///Parameters which will be excluded from report
   final List<String> excludedParameters;
 
+  ///Function which is used to filter reports. If [filterFunction] is empty then
+  ///all reports will be passed to handlers.
+  ///To mark given Report as valid, [filterFunction] should return true,
+  ///otherwise return false.
+  final bool Function(Report report)? filterFunction;
+
   /// Builds catcher options instance
   CatcherOptions(
     this.reportMode,
@@ -51,6 +58,7 @@ class CatcherOptions {
     this.handleSilentError = true,
     this.screenshotsPath = "",
     this.excludedParameters = const [],
+    this.filterFunction,
   });
 
   /// Builds default catcher options release instance
@@ -64,7 +72,8 @@ class CatcherOptions {
         explicitExceptionHandlersMap = {},
         handleSilentError = true,
         screenshotsPath = "",
-        excludedParameters = const [];
+        excludedParameters = const [],
+        filterFunction = null;
 
   /// Builds default catcher options debug instance
   CatcherOptions.getDefaultDebugOptions()
@@ -77,7 +86,8 @@ class CatcherOptions {
         explicitExceptionHandlersMap = {},
         handleSilentError = true,
         screenshotsPath = "",
-        excludedParameters = const [];
+        excludedParameters = const [],
+        filterFunction = null;
 
   /// Builds default catcher options profile instance
   CatcherOptions.getDefaultProfileOptions()
@@ -90,5 +100,6 @@ class CatcherOptions {
         explicitExceptionHandlersMap = {},
         handleSilentError = true,
         screenshotsPath = "",
-        excludedParameters = const [];
+        excludedParameters = const [],
+        filterFunction = null;
 }
