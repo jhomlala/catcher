@@ -14,6 +14,8 @@ class ToastHandler extends ReportHandler {
   final Color textColor;
   final double textSize;
   final String? customMessage;
+  final bool handleWhenRejected;
+  FToast? fToast;
 
   ToastHandler({
     this.gravity = ToastHandlerGravity.bottom,
@@ -22,9 +24,8 @@ class ToastHandler extends ReportHandler {
     this.textColor = Colors.white,
     this.textSize = 12,
     this.customMessage,
+    this.handleWhenRejected = false,
   });
-
-  FToast? fToast;
 
   @override
   Future<bool> handle(Report error, BuildContext? buildContext) async {
@@ -100,14 +101,22 @@ class ToastHandler extends ReportHandler {
 
   @override
   List<PlatformType> getSupportedPlatforms() => [
-        PlatformType.web,
         PlatformType.android,
         PlatformType.iOS,
+        PlatformType.web,
+        PlatformType.linux,
+        PlatformType.macOS,
+        PlatformType.windows,
       ];
 
   @override
   bool isContextRequired() {
     return true;
+  }
+
+  @override
+  bool shouldHandleWhenRejected() {
+    return handleWhenRejected;
   }
 }
 
@@ -129,19 +138,22 @@ class FlutterToastPage extends StatefulWidget {
 }
 
 class _FlutterToastPageState extends State<FlutterToastPage> {
-  FToast fToast = FToast();
+  final FToast _fToast = FToast();
+  bool _disposed = false;
 
   @override
   void initState() {
-    fToast.init(context);
+    _fToast.init(context);
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      showToast();
+      if (!_disposed && mounted) {
+        showToast();
+      }
     });
     super.initState();
   }
 
   void showToast() {
-    fToast.showToast(
+    _fToast.showToast(
         child: Container(
           color: widget.backgroundColor,
           child: Text(
@@ -157,7 +169,9 @@ class _FlutterToastPageState extends State<FlutterToastPage> {
     Future.delayed(
       Duration(milliseconds: widget.duration.inMilliseconds + 100),
       () {
-        Navigator.of(context).pop();
+        if (!_disposed && mounted) {
+          Navigator.of(context).pop();
+        }
       },
     );
   }
@@ -165,5 +179,11 @@ class _FlutterToastPageState extends State<FlutterToastPage> {
   @override
   Widget build(BuildContext context) {
     return const SizedBox();
+  }
+
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
   }
 }

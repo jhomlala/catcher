@@ -522,6 +522,12 @@ class Catcher with ReportModeAction {
       screenshot,
     );
 
+    if (_currentConfig.filterFunction != null &&
+        _currentConfig.filterFunction!(report) == false) {
+      _logger.fine(
+          "Error: '$error' has been filtered from Catcher logs. Report will be skipped.");
+      return;
+    }
     _cachedReports.add(report);
     ReportMode? reportMode =
         _getReportModeFromExplicitExceptionReportModeMap(error);
@@ -641,6 +647,12 @@ class Catcher with ReportModeAction {
 
   @override
   void onActionRejected(Report report) {
+    _currentConfig.handlers
+        .where((handler) => handler.shouldHandleWhenRejected())
+        .forEach((handler) {
+      _handleReport(report, handler);
+    });
+
     _cachedReports.remove(report);
   }
 

@@ -28,4 +28,9 @@ abstract class ReportHandler {
   bool isContextRequired() {
     return false;
   }
+
+  /// Check whether report mode should auto confirm without user confirmation.
+  bool shouldHandleWhenRejected() {
+    return false;
+  }
 }

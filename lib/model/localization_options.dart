@@ -42,17 +42,17 @@ class LocalizationOptions {
       "zh",
       notificationReportModeTitle: "发生应用错误",
       notificationReportModeContent: "单击此处将错误报告发送给支持团队。",
-      dialogReportModeTitle: "紧急",
+      dialogReportModeTitle: "错误",
       dialogReportModeDescription:
           "应用程序中发生意外错误。 错误报告已准备好发送给支持团队。 请单击“接受”以发送错误报告，或单击“取消”以关闭报告。",
       dialogReportModeAccept: "接受",
       dialogReportModeCancel: "取消",
-      pageReportModeTitle: "紧急",
+      pageReportModeTitle: "错误",
       pageReportModeDescription:
           "应用程序中发生意外错误。 错误报告已准备好发送给支持团队。 请单击“接受”以发送错误报告，或单击“取消”以关闭报告。",
       pageReportModeAccept: "接受",
       pageReportModeCancel: "取消",
-      toastHandlerDescription: "發生了錯誤:",
+      toastHandlerDescription: "发生了错误:",
     );
   }
 
@@ -272,6 +272,46 @@ class LocalizationOptions {
       pageReportModeAccept: "Akzeptieren",
       pageReportModeCancel: "Abbrechen",
       toastHandlerDescription: "Es ist ein Fehler aufgetreten:",
+    );
+  }
+
+  ///Helper method used to copy values of current LocalizationOptions with new
+  ///values passed in method.
+  LocalizationOptions copyWith({
+    String? languageCode,
+    String? notificationReportModeTitle,
+    String? notificationReportModeContent,
+    String? dialogReportModeTitle,
+    String? dialogReportModeDescription,
+    String? dialogReportModeAccept,
+    String? dialogReportModeCancel,
+    String? pageReportModeTitle,
+    String? pageReportModeDescription,
+    String? pageReportModeAccept,
+    String? pageReportModeCancel,
+    String? toastHandlerDescription,
+  }) {
+    return LocalizationOptions(
+      languageCode ?? this.languageCode,
+      notificationReportModeTitle:
+          notificationReportModeTitle ?? this.notificationReportModeTitle,
+      notificationReportModeContent:
+          notificationReportModeContent ?? this.notificationReportModeContent,
+      dialogReportModeTitle:
+          dialogReportModeTitle ?? this.dialogReportModeTitle,
+      dialogReportModeDescription:
+          dialogReportModeDescription ?? this.dialogReportModeDescription,
+      dialogReportModeAccept:
+          dialogReportModeAccept ?? this.dialogReportModeAccept,
+      dialogReportModeCancel:
+          dialogReportModeCancel ?? this.dialogReportModeCancel,
+      pageReportModeTitle: pageReportModeTitle ?? this.pageReportModeTitle,
+      pageReportModeDescription:
+          pageReportModeDescription ?? this.pageReportModeDescription,
+      pageReportModeAccept: pageReportModeAccept ?? this.pageReportModeAccept,
+      pageReportModeCancel: pageReportModeCancel ?? this.pageReportModeCancel,
+      toastHandlerDescription:
+          toastHandlerDescription ?? this.toastHandlerDescription,
     );
   }
 }

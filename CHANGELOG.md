@@ -1,3 +1,13 @@
+## 0.6.6
+* Added copyWith method in LocalizationOptions.
+* Updated chinese translations in LocalizationOptions.
+* Updated example app codebase.
+* Added filterFunction to CatcherOptions.
+* Fixed displaying toast in desktops. Added missing support for desktops in toast handler.
+* Fixed dialog and page report modes not triggering rejection of report when clicking on back button.
+* Added shouldHandleWhenRejected() method in report handler. Should handle rejected
+* Added handleWhenRejected parameter to ConsoleHandler, ToastHandler, FileHandler.
+
 ## 0.6.5
 * Changed package_info to package_info_plus to support all platforms.
 
