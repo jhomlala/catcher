@@ -9,6 +9,7 @@ class ConsoleHandler extends ReportHandler {
   final bool enableApplicationParameters;
   final bool enableStackTrace;
   final bool enableCustomParameters;
+  final bool handleWhenRejected;
   final Logger _logger = Logger("ConsoleHandler");
 
   ConsoleHandler({
@@ -16,13 +17,14 @@ class ConsoleHandler extends ReportHandler {
     this.enableApplicationParameters = true,
     this.enableStackTrace = true,
     this.enableCustomParameters = false,
+    this.handleWhenRejected = false,
   });
 
   @override
   Future<bool> handle(Report report, BuildContext? context) {
     _logger.info(
         "============================== CATCHER LOG ==============================");
-    _logger.info("Crash occured on ${report.dateTime}");
+    _logger.info("Crash occurred on ${report.dateTime}");
     _logger.info("");
     if (enableDeviceParameters) {
       _printDeviceParametersFormatted(report.deviceParameters);
@@ -84,4 +86,9 @@ class ConsoleHandler extends ReportHandler {
         PlatformType.macOS,
         PlatformType.windows,
       ];
+
+  @override
+  bool shouldHandleWhenRejected() {
+    return handleWhenRejected;
+  }
 }

@@ -14,6 +14,7 @@ class FileHandler extends ReportHandler {
   final bool enableStackTrace;
   final bool enableCustomParameters;
   final bool printLogs;
+  final bool handleWhenRejected;
 
   final Logger _logger = Logger("FileHandler");
   late IOSink _sink;
@@ -27,6 +28,7 @@ class FileHandler extends ReportHandler {
     this.enableStackTrace = true,
     this.enableCustomParameters = true,
     this.printLogs = false,
+    this.handleWhenRejected = false,
   });
 
   @override
@@ -150,4 +152,9 @@ class FileHandler extends ReportHandler {
         PlatformType.macOS,
         PlatformType.windows,
       ];
+
+  @override
+  bool shouldHandleWhenRejected() {
+    return handleWhenRejected;
+  }
 }

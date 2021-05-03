@@ -14,6 +14,7 @@ class ToastHandler extends ReportHandler {
   final Color textColor;
   final double textSize;
   final String? customMessage;
+  final bool handleWhenRejected;
   FToast? fToast;
 
   ToastHandler({
@@ -23,6 +24,7 @@ class ToastHandler extends ReportHandler {
     this.textColor = Colors.white,
     this.textSize = 12,
     this.customMessage,
+    this.handleWhenRejected = false,
   });
 
   @override
@@ -99,16 +101,22 @@ class ToastHandler extends ReportHandler {
 
   @override
   List<PlatformType> getSupportedPlatforms() => [
-    PlatformType.android,
-    PlatformType.iOS,
-    PlatformType.web,
-    PlatformType.linux,
-    PlatformType.macOS,
-    PlatformType.windows,
-  ];
+        PlatformType.android,
+        PlatformType.iOS,
+        PlatformType.web,
+        PlatformType.linux,
+        PlatformType.macOS,
+        PlatformType.windows,
+      ];
+
   @override
   bool isContextRequired() {
     return true;
+  }
+
+  @override
+  bool shouldHandleWhenRejected() {
+    return handleWhenRejected;
   }
 }
 

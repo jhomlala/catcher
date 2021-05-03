@@ -534,7 +534,9 @@ ConsoleHandler(
           enableApplicationParameters: true,
           enableDeviceParameters: true,
           enableCustomParameters: true,
-          enableStackTrace: true)
+          enableStackTrace: true,
+          handleWhenRejected: false
+          )
 
 ```
 
@@ -597,6 +599,10 @@ I/flutter ( 5073): #8      PointerRouter._dispatch (package:flutter/src/gestures
 I/flutter ( 5073): #9      PointerRouter.route (package:flutter/src/gestures/pointer_router.dart:101:11)
 I/flutter ( 5073): #10     _WidgetsFlutterBinding&BindingBase&GestureBinding.handleEvent (package:flutter
 ```
+
+* handleWhenRejected - should report be handled even if user rejects it
+
+
 #### Email Manual Handler
 Email manual handler can be used to send email manually by user. It opens default email application with prepared email.
 
@@ -708,7 +714,8 @@ All parameters list:
 * enableApplicationParameters (optional) - please look in console handler description  
 * enableStackTrace (optional) - please look in console handler description  
 * enableCustomParameters (optional) - please look in console handler description  
-* printLogs (optional) - enable/disable debug logs  
+* printLogs (optional) - enable/disable debug logs
+* handleWhenRejected - please look in console handler description
 
 Example of logging to file in external directory: https://github.com/jhomlala/catcher/blob/master/example/lib/file_example.dart
 
@@ -728,6 +735,7 @@ All parameters list:
 * textColor (optional) - text color of toast
 * fontSize (optional) - text size
 * customMessage (optional) - custom message for toast, if not set then "Error occured: error" will be displayed.
+* handleWhenRejected - please look in console handler description
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/5.png" width="250px">
