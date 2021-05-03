@@ -13,10 +13,10 @@ dependencies:
     sdk: flutter
   flutter_web_plugins:
     sdk: flutter
-  fluttertoast: ^8.0.3
-  device_info_plus: ^1.0.0
+  fluttertoast: ^8.0.6
+  device_info_plus: ^1.0.1
   device_info_plus_platform_interface: ^1.0.1
-  package_info_plus: ^1.0.0
+  package_info_plus: ^1.0.1
   mailer: ^5.0.0
   dio: ^4.0.0
   flutter_mailer: ^2.0.0-null-safe
