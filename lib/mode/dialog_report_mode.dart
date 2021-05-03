@@ -17,6 +17,7 @@ class DialogReportMode extends ReportMode {
       if (CatcherUtils.isCupertinoAppAncestor(context)) {
         return showCupertinoDialog<void>(
             context: context,
+            barrierDismissible: false,
             builder: (context) => _buildCupertinoDialog(report, context));
       } else {
         return showDialog<void>(
@@ -28,36 +29,48 @@ class DialogReportMode extends ReportMode {
   }
 
   Widget _buildCupertinoDialog(Report report, BuildContext context) {
-    return CupertinoAlertDialog(
-      title: Text(localizationOptions.dialogReportModeTitle),
-      content: Text(localizationOptions.dialogReportModeDescription),
-      actions: <Widget>[
-        CupertinoDialogAction(
-          onPressed: () => _onAcceptReportClicked(context, report),
-          child: Text(localizationOptions.dialogReportModeAccept),
-        ),
-        CupertinoDialogAction(
-          onPressed: () => _onCancelReportClicked(context, report),
-          child: Text(localizationOptions.dialogReportModeCancel),
-        ),
-      ],
+    return WillPopScope(
+      onWillPop: () async {
+        super.onActionRejected(report);
+        return true;
+      },
+      child: CupertinoAlertDialog(
+        title: Text(localizationOptions.dialogReportModeTitle),
+        content: Text(localizationOptions.dialogReportModeDescription),
+        actions: <Widget>[
+          CupertinoDialogAction(
+            onPressed: () => _onAcceptReportClicked(context, report),
+            child: Text(localizationOptions.dialogReportModeAccept),
+          ),
+          CupertinoDialogAction(
+            onPressed: () => _onCancelReportClicked(context, report),
+            child: Text(localizationOptions.dialogReportModeCancel),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildMaterialDialog(Report report, BuildContext context) {
-    return AlertDialog(
-      title: Text(localizationOptions.dialogReportModeTitle),
-      content: Text(localizationOptions.dialogReportModeDescription),
-      actions: <Widget>[
-        TextButton(
-          onPressed: () => _onAcceptReportClicked(context, report),
-          child: Text(localizationOptions.dialogReportModeAccept),
-        ),
-        TextButton(
-          onPressed: () => _onCancelReportClicked(context, report),
-          child: Text(localizationOptions.dialogReportModeCancel),
-        ),
-      ],
+    return WillPopScope(
+      onWillPop: () async {
+        super.onActionRejected(report);
+        return true;
+      },
+      child: AlertDialog(
+        title: Text(localizationOptions.dialogReportModeTitle),
+        content: Text(localizationOptions.dialogReportModeDescription),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => _onAcceptReportClicked(context, report),
+            child: Text(localizationOptions.dialogReportModeAccept),
+          ),
+          TextButton(
+            onPressed: () => _onCancelReportClicked(context, report),
+            child: Text(localizationOptions.dialogReportModeCancel),
+          ),
+        ],
+      ),
     );
   }
 
