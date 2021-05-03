@@ -30,7 +30,7 @@ abstract class ReportHandler {
   }
 
   /// Check whether report mode should auto confirm without user confirmation.
-  bool shouldHandleWhenRejected(){
+  bool shouldHandleWhenRejected() {
     return false;
   }
 }

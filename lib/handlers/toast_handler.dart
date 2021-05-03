@@ -138,7 +138,7 @@ class FlutterToastPage extends StatefulWidget {
 }
 
 class _FlutterToastPageState extends State<FlutterToastPage> {
-  FToast _fToast = FToast();
+  final FToast _fToast = FToast();
   bool _disposed = false;
 
   @override

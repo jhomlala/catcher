@@ -66,7 +66,7 @@ class PageWidgetState extends State<PageWidget> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async{
+      onWillPop: () async {
         widget.pageReportMode.onActionRejected(widget.report);
         return true;
       },
