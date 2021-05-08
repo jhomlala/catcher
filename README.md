@@ -269,17 +269,17 @@ main() {
 }
 ```
 CatcherOptions parameters:
-handlers - list of handlers, which will process report, see handlers to get more information
-handlerTimeout - timeout in milliseconds, this parameter describes max time of handling report by handler
-reportMode - describes how error report will be shown to user, see report modes to get more information
-localizationOptions - translations used by report modes nad report handlers
-explicitExceptionReportModesMap - explicit report modes map which will be used to trigger specific report mode for specific error
-explicitExceptionHandlersMap - Explicit report handler map which will be used to trigger specific report report handler for specific error
-customParameters - map of additional parameters that will be included in report (for example user id or user name)
-handleSilentError - should handle silent errors reported, see FlutterErrorDetails.silent for more details
-screenshotsPath - path where screenshots will be saved
-excludedParameters - parameters which will be excluded from report
-filterFunction - function used to filter errors which shouldn't be handled
+handlers - list of handlers, which will process report, see handlers to get more information. 
+handlerTimeout - timeout in milliseconds, this parameter describes max time of handling report by handler. 
+reportMode - describes how error report will be shown to user, see report modes to get more information. 
+localizationOptions - translations used by report modes nad report handlers. 
+explicitExceptionReportModesMap - explicit report modes map which will be used to trigger specific report mode for specific error. 
+explicitExceptionHandlersMap - Explicit report handler map which will be used to trigger specific report report handler for specific error. 
+customParameters - map of additional parameters that will be included in report (for example user id or user name). 
+handleSilentError - should handle silent errors reported, see FlutterErrorDetails.silent for more details. 
+screenshotsPath - path where screenshots will be saved. 
+excludedParameters - parameters which will be excluded from report. 
+filterFunction - function used to filter errors which shouldn't be handled. 
 
 
 ### Report catched exception
