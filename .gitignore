@@ -10,6 +10,8 @@ build/
 ios/.generated/
 ios/Flutter/Generated.xcconfig
 ios/Runner/GeneratedPluginRegistrant.*
+example/macos/Flutter/
+example/linux/flutter/
 
 *.txt
 android/.gradle
