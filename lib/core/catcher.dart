@@ -478,7 +478,7 @@ class Catcher with ReportModeAction {
     screenshotManager.path = screenshotsPath;
   }
 
-  /// Report checked error (error catched in try-catch block). Catcher will treat
+  /// Report checked error (error caught in try-catch block). Catcher will treat
   /// this as normal exception and pass it to handlers.
   static void reportCheckedError(dynamic error, dynamic stackTrace) {
     dynamic errorValue = error;

@@ -68,7 +68,7 @@ class FileHandler extends ReportHandler {
       await sink.close();
       return true;
     } catch (exc, stackTrace) {
-      _printLog("Exception occured: $exc stack: $stackTrace");
+      _printLog("Exception occurred: $exc stack: $stackTrace");
       return false;
     }
   }
