@@ -18,7 +18,6 @@ android/.gradle
 .flutter-plugins-dependencies
 flutter_export_environment.sh
 *.lock
-*.lock
 .vscode
 android/gradlew
 android/gradlew.bat
