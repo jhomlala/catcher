@@ -1,3 +1,7 @@
+## 0.6.7
+* Fixed typos by Morgan (https://github.com/rmtmckenzie) and Nico Mexis (https://github.com/ThexXTURBOXx)
+* Updated dependencies by Nico Mexis (https://github.com/ThexXTURBOXx)
+
 ## 0.6.6
 * Added copyWith method in LocalizationOptions.
 * Updated chinese translations in LocalizationOptions.
