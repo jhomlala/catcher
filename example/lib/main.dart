@@ -5,7 +5,7 @@ import 'package:sentry/sentry.dart';
 void main() {
   ///Configure your debug options (settings used in development mode)
   CatcherOptions debugOptions = CatcherOptions(
-    ///Show information about catched error in dialog
+    ///Show information about caught error in dialog
     DialogReportMode(),
     [
       ///Send logs to HTTP server
@@ -20,7 +20,7 @@ void main() {
 
   ///Configure your production options (settings used in release mode)
   CatcherOptions releaseOptions = CatcherOptions(
-    ///Show new page with information about catched error
+    ///Show new page with information about caught error
     PageReportMode(),
     [
       ///Send logs to Sentry

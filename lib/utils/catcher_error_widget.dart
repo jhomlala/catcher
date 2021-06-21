@@ -14,7 +14,7 @@ class CatcherErrorWidget extends StatelessWidget {
     required this.title,
     required this.description,
     required this.maxWidthForSmallMode,
-  })   : assert(maxWidthForSmallMode > 0),
+  })  : assert(maxWidthForSmallMode > 0),
         super(key: key);
 
   @override

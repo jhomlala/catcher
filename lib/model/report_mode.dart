@@ -20,7 +20,7 @@ abstract class ReportMode {
     _localizationOptions = localizationOptions;
   }
 
-  /// Code which should be triggered if new error has been catched and core
+  /// Code which should be triggered if new error has been caught and core
   /// creates report about this.
   void requestAction(Report report, BuildContext? context);
 

@@ -5,13 +5,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class Report {
-  /// Error that has been catched
+  /// Error that has been caught
   final dynamic error;
 
   /// Stack trace of error
   final dynamic stackTrace;
 
-  /// Time when it was catched
+  /// Time when it was caught
   final DateTime dateTime;
 
   /// Device info
