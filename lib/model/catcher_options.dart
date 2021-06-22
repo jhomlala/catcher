@@ -46,6 +46,10 @@ class CatcherOptions {
   ///otherwise return false.
   final bool Function(Report report)? filterFunction;
 
+  ///Timeout for reports to prevent handling duplicates of same error. In
+  ///milliseconds.
+  final int reportOccurrenceTimeout;
+
   /// Builds catcher options instance
   CatcherOptions(
     this.reportMode,
@@ -59,6 +63,7 @@ class CatcherOptions {
     this.screenshotsPath = "",
     this.excludedParameters = const [],
     this.filterFunction,
+    this.reportOccurrenceTimeout = 3000,
   });
 
   /// Builds default catcher options release instance
@@ -73,7 +78,8 @@ class CatcherOptions {
         handleSilentError = true,
         screenshotsPath = "",
         excludedParameters = const [],
-        filterFunction = null;
+        filterFunction = null,
+        reportOccurrenceTimeout = 3000;
 
   /// Builds default catcher options debug instance
   CatcherOptions.getDefaultDebugOptions()
@@ -87,7 +93,8 @@ class CatcherOptions {
         handleSilentError = true,
         screenshotsPath = "",
         excludedParameters = const [],
-        filterFunction = null;
+        filterFunction = null,
+        reportOccurrenceTimeout = 3000;
 
   /// Builds default catcher options profile instance
   CatcherOptions.getDefaultProfileOptions()
@@ -101,5 +108,6 @@ class CatcherOptions {
         handleSilentError = true,
         screenshotsPath = "",
         excludedParameters = const [],
-        filterFunction = null;
+        filterFunction = null,
+        reportOccurrenceTimeout = 3000;
 }

@@ -49,6 +49,7 @@ class Catcher with ReportModeAction {
   final Map<String, dynamic> _deviceParameters = <String, dynamic>{};
   final Map<String, dynamic> _applicationParameters = <String, dynamic>{};
   final List<Report> _cachedReports = [];
+  final Map<DateTime, String> _reportsOcurrenceMap = {};
   final CatcherScreenshotManager screenshotManager = CatcherScreenshotManager();
   LocalizationOptions? _localizationOptions;
 
@@ -505,6 +506,8 @@ class Catcher with ReportModeAction {
       _setupLocalization();
     }
 
+    _cleanPastReportsOccurences();
+
     File? screenshot;
     if (!ApplicationProfileManager.isWeb()) {
       screenshot = await screenshotManager.captureAndSave();
@@ -521,6 +524,12 @@ class Catcher with ReportModeAction {
       _getPlatformType(),
       screenshot,
     );
+
+    if (_isReportInReportsOccurencesMap(report)) {
+      _logger.fine(
+          "Error: '$error' has been skipped to due to duplication occurence within ${_currentConfig.reportOccurrenceTimeout} ms.");
+      return;
+    }
 
     if (_currentConfig.filterFunction != null &&
         _currentConfig.filterFunction!(report) == false) {
@@ -541,6 +550,8 @@ class Catcher with ReportModeAction {
           "$reportMode in not supported for ${describeEnum(report.platformType)} platform");
       return;
     }
+
+    _addReportInReportsOccurencesMap(report);
 
     if (reportMode.isContextRequired()) {
       if (_isContextValid()) {
@@ -693,6 +704,7 @@ class Catcher with ReportModeAction {
     };
   }
 
+  ///Get platform type based on device.
   PlatformType _getPlatformType() {
     if (ApplicationProfileManager.isWeb()) {
       return PlatformType.web;
@@ -714,6 +726,34 @@ class Catcher with ReportModeAction {
     }
 
     return PlatformType.unknown;
+  }
+
+  ///Clean report ocucrences from the past.
+  void _cleanPastReportsOccurences() {
+    int occurenceTimeout = _currentConfig.reportOccurrenceTimeout;
+    DateTime nowDateTime = DateTime.now();
+    _reportsOcurrenceMap.removeWhere((key, value) {
+      DateTime occurenceWithTimeout =
+          key.add(Duration(milliseconds: occurenceTimeout));
+      return nowDateTime.isAfter(occurenceWithTimeout);
+    });
+  }
+
+  ///Check whether reports occurence map contains given report.
+  bool _isReportInReportsOccurencesMap(Report report) {
+    if (report.error != null) {
+      return _reportsOcurrenceMap.containsValue(report.error.toString());
+    } else {
+      return false;
+    }
+  }
+
+  ///Add report in reports occurences map. Report will be added only when
+  ///error is not null and report occurence timeout is greater than 0.
+  void _addReportInReportsOccurencesMap(Report report) {
+    if (report.error != null && _currentConfig.reportOccurrenceTimeout > 0) {
+      _reportsOcurrenceMap[DateTime.now()] = report.error.toString();
+    }
   }
 
   ///Get current Catcher instance.
