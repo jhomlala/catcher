@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 
 void main() {
   CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
-    ConsoleHandler(),
-    ToastHandler(),
+    SnackbarHandler(null)
   ]);
   CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
     EmailManualHandler(["recipient@email.com"])
