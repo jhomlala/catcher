@@ -2,9 +2,8 @@ import 'package:catcher/catcher.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
-    SnackbarHandler(null)
-  ]);
+  CatcherOptions debugOptions = CatcherOptions(
+      DialogReportMode(), [SnackbarHandler(Duration(seconds: 5))]);
   CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
     EmailManualHandler(["recipient@email.com"])
   ]);
