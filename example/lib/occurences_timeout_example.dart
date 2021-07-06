@@ -2,9 +2,13 @@ import 'package:catcher/catcher.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
-    ConsoleHandler(),
-  ]);
+  CatcherOptions debugOptions = CatcherOptions(
+      SilentReportMode(),
+      [
+        ConsoleHandler(),
+        ToastHandler(),
+      ],
+      reportOccurrenceTimeout: 30000);
   CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
     EmailManualHandler(["recipient@email.com"])
   ]);

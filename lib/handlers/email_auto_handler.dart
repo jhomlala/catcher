@@ -2,7 +2,6 @@ import 'package:catcher/handlers/base_email_handler.dart';
 import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 
@@ -16,7 +15,6 @@ class EmailAutoHandler extends BaseEmailHandler {
   final List<String> recipients;
   final bool sendHtml;
   final bool printLogs;
-  final Logger _logger = Logger("EmailAutoHandler");
 
   EmailAutoHandler(
     this.smtpHost,
@@ -90,7 +88,7 @@ class EmailAutoHandler extends BaseEmailHandler {
 
   void _printLog(String log) {
     if (printLogs) {
-      _logger.info(log);
+      logger.info(log);
     }
   }
 

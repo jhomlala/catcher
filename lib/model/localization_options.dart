@@ -14,6 +14,7 @@ class LocalizationOptions {
   final String pageReportModeCancel;
 
   final String toastHandlerDescription;
+  final String snackbarHandlerDescription;
 
   LocalizationOptions(
     this.languageCode, {
@@ -31,6 +32,7 @@ class LocalizationOptions {
     this.pageReportModeAccept = "Accept",
     this.pageReportModeCancel = "Cancel",
     this.toastHandlerDescription = "Error occurred:",
+    this.snackbarHandlerDescription = "Error occurred:",
   });
 
   static LocalizationOptions buildDefaultEnglishOptions() {
@@ -53,6 +55,7 @@ class LocalizationOptions {
       pageReportModeAccept: "接受",
       pageReportModeCancel: "取消",
       toastHandlerDescription: "发生了错误:",
+      snackbarHandlerDescription: "发生了错误:",
     );
   }
 
@@ -73,6 +76,7 @@ class LocalizationOptions {
       pageReportModeAccept: "स्वीकार करना",
       pageReportModeCancel: "रद्द करना",
       toastHandlerDescription: "त्रुटि हुई:",
+      snackbarHandlerDescription: "त्रुटि हुई:",
     );
   }
 
@@ -93,6 +97,7 @@ class LocalizationOptions {
       pageReportModeAccept: "Aceptar",
       pageReportModeCancel: "Cancelar",
       toastHandlerDescription: "Se produjo un error:",
+      snackbarHandlerDescription: "Se produjo un error:",
     );
   }
 
@@ -113,6 +118,7 @@ class LocalizationOptions {
       pageReportModeAccept: "Terima",
       pageReportModeCancel: "Batalkan",
       toastHandlerDescription: "Ralat berlaku:",
+      snackbarHandlerDescription: "Ralat berlaku:",
     );
   }
 
@@ -133,6 +139,7 @@ class LocalizationOptions {
       pageReportModeAccept: "принимать",
       pageReportModeCancel: "отменить",
       toastHandlerDescription: "Произошла ошибка:",
+      snackbarHandlerDescription: "Произошла ошибка:",
     );
   }
 
@@ -153,6 +160,7 @@ class LocalizationOptions {
       pageReportModeAccept: "Aceitar",
       pageReportModeCancel: "Cancelar",
       toastHandlerDescription: "Ocorreu um erro:",
+      snackbarHandlerDescription: "Ocorreu um erro:",
     );
   }
 
@@ -173,6 +181,7 @@ class LocalizationOptions {
       pageReportModeAccept: "Acceptez",
       pageReportModeCancel: "Annuler",
       toastHandlerDescription: "Erreur est survenue:",
+      snackbarHandlerDescription: "Erreur est survenue:",
     );
   }
 
@@ -193,6 +202,7 @@ class LocalizationOptions {
       pageReportModeAccept: "Akceptuj",
       pageReportModeCancel: "Odrzuć",
       toastHandlerDescription: "Wystąpił błąd:",
+      snackbarHandlerDescription: "Wystąpił błąd:",
     );
   }
 
@@ -213,6 +223,7 @@ class LocalizationOptions {
       pageReportModeAccept: "Accetta",
       pageReportModeCancel: "Annulla",
       toastHandlerDescription: "Errore:",
+      snackbarHandlerDescription: "Errore:",
     );
   }
 
@@ -232,6 +243,7 @@ class LocalizationOptions {
       pageReportModeAccept: "수락",
       pageReportModeCancel: "취소",
       toastHandlerDescription: "오류가 발생했습니다:",
+      snackbarHandlerDescription: "오류가 발생했습니다:",
     );
   }
 
@@ -252,6 +264,7 @@ class LocalizationOptions {
       pageReportModeAccept: "Accepteer",
       pageReportModeCancel: "Annuleer",
       toastHandlerDescription: "Der er sket en fejl:",
+      snackbarHandlerDescription: "Der er sket en fejl:",
     );
   }
 
@@ -272,6 +285,7 @@ class LocalizationOptions {
       pageReportModeAccept: "Akzeptieren",
       pageReportModeCancel: "Abbrechen",
       toastHandlerDescription: "Es ist ein Fehler aufgetreten:",
+      snackbarHandlerDescription: "Es ist ein Fehler aufgetreten:",
     );
   }
 
@@ -290,6 +304,7 @@ class LocalizationOptions {
     String? pageReportModeAccept,
     String? pageReportModeCancel,
     String? toastHandlerDescription,
+    String? snackbarHandlerDescription,
   }) {
     return LocalizationOptions(
       languageCode ?? this.languageCode,
@@ -312,6 +327,8 @@ class LocalizationOptions {
       pageReportModeCancel: pageReportModeCancel ?? this.pageReportModeCancel,
       toastHandlerDescription:
           toastHandlerDescription ?? this.toastHandlerDescription,
+      snackbarHandlerDescription:
+          snackbarHandlerDescription ?? this.snackbarHandlerDescription,
     );
   }
 }

@@ -2,7 +2,6 @@ import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
 import 'package:catcher/model/report_handler.dart';
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
 import 'package:sentry/sentry.dart';
 
 class SentryHandler extends ReportHandler {
@@ -29,7 +28,6 @@ class SentryHandler extends ReportHandler {
 
   ///Enable additional logs printing
   final bool printLogs;
-  final Logger _logger = Logger("SentryHandler");
 
   SentryHandler(
     this.sentryClient, {
@@ -114,7 +112,7 @@ class SentryHandler extends ReportHandler {
 
   void _printLog(String message) {
     if (printLogs) {
-      _logger.info(message);
+      logger.info(message);
     }
   }
 

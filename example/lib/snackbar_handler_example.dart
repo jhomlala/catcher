@@ -3,10 +3,36 @@ import 'package:flutter/material.dart';
 
 void main() {
   CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
-    ConsoleHandler(),
+    SnackbarHandler(
+      Duration(seconds: 5),
+      backgroundColor: Colors.green,
+      elevation: 2,
+      margin: EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      behavior: SnackBarBehavior.floating,
+      action: SnackBarAction(
+          label: "Button",
+          onPressed: () {
+            print("Click!");
+          }),
+      textStyle: TextStyle(
+        color: Colors.white,
+        fontSize: 16,
+      ),
+    ),
   ]);
-  CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
-    EmailManualHandler(["recipient@email.com"])
+  CatcherOptions releaseOptions = CatcherOptions(DialogReportMode(), [
+    SnackbarHandler(
+      Duration(seconds: 5),
+      backgroundColor: Colors.green,
+      elevation: 2,
+      padding: EdgeInsets.all(16),
+      textStyle: TextStyle(
+        color: Colors.white,
+        fontSize: 16,
+      ),
+    ),
   ]);
 
   Catcher(
@@ -33,10 +59,11 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       navigatorKey: Catcher.navigatorKey,
       home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Plugin example app'),
-          ),
-          body: ChildWidget()),
+        appBar: AppBar(
+          title: const Text('Snackbar handler example'),
+        ),
+        body: ChildWidget(),
+      ),
     );
   }
 }

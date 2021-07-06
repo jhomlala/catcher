@@ -5,6 +5,7 @@ import 'package:catcher/model/localization_options.dart';
 import 'package:catcher/model/report.dart';
 import 'package:catcher/model/report_handler.dart';
 import 'package:catcher/model/report_mode.dart';
+import 'package:catcher/utils/catcher_logger.dart';
 
 class CatcherOptions {
   /// Handlers that should be used
@@ -46,6 +47,13 @@ class CatcherOptions {
   ///otherwise return false.
   final bool Function(Report report)? filterFunction;
 
+  ///Timeout for reports to prevent handling duplicates of same error. In
+  ///milliseconds.
+  final int reportOccurrenceTimeout;
+
+  ///Logger instance.
+  final CatcherLogger? logger;
+
   /// Builds catcher options instance
   CatcherOptions(
     this.reportMode,
@@ -59,6 +67,8 @@ class CatcherOptions {
     this.screenshotsPath = "",
     this.excludedParameters = const [],
     this.filterFunction,
+    this.reportOccurrenceTimeout = 3000,
+    this.logger,
   });
 
   /// Builds default catcher options release instance
@@ -73,7 +83,9 @@ class CatcherOptions {
         handleSilentError = true,
         screenshotsPath = "",
         excludedParameters = const [],
-        filterFunction = null;
+        filterFunction = null,
+        reportOccurrenceTimeout = 3000,
+        logger = CatcherLogger();
 
   /// Builds default catcher options debug instance
   CatcherOptions.getDefaultDebugOptions()
@@ -87,7 +99,9 @@ class CatcherOptions {
         handleSilentError = true,
         screenshotsPath = "",
         excludedParameters = const [],
-        filterFunction = null;
+        filterFunction = null,
+        reportOccurrenceTimeout = 3000,
+        logger = CatcherLogger();
 
   /// Builds default catcher options profile instance
   CatcherOptions.getDefaultProfileOptions()
@@ -101,5 +115,7 @@ class CatcherOptions {
         handleSilentError = true,
         screenshotsPath = "",
         excludedParameters = const [],
-        filterFunction = null;
+        filterFunction = null,
+        reportOccurrenceTimeout = 3000,
+        logger = CatcherLogger();
 }

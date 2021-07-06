@@ -2,7 +2,6 @@ import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
 import 'package:catcher/model/report_handler.dart';
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
 
 class ConsoleHandler extends ReportHandler {
   final bool enableDeviceParameters;
@@ -10,7 +9,6 @@ class ConsoleHandler extends ReportHandler {
   final bool enableStackTrace;
   final bool enableCustomParameters;
   final bool handleWhenRejected;
-  final Logger _logger = Logger("ConsoleHandler");
 
   ConsoleHandler({
     this.enableDeviceParameters = true,
@@ -22,58 +20,58 @@ class ConsoleHandler extends ReportHandler {
 
   @override
   Future<bool> handle(Report report, BuildContext? context) {
-    _logger.info(
+    logger.info(
         "============================== CATCHER LOG ==============================");
-    _logger.info("Crash occurred on ${report.dateTime}");
-    _logger.info("");
+    logger.info("Crash occurred on ${report.dateTime}");
+    logger.info("");
     if (enableDeviceParameters) {
       _printDeviceParametersFormatted(report.deviceParameters);
-      _logger.info("");
+      logger.info("");
     }
     if (enableApplicationParameters) {
       _printApplicationParametersFormatted(report.applicationParameters);
-      _logger.info("");
+      logger.info("");
     }
-    _logger.info("---------- ERROR ----------");
-    _logger.info("${report.error}");
-    _logger.info("");
+    logger.info("---------- ERROR ----------");
+    logger.info("${report.error}");
+    logger.info("");
     if (enableStackTrace) {
       _printStackTraceFormatted(report.stackTrace as StackTrace?);
     }
     if (enableCustomParameters) {
       _printCustomParametersFormatted(report.customParameters);
     }
-    _logger.info(
+    logger.info(
         "======================================================================");
     return Future.value(true);
   }
 
   void _printDeviceParametersFormatted(Map<String, dynamic> deviceParameters) {
-    _logger.info("------- DEVICE INFO -------");
+    logger.info("------- DEVICE INFO -------");
     for (final entry in deviceParameters.entries) {
-      _logger.info("${entry.key}: ${entry.value}");
+      logger.info("${entry.key}: ${entry.value}");
     }
   }
 
   void _printApplicationParametersFormatted(
       Map<String, dynamic> applicationParameters) {
-    _logger.info("------- APP INFO -------");
+    logger.info("------- APP INFO -------");
     for (final entry in applicationParameters.entries) {
-      _logger.info("${entry.key}: ${entry.value}");
+      logger.info("${entry.key}: ${entry.value}");
     }
   }
 
   void _printCustomParametersFormatted(Map<String, dynamic> customParameters) {
-    _logger.info("------- CUSTOM INFO -------");
+    logger.info("------- CUSTOM INFO -------");
     for (final entry in customParameters.entries) {
-      _logger.info("${entry.key}: ${entry.value}");
+      logger.info("${entry.key}: ${entry.value}");
     }
   }
 
   void _printStackTraceFormatted(StackTrace? stackTrace) {
-    _logger.info("------- STACK TRACE -------");
+    logger.info("------- STACK TRACE -------");
     for (final entry in stackTrace.toString().split("\n")) {
-      _logger.info(entry);
+      logger.info(entry);
     }
   }
 

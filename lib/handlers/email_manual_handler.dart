@@ -3,13 +3,11 @@ import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mailer/flutter_mailer.dart';
-import 'package:logging/logging.dart';
 
 class EmailManualHandler extends BaseEmailHandler {
   final List<String> recipients;
   final bool sendHtml;
   final bool printLogs;
-  final Logger _logger = Logger("EmailManualHandler");
 
   EmailManualHandler(
     this.recipients, {
@@ -66,7 +64,7 @@ class EmailManualHandler extends BaseEmailHandler {
 
   void _printLog(String log) {
     if (printLogs) {
-      _logger.info(log);
+      logger.info(log);
     }
   }
 

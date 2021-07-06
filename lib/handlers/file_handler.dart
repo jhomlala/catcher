@@ -5,7 +5,6 @@ import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
 import 'package:catcher/model/report_handler.dart';
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
 
 class FileHandler extends ReportHandler {
   final File file;
@@ -16,7 +15,6 @@ class FileHandler extends ReportHandler {
   final bool printLogs;
   final bool handleWhenRejected;
 
-  final Logger _logger = Logger("FileHandler");
   late IOSink _sink;
   bool _fileValidated = false;
   bool _fileValidationResult = false;
@@ -140,7 +138,7 @@ class FileHandler extends ReportHandler {
 
   void _printLog(String log) {
     if (printLogs) {
-      _logger.info(log);
+      logger.info(log);
     }
   }
 

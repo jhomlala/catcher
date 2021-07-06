@@ -5,19 +5,19 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:catcher/utils/catcher_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:logging/logging.dart';
 
 ///Manager which takes screenshot of configured widget. Screenshot will be saved
 ///to file which can be reused later.
 class CatcherScreenshotManager {
-  final Logger _logger = Logger("Catcher");
+  final CatcherLogger _logger;
   late GlobalKey _containerKey;
   String? _path;
 
-  CatcherScreenshotManager() {
+  CatcherScreenshotManager(this._logger) {
     _containerKey = GlobalKey();
   }
 

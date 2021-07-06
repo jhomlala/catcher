@@ -6,11 +6,9 @@ import 'package:catcher/model/report_handler.dart';
 import 'package:catcher/utils/catcher_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
 
 class DiscordHandler extends ReportHandler {
   final Dio _dio = Dio();
-  final Logger _logger = Logger("DiscordHandler");
 
   final String webhookUrl;
 
@@ -131,7 +129,7 @@ class DiscordHandler extends ReportHandler {
 
   void _printLog(String log) {
     if (printLogs) {
-      _logger.info(log);
+      logger.info(log);
     }
   }
 
