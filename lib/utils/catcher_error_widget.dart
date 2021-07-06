@@ -73,14 +73,18 @@ class CatcherErrorWidget extends StatelessWidget {
 
   Widget _buildStackTraceWidget() {
     if (showStacktrace) {
-      final List<String> stackTrace = details!.stack.toString().split("\n");
+      final List<String> items = [];
+      if (details != null) {
+        items.add(details!.exception.toString());
+        items.addAll(details!.stack.toString().split("\n"));
+      }
       return ListView.builder(
         padding: const EdgeInsets.all(8.0),
         shrinkWrap: true,
         physics: const ClampingScrollPhysics(),
-        itemCount: stackTrace.length,
+        itemCount: items.length,
         itemBuilder: (BuildContext context, int index) {
-          final String line = stackTrace[index];
+          final String line = items[index];
           if (line.isNotEmpty == true) {
             return Text(line);
           } else {
