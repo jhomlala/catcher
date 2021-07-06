@@ -2,6 +2,7 @@
 * Fixed typos by Morgan (https://github.com/rmtmckenzie) and Nico Mexis (https://github.com/ThexXTURBOXx)
 * Updated dependencies by Nico Mexis (https://github.com/ThexXTURBOXx)
 * Added `reportOccurrenceTimeout` in CatcherOptions to prevent reporting duplicated errors.
+* Added new handler: SnackbarHandler which can be used to show snackbar message.
 
 ## 0.6.6
 * Added copyWith method in LocalizationOptions.

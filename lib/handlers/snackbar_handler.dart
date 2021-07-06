@@ -10,6 +10,9 @@ class SnackbarHandler extends ReportHandler {
   final Logger _logger = Logger("SnackbarHandler");
 
   ///See [SnackBar] docs for details.
+  final Duration duration;
+
+  ///See [SnackBar] docs for details.
   final Color? backgroundColor;
 
   ///See [SnackBar] docs for details.
@@ -28,10 +31,10 @@ class SnackbarHandler extends ReportHandler {
   final ShapeBorder? shape;
 
   ///See [SnackBar] docs for details.
-  final SnackBarAction? action;
+  final SnackBarBehavior? behavior;
 
   ///See [SnackBar] docs for details.
-  final Duration duration;
+  final SnackBarAction? action;
 
   ///See [SnackBar] docs for details.
   final Animation<double>? animation;
@@ -42,45 +45,62 @@ class SnackbarHandler extends ReportHandler {
   ///Custom message which can be displayed instead default one.
   final String? customMessage;
 
-  SnackbarHandler(
-    this.duration, {
+  ///Custom text style for text displayed within snackbar.
+  final TextStyle? textStyle;
+
+  SnackbarHandler(this.duration, {
     this.backgroundColor,
     this.elevation,
     this.margin,
     this.padding,
     this.width,
     this.shape,
+    this.behavior,
     this.action,
     this.animation,
     this.onVisible,
     this.customMessage,
+    this.textStyle,
   });
 
+  ///Handle report. If there's scaffold messenger in provided context, then
+  ///snackbar will be shown.
   @override
   Future<bool> handle(Report error, BuildContext? context) async {
-    if (!_hasScaffoldMessenger(context!)) {
-      _logger
-          .severe("Passed context has no ScaffoldMessenger in widget ancestor");
+    try {
+      if (!_hasScaffoldMessenger(context!)) {
+        _logger.severe(
+            "Passed context has no ScaffoldMessenger in widget ancestor");
+        return false;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            _getErrorMessage(error),
+            style: textStyle,
+          ),
+          backgroundColor: backgroundColor,
+          elevation: elevation,
+          margin: margin,
+          padding: padding,
+          width: width,
+          shape: shape,
+          action: action,
+          duration: duration,
+          animation: animation,
+          behavior:  behavior,
+          onVisible: onVisible,
+        ),
+      );
+      return true;
+    } catch (exception, stackTrace) {
+      _logger.severe("Failed to show snackbar: $exception, $stackTrace");
       return false;
     }
-
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(_getErrorMessage(error)),
-      backgroundColor: backgroundColor,
-      elevation: elevation,
-      margin: margin,
-      padding: padding,
-      width: width,
-      shape: shape,
-      action: action,
-      duration: duration,
-      animation: animation,
-      onVisible: onVisible,
-    ));
-
-    return true;
   }
 
+  ///Checks whether context has scaffold messenger.
   bool _hasScaffoldMessenger(BuildContext context) {
     try {
       return context.findAncestorWidgetOfExactType<ScaffoldMessenger>() != null;
@@ -90,6 +110,7 @@ class SnackbarHandler extends ReportHandler {
     }
   }
 
+  ///Get error message based on configuration and report.
   String _getErrorMessage(Report error) {
     if (customMessage?.isNotEmpty == true) {
       return customMessage!;
@@ -104,7 +125,8 @@ class SnackbarHandler extends ReportHandler {
   }
 
   @override
-  List<PlatformType> getSupportedPlatforms() => [
+  List<PlatformType> getSupportedPlatforms() =>
+      [
         PlatformType.android,
         PlatformType.iOS,
         PlatformType.web,

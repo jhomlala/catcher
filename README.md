@@ -20,7 +20,7 @@ Catcher supports Android, iOS, Web, Linux, Windows and MacOS platforms.
 Add this line to your **pubspec.yaml**:
 ```yaml
 dependencies:
-  catcher: ^0.6.6
+  catcher: ^0.6.7
 ```
 
 Then run this command:
@@ -58,6 +58,7 @@ import 'package:catcher/catcher.dart';
 * [Sentry Handler](#sentry-handler)
 * [Slack Handler](#slack-handler)
 * [Discord Handler](#discord-handler)
+* [Snackbar Handler](#snackbar-handler)
 * [Crashlytics Handler](#crashlytics-handler)
 
 [Test Exception](#test-exception)  
@@ -829,6 +830,58 @@ All parameters list:
 * enableCustomParameters (optional) - please look in console handler description
 * enableStackTrace (optional) - please look in console handler description
 * printLogs (optional) - enable/disable debug logs
+
+
+### Snackbar Handler
+Snackbar handler allows to show customized snackbar message.
+
+```dart
+void main() {
+  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
+    SnackbarHandler(
+      Duration(seconds: 5),
+      backgroundColor: Colors.green,
+      elevation: 2,
+      margin: EdgeInsets.all(16),
+      padding: EdgeInsets.all(16),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      behavior: SnackBarBehavior.floating,
+      action: SnackBarAction(
+          label: "Button",
+          onPressed: () {
+            print("Click!");
+          }),
+      textStyle: TextStyle(
+        color: Colors.white,
+        fontSize: 16,
+      ),
+    ),
+  ]);
+
+  Catcher(
+    runAppFunction: () {
+      runApp(MyApp());
+    },
+    debugConfig: debugOptions,
+  );
+}
+```
+
+All parameters list:
+* duration - See [SnackBar] in Flutter docs for details.
+* backgroundColor - See [SnackBar] in Flutter docs for details.
+* elevation - See [SnackBar] in Flutter docs for details.
+* margin - See [SnackBar] in Flutter docs for details.
+* padding - See [SnackBar] in Flutter docs for details.
+* width - See [SnackBar] in Flutter docs for details.
+* shape - See [SnackBar] in Flutter docs for details.
+* behavior - See [SnackBar] in Flutter docs for details.
+* action - See [SnackBar] in Flutter docs for details.
+* animation - See [SnackBar] in Flutter docs for details.
+* onVisible - See [SnackBar] in Flutter docs for details.
+* customMessage - Custom message which can be displayed instead default one.
+* textStyle - Custom text style for text displayed within snackbar.
+
 
 #### Crashlytics Handler
 Crashlytics handler has been removed from core package. You can re-enable it in your project by using custom report mode presented in crashlytics_example in example project.
