@@ -7,7 +7,6 @@ import 'package:catcher/model/report_handler.dart';
 import 'package:catcher/utils/catcher_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
 
 class HttpHandler extends ReportHandler {
   final Dio _dio = Dio();

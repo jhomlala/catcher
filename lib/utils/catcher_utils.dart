@@ -19,5 +19,4 @@ class CatcherUtils {
   static bool isCupertinoAppAncestor(BuildContext context) {
     return context.findAncestorWidgetOfExactType<CupertinoApp>() != null;
   }
-
 }

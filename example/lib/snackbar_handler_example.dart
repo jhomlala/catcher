@@ -7,13 +7,15 @@ void main() {
       Duration(seconds: 5),
       backgroundColor: Colors.green,
       elevation: 2,
-      margin:  EdgeInsets.all(16),
+      margin: EdgeInsets.all(16),
       padding: EdgeInsets.all(16),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       behavior: SnackBarBehavior.floating,
-      action: SnackBarAction(label: "Button", onPressed: (){
-        print("Click!");
-      }),
+      action: SnackBarAction(
+          label: "Button",
+          onPressed: () {
+            print("Click!");
+          }),
       textStyle: TextStyle(
         color: Colors.white,
         fontSize: 16,
