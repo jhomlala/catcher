@@ -6,7 +6,7 @@
 * Reworked logger in Catcher. Now Catcher uses only one class to handle log printing. Default logger can be overridden with custom logger.
 * Added `logger` parameter in CatcherOptions to provide custom logger to Catcher.
 * General logging/reporting fixes by naurmi (https://github.com/narumishi)
-* Added CMakeLists.txt for linux
+* Added missing CMakeLists.txt for Linux.
 
 ## 0.6.6
 * Added copyWith method in LocalizationOptions.
