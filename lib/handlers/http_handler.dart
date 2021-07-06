@@ -11,7 +11,6 @@ import 'package:logging/logging.dart';
 
 class HttpHandler extends ReportHandler {
   final Dio _dio = Dio();
-  final Logger _logger = Logger("HttpHandler");
 
   final HttpRequestType requestType;
   final Uri endpointUri;
@@ -96,7 +95,7 @@ class HttpHandler extends ReportHandler {
 
   void _printLog(String log) {
     if (printLogs) {
-      _logger.info(log);
+      logger.info(log);
     }
   }
 

@@ -3,12 +3,9 @@ import 'package:catcher/model/report.dart';
 import 'package:catcher/model/report_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:logging/logging.dart';
 
 ///Handler which displays error report as snack bar.
 class SnackbarHandler extends ReportHandler {
-  final Logger _logger = Logger("SnackbarHandler");
-
   ///See [SnackBar] docs for details.
   final Duration duration;
 
@@ -48,7 +45,11 @@ class SnackbarHandler extends ReportHandler {
   ///Custom text style for text displayed within snackbar.
   final TextStyle? textStyle;
 
-  SnackbarHandler(this.duration, {
+  ///Enable additional logs printing
+  final bool printLogs;
+
+  SnackbarHandler(
+    this.duration, {
     this.backgroundColor,
     this.elevation,
     this.margin,
@@ -61,6 +62,7 @@ class SnackbarHandler extends ReportHandler {
     this.onVisible,
     this.customMessage,
     this.textStyle,
+    this.printLogs = false,
   });
 
   ///Handle report. If there's scaffold messenger in provided context, then
@@ -69,8 +71,7 @@ class SnackbarHandler extends ReportHandler {
   Future<bool> handle(Report error, BuildContext? context) async {
     try {
       if (!_hasScaffoldMessenger(context!)) {
-        _logger.severe(
-            "Passed context has no ScaffoldMessenger in widget ancestor");
+        _printLog("Passed context has no ScaffoldMessenger in widget ancestor");
         return false;
       }
 
@@ -89,13 +90,13 @@ class SnackbarHandler extends ReportHandler {
           action: action,
           duration: duration,
           animation: animation,
-          behavior:  behavior,
+          behavior: behavior,
           onVisible: onVisible,
         ),
       );
       return true;
     } catch (exception, stackTrace) {
-      _logger.severe("Failed to show snackbar: $exception, $stackTrace");
+      _printLog("Failed to show snackbar: $exception, $stackTrace");
       return false;
     }
   }
@@ -105,7 +106,7 @@ class SnackbarHandler extends ReportHandler {
     try {
       return context.findAncestorWidgetOfExactType<ScaffoldMessenger>() != null;
     } catch (exception, stackTrace) {
-      _logger.severe("_hasScaffoldMessenger failed", exception, stackTrace);
+      _printLog("_hasScaffoldMessenger failed: $exception, $stackTrace");
       return false;
     }
   }
@@ -119,14 +120,19 @@ class SnackbarHandler extends ReportHandler {
     }
   }
 
+  void _printLog(String log) {
+    if (printLogs) {
+      logger.info(log);
+    }
+  }
+
   @override
   bool isContextRequired() {
     return true;
   }
 
   @override
-  List<PlatformType> getSupportedPlatforms() =>
-      [
+  List<PlatformType> getSupportedPlatforms() => [
         PlatformType.android,
         PlatformType.iOS,
         PlatformType.web,

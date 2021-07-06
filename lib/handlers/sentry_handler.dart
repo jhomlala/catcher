@@ -29,7 +29,7 @@ class SentryHandler extends ReportHandler {
 
   ///Enable additional logs printing
   final bool printLogs;
-  final Logger _logger = Logger("SentryHandler");
+
 
   SentryHandler(
     this.sentryClient, {
@@ -114,7 +114,7 @@ class SentryHandler extends ReportHandler {
 
   void _printLog(String message) {
     if (printLogs) {
-      _logger.info(message);
+      logger.info(message);
     }
   }
 

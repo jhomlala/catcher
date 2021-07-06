@@ -2,9 +2,13 @@ import 'package:catcher/catcher.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
-    ConsoleHandler(),
-  ]);
+  CatcherOptions debugOptions = CatcherOptions(
+    DialogReportMode(),
+    [
+      ConsoleHandler(),
+    ],
+    logger: CustomCatcherLogger(),
+  );
   CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
     EmailManualHandler(["recipient@email.com"])
   ]);
@@ -54,5 +58,23 @@ class ChildWidget extends StatelessWidget {
 
   void generateError() async {
     Catcher.sendTestException();
+  }
+}
+
+class CustomCatcherLogger extends CatcherLogger {
+  void info(String message) {
+    print("Custom Catcher Logger | Info | $message");
+  }
+
+  void fine(String message) {
+    print("Custom Catcher Logger | Fine | $message");
+  }
+
+  void warning(String message) {
+    print("Custom Catcher Logger | Warning | $message");
+  }
+
+  void severe(String message) {
+    print("Custom Catcher Logger | Servere | $message");
   }
 }

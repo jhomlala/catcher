@@ -1,10 +1,14 @@
 import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
+import 'package:catcher/utils/catcher_logger.dart';
 import 'package:flutter/material.dart';
 
 import 'localization_options.dart';
 
 abstract class ReportHandler {
+  ///Logger instance
+  late CatcherLogger logger;
+
   /// Method called when report has been accepted by user
   Future<bool> handle(Report error, BuildContext? context);
 

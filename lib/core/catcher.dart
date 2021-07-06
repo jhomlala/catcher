@@ -13,10 +13,10 @@ import 'package:catcher/model/report.dart';
 import 'package:catcher/model/report_handler.dart';
 import 'package:catcher/model/report_mode.dart';
 import 'package:catcher/utils/catcher_error_widget.dart';
+import 'package:catcher/utils/catcher_logger.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class Catcher with ReportModeAction {
@@ -44,13 +44,13 @@ class Catcher with ReportModeAction {
   /// Should catcher run WidgetsFlutterBinding.ensureInitialized() during initialization.
   final bool ensureInitialized;
 
-  final Logger _logger = Logger("Catcher");
   late CatcherOptions _currentConfig;
+  late CatcherLogger _logger;
+  late CatcherScreenshotManager screenshotManager;
   final Map<String, dynamic> _deviceParameters = <String, dynamic>{};
   final Map<String, dynamic> _applicationParameters = <String, dynamic>{};
   final List<Report> _cachedReports = [];
   final Map<DateTime, String> _reportsOcurrenceMap = {};
-  final CatcherScreenshotManager screenshotManager = CatcherScreenshotManager();
   LocalizationOptions? _localizationOptions;
 
   /// Instance of navigator key
@@ -76,8 +76,8 @@ class Catcher with ReportModeAction {
   void _configure(GlobalKey<NavigatorState>? navigatorKey) {
     _instance = this;
     _configureNavigatorKey(navigatorKey);
-    _configureLogger();
     _setupCurrentConfig();
+    _configureLogger();
     _setupErrorHooks();
     _setupReportModeActionInReportMode();
     _setupScreenshotManager();
@@ -106,7 +106,6 @@ class Catcher with ReportModeAction {
     switch (ApplicationProfileManager.getApplicationProfile()) {
       case ApplicationProfile.release:
         {
-          _logger.fine("Using release config");
           if (releaseConfig != null) {
             _currentConfig = releaseConfig!;
           } else {
@@ -116,7 +115,6 @@ class Catcher with ReportModeAction {
         }
       case ApplicationProfile.debug:
         {
-          _logger.fine("Using debug config");
           if (debugConfig != null) {
             _currentConfig = debugConfig!;
           } else {
@@ -126,7 +124,6 @@ class Catcher with ReportModeAction {
         }
       case ApplicationProfile.profile:
         {
-          _logger.fine("Using profile config");
           if (profileConfig != null) {
             _currentConfig = profileConfig!;
           } else {
@@ -223,16 +220,18 @@ class Catcher with ReportModeAction {
   }
 
   void _configureLogger() {
-    if (enableLogger) {
-      Logger.root.level = Level.ALL;
-      Logger.root.onRecord.listen(
-        (LogRecord rec) {
-          // ignore: avoid_print
-          print(
-              '[${rec.time} | ${rec.loggerName} | ${rec.level.name}] ${rec.message}');
-        },
-      );
+    if (_currentConfig.logger != null) {
+      _logger = _currentConfig.logger!;
+    } else {
+      _logger = CatcherLogger();
     }
+    if (enableLogger) {
+      _logger.setup();
+    }
+
+    _currentConfig.handlers.forEach((handler) {
+      handler.logger = _logger;
+    });
   }
 
   void _loadDeviceInfo() {
@@ -472,6 +471,7 @@ class Catcher with ReportModeAction {
 
   ///Setup screenshot manager's screenshots path.
   void _setupScreenshotManager() {
+    screenshotManager = CatcherScreenshotManager(_logger);
     final String screenshotsPath = _currentConfig.screenshotsPath;
     if (!ApplicationProfileManager.isWeb() && screenshotsPath.isEmpty) {
       _logger.warning("Screenshots path is empty. Screenshots won't work.");

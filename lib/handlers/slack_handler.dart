@@ -4,12 +4,10 @@ import 'package:catcher/model/report_handler.dart';
 import 'package:catcher/utils/catcher_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
 
 //Slack webhook API doesn't allow file attachments
 class SlackHandler extends ReportHandler {
   final Dio _dio = Dio();
-  final Logger _logger = Logger("SlackHandler");
 
   final String webhookUrl;
   final String channel;
@@ -22,14 +20,17 @@ class SlackHandler extends ReportHandler {
   final bool enableStackTrace;
   final bool enableCustomParameters;
 
-  SlackHandler(this.webhookUrl, this.channel,
-      {this.username = "Catcher",
-      this.iconEmoji = ":bangbang:",
-      this.printLogs = false,
-      this.enableDeviceParameters = false,
-      this.enableApplicationParameters = false,
-      this.enableStackTrace = false,
-      this.enableCustomParameters = false});
+  SlackHandler(
+    this.webhookUrl,
+    this.channel, {
+    this.username = "Catcher",
+    this.iconEmoji = ":bangbang:",
+    this.printLogs = false,
+    this.enableDeviceParameters = false,
+    this.enableApplicationParameters = false,
+    this.enableStackTrace = false,
+    this.enableCustomParameters = false,
+  });
 
   @override
   Future<bool> handle(Report report, BuildContext? context) async {
@@ -94,7 +95,7 @@ class SlackHandler extends ReportHandler {
 
   void _printLog(String log) {
     if (printLogs) {
-      _logger.info(log);
+      logger.info(log);
     }
   }
 

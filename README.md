@@ -881,6 +881,7 @@ All parameters list:
 * onVisible - See [SnackBar] in Flutter docs for details.
 * customMessage - Custom message which can be displayed instead default one.
 * textStyle - Custom text style for text displayed within snackbar.
+* printLogs - Enable additional logs printing
 
 
 #### Crashlytics Handler

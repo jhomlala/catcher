@@ -10,7 +10,6 @@ import 'package:logging/logging.dart';
 
 class DiscordHandler extends ReportHandler {
   final Dio _dio = Dio();
-  final Logger _logger = Logger("DiscordHandler");
 
   final String webhookUrl;
 
@@ -131,7 +130,7 @@ class DiscordHandler extends ReportHandler {
 
   void _printLog(String log) {
     if (printLogs) {
-      _logger.info(log);
+      logger.info(log);
     }
   }
 
