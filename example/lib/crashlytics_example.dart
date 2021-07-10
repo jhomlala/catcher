@@ -8,48 +8,50 @@ import 'package:catcher/catcher.dart';
 
 class CrashlyticsHandler extends ReportHandler {
   final Logger _logger = Logger("CrashlyticsHandler");
-
   final bool enableDeviceParameters;
   final bool enableApplicationParameters;
   final bool enableCustomParameters;
   final bool printLogs;
-
   CrashlyticsHandler(
       {this.enableDeviceParameters = true,
-        this.enableApplicationParameters = true,
-        this.enableCustomParameters = true,
-        this.printLogs = true})
+      this.enableApplicationParameters = true,
+      this.enableCustomParameters = true,
+      this.printLogs = true})
+      // ignore: unnecessary_null_comparison
       : assert(enableDeviceParameters != null,
-  "enableDeviceParameters can't be null"),
+            // ignore: unnecessary_null_comparison
+            "enableDeviceParameters can't be null"),
+        // ignore: unnecessary_null_comparison
         assert(enableApplicationParameters != null,
-        "enableApplicationParameters can't be null"),
+            "enableApplicationParameters can't be null"),
+        // ignore: unnecessary_null_comparison
         assert(enableCustomParameters != null,
-        "enableCustomParameters can't be null"),
+            "enableCustomParameters can't be null"),
+        // ignore: unnecessary_null_comparison
         assert(printLogs != null, "printLogs can't be null");
-
   @override
   List<PlatformType> getSupportedPlatforms() {
-    return [PlatformType.Android, PlatformType.iOS];
+    return [PlatformType.android, PlatformType.iOS];
   }
 
+  
   @override
-  Future<bool> handle(Report report) async {
+  Future<bool> handle(Report report, BuildContext? context) async {
     try {
       _printLog("Sending crashlytics report");
-      var crashlytics = Crashlytics.instance;
-      crashlytics.enableInDevMode = true;
+      final crashlytics = FirebaseCrashlytics.instance;
+      crashlytics.setCrashlyticsCollectionEnabled(true);
       crashlytics.log(_getLogMessage(report));
-
       if (report.errorDetails != null) {
-        await crashlytics.recordFlutterError(report.errorDetails);
+        // ignore: cast_nullable_to_non_nullable
+        await crashlytics.recordFlutterError(report.errorDetails as FlutterErrorDetails);
       } else {
-        await crashlytics.recordError(report.error, report.stackTrace);
+        await crashlytics.recordError(report.error, report.stackTrace as StackTrace);
       }
       _printLog("Crashlytics report sent");
-
       return true;
     } catch (exception) {
-      _printLog("Failed to send crashlytics report: " + exception);
+      _printLog("Failed to send crashlytics report: $exception" );
       return false;
     }
   }
@@ -68,14 +70,12 @@ class CrashlyticsHandler extends ReportHandler {
         buffer.write("${entry.key}: ${entry.value} ");
       }
     }
-
     if (enableCustomParameters) {
       buffer.write("||| Custom parameters ||| ");
       for (var entry in report.customParameters.entries) {
         buffer.write("${entry.key}: ${entry.value} ");
       }
     }
-
     return buffer.toString();
   }
 
