@@ -22,8 +22,7 @@ class SlackHandler extends ReportHandler {
   final bool enableStackTrace;
   final bool enableCustomParameters;
 
-  final FutureOr<String> Function(Report report)? generateMessage;
-  final FutureOr<String> Function(String message)? extendMessage;
+  final FutureOr<String> Function(Report report, String message)? extendMessage;
 
   SlackHandler(
     this.webhookUrl,
@@ -35,7 +34,6 @@ class SlackHandler extends ReportHandler {
     this.enableApplicationParameters = false,
     this.enableStackTrace = false,
     this.enableCustomParameters = false,
-    this.generateMessage,
     this.extendMessage,
   });
 
@@ -49,11 +47,7 @@ class SlackHandler extends ReportHandler {
 
       final String defaultMessage = _buildMessage(report);
 
-      final String message = generateMessage != null
-          ? await generateMessage!(report)
-          : extendMessage != null
-              ? await extendMessage!(defaultMessage)
-              : defaultMessage;
+      final String message = extendMessage != null ? await extendMessage!(report, defaultMessage) : defaultMessage;
 
       final data = {"text": message, "channel": channel, "username": username, "icon_emoji": iconEmoji};
       _printLog("Sending request to Slack server...");
