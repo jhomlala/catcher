@@ -21,8 +21,7 @@ class SlackHandler extends ReportHandler {
   final bool enableApplicationParameters;
   final bool enableStackTrace;
   final bool enableCustomParameters;
-
-  final FutureOr<String> Function(Report report, String message)? extendMessage;
+  final String Function(Report report)? customMessageBuilder;
 
   SlackHandler(
     this.webhookUrl,
@@ -34,7 +33,7 @@ class SlackHandler extends ReportHandler {
     this.enableApplicationParameters = false,
     this.enableStackTrace = false,
     this.enableCustomParameters = false,
-    this.extendMessage,
+    this.customMessageBuilder,
   });
 
   @override
@@ -44,15 +43,24 @@ class SlackHandler extends ReportHandler {
         _printLog("No internet connection available");
         return false;
       }
+      String message = "";
+      if (customMessageBuilder != null) {
+        message = customMessageBuilder!(report);
+      } else {
+        message = _buildMessage(report);
+      }
 
-      final String defaultMessage = _buildMessage(report);
-
-      final String message = extendMessage != null ? await extendMessage!(report, defaultMessage) : defaultMessage;
-
-      final data = {"text": message, "channel": channel, "username": username, "icon_emoji": iconEmoji};
+      final data = {
+        "text": message,
+        "channel": channel,
+        "username": username,
+        "icon_emoji": iconEmoji
+      };
       _printLog("Sending request to Slack server...");
-      final Response response = await _dio.post<dynamic>(webhookUrl, data: data);
-      _printLog("Server responded with code: ${response.statusCode} and message: ${response.statusMessage}");
+      final Response response =
+          await _dio.post<dynamic>(webhookUrl, data: data);
+      _printLog(
+          "Server responded with code: ${response.statusCode} and message: ${response.statusMessage}");
       final statusCode = response.statusCode ?? 0;
       return statusCode >= 200 && statusCode < 300;
     } catch (exception) {
@@ -75,7 +83,8 @@ class SlackHandler extends ReportHandler {
       stringBuffer.write("```\n");
     }
 
-    if (enableApplicationParameters && report.applicationParameters.isNotEmpty) {
+    if (enableApplicationParameters &&
+        report.applicationParameters.isNotEmpty) {
       stringBuffer.write("*Application parameters:* ```");
       for (final entry in report.applicationParameters.entries) {
         stringBuffer.write("${entry.key}: ${entry.value}\n");

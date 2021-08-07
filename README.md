@@ -20,7 +20,7 @@ Catcher supports Android, iOS, Web, Linux, Windows and MacOS platforms.
 Add this line to your **pubspec.yaml**:
 ```yaml
 dependencies:
-  catcher: ^0.6.7
+  catcher: ^0.6.8
 ```
 
 Then run this command:
@@ -802,6 +802,7 @@ All parameters list:
 * enableCustomParameters (optional) - please look in console handler description
 * enableStackTrace (optional) - please look in console handler description
 * printLogs (optional) - enable/disable debug logs
+* customMessageBuilder - provide custom message
 
 #### Discord Handler
 Discord Handler allows to send messages to your Discord workspace. You need to register webhook in your server to make this handler
@@ -830,6 +831,7 @@ All parameters list:
 * enableCustomParameters (optional) - please look in console handler description
 * enableStackTrace (optional) - please look in console handler description
 * printLogs (optional) - enable/disable debug logs
+* customMessageBuilder - provide custom message
 
 
 ### Snackbar Handler

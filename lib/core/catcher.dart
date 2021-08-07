@@ -730,10 +730,10 @@ class Catcher with ReportModeAction {
 
   ///Clean report ocucrences from the past.
   void _cleanPastReportsOccurences() {
-    int occurenceTimeout = _currentConfig.reportOccurrenceTimeout;
-    DateTime nowDateTime = DateTime.now();
+    final int occurenceTimeout = _currentConfig.reportOccurrenceTimeout;
+    final DateTime nowDateTime = DateTime.now();
     _reportsOcurrenceMap.removeWhere((key, value) {
-      DateTime occurenceWithTimeout =
+      final DateTime occurenceWithTimeout =
           key.add(Duration(milliseconds: occurenceTimeout));
       return nowDateTime.isAfter(occurenceWithTimeout);
     });

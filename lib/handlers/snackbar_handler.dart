@@ -2,7 +2,6 @@ import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
 import 'package:catcher/model/report_handler.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 ///Handler which displays error report as snack bar.
 class SnackbarHandler extends ReportHandler {

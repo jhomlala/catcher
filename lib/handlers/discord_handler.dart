@@ -17,6 +17,7 @@ class DiscordHandler extends ReportHandler {
   final bool enableApplicationParameters;
   final bool enableStackTrace;
   final bool enableCustomParameters;
+  final String Function(Report report)? customMessageBuilder;
 
   DiscordHandler(
     this.webhookUrl, {
@@ -25,6 +26,7 @@ class DiscordHandler extends ReportHandler {
     this.enableApplicationParameters = false,
     this.enableStackTrace = false,
     this.enableCustomParameters = false,
+    this.customMessageBuilder,
   });
 
   @override
@@ -36,7 +38,12 @@ class DiscordHandler extends ReportHandler {
       }
     }
 
-    final String message = _setupMessage(report);
+    String message = "";
+    if (customMessageBuilder != null) {
+      message = customMessageBuilder!(report);
+    } else {
+      message = _buildMessage(report);
+    }
     final List<String> messages = _setupMessages(message);
 
     for (final value in messages) {
@@ -66,7 +73,7 @@ class DiscordHandler extends ReportHandler {
     return messages;
   }
 
-  String _setupMessage(Report report) {
+  String _buildMessage(Report report) {
     final StringBuffer stringBuffer = StringBuffer();
     stringBuffer.write("**Error:**\n${report.error}\n\n");
     if (enableStackTrace) {

@@ -1,3 +1,9 @@
+## 0.6.8
+* Updated crashlytics example by Fred Grott (https://github.com/fredgrott)
+* Added custom message builder for slack handler by Salih Agić (https://github.com/salihagic)
+* Added custom message builder for discord handler
+* Updated dependencies
+
 ## 0.6.7
 * Fixed typos by Morgan (https://github.com/rmtmckenzie) and Nico Mexis (https://github.com/ThexXTURBOXx)
 * Updated dependencies by Nico Mexis (https://github.com/ThexXTURBOXx)
