@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:catcher/model/platform_type.dart';
 import 'package:catcher/model/report.dart';
 import 'package:catcher/model/report_handler.dart';
@@ -20,6 +22,8 @@ class SlackHandler extends ReportHandler {
   final bool enableStackTrace;
   final bool enableCustomParameters;
 
+  final FutureOr<String> Function(Report report, String message)? extendMessage;
+
   SlackHandler(
     this.webhookUrl,
     this.channel, {
@@ -30,6 +34,7 @@ class SlackHandler extends ReportHandler {
     this.enableApplicationParameters = false,
     this.enableStackTrace = false,
     this.enableCustomParameters = false,
+    this.extendMessage,
   });
 
   @override
@@ -40,18 +45,14 @@ class SlackHandler extends ReportHandler {
         return false;
       }
 
-      final String message = _buildMessage(report);
-      final data = {
-        "text": message,
-        "channel": channel,
-        "username": username,
-        "icon_emoji": iconEmoji
-      };
+      final String defaultMessage = _buildMessage(report);
+
+      final String message = extendMessage != null ? await extendMessage!(report, defaultMessage) : defaultMessage;
+
+      final data = {"text": message, "channel": channel, "username": username, "icon_emoji": iconEmoji};
       _printLog("Sending request to Slack server...");
-      final Response response =
-          await _dio.post<dynamic>(webhookUrl, data: data);
-      _printLog(
-          "Server responded with code: ${response.statusCode} and message: ${response.statusMessage}");
+      final Response response = await _dio.post<dynamic>(webhookUrl, data: data);
+      _printLog("Server responded with code: ${response.statusCode} and message: ${response.statusMessage}");
       final statusCode = response.statusCode ?? 0;
       return statusCode >= 200 && statusCode < 300;
     } catch (exception) {
@@ -74,8 +75,7 @@ class SlackHandler extends ReportHandler {
       stringBuffer.write("```\n");
     }
 
-    if (enableApplicationParameters &&
-        report.applicationParameters.isNotEmpty) {
+    if (enableApplicationParameters && report.applicationParameters.isNotEmpty) {
       stringBuffer.write("*Application parameters:* ```");
       for (final entry in report.applicationParameters.entries) {
         stringBuffer.write("${entry.key}: ${entry.value}\n");
