@@ -29,7 +29,7 @@ dependencies:
   path_provider_macos: ^2.0.0
   dio: ^4.0.0
   permission_handler: ^8.1.4+2
-  flutter_local_notifications: ^9.0.0-dev.4
+  flutter_local_notifications: ^9.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
