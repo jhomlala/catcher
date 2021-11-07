@@ -1,5 +1,7 @@
 ## 0.6.9
 * [BREAKING_CHANGE] Changed customMessageBuilder return type to FutureOr<String> in slack and discord handler.
+* Fixed screenshots example documents path.
+* Fixed logger issue.
 
 ## 0.6.8
 * Updated crashlytics example by Fred Grott (https://github.com/fredgrott)

@@ -152,6 +152,7 @@ class Catcher with ReportModeAction {
     _setupCurrentConfig();
     _setupReportModeActionInReportMode();
     _setupScreenshotManager();
+    _configureLogger();
     _localizationOptions = null;
   }
 
