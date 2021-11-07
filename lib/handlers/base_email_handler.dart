@@ -14,12 +14,13 @@ abstract class BaseEmailHandler extends ReportHandler {
   final HtmlEscape _htmlEscape = const HtmlEscape();
 
   BaseEmailHandler(
-      this.enableDeviceParameters,
-      this.enableApplicationParameters,
-      this.enableStackTrace,
-      this.enableCustomParameters,
-      this.emailTitle,
-      this.emailHeader);
+    this.enableDeviceParameters,
+    this.enableApplicationParameters,
+    this.enableStackTrace,
+    this.enableCustomParameters,
+    this.emailTitle,
+    this.emailHeader,
+  );
 
   ///Setup email title from [report].
   String getEmailTitle(Report report) {

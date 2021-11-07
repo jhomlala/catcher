@@ -89,7 +89,8 @@ class FileHandler extends ReportHandler {
   void _writeReportToFile(Report report) async {
     _printLog("Writing report to file");
     _writeLineToFile(
-        "============================== CATCHER LOG ==============================");
+      "============================== CATCHER LOG ==============================",
+    );
     _writeLineToFile("Crash occurred on ${report.dateTime}");
     _writeLineToFile("");
     if (enableDeviceParameters) {
@@ -111,7 +112,8 @@ class FileHandler extends ReportHandler {
       _logCustomParametersFormatted(report.customParameters);
     }
     _writeLineToFile(
-        "======================================================================");
+      "======================================================================",
+    );
   }
 
   void _logDeviceParametersFormatted(Map<String, dynamic> deviceParameters) {
@@ -122,7 +124,8 @@ class FileHandler extends ReportHandler {
   }
 
   void _logApplicationParametersFormatted(
-      Map<String, dynamic> applicationParameters) {
+    Map<String, dynamic> applicationParameters,
+  ) {
     _writeLineToFile("------- APP INFO -------");
     for (final entry in applicationParameters.entries) {
       _writeLineToFile("${entry.key}: ${entry.value}");

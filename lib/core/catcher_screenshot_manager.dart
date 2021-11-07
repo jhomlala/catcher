@@ -43,7 +43,7 @@ class CatcherScreenshotManager {
         return saveFile(content);
       }
       return null;
-    } catch (exception, stackTrace) {
+    } catch (exception) {
       _logger.warning("Failed to create screenshot file: $exception");
     }
   }

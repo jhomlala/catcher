@@ -126,7 +126,8 @@ class DiscordHandler extends ReportHandler {
       }
 
       _printLog(
-          "Server responded with code: ${response.statusCode} and message: ${response.statusMessage}");
+        "Server responded with code: ${response.statusCode} and message: ${response.statusMessage}",
+      );
       final statusCode = response.statusCode ?? 0;
       return statusCode >= 200 && statusCode < 300;
     } catch (exception) {

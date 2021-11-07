@@ -68,8 +68,10 @@ class Catcher with ReportModeAction {
     this.enableLogger = true,
     this.ensureInitialized = false,
     GlobalKey<NavigatorState>? navigatorKey,
-  }) : assert(rootWidget != null || runAppFunction != null,
-            "You need to provide rootWidget or runAppFunction") {
+  }) : assert(
+          rootWidget != null || runAppFunction != null,
+          "You need to provide rootWidget or runAppFunction",
+        ) {
     _configure(navigatorKey);
   }
 
@@ -86,9 +88,10 @@ class Catcher with ReportModeAction {
     _loadApplicationInfo();
 
     if (_currentConfig.handlers.isEmpty) {
-      _logger
-          .warning("Handlers list is empty. Configure at least one handler to "
-              "process error reports.");
+      _logger.warning(
+        "Handlers list is empty. Configure at least one handler to "
+        "process error reports.",
+      );
     } else {
       _logger.fine("Catcher configured successfully.");
     }
@@ -187,13 +190,15 @@ class Catcher with ReportModeAction {
 
     ///Web doesn't have Isolate error listener support
     if (!ApplicationProfileManager.isWeb()) {
-      Isolate.current.addErrorListener(RawReceivePort((dynamic pair) async {
-        final isolateError = pair as List<dynamic>;
-        _reportError(
-          isolateError.first.toString(),
-          isolateError.last.toString(),
-        );
-      }).sendPort);
+      Isolate.current.addErrorListener(
+        RawReceivePort((dynamic pair) async {
+          final isolateError = pair as List<dynamic>;
+          _reportError(
+            isolateError.first.toString(),
+            isolateError.last.toString(),
+          );
+        }).sendPort,
+      );
     }
 
     if (rootWidget != null) {
@@ -437,7 +442,8 @@ class Catcher with ReportModeAction {
   }
 
   LocalizationOptions _getDefaultLocalizationOptionsForLanguage(
-      String language) {
+    String language,
+  ) {
     switch (language.toLowerCase()) {
       case "en":
         return LocalizationOptions.buildDefaultEnglishOptions();
@@ -498,7 +504,8 @@ class Catcher with ReportModeAction {
     if (errorDetails?.silent == true &&
         _currentConfig.handleSilentError == false) {
       _logger.info(
-          "Report error skipped for error: $error. HandleSilentError is false.");
+        "Report error skipped for error: $error. HandleSilentError is false.",
+      );
       return;
     }
 
@@ -528,14 +535,16 @@ class Catcher with ReportModeAction {
 
     if (_isReportInReportsOccurencesMap(report)) {
       _logger.fine(
-          "Error: '$error' has been skipped to due to duplication occurence within ${_currentConfig.reportOccurrenceTimeout} ms.");
+        "Error: '$error' has been skipped to due to duplication occurence within ${_currentConfig.reportOccurrenceTimeout} ms.",
+      );
       return;
     }
 
     if (_currentConfig.filterFunction != null &&
         _currentConfig.filterFunction!(report) == false) {
       _logger.fine(
-          "Error: '$error' has been filtered from Catcher logs. Report will be skipped.");
+        "Error: '$error' has been filtered from Catcher logs. Report will be skipped.",
+      );
       return;
     }
     _cachedReports.add(report);
@@ -548,7 +557,8 @@ class Catcher with ReportModeAction {
     }
     if (!isReportModeSupportedInPlatform(report, reportMode)) {
       _logger.warning(
-          "$reportMode in not supported for ${describeEnum(report.platformType)} platform");
+        "$reportMode in not supported for ${describeEnum(report.platformType)} platform",
+      );
       return;
     }
 
@@ -559,7 +569,8 @@ class Catcher with ReportModeAction {
         reportMode.requestAction(report, _getContext());
       } else {
         _logger.warning(
-            "Couldn't use report mode because you didn't provide navigator key. Add navigator key to use this report mode.");
+          "Couldn't use report mode because you didn't provide navigator key. Add navigator key to use this report mode.",
+        );
       }
     } else {
       reportMode.requestAction(report, null);
@@ -588,7 +599,8 @@ class Catcher with ReportModeAction {
   }
 
   ReportHandler? _getReportHandlerFromExplicitExceptionHandlerMap(
-      dynamic error) {
+    dynamic error,
+  ) {
     final errorName = error != null ? error.toString().toLowerCase() : "";
     ReportHandler? reportHandler;
     _currentConfig.explicitExceptionHandlersMap.forEach((key, value) {
@@ -618,13 +630,15 @@ class Catcher with ReportModeAction {
   void _handleReport(Report report, ReportHandler reportHandler) {
     if (!isReportHandlerSupportedInPlatform(report, reportHandler)) {
       _logger.warning(
-          "$reportHandler in not supported for ${describeEnum(report.platformType)} platform");
+        "$reportHandler in not supported for ${describeEnum(report.platformType)} platform",
+      );
       return;
     }
 
     if (reportHandler.isContextRequired() && !_isContextValid()) {
       _logger.warning(
-          "Couldn't use report handler because you didn't provide navigator key. Add navigator key to use this report mode.");
+        "Couldn't use report handler because you didn't provide navigator key. Add navigator key to use this report mode.",
+      );
       return;
     }
 
@@ -632,7 +646,8 @@ class Catcher with ReportModeAction {
         .handle(report, _getContext())
         .catchError((dynamic handlerError) {
       _logger.warning(
-          "Error occurred in ${reportHandler.toString()}: ${handlerError.toString()}");
+        "Error occurred in ${reportHandler.toString()}: ${handlerError.toString()}",
+      );
     }).then((result) {
       _logger.info("${report.runtimeType} result: $result");
       if (!result) {
@@ -640,17 +655,22 @@ class Catcher with ReportModeAction {
       } else {
         _cachedReports.remove(report);
       }
-    }).timeout(Duration(milliseconds: _currentConfig.handlerTimeout),
-            onTimeout: () {
-      _logger.warning(
-          "${reportHandler.toString()} failed to report error because of timeout");
-    });
+    }).timeout(
+      Duration(milliseconds: _currentConfig.handlerTimeout),
+      onTimeout: () {
+        _logger.warning(
+          "${reportHandler.toString()} failed to report error because of timeout",
+        );
+      },
+    );
   }
 
   /// Checks is report handler is supported in given platform. Only supported
   /// report handlers in given platform can be used.
   bool isReportHandlerSupportedInPlatform(
-      Report report, ReportHandler reportHandler) {
+    Report report,
+    ReportHandler reportHandler,
+  ) {
     if (reportHandler.getSupportedPlatforms().isEmpty == true) {
       return false;
     }
@@ -687,13 +707,14 @@ class Catcher with ReportModeAction {
   }
 
   /// Add default error widget which replaces red screen of death (RSOD).
-  static void addDefaultErrorWidget(
-      {bool showStacktrace = true,
-      String title = "An application error has occurred",
-      String description =
-          "There was unexpected situation in application. Application has been "
-              "able to recover from error state.",
-      double maxWidthForSmallMode = 150}) {
+  static void addDefaultErrorWidget({
+    bool showStacktrace = true,
+    String title = "An application error has occurred",
+    String description =
+        "There was unexpected situation in application. Application has been "
+            "able to recover from error state.",
+    double maxWidthForSmallMode = 150,
+  }) {
     ErrorWidget.builder = (FlutterErrorDetails details) {
       return CatcherErrorWidget(
         details: details,

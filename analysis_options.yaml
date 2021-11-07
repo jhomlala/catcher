@@ -18,3 +18,5 @@ linter:
     invalid_dependency: false
     sort_pub_dependencies: false
     import_of_legacy_library_into_null_safe: false
+    use_build_context_synchronously: false
+    use_setters_to_change_properties: false

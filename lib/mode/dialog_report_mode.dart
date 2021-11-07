@@ -16,14 +16,16 @@ class DialogReportMode extends ReportMode {
     if (context != null) {
       if (CatcherUtils.isCupertinoAppAncestor(context)) {
         return showCupertinoDialog<void>(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) => _buildCupertinoDialog(report, context));
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => _buildCupertinoDialog(report, context),
+        );
       } else {
         return showDialog<void>(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) => _buildMaterialDialog(report, context));
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => _buildMaterialDialog(report, context),
+        );
       }
     }
   }

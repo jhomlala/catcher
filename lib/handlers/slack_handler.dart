@@ -60,7 +60,8 @@ class SlackHandler extends ReportHandler {
       final Response response =
           await _dio.post<dynamic>(webhookUrl, data: data);
       _printLog(
-          "Server responded with code: ${response.statusCode} and message: ${response.statusMessage}");
+        "Server responded with code: ${response.statusCode} and message: ${response.statusMessage}",
+      );
       final statusCode = response.statusCode ?? 0;
       return statusCode >= 200 && statusCode < 300;
     } catch (exception) {
