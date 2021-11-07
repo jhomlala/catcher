@@ -111,7 +111,8 @@ class NotificationReportMode extends ReportMode {
 
   void _sendNotification() async {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
-        channelId, channelName, channelDescription,
+        channelId, channelName,
+        channelDescription: channelDescription,
         importance: Importance.defaultImportance,
         priority: Priority.defaultPriority);
     var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
