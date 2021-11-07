@@ -11,7 +11,8 @@ class CatcherLogger {
       (LogRecord rec) {
         // ignore: avoid_print
         print(
-            '[${rec.time} | ${rec.loggerName} | ${rec.level.name}] ${rec.message}');
+          '[${rec.time} | ${rec.loggerName} | ${rec.level.name}] ${rec.message}',
+        );
       },
     );
   }

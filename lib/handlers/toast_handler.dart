@@ -33,13 +33,14 @@ class ToastHandler extends ReportHandler {
         ApplicationProfileManager.isIos() ||
         ApplicationProfileManager.isWeb()) {
       Fluttertoast.showToast(
-          msg: _getErrorMessage(error),
-          toastLength: _getLength(),
-          gravity: _getGravity(),
-          timeInSecForIosWeb: _getLengthIos(),
-          backgroundColor: backgroundColor,
-          textColor: textColor,
-          fontSize: textSize);
+        msg: _getErrorMessage(error),
+        toastLength: _getLength(),
+        gravity: _getGravity(),
+        timeInSecForIosWeb: _getLengthIos(),
+        backgroundColor: backgroundColor,
+        textColor: textColor,
+        fontSize: textSize,
+      );
     } else {
       Future.delayed(
         const Duration(milliseconds: 500),
@@ -49,12 +50,13 @@ class ToastHandler extends ReportHandler {
             PageRouteBuilder(
               opaque: false,
               pageBuilder: (_, __, ___) => FlutterToastPage(
-                  _getErrorMessage(error),
-                  _getGravity(),
-                  Duration(seconds: _getLengthIos()),
-                  backgroundColor,
-                  textColor,
-                  textSize),
+                _getErrorMessage(error),
+                _getGravity(),
+                Duration(seconds: _getLengthIos()),
+                backgroundColor,
+                textColor,
+                textSize,
+              ),
             ),
           );
         },
@@ -128,10 +130,15 @@ class FlutterToastPage extends StatefulWidget {
   final Color textColor;
   final double textSize;
 
-  const FlutterToastPage(this.text, this.gravity, this.duration,
-      this.backgroundColor, this.textColor, this.textSize,
-      {Key? key})
-      : super(key: key);
+  const FlutterToastPage(
+    this.text,
+    this.gravity,
+    this.duration,
+    this.backgroundColor,
+    this.textColor,
+    this.textSize, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   _FlutterToastPageState createState() => _FlutterToastPageState();
@@ -154,18 +161,19 @@ class _FlutterToastPageState extends State<FlutterToastPage> {
 
   void showToast() {
     _fToast.showToast(
-        child: Container(
-          color: widget.backgroundColor,
-          child: Text(
-            widget.text,
-            style: TextStyle(
-              color: widget.textColor,
-              fontSize: widget.textSize,
-            ),
+      child: Container(
+        color: widget.backgroundColor,
+        child: Text(
+          widget.text,
+          style: TextStyle(
+            color: widget.textColor,
+            fontSize: widget.textSize,
           ),
         ),
-        gravity: widget.gravity,
-        toastDuration: widget.duration);
+      ),
+      gravity: widget.gravity,
+      toastDuration: widget.duration,
+    );
     Future.delayed(
       Duration(milliseconds: widget.duration.inMilliseconds + 100),
       () {

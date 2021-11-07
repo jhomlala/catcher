@@ -1,3 +1,11 @@
+## 0.6.9
+* [BREAKING_CHANGE] Changed customMessageBuilder return type to FutureOr<String> in slack and discord handler.
+* Fixed screenshots example documents path.
+* Fixed logger issue.
+* Fixed lint.
+* Depdencies and Android 12 update by Nico Mexis (https://github.com/ThexXTURBOXx).
+* Removed deprecated splash screen from Android example.
+
 ## 0.6.8
 * Updated crashlytics example by Fred Grott (https://github.com/fredgrott)
 * Added custom message builder for slack handler by Salih Agić (https://github.com/salihagic)

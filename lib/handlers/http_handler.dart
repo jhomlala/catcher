@@ -65,9 +65,10 @@ class HttpHandler extends ReportHandler {
       }
 
       final Options options = Options(
-          sendTimeout: requestTimeout,
-          receiveTimeout: responseTimeout,
-          headers: mutableHeaders);
+        sendTimeout: requestTimeout,
+        receiveTimeout: responseTimeout,
+        headers: mutableHeaders,
+      );
 
       Response? response;
       _printLog("Calling: ${endpointUri.toString()}");
@@ -77,14 +78,21 @@ class HttpHandler extends ReportHandler {
           "payload_json": json,
           "file": await MultipartFile.fromFile(screenshotPath)
         });
-        response = await _dio.post<dynamic>(endpointUri.toString(),
-            data: formData, options: options);
+        response = await _dio.post<dynamic>(
+          endpointUri.toString(),
+          data: formData,
+          options: options,
+        );
       } else {
-        response = await _dio.post<dynamic>(endpointUri.toString(),
-            data: json, options: options);
+        response = await _dio.post<dynamic>(
+          endpointUri.toString(),
+          data: json,
+          options: options,
+        );
       }
       _printLog(
-          "HttpHandler response status: ${response.statusCode!} body: ${response.data!}");
+        "HttpHandler response status: ${response.statusCode!} body: ${response.data!}",
+      );
       return true;
     } catch (error, stackTrace) {
       _printLog("HttpHandler error: $error, stackTrace: $stackTrace");

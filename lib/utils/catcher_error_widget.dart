@@ -44,21 +44,23 @@ class CatcherErrorWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(20),
       child: Center(
-        child: ListView(children: [
-          _buildIcon(),
-          Text(
-            title,
-            style: const TextStyle(color: Colors.black, fontSize: 25),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 10),
-          Text(
-            _getDescription(),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 10),
-          _buildStackTraceWidget()
-        ]),
+        child: ListView(
+          children: [
+            _buildIcon(),
+            Text(
+              title,
+              style: const TextStyle(color: Colors.black, fontSize: 25),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 10),
+            Text(
+              _getDescription(),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 10),
+            _buildStackTraceWidget()
+          ],
+        ),
       ),
     );
   }

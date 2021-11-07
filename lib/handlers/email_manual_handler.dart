@@ -37,13 +37,14 @@ class EmailManualHandler extends BaseEmailHandler {
   Future<bool> _sendEmail(Report report) async {
     try {
       final MailOptions mailOptions = MailOptions(
-          body: _getEmailBody(report),
-          subject: getEmailTitle(report),
-          recipients: recipients,
-          isHTML: sendHtml,
-          attachments: [
-            report.screenshot?.path ?? "",
-          ]);
+        body: _getEmailBody(report),
+        subject: getEmailTitle(report),
+        recipients: recipients,
+        isHTML: sendHtml,
+        attachments: [
+          report.screenshot?.path ?? "",
+        ],
+      );
       _printLog("Creating mail request");
       await FlutterMailer.send(mailOptions);
       _printLog("Creating mail request success");

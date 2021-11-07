@@ -132,13 +132,17 @@ class PageWidgetState extends State<PageWidget> {
             children: <Widget>[
               TextButton(
                 onPressed: () => _onAcceptClicked(),
-                child: Text(widget
-                    .pageReportMode.localizationOptions.pageReportModeAccept),
+                child: Text(
+                  widget
+                      .pageReportMode.localizationOptions.pageReportModeAccept,
+                ),
               ),
               TextButton(
                 onPressed: () => _onCancelClicked(),
-                child: Text(widget
-                    .pageReportMode.localizationOptions.pageReportModeCancel),
+                child: Text(
+                  widget
+                      .pageReportMode.localizationOptions.pageReportModeCancel,
+                ),
               ),
             ],
           )

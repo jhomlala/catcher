@@ -66,9 +66,11 @@ class EmailAutoHandler extends BaseEmailHandler {
 
       final result = await send(message, _setupSmtpServer());
 
-      _printLog("Email result: mail: ${result.mail} "
-          "sending start time: ${result.messageSendingStart} "
-          "sending end time: ${result.messageSendingEnd}");
+      _printLog(
+        "Email result: mail: ${result.mail} "
+        "sending start time: ${result.messageSendingStart} "
+        "sending end time: ${result.messageSendingEnd}",
+      );
 
       return true;
     } catch (stacktrace, exception) {
@@ -79,11 +81,13 @@ class EmailAutoHandler extends BaseEmailHandler {
   }
 
   SmtpServer _setupSmtpServer() {
-    return SmtpServer(smtpHost,
-        port: smtpPort,
-        ssl: enableSsl,
-        username: senderEmail,
-        password: senderPassword);
+    return SmtpServer(
+      smtpHost,
+      port: smtpPort,
+      ssl: enableSsl,
+      username: senderEmail,
+      password: senderPassword,
+    );
   }
 
   void _printLog(String log) {

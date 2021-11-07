@@ -21,7 +21,8 @@ class ConsoleHandler extends ReportHandler {
   @override
   Future<bool> handle(Report report, BuildContext? context) {
     logger.info(
-        "============================== CATCHER LOG ==============================");
+      "============================== CATCHER LOG ==============================",
+    );
     logger.info("Crash occurred on ${report.dateTime}");
     logger.info("");
     if (enableDeviceParameters) {
@@ -42,7 +43,8 @@ class ConsoleHandler extends ReportHandler {
       _printCustomParametersFormatted(report.customParameters);
     }
     logger.info(
-        "======================================================================");
+      "======================================================================",
+    );
     return Future.value(true);
   }
 
@@ -54,7 +56,8 @@ class ConsoleHandler extends ReportHandler {
   }
 
   void _printApplicationParametersFormatted(
-      Map<String, dynamic> applicationParameters) {
+    Map<String, dynamic> applicationParameters,
+  ) {
     logger.info("------- APP INFO -------");
     for (final entry in applicationParameters.entries) {
       logger.info("${entry.key}: ${entry.value}");
