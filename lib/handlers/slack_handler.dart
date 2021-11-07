@@ -21,7 +21,7 @@ class SlackHandler extends ReportHandler {
   final bool enableApplicationParameters;
   final bool enableStackTrace;
   final bool enableCustomParameters;
-  final String Function(Report report)? customMessageBuilder;
+  final FutureOr<String> Function(Report report)? customMessageBuilder;
 
   SlackHandler(
     this.webhookUrl,
@@ -45,7 +45,7 @@ class SlackHandler extends ReportHandler {
       }
       String message = "";
       if (customMessageBuilder != null) {
-        message = customMessageBuilder!(report);
+        message = await customMessageBuilder!(report);
       } else {
         message = _buildMessage(report);
       }
