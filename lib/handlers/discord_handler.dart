@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:catcher/model/platform_type.dart';
@@ -17,7 +18,7 @@ class DiscordHandler extends ReportHandler {
   final bool enableApplicationParameters;
   final bool enableStackTrace;
   final bool enableCustomParameters;
-  final String Function(Report report)? customMessageBuilder;
+  final FutureOr<String> Function(Report report)? customMessageBuilder;
 
   DiscordHandler(
     this.webhookUrl, {
@@ -40,7 +41,7 @@ class DiscordHandler extends ReportHandler {
 
     String message = "";
     if (customMessageBuilder != null) {
-      message = customMessageBuilder!(report);
+      message = await customMessageBuilder!(report);
     } else {
       message = _buildMessage(report);
     }

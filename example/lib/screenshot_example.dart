@@ -7,10 +7,10 @@ import 'package:path_provider/path_provider.dart';
 void main() async {
   var catcher = Catcher(rootWidget: MyApp(), ensureInitialized: true);
   Directory? externalDir;
-  if (Platform.isAndroid || Platform.isIOS) {
+  if (Platform.isAndroid) {
     externalDir = await getExternalStorageDirectory();
   }
-  if (Platform.isMacOS) {
+  if (Platform.isIOS || Platform.isMacOS) {
     externalDir = await getApplicationDocumentsDirectory();
   }
   String path = "";
@@ -19,23 +19,24 @@ void main() async {
   }
 
   CatcherOptions debugOptions = CatcherOptions(
-      DialogReportMode(),
-      [
-        EmailManualHandler(["email1@email.com", "email2@email.com"],
-            enableDeviceParameters: true,
-            enableStackTrace: true,
-            enableCustomParameters: true,
-            enableApplicationParameters: true,
-            sendHtml: true,
-            emailTitle: "Sample Title",
-            emailHeader: "Sample Header",
-            printLogs: true)
-      ],
-      customParameters: <String, dynamic>{
-        "Test": "Test12345",
-        "Test2": "Test54321"
-      },
-      screenshotsPath: path);
+    DialogReportMode(),
+    [
+      EmailManualHandler(["email1@email.com", "email2@email.com"],
+          enableDeviceParameters: true,
+          enableStackTrace: true,
+          enableCustomParameters: true,
+          enableApplicationParameters: true,
+          sendHtml: true,
+          emailTitle: "Sample Title",
+          emailHeader: "Sample Header",
+          printLogs: true)
+    ],
+    customParameters: <String, dynamic>{
+      "Test": "Test12345",
+      "Test2": "Test54321"
+    },
+    screenshotsPath: path,
+  );
 
   catcher.updateConfig(debugConfig: debugOptions);
 }
