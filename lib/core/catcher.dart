@@ -27,7 +27,7 @@ class Catcher with ReportModeAction {
   final Widget? rootWidget;
 
   ///Run app function which will be ran
-  final void Function()? runAppFunction;
+  final FutureOr<void> Function()? runAppFunction;
 
   /// Instance of catcher config used in release mode
   CatcherOptions? releaseConfig;
@@ -206,20 +206,18 @@ class Catcher with ReportModeAction {
         runApp(rootWidget!);
       });
     } else if (runAppFunction != null) {
-      _runZonedGuarded(() {
-        runAppFunction!();
-      });
+      _runZonedGuarded(runAppFunction!);
     } else {
       throw ArgumentError("Provide rootWidget or runAppFunction to Catcher.");
     }
   }
 
-  void _runZonedGuarded(void Function() callback) {
+  void _runZonedGuarded(FutureOr<void> Function() callback) {
     runZonedGuarded<Future<void>>(() async {
       if (ensureInitialized) {
         WidgetsFlutterBinding.ensureInitialized();
       }
-      callback();
+      await callback();
     }, (dynamic error, StackTrace stackTrace) {
       _reportError(error, stackTrace);
     });
