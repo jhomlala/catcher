@@ -46,6 +46,7 @@ class CatcherScreenshotManager {
     } catch (exception) {
       _logger.warning("Failed to create screenshot file: $exception");
     }
+    return null;
   }
 
   Future<File> saveFile(Uint8List fileContent) async {

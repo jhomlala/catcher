@@ -1,10 +1,8 @@
 import 'package:catcher/catcher.dart';
 import 'package:catcher/model/platform_type.dart';
-import 'package:catcher/model/report_mode.dart';
 import 'package:catcher/utils/catcher_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class PageReportMode extends ReportMode {
   final bool showStackTrace;

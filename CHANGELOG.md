@@ -1,3 +1,7 @@
+## 0.7.0
+* Updated dependencies
+* Fixed Flutter 3.0 issues
+
 ## 0.6.9
 * [BREAKING_CHANGE] Changed customMessageBuilder return type to FutureOr<String> in slack and discord handler.
 * Fixed screenshots example documents path.
