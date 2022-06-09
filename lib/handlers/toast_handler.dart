@@ -29,9 +29,7 @@ class ToastHandler extends ReportHandler {
 
   @override
   Future<bool> handle(Report error, BuildContext? buildContext) async {
-    if (ApplicationProfileManager.isAndroid() ||
-        ApplicationProfileManager.isIos() ||
-        ApplicationProfileManager.isWeb()) {
+    if (ApplicationProfileManager.isAndroid() || ApplicationProfileManager.isIos() || ApplicationProfileManager.isWeb()) {
       Fluttertoast.showToast(
         msg: _getErrorMessage(error),
         toastLength: _getLength(),
@@ -151,7 +149,7 @@ class _FlutterToastPageState extends State<FlutterToastPage> {
   @override
   void initState() {
     _fToast.init(context);
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!_disposed && mounted) {
         showToast();
       }

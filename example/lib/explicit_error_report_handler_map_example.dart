@@ -1,17 +1,10 @@
 import 'package:catcher/catcher.dart';
-import 'package:catcher/model/catcher_options.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   var explicitMap = {"FormatException": ConsoleHandler()};
-  CatcherOptions debugOptions = CatcherOptions(
-      DialogReportMode(),
-      [
-        ConsoleHandler(),
-        HttpHandler(HttpRequestType.post, Uri.parse("https://httpstat.us/200"),
-            printLogs: true)
-      ],
-      explicitExceptionHandlersMap: explicitMap);
+  CatcherOptions debugOptions =
+      CatcherOptions(DialogReportMode(), [ConsoleHandler(), HttpHandler(HttpRequestType.post, Uri.parse("https://httpstat.us/200"), printLogs: true)], explicitExceptionHandlersMap: explicitMap);
   CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
     EmailManualHandler(["recipient@email.com"])
   ]);

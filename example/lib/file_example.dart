@@ -1,8 +1,6 @@
 import 'dart:io';
 
 import 'package:catcher/catcher.dart';
-import 'package:catcher/mode/dialog_report_mode.dart';
-import 'package:catcher/model/catcher_options.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -22,12 +20,9 @@ void main() async {
   }
   print("PATH: " + path);
 
-  CatcherOptions debugOptions = CatcherOptions(
-      DialogReportMode(), [FileHandler(File(path), printLogs: true)]);
-  CatcherOptions releaseOptions =
-      CatcherOptions(DialogReportMode(), [FileHandler(File(path))]);
-  catcher.updateConfig(
-      debugConfig: debugOptions, releaseConfig: releaseOptions);
+  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [FileHandler(File(path), printLogs: true)]);
+  CatcherOptions releaseOptions = CatcherOptions(DialogReportMode(), [FileHandler(File(path))]);
+  catcher.updateConfig(debugConfig: debugOptions, releaseConfig: releaseOptions);
 }
 
 class MyApp extends StatefulWidget {

@@ -1,16 +1,11 @@
 import 'package:catcher/catcher.dart';
-import 'package:catcher/model/catcher_options.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   var explicitReportModesMap = {"FormatException": PageReportMode()};
   CatcherOptions debugOptions = CatcherOptions(
     DialogReportMode(),
-    [
-      ConsoleHandler(),
-      HttpHandler(HttpRequestType.post, Uri.parse("https://httpstat.us/200"),
-          printLogs: true)
-    ],
+    [ConsoleHandler(), HttpHandler(HttpRequestType.post, Uri.parse("https://httpstat.us/200"), printLogs: true)],
     explicitExceptionReportModesMap: explicitReportModesMap,
   );
   CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
@@ -53,9 +48,7 @@ class ChildWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Column(children: <Widget>[
-        TextButton(
-            child: Text("Generate first error"),
-            onPressed: () => generateFirstError()),
+        TextButton(child: Text("Generate first error"), onPressed: () => generateFirstError()),
         TextButton(
           child: Text("Generate second error"),
           onPressed: () => generateSecondError(),
