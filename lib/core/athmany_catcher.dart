@@ -2,18 +2,18 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:isolate';
 
-import 'package:catcher/core/application_profile_manager.dart';
-import 'package:catcher/core/catcher_screenshot_manager.dart';
-import 'package:catcher/mode/report_mode_action_confirmed.dart';
-import 'package:catcher/model/application_profile.dart';
-import 'package:catcher/model/catcher_options.dart';
-import 'package:catcher/model/localization_options.dart';
-import 'package:catcher/model/platform_type.dart';
-import 'package:catcher/model/report.dart';
-import 'package:catcher/model/report_handler.dart';
-import 'package:catcher/model/report_mode.dart';
-import 'package:catcher/utils/catcher_error_widget.dart';
-import 'package:catcher/utils/catcher_logger.dart';
+import 'package:athmany_catcher/core/application_profile_manager.dart';
+import 'package:athmany_catcher/core/catcher_screenshot_manager.dart';
+import 'package:athmany_catcher/mode/report_mode_action_confirmed.dart';
+import 'package:athmany_catcher/model/application_profile.dart';
+import 'package:athmany_catcher/model/catcher_options.dart';
+import 'package:athmany_catcher/model/localization_options.dart';
+import 'package:athmany_catcher/model/platform_type.dart';
+import 'package:athmany_catcher/model/report.dart';
+import 'package:athmany_catcher/model/report_handler.dart';
+import 'package:athmany_catcher/model/report_mode.dart';
+import 'package:athmany_catcher/utils/catcher_error_widget.dart';
+import 'package:athmany_catcher/utils/catcher_logger.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +24,7 @@ class AthmanyCatcher with ReportModeAction {
   static GlobalKey<NavigatorState>? _navigatorKey;
 
   /// Root widget which will be ran
-  final Widget? rootWidget;
+  final Widget? appWidget;
 
   ///Run app function which will be ran
   final void Function()? runAppFunction;
@@ -60,7 +60,7 @@ class AthmanyCatcher with ReportModeAction {
 
   /// Builds catcher instance
   AthmanyCatcher({
-    this.rootWidget,
+    this.appWidget,
     this.runAppFunction,
     this.releaseConfig,
     this.debugConfig,
@@ -69,7 +69,7 @@ class AthmanyCatcher with ReportModeAction {
     this.ensureInitialized = false,
     GlobalKey<NavigatorState>? navigatorKey,
   }) : assert(
-          rootWidget != null || runAppFunction != null,
+          appWidget != null || runAppFunction != null,
           "You need to provide rootWidget or runAppFunction",
         ) {
     _configure(navigatorKey);
@@ -201,9 +201,9 @@ class AthmanyCatcher with ReportModeAction {
       );
     }
 
-    if (rootWidget != null) {
+    if (appWidget != null) {
       _runZonedGuarded(() {
-        runApp(rootWidget!);
+        runApp(appWidget!);
       });
     } else if (runAppFunction != null) {
       _runZonedGuarded(() {
@@ -322,8 +322,7 @@ class AthmanyCatcher with ReportModeAction {
     try {
       _deviceParameters["computerName"] = windowsDeviceInfo.computerName;
       _deviceParameters["numberOfCores"] = windowsDeviceInfo.numberOfCores;
-      _deviceParameters["systemMemoryInMegabytes"] =
-          windowsDeviceInfo.systemMemoryInMegabytes;
+      _deviceParameters["systemMemoryInMegabytes"] = windowsDeviceInfo.systemMemoryInMegabytes;
     } catch (exception) {
       _logger.warning("Load Windows parameters failed: $exception");
     }
@@ -337,8 +336,7 @@ class AthmanyCatcher with ReportModeAction {
       _deviceParameters["appVersion"] = webBrowserInfo.appVersion;
       _deviceParameters["browserName"] = webBrowserInfo.browserName.toString();
       _deviceParameters["deviceMemory"] = webBrowserInfo.deviceMemory;
-      _deviceParameters["hardwareConcurrency"] =
-          webBrowserInfo.hardwareConcurrency;
+      _deviceParameters["hardwareConcurrency"] = webBrowserInfo.hardwareConcurrency;
       _deviceParameters["languages"] = webBrowserInfo.languages;
       _deviceParameters["maxTouchPoints"] = webBrowserInfo.maxTouchPoints;
       _deviceParameters["platform"] = webBrowserInfo.platform;
@@ -364,8 +362,7 @@ class AthmanyCatcher with ReportModeAction {
       _deviceParameters["fingerprint"] = androidDeviceInfo.fingerprint;
       _deviceParameters["hardware"] = androidDeviceInfo.hardware;
       _deviceParameters["host"] = androidDeviceInfo.host;
-      _deviceParameters["isPhysicalDevice"] =
-          androidDeviceInfo.isPhysicalDevice;
+      _deviceParameters["isPhysicalDevice"] = androidDeviceInfo.isPhysicalDevice;
       _deviceParameters["manufacturer"] = androidDeviceInfo.manufacturer;
       _deviceParameters["model"] = androidDeviceInfo.model;
       _deviceParameters["product"] = androidDeviceInfo.product;
@@ -373,14 +370,11 @@ class AthmanyCatcher with ReportModeAction {
       _deviceParameters["type"] = androidDeviceInfo.type;
       _deviceParameters["versionBaseOs"] = androidDeviceInfo.version.baseOS;
       _deviceParameters["versionCodename"] = androidDeviceInfo.version.codename;
-      _deviceParameters["versionIncremental"] =
-          androidDeviceInfo.version.incremental;
-      _deviceParameters["versionPreviewSdk"] =
-          androidDeviceInfo.version.previewSdkInt;
+      _deviceParameters["versionIncremental"] = androidDeviceInfo.version.incremental;
+      _deviceParameters["versionPreviewSdk"] = androidDeviceInfo.version.previewSdkInt;
       _deviceParameters["versionRelease"] = androidDeviceInfo.version.release;
       _deviceParameters["versionSdk"] = androidDeviceInfo.version.sdkInt;
-      _deviceParameters["versionSecurityPatch"] =
-          androidDeviceInfo.version.securityPatch;
+      _deviceParameters["versionSecurityPatch"] = androidDeviceInfo.version.securityPatch;
     } catch (exception) {
       _logger.warning("Load Android parameters failed: $exception");
     }
@@ -405,8 +399,7 @@ class AthmanyCatcher with ReportModeAction {
   }
 
   void _loadApplicationInfo() {
-    _applicationParameters["environment"] =
-        describeEnum(ApplicationProfileManager.getApplicationProfile());
+    _applicationParameters["environment"] = describeEnum(ApplicationProfileManager.getApplicationProfile());
 
     PackageInfo.fromPlatform().then((packageInfo) {
       _applicationParameters["version"] = packageInfo.version;
@@ -427,16 +420,14 @@ class AthmanyCatcher with ReportModeAction {
       }
       if (_currentConfig.localizationOptions.isNotEmpty == true) {
         for (final options in _currentConfig.localizationOptions) {
-          if (options.languageCode.toLowerCase() ==
-              locale.languageCode.toLowerCase()) {
+          if (options.languageCode.toLowerCase() == locale.languageCode.toLowerCase()) {
             _localizationOptions = options;
           }
         }
       }
     }
 
-    _localizationOptions ??=
-        _getDefaultLocalizationOptionsForLanguage(locale.languageCode);
+    _localizationOptions ??= _getDefaultLocalizationOptionsForLanguage(locale.languageCode);
     _setupLocalizationsOptionsInReportMode();
     _setupLocalizationsOptionsInReportsHandler();
   }
@@ -501,8 +492,7 @@ class AthmanyCatcher with ReportModeAction {
     dynamic stackTrace, {
     FlutterErrorDetails? errorDetails,
   }) async {
-    if (errorDetails?.silent == true &&
-        _currentConfig.handleSilentError == false) {
+    if (errorDetails?.silent == true && _currentConfig.handleSilentError == false) {
       _logger.info(
         "Report error skipped for error: $error. HandleSilentError is false.",
       );
@@ -540,16 +530,14 @@ class AthmanyCatcher with ReportModeAction {
       return;
     }
 
-    if (_currentConfig.filterFunction != null &&
-        _currentConfig.filterFunction!(report) == false) {
+    if (_currentConfig.filterFunction != null && _currentConfig.filterFunction!(report) == false) {
       _logger.fine(
         "Error: '$error' has been filtered from Catcher logs. Report will be skipped.",
       );
       return;
     }
     _cachedReports.add(report);
-    ReportMode? reportMode =
-        _getReportModeFromExplicitExceptionReportModeMap(error);
+    ReportMode? reportMode = _getReportModeFromExplicitExceptionReportModeMap(error);
     if (reportMode != null) {
       _logger.info("Using explicit report mode for error");
     } else {
@@ -614,8 +602,7 @@ class AthmanyCatcher with ReportModeAction {
 
   @override
   void onActionConfirmed(Report report) {
-    final ReportHandler? reportHandler =
-        _getReportHandlerFromExplicitExceptionHandlerMap(report.error);
+    final ReportHandler? reportHandler = _getReportHandlerFromExplicitExceptionHandlerMap(report.error);
     if (reportHandler != null) {
       _logger.info("Using explicit report handler");
       _handleReport(report, reportHandler);
@@ -642,9 +629,7 @@ class AthmanyCatcher with ReportModeAction {
       return;
     }
 
-    reportHandler
-        .handle(report, _getContext())
-        .catchError((dynamic handlerError) {
+    reportHandler.handle(report, _getContext()).catchError((dynamic handlerError) {
       _logger.warning(
         "Error occurred in ${reportHandler.toString()}: ${handlerError.toString()}",
       );
@@ -679,9 +664,7 @@ class AthmanyCatcher with ReportModeAction {
 
   @override
   void onActionRejected(Report report) {
-    _currentConfig.handlers
-        .where((handler) => handler.shouldHandleWhenRejected())
-        .forEach((handler) {
+    _currentConfig.handlers.where((handler) => handler.shouldHandleWhenRejected()).forEach((handler) {
       _handleReport(report, handler);
     });
 
@@ -710,9 +693,8 @@ class AthmanyCatcher with ReportModeAction {
   static void addDefaultErrorWidget({
     bool showStacktrace = true,
     String title = "An application error has occurred",
-    String description =
-        "There was unexpected situation in application. Application has been "
-            "able to recover from error state.",
+    String description = "There was unexpected situation in application. Application has been "
+        "able to recover from error state.",
     double maxWidthForSmallMode = 150,
   }) {
     ErrorWidget.builder = (FlutterErrorDetails details) {
@@ -755,8 +737,7 @@ class AthmanyCatcher with ReportModeAction {
     final int occurenceTimeout = _currentConfig.reportOccurrenceTimeout;
     final DateTime nowDateTime = DateTime.now();
     _reportsOcurrenceMap.removeWhere((key, value) {
-      final DateTime occurenceWithTimeout =
-          key.add(Duration(milliseconds: occurenceTimeout));
+      final DateTime occurenceWithTimeout = key.add(Duration(milliseconds: occurenceTimeout));
       return nowDateTime.isAfter(occurenceWithTimeout);
     });
   }

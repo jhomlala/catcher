@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:catcher/model/platform_type.dart';
+import 'package:athmany_catcher/model/platform_type.dart';
 import 'package:flutter/foundation.dart';
 
 class Report {
@@ -65,10 +65,18 @@ class Report {
       json["applicationParameters"] = applicationParameters;
     }
     if (enableStackTrace) {
-      json["stackTrace"] = stackTrace.toString();
+      final stack = <String, dynamic>{};
+      final _stackArrary = stackTrace.toString().split("\n");
+      for (final entry in _stackArrary) {
+        stack['${_stackArrary.indexOf(entry)}'] = entry;
+      }
+      json["stackTrace"] = stack;
     }
     if (enableCustomParameters) {
       json["customParameters"] = customParameters;
+    }
+    if (customParameters.isNotEmpty) {
+      json.remove('customParameters');
     }
     return json;
   }

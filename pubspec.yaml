@@ -1,4 +1,4 @@
-name: catcher
+name: athmany_catcher
 description: Plugin for error catching which provides multiple handlers for dealing with errors when they are not caught by the developer.
 version: 0.6.9
 #author: Jakub Homlala <jhomlala@gmail.com>

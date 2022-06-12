@@ -31,7 +31,7 @@ flutter packages get
 Then add this import:
 
 ```dart
-import 'package:catcher/catcher.dart';
+import 'package:athmany_catcher/catcher.dart';
 ```
 
 ## Table of contents
@@ -91,7 +91,7 @@ Here is complete example:
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:catcher/catcher.dart';
+import 'package:athmany_catcher/catcher.dart';
 
 main() {
   /// STEP 1. Create catcher configuration. 
@@ -441,7 +441,7 @@ Complete Example:
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:catcher/catcher.dart';
+import 'package:athmany_catcher/catcher.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 main() {

@@ -1,6 +1,6 @@
-import 'package:catcher/model/platform_type.dart';
-import 'package:catcher/model/report.dart';
-import 'package:catcher/model/report_handler.dart';
+import 'package:athmany_catcher/model/platform_type.dart';
+import 'package:athmany_catcher/model/report.dart';
+import 'package:athmany_catcher/model/report_handler.dart';
 import 'package:flutter/material.dart';
 
 class ConsoleHandler extends ReportHandler {
@@ -73,9 +73,9 @@ class ConsoleHandler extends ReportHandler {
 
   void _printStackTraceFormatted(StackTrace? stackTrace) {
     logger.info("------- STACK TRACE -------");
-    // for (final entry in stackTrace.toString().split("\n")[0]) {
-    logger.info(stackTrace.toString().split("\n")[0]);
-    // }
+    for (final entry in stackTrace.toString().split("\n")) {
+      logger.info(entry);
+    }
   }
 
   @override

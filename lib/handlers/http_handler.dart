@@ -1,15 +1,15 @@
 import 'dart:collection';
 
-import 'package:catcher/model/http_request_type.dart';
-import 'package:catcher/model/platform_type.dart';
-import 'package:catcher/model/report.dart';
-import 'package:catcher/model/report_handler.dart';
-import 'package:catcher/utils/catcher_utils.dart';
+import 'package:athmany_catcher/model/http_request_type.dart';
+import 'package:athmany_catcher/model/platform_type.dart';
+import 'package:athmany_catcher/model/report.dart';
+import 'package:athmany_catcher/model/report_handler.dart';
+import 'package:athmany_catcher/utils/catcher_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class HttpHandler extends ReportHandler {
-  final  _dio = Dio();
+  final _dio = Dio();
 
   final HttpRequestType requestType;
   final Uri endpointUri;

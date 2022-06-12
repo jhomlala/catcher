@@ -1,6 +1,6 @@
-import 'package:catcher/athmany_catcher.dart';
-import 'package:catcher/model/platform_type.dart';
-import 'package:catcher/utils/catcher_utils.dart';
+import 'package:athmany_catcher/athmany_catcher.dart';
+import 'package:athmany_catcher/model/platform_type.dart';
+import 'package:athmany_catcher/utils/catcher_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

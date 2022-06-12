@@ -150,7 +150,7 @@ with Http Handler, Email Auto Handler, Email Manual Handler, Discord Handler.
 ## 0.3.14
 
 * General refactor
-* [BREAKING_CHANGE] You should use import "import 'package:catcher/catcher.dart';" instead import 'package:catcher/catcher_plugin.dart';
+* [BREAKING_CHANGE] You should use import "import 'package:athmany_catcher/catcher.dart';" instead import 'package:athmany_catcher/catcher_plugin.dart';
 
 ## 0.3.13
 

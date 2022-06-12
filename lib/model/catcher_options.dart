@@ -1,11 +1,11 @@
-import 'package:catcher/handlers/console_handler.dart';
-import 'package:catcher/mode/dialog_report_mode.dart';
-import 'package:catcher/mode/silent_report_mode.dart';
-import 'package:catcher/model/localization_options.dart';
-import 'package:catcher/model/report.dart';
-import 'package:catcher/model/report_handler.dart';
-import 'package:catcher/model/report_mode.dart';
-import 'package:catcher/utils/catcher_logger.dart';
+import 'package:athmany_catcher/handlers/console_handler.dart';
+import 'package:athmany_catcher/mode/dialog_report_mode.dart';
+import 'package:athmany_catcher/mode/silent_report_mode.dart';
+import 'package:athmany_catcher/model/localization_options.dart';
+import 'package:athmany_catcher/model/report.dart';
+import 'package:athmany_catcher/model/report_handler.dart';
+import 'package:athmany_catcher/model/report_mode.dart';
+import 'package:athmany_catcher/utils/catcher_logger.dart';
 
 class CatcherOptions {
   /// Handlers that should be used
