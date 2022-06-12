@@ -9,7 +9,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class HttpHandler extends ReportHandler {
-  final Dio _dio = Dio();
+  final  _dio = Dio();
 
   final HttpRequestType requestType;
   final Uri endpointUri;
@@ -21,6 +21,7 @@ class HttpHandler extends ReportHandler {
   final bool enableApplicationParameters;
   final bool enableStackTrace;
   final bool enableCustomParameters;
+  final Map<String, dynamic> customParameters;
 
   HttpHandler(
     this.requestType,
@@ -33,7 +34,9 @@ class HttpHandler extends ReportHandler {
     this.enableApplicationParameters = true,
     this.enableStackTrace = true,
     this.enableCustomParameters = false,
-  }) : headers = headers ?? <String, dynamic>{};
+    Map<String, dynamic>? customParameters,
+  })  : headers = headers ?? <String, dynamic>{},
+        customParameters = customParameters ?? <String, dynamic>{};
 
   @override
   Future<bool> handle(Report error, BuildContext? context) async {
@@ -58,8 +61,7 @@ class HttpHandler extends ReportHandler {
         enableStackTrace: enableStackTrace,
         enableCustomParameters: enableCustomParameters,
       );
-      final HashMap<String, dynamic> mutableHeaders =
-          HashMap<String, dynamic>();
+      final HashMap<String, dynamic> mutableHeaders = HashMap<String, dynamic>();
       if (headers.isNotEmpty == true) {
         mutableHeaders.addAll(headers);
       }
@@ -74,10 +76,7 @@ class HttpHandler extends ReportHandler {
       _printLog("Calling: ${endpointUri.toString()}");
       if (report.screenshot != null) {
         final screenshotPath = report.screenshot?.path ?? "";
-        final FormData formData = FormData.fromMap(<String, dynamic>{
-          "payload_json": json,
-          "file": await MultipartFile.fromFile(screenshotPath)
-        });
+        final FormData formData = FormData.fromMap(<String, dynamic>{"payload_json": json, "file": await MultipartFile.fromFile(screenshotPath)});
         response = await _dio.post<dynamic>(
           endpointUri.toString(),
           data: formData,

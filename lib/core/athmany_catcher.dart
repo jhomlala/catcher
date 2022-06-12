@@ -19,8 +19,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-class Catcher with ReportModeAction {
-  static late Catcher _instance;
+class AthmanyCatcher with ReportModeAction {
+  static late AthmanyCatcher _instance;
   static GlobalKey<NavigatorState>? _navigatorKey;
 
   /// Root widget which will be ran
@@ -59,7 +59,7 @@ class Catcher with ReportModeAction {
   }
 
   /// Builds catcher instance
-  Catcher({
+  AthmanyCatcher({
     this.rootWidget,
     this.runAppFunction,
     this.releaseConfig,
@@ -779,7 +779,7 @@ class Catcher with ReportModeAction {
   }
 
   ///Get current Catcher instance.
-  static Catcher getInstance() {
+  static AthmanyCatcher getInstance() {
     return _instance;
   }
 }
