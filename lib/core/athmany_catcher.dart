@@ -5,7 +5,6 @@ import 'dart:isolate';
 import 'package:athmany_catcher/core/application_profile_manager.dart';
 import 'package:athmany_catcher/core/catcher_screenshot_manager.dart';
 import 'package:athmany_catcher/mode/report_mode_action_confirmed.dart';
-import 'package:athmany_catcher/model/application_profile.dart';
 import 'package:athmany_catcher/model/catcher_options.dart';
 import 'package:athmany_catcher/model/localization_options.dart';
 import 'package:athmany_catcher/model/platform_type.dart';
@@ -19,6 +18,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import '../handlers/console_handler.dart';
+import '../handlers/http_handler.dart';
+import '../mode/silent_report_mode.dart';
+import '../model/http_request_type.dart';
+
 class AthmanyCatcher with ReportModeAction {
   static late AthmanyCatcher _instance;
   static GlobalKey<NavigatorState>? _navigatorKey;
@@ -26,17 +30,10 @@ class AthmanyCatcher with ReportModeAction {
   /// Root widget which will be ran
   final Widget? appWidget;
 
-  ///Run app function which will be ran
-  final void Function()? runAppFunction;
-
-  /// Instance of catcher config used in release mode
-  CatcherOptions? releaseConfig;
+  final Map<String, dynamic> customParameters;
 
   /// Instance of catcher config used in debug mode
   CatcherOptions? debugConfig;
-
-  /// Instance of catcher config used in profile mode
-  CatcherOptions? profileConfig;
 
   /// Should catcher logs be enabled
   final bool enableLogger;
@@ -60,16 +57,13 @@ class AthmanyCatcher with ReportModeAction {
 
   /// Builds catcher instance
   AthmanyCatcher({
-    this.appWidget,
-    this.runAppFunction,
-    this.releaseConfig,
-    this.debugConfig,
-    this.profileConfig,
+    required this.appWidget,
+    required this.customParameters,
     this.enableLogger = true,
     this.ensureInitialized = false,
     GlobalKey<NavigatorState>? navigatorKey,
   }) : assert(
-          appWidget != null || runAppFunction != null,
+          appWidget != null,
           "You need to provide rootWidget or runAppFunction",
         ) {
     _configure(navigatorKey);
@@ -78,15 +72,13 @@ class AthmanyCatcher with ReportModeAction {
   void _configure(GlobalKey<NavigatorState>? navigatorKey) {
     _instance = this;
     _configureNavigatorKey(navigatorKey);
-    _setupCurrentConfig();
     _configureLogger();
     _setupErrorHooks();
     _setupReportModeActionInReportMode();
     _setupScreenshotManager();
-
     _loadDeviceInfo();
     _loadApplicationInfo();
-
+    _updateConfig();
     if (_currentConfig.handlers.isEmpty) {
       _logger.warning(
         "Handlers list is empty. Configure at least one handler to "
@@ -105,54 +97,20 @@ class AthmanyCatcher with ReportModeAction {
     }
   }
 
-  void _setupCurrentConfig() {
-    switch (ApplicationProfileManager.getApplicationProfile()) {
-      case ApplicationProfile.release:
-        {
-          if (releaseConfig != null) {
-            _currentConfig = releaseConfig!;
-          } else {
-            _currentConfig = CatcherOptions.getDefaultReleaseOptions();
-          }
-          break;
-        }
-      case ApplicationProfile.debug:
-        {
-          if (debugConfig != null) {
-            _currentConfig = debugConfig!;
-          } else {
-            _currentConfig = CatcherOptions.getDefaultDebugOptions();
-          }
-          break;
-        }
-      case ApplicationProfile.profile:
-        {
-          if (profileConfig != null) {
-            _currentConfig = profileConfig!;
-          } else {
-            _currentConfig = CatcherOptions.getDefaultProfileOptions();
-          }
-          break;
-        }
-    }
-  }
-
   ///Update config after initialization
-  void updateConfig({
+  void _updateConfig({
     CatcherOptions? debugConfig,
-    CatcherOptions? profileConfig,
-    CatcherOptions? releaseConfig,
   }) {
     if (debugConfig != null) {
-      this.debugConfig = debugConfig;
+      this.debugConfig = CatcherOptions(
+        SilentReportMode(),
+        [
+          HttpHandler(HttpRequestType.post, Uri.parse("http://athmany.tech/api/method/business_layer.pos_business_layer.doctype.pos_error_log.pos_error_log.new_pos_error_log"),
+              printLogs: true, customParameters: customParameters),
+          ConsoleHandler(),
+        ],
+      );
     }
-    if (profileConfig != null) {
-      this.profileConfig = profileConfig;
-    }
-    if (releaseConfig != null) {
-      this.releaseConfig = releaseConfig;
-    }
-    _setupCurrentConfig();
     _setupReportModeActionInReportMode();
     _setupScreenshotManager();
     _configureLogger();
@@ -204,10 +162,6 @@ class AthmanyCatcher with ReportModeAction {
     if (appWidget != null) {
       _runZonedGuarded(() {
         runApp(appWidget!);
-      });
-    } else if (runAppFunction != null) {
-      _runZonedGuarded(() {
-        runAppFunction!();
       });
     } else {
       throw ArgumentError("Provide rootWidget or runAppFunction to Catcher.");

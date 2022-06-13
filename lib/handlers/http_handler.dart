@@ -61,6 +61,12 @@ class HttpHandler extends ReportHandler {
         enableStackTrace: enableStackTrace,
         enableCustomParameters: enableCustomParameters,
       );
+      final _request = {
+        "method": "ddd",
+        "date_time": "2022-03-13 15:09:59",
+        "pos_profile": "بسطة جورمية GP BSTAH",
+        "error": json,
+      };
       final HashMap<String, dynamic> mutableHeaders = HashMap<String, dynamic>();
       if (headers.isNotEmpty == true) {
         mutableHeaders.addAll(headers);
@@ -85,7 +91,7 @@ class HttpHandler extends ReportHandler {
       } else {
         response = await _dio.post<dynamic>(
           endpointUri.toString(),
-          data: json,
+          data: _request,
           options: options,
         );
       }

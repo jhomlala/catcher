@@ -2,22 +2,9 @@ import 'package:athmany_catcher/athmany_catcher.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  final options = CatcherOptions(
-    SilentReportMode(),
-    [
-      HttpHandler(
-        HttpRequestType.post,
-        Uri.parse("http://athmany.tech/api/method/business_layer.pos_business_layer.doctype.pos_error_log.pos_error_log.new_pos_error_log"),
-        printLogs: true,
-      ),
-      ConsoleHandler(),
-    ],
-  );
-
   AthmanyCatcher(
     appWidget: const MyApp(),
-    debugConfig: options,
-    releaseConfig: options,
+    customParameters: {}
   );
 }
 
@@ -66,7 +53,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-  int x=0;
+  int x = 0;
 
   void _incrementCounter() {
     setState(() {
