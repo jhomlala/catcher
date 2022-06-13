@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 
 void main() {
   AthmanyCatcher(
-    appWidget: const MyApp(),
-    customParameters: {}
+    child: const MyApp(),
   );
 }
 

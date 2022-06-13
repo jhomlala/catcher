@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:isolate';
 
 import 'package:athmany_catcher/core/application_profile_manager.dart';
 import 'package:athmany_catcher/core/catcher_screenshot_manager.dart';
@@ -28,9 +27,9 @@ class AthmanyCatcher with ReportModeAction {
   static GlobalKey<NavigatorState>? _navigatorKey;
 
   /// Root widget which will be ran
-  final Widget? appWidget;
+  final Widget? child;
 
-  final Map<String, dynamic> customParameters;
+  final Map<String, dynamic>? customParameters;
 
   /// Instance of catcher config used in debug mode
   CatcherOptions? debugConfig;
@@ -57,13 +56,13 @@ class AthmanyCatcher with ReportModeAction {
 
   /// Builds catcher instance
   AthmanyCatcher({
-    required this.appWidget,
-    required this.customParameters,
+    required this.child,
+    this.customParameters,
     this.enableLogger = true,
     this.ensureInitialized = false,
     GlobalKey<NavigatorState>? navigatorKey,
   }) : assert(
-          appWidget != null,
+          child != null,
           "You need to provide rootWidget or runAppFunction",
         ) {
     _configure(navigatorKey);
@@ -146,22 +145,9 @@ class AthmanyCatcher with ReportModeAction {
       _reportError(details.exception, details.stack, errorDetails: details);
     };
 
-    ///Web doesn't have Isolate error listener support
-    if (!ApplicationProfileManager.isWeb()) {
-      Isolate.current.addErrorListener(
-        RawReceivePort((dynamic pair) async {
-          final isolateError = pair as List<dynamic>;
-          _reportError(
-            isolateError.first.toString(),
-            isolateError.last.toString(),
-          );
-        }).sendPort,
-      );
-    }
-
-    if (appWidget != null) {
+    if (child != null) {
       _runZonedGuarded(() {
-        runApp(appWidget!);
+        runApp(child!);
       });
     } else {
       throw ArgumentError("Provide rootWidget or runAppFunction to Catcher.");
