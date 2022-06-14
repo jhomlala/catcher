@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:catcher/model/platform_type.dart';
-import 'package:catcher/model/report.dart';
-import 'package:catcher/model/report_handler.dart';
+import 'package:athmany_catcher/model/platform_type.dart';
+import 'package:athmany_catcher/model/report.dart';
+import 'package:athmany_catcher/model/report_handler.dart';
 import 'package:flutter/material.dart';
 
 class FileHandler extends ReportHandler {

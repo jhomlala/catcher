@@ -1,4 +1,4 @@
-import 'package:catcher/model/application_profile.dart';
+import 'package:athmany_catcher/model/application_profile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:universal_io/io.dart';
 

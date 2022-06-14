@@ -1,4 +1,4 @@
-import 'package:catcher/model/report.dart';
+import 'package:athmany_catcher/model/report.dart';
 
 abstract class ReportModeAction {
   ///Code which should be triggered if report mode has been confirmed

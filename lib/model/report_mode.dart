@@ -1,7 +1,7 @@
-import 'package:catcher/mode/report_mode_action_confirmed.dart';
-import 'package:catcher/model/localization_options.dart';
-import 'package:catcher/model/platform_type.dart';
-import 'package:catcher/model/report.dart';
+import 'package:athmany_catcher/mode/report_mode_action_confirmed.dart';
+import 'package:athmany_catcher/model/localization_options.dart';
+import 'package:athmany_catcher/model/platform_type.dart';
+import 'package:athmany_catcher/model/report.dart';
 import 'package:flutter/widgets.dart';
 
 abstract class ReportMode {
@@ -40,8 +40,7 @@ abstract class ReportMode {
   }
 
   /// Get currently used localization options
-  LocalizationOptions get localizationOptions =>
-      _localizationOptions ?? LocalizationOptions.buildDefaultEnglishOptions();
+  LocalizationOptions get localizationOptions => _localizationOptions ?? LocalizationOptions.buildDefaultEnglishOptions();
 
   /// Get supported platform list
   List<PlatformType> getSupportedPlatforms();

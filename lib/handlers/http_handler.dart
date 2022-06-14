@@ -1,15 +1,15 @@
 import 'dart:collection';
 
-import 'package:catcher/model/http_request_type.dart';
-import 'package:catcher/model/platform_type.dart';
-import 'package:catcher/model/report.dart';
-import 'package:catcher/model/report_handler.dart';
-import 'package:catcher/utils/catcher_utils.dart';
+import 'package:athmany_catcher/model/http_request_type.dart';
+import 'package:athmany_catcher/model/platform_type.dart';
+import 'package:athmany_catcher/model/report.dart';
+import 'package:athmany_catcher/model/report_handler.dart';
+import 'package:athmany_catcher/utils/catcher_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class HttpHandler extends ReportHandler {
-  final Dio _dio = Dio();
+  final _dio = Dio();
 
   final HttpRequestType requestType;
   final Uri endpointUri;
@@ -21,6 +21,7 @@ class HttpHandler extends ReportHandler {
   final bool enableApplicationParameters;
   final bool enableStackTrace;
   final bool enableCustomParameters;
+  final Map<String, dynamic> customParameters;
 
   HttpHandler(
     this.requestType,
@@ -33,7 +34,9 @@ class HttpHandler extends ReportHandler {
     this.enableApplicationParameters = true,
     this.enableStackTrace = true,
     this.enableCustomParameters = false,
-  }) : headers = headers ?? <String, dynamic>{};
+    Map<String, dynamic>? customParameters,
+  })  : headers = headers ?? <String, dynamic>{},
+        customParameters = customParameters ?? <String, dynamic>{};
 
   @override
   Future<bool> handle(Report error, BuildContext? context) async {
@@ -58,8 +61,13 @@ class HttpHandler extends ReportHandler {
         enableStackTrace: enableStackTrace,
         enableCustomParameters: enableCustomParameters,
       );
-      final HashMap<String, dynamic> mutableHeaders =
-          HashMap<String, dynamic>();
+      final _request = {
+        "method": "ddd",
+        "date_time": "2022-03-13 15:09:59",
+        "pos_profile": "بسطة جورمية GP BSTAH",
+        "error": json,
+      };
+      final HashMap<String, dynamic> mutableHeaders = HashMap<String, dynamic>();
       if (headers.isNotEmpty == true) {
         mutableHeaders.addAll(headers);
       }
@@ -74,10 +82,7 @@ class HttpHandler extends ReportHandler {
       _printLog("Calling: ${endpointUri.toString()}");
       if (report.screenshot != null) {
         final screenshotPath = report.screenshot?.path ?? "";
-        final FormData formData = FormData.fromMap(<String, dynamic>{
-          "payload_json": json,
-          "file": await MultipartFile.fromFile(screenshotPath)
-        });
+        final FormData formData = FormData.fromMap(<String, dynamic>{"payload_json": json, "file": await MultipartFile.fromFile(screenshotPath)});
         response = await _dio.post<dynamic>(
           endpointUri.toString(),
           data: formData,
@@ -86,7 +91,7 @@ class HttpHandler extends ReportHandler {
       } else {
         response = await _dio.post<dynamic>(
           endpointUri.toString(),
-          data: json,
+          data: _request,
           options: options,
         );
       }

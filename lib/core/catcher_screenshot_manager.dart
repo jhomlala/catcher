@@ -5,7 +5,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:catcher/utils/catcher_logger.dart';
+import 'package:athmany_catcher/utils/catcher_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -46,6 +46,7 @@ class CatcherScreenshotManager {
     } catch (exception) {
       _logger.warning("Failed to create screenshot file: $exception");
     }
+    return null;
   }
 
   Future<File> saveFile(Uint8List fileContent) async {
@@ -64,8 +65,7 @@ class CatcherScreenshotManager {
         delay: Duration.zero,
         pixelRatio: pixelRatio,
       );
-      final ByteData? byteData =
-          await image.toByteData(format: ui.ImageByteFormat.png);
+      final ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       final Uint8List? pngBytes = byteData?.buffer.asUint8List();
 
       return pngBytes;
@@ -78,8 +78,7 @@ class CatcherScreenshotManager {
   }) {
     return Future.delayed(delay, () async {
       // ignore: cast_nullable_to_non_nullable
-      final RenderRepaintBoundary boundary = _containerKey.currentContext
-          ?.findRenderObject() as RenderRepaintBoundary;
+      final RenderRepaintBoundary boundary = _containerKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
 
       // ignore: unnecessary_null_comparison
       if (boundary == null) {
@@ -90,12 +89,10 @@ class CatcherScreenshotManager {
       double? pixelRatioValue = pixelRatio;
       if (pixelRatioValue == null) {
         if (context != null) {
-          pixelRatioValue =
-              pixelRatioValue ?? MediaQuery.of(context).devicePixelRatio;
+          pixelRatioValue = pixelRatioValue ?? MediaQuery.of(context).devicePixelRatio;
         }
       }
-      final ui.Image image =
-          await boundary.toImage(pixelRatio: pixelRatio ?? 1);
+      final ui.Image image = await boundary.toImage(pixelRatio: pixelRatio ?? 1);
       return image;
     });
   }

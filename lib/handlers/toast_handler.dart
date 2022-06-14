@@ -1,9 +1,9 @@
-import 'package:catcher/core/application_profile_manager.dart';
-import 'package:catcher/model/platform_type.dart';
-import 'package:catcher/model/report.dart';
-import 'package:catcher/model/report_handler.dart';
-import 'package:catcher/model/toast_handler_gravity.dart';
-import 'package:catcher/model/toast_handler_length.dart';
+import 'package:athmany_catcher/core/application_profile_manager.dart';
+import 'package:athmany_catcher/model/platform_type.dart';
+import 'package:athmany_catcher/model/report.dart';
+import 'package:athmany_catcher/model/report_handler.dart';
+import 'package:athmany_catcher/model/toast_handler_gravity.dart';
+import 'package:athmany_catcher/model/toast_handler_length.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -29,9 +29,7 @@ class ToastHandler extends ReportHandler {
 
   @override
   Future<bool> handle(Report error, BuildContext? buildContext) async {
-    if (ApplicationProfileManager.isAndroid() ||
-        ApplicationProfileManager.isIos() ||
-        ApplicationProfileManager.isWeb()) {
+    if (ApplicationProfileManager.isAndroid() || ApplicationProfileManager.isIos() || ApplicationProfileManager.isWeb()) {
       Fluttertoast.showToast(
         msg: _getErrorMessage(error),
         toastLength: _getLength(),
@@ -151,7 +149,7 @@ class _FlutterToastPageState extends State<FlutterToastPage> {
   @override
   void initState() {
     _fToast.init(context);
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!_disposed && mounted) {
         showToast();
       }

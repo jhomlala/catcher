@@ -1,4 +1,4 @@
-name: catcher
+name: athmany_catcher
 description: Plugin for error catching which provides multiple handlers for dealing with errors when they are not caught by the developer.
 version: 0.6.9
 #author: Jakub Homlala <jhomlala@gmail.com>
@@ -23,6 +23,8 @@ dependencies:
   logging: ^1.0.2
   sentry: ^6.1.0
   universal_io: ^2.0.4
+  sqflite: ^2.0.2+1
+  path: 
 
 dev_dependencies:
   lint: ^1.7.2

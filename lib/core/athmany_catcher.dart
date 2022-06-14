@@ -1,48 +1,49 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:isolate';
 
-import 'package:catcher/core/application_profile_manager.dart';
-import 'package:catcher/core/catcher_screenshot_manager.dart';
-import 'package:catcher/mode/report_mode_action_confirmed.dart';
-import 'package:catcher/model/application_profile.dart';
-import 'package:catcher/model/catcher_options.dart';
-import 'package:catcher/model/localization_options.dart';
-import 'package:catcher/model/platform_type.dart';
-import 'package:catcher/model/report.dart';
-import 'package:catcher/model/report_handler.dart';
-import 'package:catcher/model/report_mode.dart';
-import 'package:catcher/utils/catcher_error_widget.dart';
-import 'package:catcher/utils/catcher_logger.dart';
+import 'package:athmany_catcher/core/application_profile_manager.dart';
+import 'package:athmany_catcher/core/catcher_screenshot_manager.dart';
+import 'package:athmany_catcher/mode/report_mode_action_confirmed.dart';
+import 'package:athmany_catcher/model/catcher_options.dart';
+import 'package:athmany_catcher/model/localization_options.dart';
+import 'package:athmany_catcher/model/platform_type.dart';
+import 'package:athmany_catcher/model/report.dart';
+import 'package:athmany_catcher/model/report_handler.dart';
+import 'package:athmany_catcher/model/report_mode.dart';
+import 'package:athmany_catcher/utils/catcher_error_widget.dart';
+import 'package:athmany_catcher/utils/catcher_logger.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:sqflite/sqflite.dart';
 
-class Catcher with ReportModeAction {
-  static late Catcher _instance;
+import '../handlers/console_handler.dart';
+import '../handlers/http_handler.dart';
+import '../mode/silent_report_mode.dart';
+import '../model/http_request_type.dart';
+import 'db_service.dart';
+
+class AthmanyCatcher with ReportModeAction {
+  static late AthmanyCatcher _instance;
   static GlobalKey<NavigatorState>? _navigatorKey;
-
-  /// Root widget which will be ran
-  final Widget? rootWidget;
 
   ///Run app function which will be ran
   final void Function()? runAppFunction;
 
-  /// Instance of catcher config used in release mode
-  CatcherOptions? releaseConfig;
+  /// Root widget which will be ran
+  final Widget? child;
 
   /// Instance of catcher config used in debug mode
   CatcherOptions? debugConfig;
-
-  /// Instance of catcher config used in profile mode
-  CatcherOptions? profileConfig;
 
   /// Should catcher logs be enabled
   final bool enableLogger;
 
   /// Should catcher run WidgetsFlutterBinding.ensureInitialized() during initialization.
   final bool ensureInitialized;
+
+  late DBService _dbService;
 
   late CatcherOptions _currentConfig;
   late CatcherLogger _logger;
@@ -59,38 +60,34 @@ class Catcher with ReportModeAction {
   }
 
   /// Builds catcher instance
-  Catcher({
-    this.rootWidget,
-    this.runAppFunction,
-    this.releaseConfig,
-    this.debugConfig,
-    this.profileConfig,
+  AthmanyCatcher({
+    this.child,
+    required this.runAppFunction,
     this.enableLogger = true,
     this.ensureInitialized = false,
     GlobalKey<NavigatorState>? navigatorKey,
   }) : assert(
-          rootWidget != null || runAppFunction != null,
-          "You need to provide rootWidget or runAppFunction",
-        ) {
+  child != null || runAppFunction != null,
+  "You need to provide rootWidget or runAppFunction",
+  ) {
     _configure(navigatorKey);
   }
 
   void _configure(GlobalKey<NavigatorState>? navigatorKey) {
     _instance = this;
+    _dbService = DBService()..initDatabase();
     _configureNavigatorKey(navigatorKey);
-    _setupCurrentConfig();
     _configureLogger();
     _setupErrorHooks();
     _setupReportModeActionInReportMode();
     _setupScreenshotManager();
-
     _loadDeviceInfo();
     _loadApplicationInfo();
-
+    _updateConfig();
     if (_currentConfig.handlers.isEmpty) {
       _logger.warning(
         "Handlers list is empty. Configure at least one handler to "
-        "process error reports.",
+            "process error reports.",
       );
     } else {
       _logger.fine("Catcher configured successfully.");
@@ -105,54 +102,25 @@ class Catcher with ReportModeAction {
     }
   }
 
-  void _setupCurrentConfig() {
-    switch (ApplicationProfileManager.getApplicationProfile()) {
-      case ApplicationProfile.release:
-        {
-          if (releaseConfig != null) {
-            _currentConfig = releaseConfig!;
-          } else {
-            _currentConfig = CatcherOptions.getDefaultReleaseOptions();
-          }
-          break;
-        }
-      case ApplicationProfile.debug:
-        {
-          if (debugConfig != null) {
-            _currentConfig = debugConfig!;
-          } else {
-            _currentConfig = CatcherOptions.getDefaultDebugOptions();
-          }
-          break;
-        }
-      case ApplicationProfile.profile:
-        {
-          if (profileConfig != null) {
-            _currentConfig = profileConfig!;
-          } else {
-            _currentConfig = CatcherOptions.getDefaultProfileOptions();
-          }
-          break;
-        }
-    }
-  }
-
   ///Update config after initialization
-  void updateConfig({
+  void _updateConfig({
     CatcherOptions? debugConfig,
-    CatcherOptions? profileConfig,
-    CatcherOptions? releaseConfig,
-  }) {
+  }) async {
+    final companyDetails = await _dbService.getCompanyDetails();
     if (debugConfig != null) {
-      this.debugConfig = debugConfig;
+      this.debugConfig = CatcherOptions(
+        SilentReportMode(),
+        [
+          HttpHandler(
+              HttpRequestType.post,
+              Uri.parse(
+                  "http://athmany.tech/api/method/business_layer.pos_business_layer.doctype.pos_error_log.pos_error_log.new_pos_error_log"),
+              printLogs: true,
+              customParameters: companyDetails as Map<String, dynamic>),
+          ConsoleHandler(),
+        ],
+      );
     }
-    if (profileConfig != null) {
-      this.profileConfig = profileConfig;
-    }
-    if (releaseConfig != null) {
-      this.releaseConfig = releaseConfig;
-    }
-    _setupCurrentConfig();
     _setupReportModeActionInReportMode();
     _setupScreenshotManager();
     _configureLogger();
@@ -162,7 +130,7 @@ class Catcher with ReportModeAction {
   void _setupReportModeActionInReportMode() {
     _currentConfig.reportMode.setReportModeAction(this);
     _currentConfig.explicitExceptionReportModesMap.forEach(
-      (error, reportMode) {
+          (error, reportMode) {
         reportMode.setReportModeAction(this);
       },
     );
@@ -171,7 +139,7 @@ class Catcher with ReportModeAction {
   void _setupLocalizationsOptionsInReportMode() {
     _currentConfig.reportMode.setLocalizationOptions(_localizationOptions);
     _currentConfig.explicitExceptionReportModesMap.forEach(
-      (error, reportMode) {
+          (error, reportMode) {
         reportMode.setLocalizationOptions(_localizationOptions);
       },
     );
@@ -188,22 +156,9 @@ class Catcher with ReportModeAction {
       _reportError(details.exception, details.stack, errorDetails: details);
     };
 
-    ///Web doesn't have Isolate error listener support
-    if (!ApplicationProfileManager.isWeb()) {
-      Isolate.current.addErrorListener(
-        RawReceivePort((dynamic pair) async {
-          final isolateError = pair as List<dynamic>;
-          _reportError(
-            isolateError.first.toString(),
-            isolateError.last.toString(),
-          );
-        }).sendPort,
-      );
-    }
-
-    if (rootWidget != null) {
+    if (child != null) {
       _runZonedGuarded(() {
-        runApp(rootWidget!);
+        runApp(child!);
       });
     } else if (runAppFunction != null) {
       _runZonedGuarded(() {
@@ -442,8 +397,8 @@ class Catcher with ReportModeAction {
   }
 
   LocalizationOptions _getDefaultLocalizationOptionsForLanguage(
-    String language,
-  ) {
+      String language,
+      ) {
     switch (language.toLowerCase()) {
       case "en":
         return LocalizationOptions.buildDefaultEnglishOptions();
@@ -497,10 +452,10 @@ class Catcher with ReportModeAction {
   }
 
   void _reportError(
-    dynamic error,
-    dynamic stackTrace, {
-    FlutterErrorDetails? errorDetails,
-  }) async {
+      dynamic error,
+      dynamic stackTrace, {
+        FlutterErrorDetails? errorDetails,
+      }) async {
     if (errorDetails?.silent == true &&
         _currentConfig.handleSilentError == false) {
       _logger.info(
@@ -549,7 +504,7 @@ class Catcher with ReportModeAction {
     }
     _cachedReports.add(report);
     ReportMode? reportMode =
-        _getReportModeFromExplicitExceptionReportModeMap(error);
+    _getReportModeFromExplicitExceptionReportModeMap(error);
     if (reportMode != null) {
       _logger.info("Using explicit report mode for error");
     } else {
@@ -599,8 +554,8 @@ class Catcher with ReportModeAction {
   }
 
   ReportHandler? _getReportHandlerFromExplicitExceptionHandlerMap(
-    dynamic error,
-  ) {
+      dynamic error,
+      ) {
     final errorName = error != null ? error.toString().toLowerCase() : "";
     ReportHandler? reportHandler;
     _currentConfig.explicitExceptionHandlersMap.forEach((key, value) {
@@ -615,7 +570,7 @@ class Catcher with ReportModeAction {
   @override
   void onActionConfirmed(Report report) {
     final ReportHandler? reportHandler =
-        _getReportHandlerFromExplicitExceptionHandlerMap(report.error);
+    _getReportHandlerFromExplicitExceptionHandlerMap(report.error);
     if (reportHandler != null) {
       _logger.info("Using explicit report handler");
       _handleReport(report, reportHandler);
@@ -668,9 +623,9 @@ class Catcher with ReportModeAction {
   /// Checks is report handler is supported in given platform. Only supported
   /// report handlers in given platform can be used.
   bool isReportHandlerSupportedInPlatform(
-    Report report,
-    ReportHandler reportHandler,
-  ) {
+      Report report,
+      ReportHandler reportHandler,
+      ) {
     if (reportHandler.getSupportedPlatforms().isEmpty == true) {
       return false;
     }
@@ -711,8 +666,8 @@ class Catcher with ReportModeAction {
     bool showStacktrace = true,
     String title = "An application error has occurred",
     String description =
-        "There was unexpected situation in application. Application has been "
-            "able to recover from error state.",
+    "There was unexpected situation in application. Application has been "
+        "able to recover from error state.",
     double maxWidthForSmallMode = 150,
   }) {
     ErrorWidget.builder = (FlutterErrorDetails details) {
@@ -756,7 +711,7 @@ class Catcher with ReportModeAction {
     final DateTime nowDateTime = DateTime.now();
     _reportsOcurrenceMap.removeWhere((key, value) {
       final DateTime occurenceWithTimeout =
-          key.add(Duration(milliseconds: occurenceTimeout));
+      key.add(Duration(milliseconds: occurenceTimeout));
       return nowDateTime.isAfter(occurenceWithTimeout);
     });
   }
@@ -779,7 +734,11 @@ class Catcher with ReportModeAction {
   }
 
   ///Get current Catcher instance.
-  static Catcher getInstance() {
+  static AthmanyCatcher getInstance() {
     return _instance;
   }
+
+  FutureOr<void> onConfigure(Database db) {}
+
+  FutureOr<void> onCreate(Database db, int version) {}
 }

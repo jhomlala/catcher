@@ -1,10 +1,11 @@
-import 'package:catcher/core/catcher.dart';
 import 'package:flutter/material.dart';
+
+import 'athmany_catcher.dart';
 
 ///Screenshot widget used to create screenshot of all child widgets.
 class CatcherScreenshot extends StatefulWidget {
   final Widget child;
-  final Catcher catcher;
+  final AthmanyCatcher catcher;
 
   const CatcherScreenshot({
     Key? key,
@@ -19,8 +20,7 @@ class CatcherScreenshot extends StatefulWidget {
 }
 
 ///State of screenshot widget.
-class CatcherScreenshotState extends State<CatcherScreenshot>
-    with TickerProviderStateMixin {
+class CatcherScreenshotState extends State<CatcherScreenshot> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return RepaintBoundary(
