@@ -16,6 +16,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:sqflite/sqflite.dart';
 
 import '../handlers/console_handler.dart';
 import '../handlers/http_handler.dart';
@@ -703,4 +704,8 @@ class AthmanyCatcher with ReportModeAction {
   static AthmanyCatcher getInstance() {
     return _instance;
   }
+
+  FutureOr<void> onConfigure(Database db) {}
+
+  FutureOr<void> onCreate(Database db, int version) {}
 }

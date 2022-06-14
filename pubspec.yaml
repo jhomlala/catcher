@@ -23,6 +23,8 @@ dependencies:
   logging: ^1.0.2
   sentry: ^6.1.0
   universal_io: ^2.0.4
+  sqflite: ^2.0.2+1
+  path: 
 
 dev_dependencies:
   lint: ^1.7.2
