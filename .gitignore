@@ -21,5 +21,3 @@ android/.gradle
 flutter_export_environment.sh
 *.lock
 .vscode
-android/gradlew
-android/gradlew.bat
