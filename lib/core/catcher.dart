@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:isolate';
 
+import 'package:android_id/android_id.dart';
 import 'package:catcher/core/application_profile_manager.dart';
 import 'package:catcher/core/catcher_screenshot_manager.dart';
 import 'package:catcher/mode/report_mode_action_confirmed.dart';
@@ -242,6 +243,7 @@ class Catcher with ReportModeAction {
 
   void _loadDeviceInfo() {
     final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    final AndroidId androidId = AndroidId();
     if (ApplicationProfileManager.isWeb()) {
       deviceInfo.webBrowserInfo.then((webBrowserInfo) {
         _loadWebParameters(webBrowserInfo);
@@ -264,8 +266,10 @@ class Catcher with ReportModeAction {
       });
     } else if (ApplicationProfileManager.isAndroid()) {
       deviceInfo.androidInfo.then((androidInfo) {
-        _loadAndroidParameters(androidInfo);
-        _removeExcludedParameters();
+        androidId.getId().then((androidId) {
+          _loadAndroidParameters(androidInfo, androidId);
+          _removeExcludedParameters();
+        });
       });
     } else if (ApplicationProfileManager.isIos()) {
       deviceInfo.iosInfo.then((iosInfo) {
@@ -352,10 +356,11 @@ class Catcher with ReportModeAction {
     }
   }
 
-  void _loadAndroidParameters(AndroidDeviceInfo androidDeviceInfo) {
+  void _loadAndroidParameters(
+      AndroidDeviceInfo androidDeviceInfo, String? androidId) {
     try {
       _deviceParameters["id"] = androidDeviceInfo.id;
-      _deviceParameters["androidId"] = androidDeviceInfo.androidId;
+      _deviceParameters["androidId"] = androidId;
       _deviceParameters["board"] = androidDeviceInfo.board;
       _deviceParameters["bootloader"] = androidDeviceInfo.bootloader;
       _deviceParameters["brand"] = androidDeviceInfo.brand;
