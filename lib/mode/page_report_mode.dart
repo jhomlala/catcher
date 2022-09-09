@@ -103,7 +103,7 @@ class PageWidgetState extends State<PageWidget> {
   Widget _buildInnerWidget() {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
-      decoration: const BoxDecoration(color: Colors.white),
+      decoration: const BoxDecoration(),
       child: Column(
         children: [
           const Padding(

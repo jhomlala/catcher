@@ -34,7 +34,6 @@ class CatcherErrorWidget extends StatelessWidget {
     return const Center(
       child: Icon(
         Icons.error_outline,
-        color: Colors.red,
         size: 40,
       ),
     );
@@ -49,7 +48,7 @@ class CatcherErrorWidget extends StatelessWidget {
             _buildIcon(),
             Text(
               title,
-              style: const TextStyle(color: Colors.black, fontSize: 25),
+              style: const TextStyle(fontSize: 25),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 10),

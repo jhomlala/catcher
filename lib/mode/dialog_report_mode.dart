@@ -61,7 +61,8 @@ class DialogReportMode extends ReportMode {
       },
       child: AlertDialog(
         title: Text(localizationOptions.dialogReportModeTitle),
-        content: Text(localizationOptions.dialogReportModeDescription),
+        content: Text(localizationOptions.dialogReportModeDescription,
+            style: Theme.of(context).textTheme.bodyText1),
         actions: <Widget>[
           TextButton(
             onPressed: () => _onAcceptReportClicked(context, report),
