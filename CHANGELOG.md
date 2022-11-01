@@ -1,9 +1,13 @@
+## 0.7.0
+* [BREAKING_CHANGE] Update to Flutter 3 by Nico Mexis (https://github.com/ThexXTURBOXx).
+* [BREAKING_CHANGE] Update device_info_plus and added android_id plugin by Nico Mexis (https://github.com/ThexXTURBOXx).
+
 ## 0.6.9
 * [BREAKING_CHANGE] Changed customMessageBuilder return type to FutureOr<String> in slack and discord handler.
 * Fixed screenshots example documents path.
 * Fixed logger issue.
 * Fixed lint.
-* Depdencies and Android 12 update by Nico Mexis (https://github.com/ThexXTURBOXx).
+* Dependencies and Android 12 update by Nico Mexis (https://github.com/ThexXTURBOXx).
 * Removed deprecated splash screen from Android example.
 
 ## 0.6.8

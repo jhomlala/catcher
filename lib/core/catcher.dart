@@ -355,7 +355,7 @@ class Catcher with ReportModeAction {
   void _loadAndroidParameters(AndroidDeviceInfo androidDeviceInfo) {
     try {
       _deviceParameters["id"] = androidDeviceInfo.id;
-      _deviceParameters["androidId"] = androidDeviceInfo.androidId;
+      // TODO(*): _deviceParameters["androidId"] = androidDeviceInfo.androidId;
       _deviceParameters["board"] = androidDeviceInfo.board;
       _deviceParameters["bootloader"] = androidDeviceInfo.bootloader;
       _deviceParameters["brand"] = androidDeviceInfo.brand;
