@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:catcher/model/platform_type.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
 class Report {
   /// Error that has been caught
