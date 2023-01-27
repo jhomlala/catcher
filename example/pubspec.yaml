@@ -25,11 +25,10 @@ dependencies:
   dio: ^4.0.0
   flutter:
     sdk: flutter
-  flutter_local_notifications: ^12.0.0
+  flutter_local_notifications: ^13.0.0
   flutter_localizations:
     sdk: flutter
   path_provider: ^2.0.1
-  path_provider_macos: ^2.0.0
   permission_handler: ^10.0.0
 
 dev_dependencies:

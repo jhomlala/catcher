@@ -648,6 +648,7 @@ class Catcher with ReportModeAction {
       _logger.warning(
         "Error occurred in ${reportHandler.toString()}: ${handlerError.toString()}",
       );
+      return true; // Shut up warnings
     }).then((result) {
       _logger.info("${report.runtimeType} result: $result");
       if (!result) {
