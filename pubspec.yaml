@@ -5,7 +5,7 @@ version: 0.7.0
 homepage: https://github.com/jhomlala/catcher
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: '>=2.18.0 <3.0.0'
   flutter: ">=3.0.0"
 
 dependencies:
@@ -13,19 +13,19 @@ dependencies:
     sdk: flutter
   flutter_web_plugins:
     sdk: flutter
-  fluttertoast: ^8.0.8
-  device_info_plus: ^7.0.0
-  device_info_plus_platform_interface: ^6.0.0
-  package_info_plus: ^3.0.0
-  mailer: ^5.0.2
-  dio: ^4.0.1
-  flutter_mailer: ^2.0.0
-  logging: ^1.0.2
-  sentry: ^6.1.0
-  universal_io: ^2.0.4
+  fluttertoast: ^8.2.1
+  device_info_plus: ^8.1.0
+  device_info_plus_platform_interface: ^7.0.0
+  package_info_plus: ^3.0.3
+  mailer: ^6.0.0
+  dio: ^5.0.1
+  flutter_mailer: ^2.0.2
+  logging: ^1.1.1
+  sentry: ^6.20.1
+  universal_io: ^2.2.0
 
 dev_dependencies:
-  lint: ^1.7.2
+  lint: ^2.0.1
 
 flutter:
   plugin:

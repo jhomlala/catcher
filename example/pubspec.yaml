@@ -25,16 +25,16 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  path_provider: ^2.0.1
-  path_provider_macos: ^2.0.0
-  dio: ^4.0.0
-  permission_handler: ^8.1.4+2
-  flutter_local_notifications: ^9.0.0
+  path_provider: ^2.0.13
+  path_provider_macos: ^2.0.7
+  dio: ^5.0.1
+  permission_handler: ^10.2.0
+  flutter_local_notifications: ^13.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.5
 
 dev_dependencies:
   flutter_test:
