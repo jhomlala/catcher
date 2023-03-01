@@ -22,7 +22,7 @@ environment:
 
 dependencies:
   cupertino_icons: ^1.0.2
-  dio: ^4.0.0
+  dio: ^5.0.1
   flutter:
     sdk: flutter
   flutter_local_notifications: ^13.0.0
