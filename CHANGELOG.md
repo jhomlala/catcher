@@ -1,6 +1,7 @@
-## 0.7.1
-* Update `device_info_plus` to newest version
-* Update example dependencies
+## 0.8.0
+* [BREAKING_CHANGE] Update to `dio` 5.x. This has an effect on the `HttpHandler`.
+* Update package dependencies.
+* Update example dependencies.
 
 ## 0.7.0
 * [BREAKING_CHANGE] Update to Flutter 3 by Nico Mexis (https://github.com/ThexXTURBOXx).

@@ -14,8 +14,8 @@ class HttpHandler extends ReportHandler {
   final HttpRequestType requestType;
   final Uri endpointUri;
   final Map<String, dynamic> headers;
-  final int requestTimeout;
-  final int responseTimeout;
+  final Duration requestTimeout;
+  final Duration responseTimeout;
   final bool printLogs;
   final bool enableDeviceParameters;
   final bool enableApplicationParameters;
@@ -26,8 +26,8 @@ class HttpHandler extends ReportHandler {
     this.requestType,
     this.endpointUri, {
     Map<String, dynamic>? headers,
-    this.requestTimeout = 5000,
-    this.responseTimeout = 5000,
+    this.requestTimeout = const Duration(seconds: 5),
+    this.responseTimeout = const Duration(seconds: 5),
     this.printLogs = false,
     this.enableDeviceParameters = true,
     this.enableApplicationParameters = true,
