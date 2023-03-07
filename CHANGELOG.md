@@ -1,3 +1,5 @@
+## 0.7.1
+* [BREAKING_CHANGE] Update dio to 5.0.1.
 ## 0.7.0
 * [BREAKING_CHANGE] Update to Flutter 3 by Nico Mexis (https://github.com/ThexXTURBOXx).
 * [BREAKING_CHANGE] Update device_info_plus and added android_id plugin by Nico Mexis (https://github.com/ThexXTURBOXx).
