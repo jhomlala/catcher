@@ -18,7 +18,7 @@ dependencies:
   device_info_plus_platform_interface: ^6.0.0
   package_info_plus: ^3.0.0
   mailer: ^5.0.2
-  dio: ^4.0.1
+  dio: ">=4.0.1 <6.0.0"
   flutter_mailer: ^2.0.0
   logging: ^1.0.2
   sentry: ^6.1.0
