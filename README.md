@@ -20,7 +20,7 @@ Catcher supports Android, iOS, Web, Linux, Windows and MacOS platforms.
 Add this line to your **pubspec.yaml**:
 ```yaml
 dependencies:
-  catcher: ^0.7.1
+  catcher: ^0.8.0
 ```
 
 Then run this command:
@@ -39,7 +39,7 @@ import 'package:catcher/catcher.dart';
 [Catcher usage](#catcher-usage)
 [Adding navigator key](#adding-navigator-key)  
 [Catcher configuration](#catcher-configuration)    
-[Report catched exception](#report-catched-exception)   
+[Report caught exception](#report-caught-exception)   
 [Localization](#localization)    
   
 [Report modes](#report-modes)  
@@ -144,7 +144,7 @@ class ChildWidget extends StatelessWidget {
 If you run this code you will see screen with "Generate error" button on the screen. 
 After clicking on it, it will generate test exception, which will be handled by Catcher. Before Catcher process exception to handler, it will
 show dialog with information for user. This dialog is shown because we have used DialogReportHandler. Once user confirms action in this dialog,
-report will be send to console handler which will log to console error informations.
+report will be send to console handler which will log to console error information.
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/6.png" width="250px"> <br/> 
@@ -155,7 +155,7 @@ report will be send to console handler which will log to console error informati
   
 ```dart
 I/flutter ( 7457): [2019-02-09 12:40:21.527271 | ConsoleHandler | INFO] ============================== CATCHER LOG ==============================
-I/flutter ( 7457): [2019-02-09 12:40:21.527742 | ConsoleHandler | INFO] Crash occured on 2019-02-09 12:40:20.424286
+I/flutter ( 7457): [2019-02-09 12:40:21.527742 | ConsoleHandler | INFO] Crash occurred on 2019-02-09 12:40:20.424286
 I/flutter ( 7457): [2019-02-09 12:40:21.527827 | ConsoleHandler | INFO] 
 I/flutter ( 7457): [2019-02-09 12:40:21.527908 | ConsoleHandler | INFO] ------- DEVICE INFO -------
 I/flutter ( 7457): [2019-02-09 12:40:21.528233 | ConsoleHandler | INFO] id: PSR1.180720.061
@@ -283,8 +283,8 @@ excludedParameters - parameters which will be excluded from report.
 filterFunction - function used to filter errors which shouldn't be handled.   
 
 
-### Report catched exception
-Catcher won't process exceptions catched in try/catch block. You can send exception from try catch block to Catcher:
+### Report caught exception
+Catcher won't process exceptions caught in try/catch block. You can send exception from try catch block to Catcher:
 
 ```dart
 try {
@@ -298,12 +298,12 @@ try {
 Catcher allows to create localizations for Report modes. To add localization support, you need setup
 few things:
 
-Add navigatorKey in your MaterialApp:
+Add navigatorKey in your `MaterialApp`:
 ```dart
  navigatorKey: Catcher.navigatorKey,
 ```
 
-Add flutter localizations delegates and locales in your MaterialApp:
+Add Flutter localizations delegates and locales in your MaterialApp:
 ```dart
  localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
@@ -315,7 +315,7 @@ Add flutter localizations delegates and locales in your MaterialApp:
       ],
 ```
 
-Add localizationOptions in catcherOptions:
+Add localizationOptions in `CatcherOptions`:
 ```dart
 CatcherOptions(
 ...
@@ -386,6 +386,10 @@ LocalizationOptions.buildDefaultItalianOptions();
 * korean
 ```dart
 LocalizationOptions.buildDefaultKoreanOptions();
+```
+* german
+```dart
+LocalizationOptions.buildDefaultGermanOptions();
 ```
 * dutch
 ```dart
@@ -487,7 +491,7 @@ ReportMode reportMode = SilentReportMode();
 ```
 
 #### Notification Report Mode
-Notification Report Mode has been removed because of incompatibility with firebase. Please check local_notifications_example to re-add local notificaitons to your app.
+Notification Report Mode has been removed because of incompatibility with firebase. Please check local_notifications_example to re-add local notifications to your app.
 
 #### Dialog Report Mode
 Dialog Report Mode shows dialog with information about error. Dialog has title, description and 2 buttons: Accept and Cancel. Once user clicks on Accept button, report will be pushed to handlers.
@@ -689,7 +693,7 @@ You can find code of backend server here: https://github.com/jhomlala/catcher/tr
 <img src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/4.png">
 </p>
 
-Note: Remeber to add Internet permission in Android Manifest:
+Note: Remember to add Internet permission in Android Manifest:
 ```xml
 <uses-permission android:name="android.permission.INTERNET"/>
 ```
@@ -735,7 +739,7 @@ All parameters list:
 * backgroundColor (optional) - background color of toast
 * textColor (optional) - text color of toast
 * fontSize (optional) - text size
-* customMessage (optional) - custom message for toast, if not set then "Error occured: error" will be displayed.
+* customMessage (optional) - custom message for toast, if not set then "Error occurred: error" will be displayed.
 * handleWhenRejected - please look in console handler description
 
 <p align="center">
@@ -904,7 +908,7 @@ CatcherOptions debugOptions = CatcherOptions(
       explicitExceptionHandlersMap: explicitMap);
 ```
 
-Now if `FormatException` will be catched, then Console Handler will be used. Warning: if you setup explicit exception map for specific exception, then only this handler will be used for this exception!
+Now if `FormatException` will be caught, then Console Handler will be used. Warning: if you setup explicit exception map for specific exception, then only this handler will be used for this exception!
 
 ### Explicit exception report mode map
 Same as explicit report handler map, but it's for report mode. Let's say you want to use specific report mode for some exception:
@@ -919,7 +923,7 @@ Same as explicit report handler map, but it's for report mode. Let's say you wan
       ],
       explicitExceptionReportModesMap: explicitReportModesMap,);
 ```
-When `FormatException` will be catched, then NotificationReportMode will be used. For other exceptions, Catcher will use DialogReportMode.
+When `FormatException` will be caught, then NotificationReportMode will be used. For other exceptions, Catcher will use DialogReportMode.
 
 
 
