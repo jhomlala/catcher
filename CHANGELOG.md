@@ -1,6 +1,9 @@
 ## 0.8.0
 * [BREAKING_CHANGE] Update to `dio` 5.x. This has an effect on the `HttpHandler`.
 * [BREAKING_CHANGE] Update to `sentry` 7.x. Only SDK `>=2.17.0` is supported now.
+* Fix compatibility with Flutter 3.10+.
+* Fix wrong stack trace being sent to Sentry.
+* Fix a few typos in the README.
 * Update package dependencies.
 * Update example dependencies.
 
