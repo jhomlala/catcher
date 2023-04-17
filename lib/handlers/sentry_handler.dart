@@ -57,7 +57,7 @@ class SentryHandler extends ReportHandler {
       }
 
       final event = buildEvent(error, tags);
-      await sentryClient.captureEvent(event);
+      await sentryClient.captureEvent(event, stackTrace: error.stackTrace);
 
       _printLog("Logged to sentry!");
       return true;
