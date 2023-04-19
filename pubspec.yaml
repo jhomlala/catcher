@@ -21,7 +21,7 @@ dependencies:
   dio: ^5.0.1
   flutter_mailer: ^2.0.0
   logging: ^1.0.2
-  sentry: ^6.1.0
+  sentry: ^7.4.2
   universal_io: ^2.0.4
 
 dev_dependencies:
