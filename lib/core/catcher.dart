@@ -355,7 +355,7 @@ class Catcher with ReportModeAction {
   void _loadAndroidParameters(AndroidDeviceInfo androidDeviceInfo) {
     try {
       _deviceParameters["id"] = androidDeviceInfo.id;
-      // TODO(*): _deviceParameters["androidId"] = androidDeviceInfo.androidId;
+      // (*): _deviceParameters["androidId"] = androidDeviceInfo.androidId;
       _deviceParameters["board"] = androidDeviceInfo.board;
       _deviceParameters["bootloader"] = androidDeviceInfo.bootloader;
       _deviceParameters["brand"] = androidDeviceInfo.brand;
@@ -644,6 +644,7 @@ class Catcher with ReportModeAction {
 
     reportHandler
         .handle(report, _getContext())
+        // ignore: body_might_complete_normally_catch_error
         .catchError((dynamic handlerError) {
       _logger.warning(
         "Error occurred in ${reportHandler.toString()}: ${handlerError.toString()}",
