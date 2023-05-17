@@ -19,14 +19,16 @@ class CatcherErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraint) {
-        if (constraint.maxWidth < maxWidthForSmallMode) {
-          return _buildSmallErrorWidget();
-        } else {
-          return _buildNormalErrorWidget();
-        }
-      },
+    return Material(
+      child: LayoutBuilder(
+        builder: (context, constraint) {
+          if (constraint.maxWidth < maxWidthForSmallMode) {
+            return _buildSmallErrorWidget();
+          } else {
+            return _buildNormalErrorWidget();
+          }
+        },
+      ),
     );
   }
 
