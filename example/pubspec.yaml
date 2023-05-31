@@ -18,14 +18,14 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   cupertino_icons: ^1.0.2
   dio: ^5.0.1
   flutter:
     sdk: flutter
-  flutter_local_notifications: ^13.0.0
+  flutter_local_notifications: ^14.1.0
   flutter_localizations:
     sdk: flutter
   path_provider: ^2.0.1
