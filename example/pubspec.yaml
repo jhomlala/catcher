@@ -27,7 +27,7 @@ dependencies:
     sdk: flutter
   path_provider: ^2.0.1
   path_provider_macos: ^2.0.0
-  dio: ^4.0.0
+  dio: ^5.2.1+1
   permission_handler: ^8.1.4+2
   flutter_local_notifications: ^9.0.0
 

@@ -1,3 +1,9 @@
+## 0.7.1
+* [BREAKING_CHANGE] Update to Flutter 3.10.5 by Jhonacode (https://github.com/JhonaCodes)
+* [BREAKING_CHANGE] Update some library's by Jhonacode (https://github.com/JhonaCodes)
+* Change ``with ReportModeAction`` to ```implements ReportModeAction```, now its abstract class.
+* Change values for ``sendTimeout and receiveTimeout`` to ```Duration()```
+
 ## 0.7.0
 * [BREAKING_CHANGE] Update to Flutter 3 by Nico Mexis (https://github.com/ThexXTURBOXx).
 * [BREAKING_CHANGE] Update device_info_plus and added android_id plugin by Nico Mexis (https://github.com/ThexXTURBOXx).
