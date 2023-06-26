@@ -13,16 +13,16 @@ dependencies:
     sdk: flutter
   flutter_web_plugins:
     sdk: flutter
-  fluttertoast: ^8.2.2
-  device_info_plus: ^9.0.2
-  device_info_plus_platform_interface: ^7.0.0
-  package_info_plus: ^4.0.2
-  mailer: ^6.0.1
-  dio: ^5.0.1
-  flutter_mailer: ^2.0.4
-  logging: ^1.2.0
-  sentry: ^7.8.0
-  universal_io: ^2.2.2
+  fluttertoast: 8.2.2
+  device_info_plus: 9.0.2
+  device_info_plus_platform_interface: 7.0.0
+  package_info_plus: 4.0.2
+  mailer: 6.0.1
+  dio: 5.0.1
+  flutter_mailer: 2.0.4
+  logging: 1.2.0
+  sentry: 7.8.0
+  universal_io: 2.2.2
 
 dev_dependencies:
   lint: ^1.7.2
