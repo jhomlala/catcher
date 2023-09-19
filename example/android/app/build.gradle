@@ -27,7 +27,9 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
     compileSdkVersion 33
-    namespace 'com.jhomlala.catcher_example'
+    if (project.android.hasProperty("namespace")) {
+        namespace 'com.jhomlala.catcher_example'
+    }
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'

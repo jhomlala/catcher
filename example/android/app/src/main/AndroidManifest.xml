@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.jhomlala.catcher_example">
    <application
         android:label="catcher_example"
         android:icon="@mipmap/ic_launcher">
