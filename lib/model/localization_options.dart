@@ -125,19 +125,19 @@ class LocalizationOptions {
   static LocalizationOptions buildDefaultRussianOptions() {
     return LocalizationOptions(
       "ru",
-      notificationReportModeTitle: "Произошла ошибка приложения",
+      notificationReportModeTitle: "В приложении произошла ошибка",
       notificationReportModeContent:
           "Нажмите здесь, чтобы отправить отчет об ошибке в службу поддержки.",
-      dialogReportModeTitle: "авария",
+      dialogReportModeTitle: "Сбой",
       dialogReportModeDescription:
           "В приложении произошла непредвиденная ошибка. Отчет об ошибке готов к отправке в службу поддержки. Пожалуйста, нажмите Принять, чтобы отправить отчет об ошибке или Отмена, чтобы закрыть отчет.",
-      dialogReportModeAccept: "принимать",
-      dialogReportModeCancel: "отменить",
-      pageReportModeTitle: "авария",
+      dialogReportModeAccept: "Принять", 
+      dialogReportModeCancel: "Отмена",
+      pageReportModeTitle: "Сбой",
       pageReportModeDescription:
           "В приложении произошла непредвиденная ошибка. Отчет об ошибке готов к отправке в службу поддержки. Пожалуйста, нажмите Принять, чтобы отправить отчет об ошибке или Отмена, чтобы закрыть отчет.",
-      pageReportModeAccept: "принимать",
-      pageReportModeCancel: "отменить",
+      pageReportModeAccept: "Принять",
+      pageReportModeCancel: "Отмена",
       toastHandlerDescription: "Произошла ошибка:",
       snackbarHandlerDescription: "Произошла ошибка:",
     );
