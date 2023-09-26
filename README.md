@@ -4,6 +4,8 @@
 
 # Catcher 2
 
+**This project is a continuation of [catcher](https://github.com/jhomlala/catcher) by Jakub Homlala with many new features and bug fixes.**
+
 [![pub package](https://img.shields.io/pub/v/catcher_2.svg)](https://pub.dartlang.org/packages/catcher_2)
 [![pub package](https://img.shields.io/github/license/ThexXTURBOXx/catcher_2.svg?style=flat)](https://github.com/ThexXTURBOXx/catcher_2)
 [![pub package](https://img.shields.io/badge/platform-flutter-blue.svg)](https://github.com/ThexXTURBOXx/catcher_2)
