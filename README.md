@@ -4,7 +4,7 @@
 
 # Catcher 2
 
-[![pub package](https://img.shields.io/pub/v/catcher.svg)](https://pub.dartlang.org/packages/catcher)
+[![pub package](https://img.shields.io/pub/v/catcher_2.svg)](https://pub.dartlang.org/packages/catcher_2)
 [![pub package](https://img.shields.io/github/license/ThexXTURBOXx/catcher_2.svg?style=flat)](https://github.com/ThexXTURBOXx/catcher_2)
 [![pub package](https://img.shields.io/badge/platform-flutter-blue.svg)](https://github.com/ThexXTURBOXx/catcher_2)
 [![pub package](https://img.shields.io/badge/Awesome-Flutter-blue.svg?longCache=true&style=flat-square)](https://github.com/Solido/awesome-flutter)
