@@ -1,11 +1,13 @@
-## 0.8.0
-* [BREAKING_CHANGE] Update to `dio` 5.x. This has an effect on the `HttpHandler`.
-* [BREAKING_CHANGE] Update to `sentry` 7.x. Only SDK `>=2.17.0` is supported now.
-* Fix compatibility with Flutter 3.10+.
-* Fix wrong stack trace being sent to Sentry.
-* Fix a few typos in the README.
-* Update package dependencies.
-* Update example dependencies.
+## 1.0.0-alpha.0
+* [BREAKING_CHANGE] Rebrand to `catcher_2`
+* [BREAKING_CHANGE] Update to `dio` 5.x. This has an effect on the `HttpHandler`
+* [BREAKING_CHANGE] Update to `sentry` 7.x. Only SDK `>=2.17.0` is supported now
+* Fix compatibility with newer versions of Flutter
+* Fix wrong stack trace being sent to Sentry
+* Fix a few typos in the README
+* Fix many other errors as well
+* Update package dependencies
+* Update example dependencies
 
 ## 0.7.0
 * [BREAKING_CHANGE] Update to Flutter 3 by Nico Mexis (https://github.com/ThexXTURBOXx).
