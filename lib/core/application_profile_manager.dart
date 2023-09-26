@@ -1,4 +1,4 @@
-import 'package:catcher/model/application_profile.dart';
+import 'package:catcher_2/model/application_profile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:universal_io/io.dart';
 
@@ -15,7 +15,7 @@ class ApplicationProfileManager {
       return ApplicationProfile.profile;
     }
 
-    ///Fallback
+    /// Fallback
     return ApplicationProfile.debug;
   }
 
@@ -28,12 +28,12 @@ class ApplicationProfileManager {
   /// Check if current platform is ios
   static bool isIos() => Platform.isIOS;
 
-  ///Check if current platform is linux
+  /// Check if current platform is linux
   static bool isLinux() => Platform.isLinux;
 
-  ///Check if current platform is windows
+  /// Check if current platform is windows
   static bool isWindows() => Platform.isWindows;
 
-  ///Check if current platform is macOS
+  /// Check if current platform is macOS
   static bool isMacOS() => Platform.isMacOS;
 }

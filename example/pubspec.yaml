@@ -1,4 +1,4 @@
-name: catcher_example
+name: catcher_2_example
 description: A new Flutter application.
 
 # The following line prevents the package from being accidentally published to
@@ -21,6 +21,8 @@ environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
+  catcher_2:
+    path: ../
   cupertino_icons: ^1.0.2
   dio: ^5.0.1
   flutter:
@@ -30,10 +32,9 @@ dependencies:
     sdk: flutter
   path_provider: ^2.0.1
   permission_handler: ^11.0.0
+  sentry: ^7.2.0
 
 dev_dependencies:
-  catcher:
-    path: ../
   flutter_test:
     sdk: flutter
 

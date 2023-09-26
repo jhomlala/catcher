@@ -1,24 +1,26 @@
-import 'package:catcher/catcher.dart';
+import 'package:catcher_2/catcher_2.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  CatcherOptions debugOptions = CatcherOptions(SilentReportMode(), [
+  final debugOptions = Catcher2Options(SilentReportMode(), [
     ConsoleHandler(),
   ]);
-  CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
-    EmailManualHandler(["recipient@email.com"])
+  final releaseOptions = Catcher2Options(PageReportMode(), [
+    EmailManualHandler(['recipient@email.com']),
   ]);
 
-  Catcher(
-    rootWidget: MyApp(),
+  Catcher2(
+    rootWidget: const MyApp(),
     debugConfig: debugOptions,
     releaseConfig: releaseOptions,
   );
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -28,25 +30,24 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: Catcher.navigatorKey,
-      builder: (BuildContext context, Widget? widget) {
-        Catcher.addDefaultErrorWidget(
+  Widget build(BuildContext context) => MaterialApp(
+        navigatorKey: Catcher2.navigatorKey,
+        builder: (context, widget) {
+          Catcher2.addDefaultErrorWidget(
             showStacktrace: true,
-            title: "Custom title",
-            description: "Custom description",
-            maxWidthForSmallMode: 150);
-        return widget!;
-      },
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
+            title: 'Custom title',
+            description: 'Custom description',
+            maxWidthForSmallMode: 150,
+          );
+          return widget!;
+        },
+        home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Plugin example app'),
+          ),
+          body: _buildSmallErrorWidget(),
         ),
-        body: _buildSmallErrorWidget(),
-      ),
-    );
-  }
+      );
 
   ///Trigger "normal" mode
   /*Widget _buildNormalErrorWidget() {
@@ -54,24 +55,24 @@ class _MyAppState extends State<MyApp> {
   }*/
 
   ///Trigger "small" mode
-  Widget _buildSmallErrorWidget() {
-    return GridView.count(crossAxisCount: 3, children: [
-      ChildWidget(),
-      ChildWidget(),
-      ChildWidget(),
-    ]);
-  }
+  Widget _buildSmallErrorWidget() => GridView.count(
+        crossAxisCount: 3,
+        children: const [
+          ChildWidget(),
+          ChildWidget(),
+          ChildWidget(),
+        ],
+      );
 }
 
 class ChildWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: TextButton(child: Text("Test"), onPressed: generateError),
-    );
-  }
+  const ChildWidget({super.key});
 
-  void generateError() async {
-    Catcher.sendTestException();
+  @override
+  Widget build(BuildContext context) =>
+      TextButton(onPressed: generateError, child: const Text('Test'));
+
+  Future<void> generateError() async {
+    Catcher2.sendTestException();
   }
 }

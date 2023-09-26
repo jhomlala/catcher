@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:catcher/catcher.dart';
+import 'package:catcher_2/catcher_2.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() async {
-  var catcher = Catcher(rootWidget: MyApp(), ensureInitialized: true);
+  final catcher2 = Catcher2(rootWidget: const MyApp(), ensureInitialized: true);
   Directory? externalDir;
   if (Platform.isAndroid || Platform.isIOS) {
     externalDir = await getExternalStorageDirectory();
@@ -14,23 +14,30 @@ void main() async {
   if (Platform.isMacOS) {
     externalDir = await getApplicationDocumentsDirectory();
   }
-  String path = "";
+  var path = '';
   if (externalDir != null) {
-    path = externalDir.path.toString() + "/log.txt";
+    path = '${externalDir.path}/log.txt';
   }
-  print("PATH: " + path);
+  // ignore: avoid_print
+  print('PATH: $path');
 
-  CatcherOptions debugOptions = CatcherOptions(
-      DialogReportMode(), [FileHandler(File(path), printLogs: true)]);
-  CatcherOptions releaseOptions =
-      CatcherOptions(DialogReportMode(), [FileHandler(File(path))]);
-  catcher.updateConfig(
-      debugConfig: debugOptions, releaseConfig: releaseOptions);
+  final debugOptions = Catcher2Options(
+    DialogReportMode(),
+    [FileHandler(File(path), printLogs: true)],
+  );
+  final releaseOptions =
+      Catcher2Options(DialogReportMode(), [FileHandler(File(path))]);
+  catcher2.updateConfig(
+    debugConfig: debugOptions,
+    releaseConfig: releaseOptions,
+  );
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -40,46 +47,45 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: Catcher.navigatorKey,
-      home: Scaffold(
+  Widget build(BuildContext context) => MaterialApp(
+        navigatorKey: Catcher2.navigatorKey,
+        home: Scaffold(
           appBar: AppBar(
             title: const Text('Plugin example app'),
           ),
-          body: ChildWidget()),
-    );
-  }
+          body: const ChildWidget(),
+        ),
+      );
 }
 
 class ChildWidget extends StatelessWidget {
+  const ChildWidget({super.key});
+
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
+  Widget build(BuildContext context) => Column(
         children: [
           TextButton(
-            child: Text("Check permission"),
             onPressed: checkPermissions,
+            child: const Text('Check permission'),
           ),
           TextButton(
-            child: Text("Generate error"),
-            onPressed: () => generateError(),
-          )
+            onPressed: generateError,
+            child: const Text('Generate error'),
+          ),
         ],
-      ),
-    );
-  }
+      );
 
-  void checkPermissions() async {
-    var status = await Permission.storage.status;
-    print("Status: $status");
+  Future<void> checkPermissions() async {
+    final status = await Permission.storage.status;
+    // ignore: avoid_print
+    print('Status: $status');
     if (!status.isGranted) {
-      print("Requested");
+      // ignore: avoid_print
+      print('Requested');
     }
   }
 
-  void generateError() async {
-    throw "Test exception";
+  Future<void> generateError() async {
+    throw Exception('Test exception');
   }
 }

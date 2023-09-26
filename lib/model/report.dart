@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:catcher/model/platform_type.dart';
+import 'package:catcher_2/model/platform_type.dart';
 import 'package:flutter/foundation.dart';
 
 class Report {
@@ -28,7 +28,7 @@ class Report {
   /// Type of platform used
   final PlatformType platformType;
 
-  ///Screenshot of screen where error happens. Screenshot won't work everywhere
+  /// Screenshot of screen where error happens. Screenshot won't work everywhere
   /// (i.e. web platform), so this may be null.
   final File? screenshot;
 
@@ -52,23 +52,23 @@ class Report {
     bool enableStackTrace = true,
     bool enableCustomParameters = false,
   }) {
-    final Map<String, dynamic> json = <String, dynamic>{
-      "error": error.toString(),
-      "customParameters": customParameters,
-      "dateTime": dateTime.toIso8601String(),
-      "platformType": describeEnum(platformType),
+    final json = <String, dynamic>{
+      'error': error.toString(),
+      'customParameters': customParameters,
+      'dateTime': dateTime.toIso8601String(),
+      'platformType': describeEnum(platformType),
     };
     if (enableDeviceParameters) {
-      json["deviceParameters"] = deviceParameters;
+      json['deviceParameters'] = deviceParameters;
     }
     if (enableApplicationParameters) {
-      json["applicationParameters"] = applicationParameters;
+      json['applicationParameters'] = applicationParameters;
     }
     if (enableStackTrace) {
-      json["stackTrace"] = stackTrace.toString();
+      json['stackTrace'] = stackTrace.toString();
     }
     if (enableCustomParameters) {
-      json["customParameters"] = customParameters;
+      json['customParameters'] = customParameters;
     }
     return json;
   }

@@ -1,11 +1,11 @@
-import 'package:catcher/catcher.dart';
+import 'package:catcher_2/catcher_2.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   ///Http handler instance
-  var httpHandler = HttpHandler(
+  final httpHandler = HttpHandler(
     HttpRequestType.post,
-    Uri.parse("https://jsonplaceholder.typicode.com/posts"),
+    Uri.parse('https://jsonplaceholder.typicode.com/posts'),
     printLogs: true,
     enableCustomParameters: false,
     enableStackTrace: false,
@@ -14,14 +14,14 @@ void main() {
   );
 
   ///Init catcher
-  CatcherOptions debugOptions =
-      CatcherOptions(DialogReportMode(), [httpHandler, ConsoleHandler()]);
-  CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
-    EmailManualHandler(["recipient@email.com"])
+  final debugOptions =
+      Catcher2Options(DialogReportMode(), [httpHandler, ConsoleHandler()]);
+  final releaseOptions = Catcher2Options(PageReportMode(), [
+    EmailManualHandler(['recipient@email.com']),
   ]);
 
-  Catcher(
-    rootWidget: MyApp(),
+  Catcher2(
+    rootWidget: const MyApp(),
     debugConfig: debugOptions,
     releaseConfig: releaseOptions,
   );
@@ -29,12 +29,14 @@ void main() {
   ///At some point of time, you're updating headers:
 
   httpHandler.headers.clear();
-  httpHandler.headers["my_header"] = "Test";
+  httpHandler.headers['my_header'] = 'Test';
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -44,27 +46,27 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: Catcher.navigatorKey,
-      home: Scaffold(
+  Widget build(BuildContext context) => MaterialApp(
+        navigatorKey: Catcher2.navigatorKey,
+        home: Scaffold(
           appBar: AppBar(
             title: const Text('Plugin example app'),
           ),
-          body: ChildWidget()),
-    );
-  }
+          body: const ChildWidget(),
+        ),
+      );
 }
 
 class ChildWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        child: TextButton(
-            child: Text("Generate error"), onPressed: () => generateError()));
-  }
+  const ChildWidget({super.key});
 
-  void generateError() async {
-    Catcher.sendTestException();
+  @override
+  Widget build(BuildContext context) => TextButton(
+        onPressed: generateError,
+        child: const Text('Generate error'),
+      );
+
+  Future<void> generateError() async {
+    Catcher2.sendTestException();
   }
 }

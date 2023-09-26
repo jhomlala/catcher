@@ -1,10 +1,10 @@
 import 'dart:collection';
 
-import 'package:catcher/model/http_request_type.dart';
-import 'package:catcher/model/platform_type.dart';
-import 'package:catcher/model/report.dart';
-import 'package:catcher/model/report_handler.dart';
-import 'package:catcher/utils/catcher_utils.dart';
+import 'package:catcher_2/model/http_request_type.dart';
+import 'package:catcher_2/model/platform_type.dart';
+import 'package:catcher_2/model/report.dart';
+import 'package:catcher_2/model/report_handler.dart';
+import 'package:catcher_2/utils/catcher_2_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -38,8 +38,8 @@ class HttpHandler extends ReportHandler {
   @override
   Future<bool> handle(Report error, BuildContext? context) async {
     if (error.platformType != PlatformType.web) {
-      if (!(await CatcherUtils.isInternetConnectionAvailable())) {
-        _printLog("No internet connection available");
+      if (!(await Catcher2Utils.isInternetConnectionAvailable())) {
+        _printLog('No internet connection available');
         return false;
       }
     }
@@ -58,25 +58,24 @@ class HttpHandler extends ReportHandler {
         enableStackTrace: enableStackTrace,
         enableCustomParameters: enableCustomParameters,
       );
-      final HashMap<String, dynamic> mutableHeaders =
-          HashMap<String, dynamic>();
+      final mutableHeaders = HashMap<String, dynamic>();
       if (headers.isNotEmpty == true) {
         mutableHeaders.addAll(headers);
       }
 
-      final Options options = Options(
+      final options = Options(
         sendTimeout: requestTimeout,
         receiveTimeout: responseTimeout,
         headers: mutableHeaders,
       );
 
       Response? response;
-      _printLog("Calling: ${endpointUri.toString()}");
+      _printLog('Calling: $endpointUri');
       if (report.screenshot != null) {
-        final screenshotPath = report.screenshot?.path ?? "";
-        final FormData formData = FormData.fromMap(<String, dynamic>{
-          "payload_json": json,
-          "file": await MultipartFile.fromFile(screenshotPath)
+        final screenshotPath = report.screenshot?.path ?? '';
+        final formData = FormData.fromMap(<String, dynamic>{
+          'payload_json': json,
+          'file': await MultipartFile.fromFile(screenshotPath),
         });
         response = await _dio.post<dynamic>(
           endpointUri.toString(),
@@ -91,11 +90,12 @@ class HttpHandler extends ReportHandler {
         );
       }
       _printLog(
-        "HttpHandler response status: ${response.statusCode!} body: ${response.data!}",
+        'HttpHandler response status: ${response.statusCode!} '
+        'body: ${response.data!}',
       );
       return true;
     } catch (error, stackTrace) {
-      _printLog("HttpHandler error: $error, stackTrace: $stackTrace");
+      _printLog('HttpHandler error: $error, stackTrace: $stackTrace');
       return false;
     }
   }
@@ -107,9 +107,7 @@ class HttpHandler extends ReportHandler {
   }
 
   @override
-  String toString() {
-    return 'HttpHandler';
-  }
+  String toString() => 'HttpHandler';
 
   @override
   List<PlatformType> getSupportedPlatforms() => [

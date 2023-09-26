@@ -3,7 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 title: "[BUG]"
 labels: New issue
-assignees: jhomlala
+assignees: ThexXTURBOXx
 
 ---
 
@@ -26,7 +26,7 @@ If applicable, add screenshots to help explain your problem.
 **Flutter doctor**
 Please add flutter doctor output here.
 
-**Catcher version**
+**Catcher 2 version**
 - Version: 
 
 **Smartphone (please complete the following information):**

@@ -1,46 +1,51 @@
-name: catcher
+name: catcher_2
 description: Plugin for error catching which provides multiple handlers for dealing with errors when they are not caught by the developer.
-version: 0.8.0
-#author: Jakub Homlala <jhomlala@gmail.com>
-homepage: https://github.com/jhomlala/catcher
+version: 1.0.0-alpha.0
+homepage: https://github.com/ThexXTURBOXx/catcher_2
+repository: https://github.com/ThexXTURBOXx/catcher_2
+issue_tracker: https://github.com/ThexXTURBOXx/catcher_2/issues
+funding:
+  - https://github.com/sponsors/ThexXTURBOXx
+screenshots:
+  - description: 'The catcher_2 logo'
+    path: screenshots/logo.png
+  - description: 'catcher_2 in action with notifications'
+    path: screenshots/1.png
+  - description: 'catcher_2 in action with emails'
+    path: screenshots/3.png
+  - description: 'catcher_2 in action with dialogs'
+    path: screenshots/6.png
+topics:
+  - analysis
+  - errors
+  - flutter
+  - logging
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
   flutter: ">=3.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
-  flutter_web_plugins:
-    sdk: flutter
-  fluttertoast: ^8.0.8
   device_info_plus: ^9.0.0
   device_info_plus_platform_interface: ^7.0.0
-  package_info_plus: ^4.0.0
-  mailer: ^6.0.0
   dio: ^5.0.1
+  flutter:
+    sdk: flutter
   flutter_mailer: ^2.0.0
+  fluttertoast: ^8.0.8
   logging: ^1.0.2
+  mailer: ^6.0.0
+  package_info_plus: ^4.0.0
   sentry: ^7.2.0
   universal_io: ^2.0.4
 
 dev_dependencies:
-  lint: ^2.0.1
+  flutter_lints: ^2.0.3
 
-flutter:
-  plugin:
-    platforms:
-      android:
-        package: com.jhomlala.catcher
-        pluginClass: CatcherPlugin
-      ios:
-        pluginClass: CatcherPlugin
-      web:
-        pluginClass: CatcherWebPlugin
-        fileName: catcher_web_plugin.dart
-      macos:
-        pluginClass: CatcherPlugin
-      windows:
-        pluginClass: CatcherPlugin
-      linux:
-        pluginClass: CatcherPlugin
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+  web:
+  windows:

@@ -1,28 +1,33 @@
-import 'package:catcher/catcher.dart';
+import 'package:catcher_2/catcher_2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
+  final debugOptions = Catcher2Options(DialogReportMode(), [
     //EmailManualHandler(["recipient@email.com"]),
-    HttpHandler(HttpRequestType.post,
-        Uri.parse("https://jsonplaceholder.typicode.com/posts"),
-        printLogs: true),
-    ConsoleHandler()
+    HttpHandler(
+      HttpRequestType.post,
+      Uri.parse('https://jsonplaceholder.typicode.com/posts'),
+      printLogs: true,
+    ),
+    ConsoleHandler(),
   ]);
-  CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
-    EmailManualHandler(["recipient@email.com"])
+  final releaseOptions = Catcher2Options(PageReportMode(), [
+    EmailManualHandler(['recipient@email.com']),
   ]);
 
-  Catcher(
-      rootWidget: MyApp(),
-      debugConfig: debugOptions,
-      releaseConfig: releaseOptions);
+  Catcher2(
+    rootWidget: const MyApp(),
+    debugConfig: debugOptions,
+    releaseConfig: releaseOptions,
+  );
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -32,34 +37,32 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return CupertinoApp(
-      navigatorKey: Catcher.navigatorKey,
-      home: CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(
-          middle: const Text('Cupertino example'),
+  Widget build(BuildContext context) => CupertinoApp(
+        navigatorKey: Catcher2.navigatorKey,
+        home: const CupertinoPageScaffold(
+          navigationBar: CupertinoNavigationBar(
+            middle: Text('Cupertino example'),
+          ),
+          child: SafeArea(
+            child: ChildWidget(),
+          ),
         ),
-        child: SafeArea(
-          child: ChildWidget(),
-        ),
-      ),
-    );
-  }
+      );
 }
 
 class ChildWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.orange,
-      child: TextButton(
-        child: Text("Generate error"),
-        onPressed: () => generateError(),
-      ),
-    );
-  }
+  const ChildWidget({super.key});
 
-  void generateError() async {
-    Catcher.sendTestException();
+  @override
+  Widget build(BuildContext context) => Container(
+        color: Colors.orange,
+        child: TextButton(
+          onPressed: generateError,
+          child: const Text('Generate error'),
+        ),
+      );
+
+  Future<void> generateError() async {
+    Catcher2.sendTestException();
   }
 }

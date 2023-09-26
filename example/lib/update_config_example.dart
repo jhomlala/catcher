@@ -1,30 +1,34 @@
-import 'package:catcher/catcher.dart';
+import 'package:catcher_2/catcher_2.dart';
 import 'package:flutter/material.dart';
 
-late Catcher catcher;
+late Catcher2 catcher2;
 
 void main() {
-  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
+  final debugOptions = Catcher2Options(DialogReportMode(), [
     //EmailManualHandler(["recipient@email.com"]),
-    HttpHandler(HttpRequestType.post,
-        Uri.parse("https://jsonplaceholder.typicode.com/posts"),
-        printLogs: true),
-    ConsoleHandler()
+    HttpHandler(
+      HttpRequestType.post,
+      Uri.parse('https://jsonplaceholder.typicode.com/posts'),
+      printLogs: true,
+    ),
+    ConsoleHandler(),
   ]);
-  CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
-    EmailManualHandler(["recipient@email.com"])
+  final releaseOptions = Catcher2Options(PageReportMode(), [
+    EmailManualHandler(['recipient@email.com']),
   ]);
 
-  catcher = Catcher(
-    rootWidget: MyApp(),
+  catcher2 = Catcher2(
+    rootWidget: const MyApp(),
     debugConfig: debugOptions,
     releaseConfig: releaseOptions,
   );
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -34,42 +38,41 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: Catcher.navigatorKey,
-      home: Scaffold(
+  Widget build(BuildContext context) => MaterialApp(
+        navigatorKey: Catcher2.navigatorKey,
+        home: Scaffold(
           appBar: AppBar(
             title: const Text('Plugin example app'),
           ),
-          body: ChildWidget()),
-    );
-  }
+          body: const ChildWidget(),
+        ),
+      );
 }
 
 class ChildWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Row(children: [
-        TextButton(
-          child: Text("Change config"),
-          onPressed: () => changeConfig(),
-        ),
-        TextButton(
-          child: Text("Generate error"),
-          onPressed: () => generateError(),
-        ),
-      ]),
-    );
-  }
+  const ChildWidget({super.key});
 
-  void generateError() async {
-    Catcher.sendTestException();
+  @override
+  Widget build(BuildContext context) => Row(
+        children: [
+          TextButton(
+            onPressed: changeConfig,
+            child: const Text('Change config'),
+          ),
+          TextButton(
+            onPressed: generateError,
+            child: const Text('Generate error'),
+          ),
+        ],
+      );
+
+  Future<void> generateError() async {
+    Catcher2.sendTestException();
   }
 
   void changeConfig() {
-    catcher.updateConfig(
-      debugConfig: CatcherOptions(
+    catcher2.updateConfig(
+      debugConfig: Catcher2Options(
         PageReportMode(),
         [ConsoleHandler()],
       ),

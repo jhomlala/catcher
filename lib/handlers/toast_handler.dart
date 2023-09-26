@@ -1,9 +1,9 @@
-import 'package:catcher/core/application_profile_manager.dart';
-import 'package:catcher/model/platform_type.dart';
-import 'package:catcher/model/report.dart';
-import 'package:catcher/model/report_handler.dart';
-import 'package:catcher/model/toast_handler_gravity.dart';
-import 'package:catcher/model/toast_handler_length.dart';
+import 'package:catcher_2/core/application_profile_manager.dart';
+import 'package:catcher_2/model/platform_type.dart';
+import 'package:catcher_2/model/report.dart';
+import 'package:catcher_2/model/report_handler.dart';
+import 'package:catcher_2/model/toast_handler_gravity.dart';
+import 'package:catcher_2/model/toast_handler_length.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -28,11 +28,11 @@ class ToastHandler extends ReportHandler {
   });
 
   @override
-  Future<bool> handle(Report error, BuildContext? buildContext) async {
+  Future<bool> handle(Report error, BuildContext? context) async {
     if (ApplicationProfileManager.isAndroid() ||
         ApplicationProfileManager.isIos() ||
         ApplicationProfileManager.isWeb()) {
-      Fluttertoast.showToast(
+      await Fluttertoast.showToast(
         msg: _getErrorMessage(error),
         toastLength: _getLength(),
         gravity: _getGravity(),
@@ -46,7 +46,7 @@ class ToastHandler extends ReportHandler {
         const Duration(milliseconds: 500),
         () {
           Navigator.push<void>(
-            buildContext!,
+            context!,
             PageRouteBuilder(
               opaque: false,
               pageBuilder: (_, __, ___) => FlutterToastPage(
@@ -94,10 +94,10 @@ class ToastHandler extends ReportHandler {
   }
 
   String _getErrorMessage(Report error) {
-    if (customMessage?.isNotEmpty == true) {
+    if (customMessage?.isNotEmpty ?? false) {
       return customMessage!;
     } else {
-      return "${localizationOptions.toastHandlerDescription} ${error.error}";
+      return '${localizationOptions.toastHandlerDescription} ${error.error}';
     }
   }
 
@@ -112,14 +112,10 @@ class ToastHandler extends ReportHandler {
       ];
 
   @override
-  bool isContextRequired() {
-    return true;
-  }
+  bool isContextRequired() => true;
 
   @override
-  bool shouldHandleWhenRejected() {
-    return handleWhenRejected;
-  }
+  bool shouldHandleWhenRejected() => handleWhenRejected;
 }
 
 class FlutterToastPage extends StatefulWidget {
@@ -141,7 +137,7 @@ class FlutterToastPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _FlutterToastPageState createState() => _FlutterToastPageState();
+  State<FlutterToastPage> createState() => _FlutterToastPageState();
 }
 
 class _FlutterToastPageState extends State<FlutterToastPage> {
@@ -185,9 +181,7 @@ class _FlutterToastPageState extends State<FlutterToastPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return const SizedBox();
-  }
+  Widget build(BuildContext context) => const SizedBox();
 
   @override
   void dispose() {

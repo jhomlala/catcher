@@ -1,18 +1,18 @@
 <p align="center">
-<img src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/logo.png">
+<img src="https://raw.githubusercontent.com/ThexXTURBOXx/catcher_2/master/screenshots/logo.png">
 </p>
 
-# Catcher
+# Catcher 2
 
 [![pub package](https://img.shields.io/pub/v/catcher.svg)](https://pub.dartlang.org/packages/catcher)
-[![pub package](https://img.shields.io/github/license/jhomlala/catcher.svg?style=flat)](https://github.com/jhomlala/catcher)
-[![pub package](https://img.shields.io/badge/platform-flutter-blue.svg)](https://github.com/jhomlala/catcher)
+[![pub package](https://img.shields.io/github/license/ThexXTURBOXx/catcher_2.svg?style=flat)](https://github.com/ThexXTURBOXx/catcher_2)
+[![pub package](https://img.shields.io/badge/platform-flutter-blue.svg)](https://github.com/ThexXTURBOXx/catcher_2)
 [![pub package](https://img.shields.io/badge/Awesome-Flutter-blue.svg?longCache=true&style=flat-square)](https://github.com/Solido/awesome-flutter)
 
 
-Catcher is Flutter plugin which automatically catches error/exceptions and handle them. Catcher offers multiple way to handle errors.
-Catcher is heavily inspired from ACRA: https://github.com/ACRA/acra.
-Catcher supports Android, iOS, Web, Linux, Windows and MacOS platforms.
+Catcher 2 is Flutter plugin which automatically catches error/exceptions and handle them. Catcher 2 offers multiple way to handle errors.
+Catcher 2 is heavily inspired from ACRA: https://github.com/ACRA/acra.
+Catcher 2 supports Android, iOS, Web, Linux, Windows and MacOS platforms.
 
 
 ## Install
@@ -20,7 +20,7 @@ Catcher supports Android, iOS, Web, Linux, Windows and MacOS platforms.
 Add this line to your **pubspec.yaml**:
 ```yaml
 dependencies:
-  catcher: ^0.8.0
+  catcher_2: ^1.0.0
 ```
 
 Then run this command:
@@ -30,15 +30,15 @@ $ flutter packages get
 
 Then add this import:
 ```dart
-import 'package:catcher/catcher.dart';
+import 'package:catcher_2/catcher_2.dart';
 ```
 
 ## Table of contents
 [Platform support](#platform-support)   
 [Basic example](#basic-example)  
-[Catcher usage](#catcher-usage)
+[Catcher 2 usage](#catcher-2-usage)
 [Adding navigator key](#adding-navigator-key)  
-[Catcher configuration](#catcher-configuration)    
+[Catcher 2 configuration](#catcher-2-configuration)    
 [Report caught exception](#report-caught-exception)   
 [Localization](#localization)    
   
@@ -70,35 +70,35 @@ import 'package:catcher/catcher.dart';
 [Screenshots](#screenshots) 
 
 ## Platform support
-To check which features of Catcher are available in given platform visit this page: [Platform support](https://github.com/jhomlala/catcher/blob/master/platform_support.md)
+To check which features of Catcher 2 are available in given platform visit this page: [Platform support](https://github.com/ThexXTURBOXx/catcher_2/blob/master/platform_support.md)
 
 ## Basic example
 Basic example utilizes debug config with Dialog Report Mode and Console Handler and release config with Dialog Report Mode and Email Manual Handler.
 
-To start using Catcher, you have to:   
-1. Create Catcher configuration (you can use only debug config at start)   
-2. Create Catcher instance and pass your root widget along with catcher configuration   
+To start using Catcher 2, you have to:   
+1. Create Catcher 2 configuration (you can use only debug config at start)   
+2. Create Catcher 2 instance and pass your root widget along with its configuration   
 3. Add navigator key to MaterialApp or CupertinoApp   
    
 Here is complete example:   
 
 ```dart
 import 'package:flutter/material.dart';
-import 'package:catcher/catcher.dart';
+import 'package:catcher_2/catcher_2.dart';
 
 main() {
-  /// STEP 1. Create catcher configuration. 
+  /// STEP 1. Create Catcher 2 configuration. 
   /// Debug configuration with dialog report mode and console handler. It will show dialog and once user accepts it, error will be shown   /// in console.
-  CatcherOptions debugOptions =
-      CatcherOptions(DialogReportMode(), [ConsoleHandler()]);
+  Catcher2Options debugOptions =
+      Catcher2Options(DialogReportMode(), [ConsoleHandler()]);
       
   /// Release configuration. Same as above, but once user accepts dialog, user will be prompted to send email with crash to support.
-  CatcherOptions releaseOptions = CatcherOptions(DialogReportMode(), [
+  Catcher2Options releaseOptions = Catcher2Options(DialogReportMode(), [
     EmailManualHandler(["support@email.com"])
   ]);
 
-  /// STEP 2. Pass your root widget (MyApp) along with Catcher configuration:
-  Catcher(rootWidget: MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
+  /// STEP 2. Pass your root widget (MyApp) along with Catcher 2 configuration:
+  Catcher2(rootWidget: MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
 }
 
 class MyApp extends StatefulWidget {
@@ -115,8 +115,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      /// STEP 3. Add navigator key from Catcher. It will be used to navigate user to report page or to show dialog.
-      navigatorKey: Catcher.navigatorKey,
+      /// STEP 3. Add navigator key from Catcher 2. It will be used to navigate user to report page or to show dialog.
+      navigatorKey: Catcher2.navigatorKey,
       home: Scaffold(
           appBar: AppBar(
             title: const Text('Plugin example app'),
@@ -142,95 +142,97 @@ class ChildWidget extends StatelessWidget {
 
 ```
 If you run this code you will see screen with "Generate error" button on the screen. 
-After clicking on it, it will generate test exception, which will be handled by Catcher. Before Catcher process exception to handler, it will
+After clicking on it, it will generate test exception, which will be handled by Catcher 2. Before Catcher 2 process exception to handler, it will
 show dialog with information for user. This dialog is shown because we have used DialogReportHandler. Once user confirms action in this dialog,
 report will be send to console handler which will log to console error information.
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/6.png" width="250px"> <br/> 
+<img src="https://raw.githubusercontent.com/ThexXTURBOXx/catcher_2/master/screenshots/6.png" width="250px"> <br/> 
   <i>Dialog with default confirmation message</i>
 </p>
 
 
   
 ```dart
-I/flutter ( 7457): [2019-02-09 12:40:21.527271 | ConsoleHandler | INFO] ============================== CATCHER LOG ==============================
-I/flutter ( 7457): [2019-02-09 12:40:21.527742 | ConsoleHandler | INFO] Crash occurred on 2019-02-09 12:40:20.424286
-I/flutter ( 7457): [2019-02-09 12:40:21.527827 | ConsoleHandler | INFO] 
-I/flutter ( 7457): [2019-02-09 12:40:21.527908 | ConsoleHandler | INFO] ------- DEVICE INFO -------
-I/flutter ( 7457): [2019-02-09 12:40:21.528233 | ConsoleHandler | INFO] id: PSR1.180720.061
-I/flutter ( 7457): [2019-02-09 12:40:21.528337 | ConsoleHandler | INFO] androidId: 726e4abc58dde277
-I/flutter ( 7457): [2019-02-09 12:40:21.528431 | ConsoleHandler | INFO] board: goldfish_x86
-I/flutter ( 7457): [2019-02-09 12:40:21.528512 | ConsoleHandler | INFO] bootloader: unknown
-I/flutter ( 7457): [2019-02-09 12:40:21.528595 | ConsoleHandler | INFO] brand: google
-I/flutter ( 7457): [2019-02-09 12:40:21.528694 | ConsoleHandler | INFO] device: generic_x86
-I/flutter ( 7457): [2019-02-09 12:40:21.528774 | ConsoleHandler | INFO] display: sdk_gphone_x86-userdebug 9 PSR1.180720.061 5075414 dev-keys
-I/flutter ( 7457): [2019-02-09 12:40:21.528855 | ConsoleHandler | INFO] fingerprint: google/sdk_gphone_x86/generic_x86:9/PSR1.180720.061/5075414:userdebug/dev-keys
-I/flutter ( 7457): [2019-02-09 12:40:21.528939 | ConsoleHandler | INFO] hardware: ranchu
-I/flutter ( 7457): [2019-02-09 12:40:21.529023 | ConsoleHandler | INFO] host: vped9.mtv.corp.google.com
-I/flutter ( 7457): [2019-02-09 12:40:21.529813 | ConsoleHandler | INFO] isPsychicalDevice: false
-I/flutter ( 7457): [2019-02-09 12:40:21.530178 | ConsoleHandler | INFO] manufacturer: Google
-I/flutter ( 7457): [2019-02-09 12:40:21.530345 | ConsoleHandler | INFO] model: Android SDK built for x86
-I/flutter ( 7457): [2019-02-09 12:40:21.530443 | ConsoleHandler | INFO] product: sdk_gphone_x86
-I/flutter ( 7457): [2019-02-09 12:40:21.530610 | ConsoleHandler | INFO] tags: dev-keys
-I/flutter ( 7457): [2019-02-09 12:40:21.530713 | ConsoleHandler | INFO] type: userdebug
-I/flutter ( 7457): [2019-02-09 12:40:21.530825 | ConsoleHandler | INFO] versionBaseOs: 
-I/flutter ( 7457): [2019-02-09 12:40:21.530922 | ConsoleHandler | INFO] versionCodename: REL
-I/flutter ( 7457): [2019-02-09 12:40:21.531074 | ConsoleHandler | INFO] versionIncremental: 5075414
-I/flutter ( 7457): [2019-02-09 12:40:21.531573 | ConsoleHandler | INFO] versionPreviewSdk: 0
-I/flutter ( 7457): [2019-02-09 12:40:21.531659 | ConsoleHandler | INFO] versionRelase: 9
-I/flutter ( 7457): [2019-02-09 12:40:21.531740 | ConsoleHandler | INFO] versionSdk: 28
-I/flutter ( 7457): [2019-02-09 12:40:21.531870 | ConsoleHandler | INFO] versionSecurityPatch: 2018-08-05
-I/flutter ( 7457): [2019-02-09 12:40:21.532002 | ConsoleHandler | INFO] 
-I/flutter ( 7457): [2019-02-09 12:40:21.532078 | ConsoleHandler | INFO] ------- APP INFO -------
-I/flutter ( 7457): [2019-02-09 12:40:21.532167 | ConsoleHandler | INFO] version: 1.0
-I/flutter ( 7457): [2019-02-09 12:40:21.532250 | ConsoleHandler | INFO] appName: catcher_example
-I/flutter ( 7457): [2019-02-09 12:40:21.532345 | ConsoleHandler | INFO] buildNumber: 1
-I/flutter ( 7457): [2019-02-09 12:40:21.532426 | ConsoleHandler | INFO] packageName: com.jhomlala.catcherexample
-I/flutter ( 7457): [2019-02-09 12:40:21.532667 | ConsoleHandler | INFO] 
-I/flutter ( 7457): [2019-02-09 12:40:21.532944 | ConsoleHandler | INFO] ---------- ERROR ----------
-I/flutter ( 7457): [2019-02-09 12:40:21.533096 | ConsoleHandler | INFO] Test exception
-I/flutter ( 7457): [2019-02-09 12:40:21.533179 | ConsoleHandler | INFO] 
-I/flutter ( 7457): [2019-02-09 12:40:21.533257 | ConsoleHandler | INFO] ------- STACK TRACE -------
-I/flutter ( 7457): [2019-02-09 12:40:21.533695 | ConsoleHandler | INFO] #0      ChildWidget.generateError (package:catcher_example/file_example.dart:62:5)
-I/flutter ( 7457): [2019-02-09 12:40:21.533799 | ConsoleHandler | INFO] <asynchronous suspension>
-I/flutter ( 7457): [2019-02-09 12:40:21.533879 | ConsoleHandler | INFO] #1      ChildWidget.build.<anonymous closure> (package:catcher_example/file_example.dart:53:61)
-I/flutter ( 7457): [2019-02-09 12:40:21.534149 | ConsoleHandler | INFO] #2      _InkResponseState._handleTap (package:flutter/src/material/ink_well.dart:507:14)
-I/flutter ( 7457): [2019-02-09 12:40:21.534230 | ConsoleHandler | INFO] #3      _InkResponseState.build.<anonymous closure> (package:flutter/src/material/ink_well.dart:562:30)
-I/flutter ( 7457): [2019-02-09 12:40:21.534321 | ConsoleHandler | INFO] #4      GestureRecognizer.invokeCallback (package:flutter/src/gestures/recognizer.dart:102:24)
-I/flutter ( 7457): [2019-02-09 12:40:21.534419 | ConsoleHandler | INFO] #5      TapGestureRecognizer._checkUp (package:flutter/src/gestures/tap.dart:242:9)
-I/flutter ( 7457): [2019-02-09 12:40:21.534524 | ConsoleHandler | INFO] #6      TapGestureRecognizer.handlePrimaryPointer (package:flutter/src/gestures/tap.dart:175:7)
-I/flutter ( 7457): [2019-02-09 12:40:21.534608 | ConsoleHandler | INFO] #7      PrimaryPointerGestureRecognizer.handleEvent (package:flutter/src/gestures/recognizer.dart:315:9)
-I/flutter ( 7457): [2019-02-09 12:40:21.534686 | ConsoleHandler | INFO] #8      PointerRouter._dispatch (package:flutter/src/gestures/pointer_router.dart:73:12)
-I/flutter ( 7457): [2019-02-09 12:40:21.534765 | ConsoleHandler | INFO] #9      PointerRouter.route (package:flutter/src/gestures/pointer_router.dart:101:11)
-I/flutter ( 7457): [2019-02-09 12:40:21.534843 | ConsoleHandler | INFO] #10     _WidgetsFlutterBinding&BindingBase&GestureBinding.handleEvent (package:flutter/src/gestures/binding.dart:180:19)
-I/flutter ( 7457): [2019-02-09 12:40:21.534973 | ConsoleHandler | INFO] #11     _WidgetsFlutterBinding&BindingBase&GestureBinding.dispatchEvent (package:flutter/src/gestures/binding.dart:158:22)
-I/flutter ( 7457): [2019-02-09 12:40:21.535052 | ConsoleHandler | INFO] #12     _WidgetsFlutterBinding&BindingBase&GestureBinding._handlePointerEvent (package:flutter/src/gestures/binding.dart:138:7)
-I/flutter ( 7457): [2019-02-09 12:40:21.535136 | ConsoleHandler | INFO] #13     _WidgetsFlutterBinding&BindingBase&GestureBinding._flushPointerEventQueue (package:flutter/src/gestures/binding.dart:101:7)
-I/flutter ( 7457): [2019-02-09 12:40:21.535216 | ConsoleHandler | INFO] #14     _WidgetsFlutterBinding&BindingBase&GestureBinding._handlePointerDataPacket (package:flutter/src/gestures/binding.dart:85:7)
-I/flutter ( 7457): [2019-02-09 12:40:21.535600 | ConsoleHandler | INFO] #15     _rootRunUnary (dart:async/zone.dart:1136:13)
-I/flutter ( 7457): [2019-02-09 12:40:21.535753 | ConsoleHandler | INFO] #16     _CustomZone.runUnary (dart:async/zone.dart:1029:19)
-I/flutter ( 7457): [2019-02-09 12:40:21.536008 | ConsoleHandler | INFO] #17     _CustomZone.runUnaryGuarded (dart:async/zone.dart:931:7)
-I/flutter ( 7457): [2019-02-09 12:40:21.536138 | ConsoleHandler | INFO] #18     _invoke1 (dart:ui/hooks.dart:170:10)
-I/flutter ( 7457): [2019-02-09 12:40:21.536271 | ConsoleHandler | INFO] #19     _dispatchPointerDataPacket (dart:ui/hooks.dart:122:5)
-I/flutter ( 7457): [2019-02-09 12:40:21.536375 | ConsoleHandler | INFO] 
-I/flutter ( 7457): [2019-02-09 12:40:21.536539 | ConsoleHandler | INFO] ======================================================================
+I/flutter ( 1792): [2023-09-26 20:40:59.075029 | Catcher 2 | INFO] ============================== CATCHER 2 LOG ==============================
+I/flutter ( 1792): [2023-09-26 20:40:59.075175 | Catcher 2 | INFO] Crash occurred on 2023-09-26 20:40:57.818695
+I/flutter ( 1792): [2023-09-26 20:40:59.075220 | Catcher 2 | INFO]
+I/flutter ( 1792): [2023-09-26 20:40:59.075378 | Catcher 2 | INFO] ------- DEVICE INFO -------
+I/flutter ( 1792): [2023-09-26 20:40:59.075755 | Catcher 2 | INFO] id: TQ3A.230705.001.B4
+I/flutter ( 1792): [2023-09-26 20:40:59.075830 | Catcher 2 | INFO] board: windows
+I/flutter ( 1792): [2023-09-26 20:40:59.075874 | Catcher 2 | INFO] bootloader: unknown
+I/flutter ( 1792): [2023-09-26 20:40:59.075901 | Catcher 2 | INFO] brand: Windows
+I/flutter ( 1792): [2023-09-26 20:40:59.075940 | Catcher 2 | INFO] device: windows_x86_64
+I/flutter ( 1792): [2023-09-26 20:40:59.075966 | Catcher 2 | INFO] display: TQ3A.230705.001.B4
+I/flutter ( 1792): [2023-09-26 20:40:59.076003 | Catcher 2 | INFO] fingerprint: Windows/windows_x86_64/windows_x86_64:13/TQ3A.230705.001.B4/2307.40000.6.0:user/release-keys
+I/flutter ( 1792): [2023-09-26 20:40:59.076047 | Catcher 2 | INFO] hardware: windows_x86_64
+I/flutter ( 1792): [2023-09-26 20:40:59.076089 | Catcher 2 | INFO] host: bba7b442c000000
+I/flutter ( 1792): [2023-09-26 20:40:59.076169 | Catcher 2 | INFO] isPhysicalDevice: true
+I/flutter ( 1792): [2023-09-26 20:40:59.076224 | Catcher 2 | INFO] manufacturer: Microsoft Corporation
+I/flutter ( 1792): [2023-09-26 20:40:59.076269 | Catcher 2 | INFO] model: Subsystem for Android(TM)
+I/flutter ( 1792): [2023-09-26 20:40:59.076310 | Catcher 2 | INFO] product: windows_x86_64
+I/flutter ( 1792): [2023-09-26 20:40:59.076346 | Catcher 2 | INFO] tags: release-keys
+I/flutter ( 1792): [2023-09-26 20:40:59.076371 | Catcher 2 | INFO] type: user
+I/flutter ( 1792): [2023-09-26 20:40:59.076404 | Catcher 2 | INFO] versionBaseOs:
+I/flutter ( 1792): [2023-09-26 20:40:59.076430 | Catcher 2 | INFO] versionCodename: REL
+I/flutter ( 1792): [2023-09-26 20:40:59.076462 | Catcher 2 | INFO] versionIncremental: 2307.40000.6.0
+I/flutter ( 1792): [2023-09-26 20:40:59.076487 | Catcher 2 | INFO] versionPreviewSdk: 0
+I/flutter ( 1792): [2023-09-26 20:40:59.076521 | Catcher 2 | INFO] versionRelease: 13
+I/flutter ( 1792): [2023-09-26 20:40:59.076573 | Catcher 2 | INFO] versionSdk: 33
+I/flutter ( 1792): [2023-09-26 20:40:59.076611 | Catcher 2 | INFO] versionSecurityPatch: 2023-07-05
+I/flutter ( 1792): [2023-09-26 20:40:59.076640 | Catcher 2 | INFO]
+I/flutter ( 1792): [2023-09-26 20:40:59.076759 | Catcher 2 | INFO] ------- APP INFO -------
+I/flutter ( 1792): [2023-09-26 20:40:59.076829 | Catcher 2 | INFO] environment: debug
+I/flutter ( 1792): [2023-09-26 20:40:59.076867 | Catcher 2 | INFO] version: 1.0.0
+I/flutter ( 1792): [2023-09-26 20:40:59.076903 | Catcher 2 | INFO] appName: catcher_2_example
+I/flutter ( 1792): [2023-09-26 20:40:59.076941 | Catcher 2 | INFO] buildNumber: 1
+I/flutter ( 1792): [2023-09-26 20:40:59.076978 | Catcher 2 | INFO] packageName: com.jhomlala.catcher_2_example
+I/flutter ( 1792): [2023-09-26 20:40:59.077006 | Catcher 2 | INFO]
+I/flutter ( 1792): [2023-09-26 20:40:59.077040 | Catcher 2 | INFO] ---------- ERROR ----------
+I/flutter ( 1792): [2023-09-26 20:40:59.077079 | Catcher 2 | INFO] FormatException: Test exception generated by Catcher 2
+I/flutter ( 1792): [2023-09-26 20:40:59.077125 | Catcher 2 | INFO]
+I/flutter ( 1792): [2023-09-26 20:40:59.077267 | Catcher 2 | INFO] ------- STACK TRACE -------
+I/flutter ( 1792): [2023-09-26 20:40:59.077461 | Catcher 2 | INFO] #0      Catcher2.sendTestException (package:catcher_2/core/catcher_2.dart:706:5)
+I/flutter ( 1792): [2023-09-26 20:40:59.077523 | Catcher 2 | INFO] #1      ChildWidget.generateError (package:catcher_2_example/main.dart:89:14)
+I/flutter ( 1792): [2023-09-26 20:40:59.077562 | Catcher 2 | INFO] #2      _InkResponseState.handleTap (package:flutter/src/material/ink_well.dart:1154:21)
+I/flutter ( 1792): [2023-09-26 20:40:59.077588 | Catcher 2 | INFO] #3      GestureRecognizer.invokeCallback (package:flutter/src/gestures/recognizer.dart:275:24)
+I/flutter ( 1792): [2023-09-26 20:40:59.077611 | Catcher 2 | INFO] #4      TapGestureRecognizer.handleTapUp (package:flutter/src/gestures/tap.dart:654:11)
+I/flutter ( 1792): [2023-09-26 20:40:59.077643 | Catcher 2 | INFO] #5      BaseTapGestureRecognizer._checkUp (package:flutter/src/gestures/tap.dart:311:5)
+I/flutter ( 1792): [2023-09-26 20:40:59.077690 | Catcher 2 | INFO] #6      BaseTapGestureRecognizer.handlePrimaryPointer (package:flutter/src/gestures/tap.dart:244:7)
+I/flutter ( 1792): [2023-09-26 20:40:59.077719 | Catcher 2 | INFO] #7      PrimaryPointerGestureRecognizer.handleEvent (package:flutter/src/gestures/recognizer.dart:630:9)
+I/flutter ( 1792): [2023-09-26 20:40:59.077761 | Catcher 2 | INFO] #8      PointerRouter._dispatch (package:flutter/src/gestures/pointer_router.dart:98:12)
+I/flutter ( 1792): [2023-09-26 20:40:59.077811 | Catcher 2 | INFO] #9      PointerRouter._dispatchEventToRoutes.<anonymous closure> (package:flutter/src/gestures/pointer_router.dart:143:9)
+I/flutter ( 1792): [2023-09-26 20:40:59.077869 | Catcher 2 | INFO] #10     _LinkedHashMapMixin.forEach (dart:collection-patch/compact_hash.dart:625:13)
+I/flutter ( 1792): [2023-09-26 20:40:59.077908 | Catcher 2 | INFO] #11     PointerRouter._dispatchEventToRoutes (package:flutter/src/gestures/pointer_router.dart:141:18)
+I/flutter ( 1792): [2023-09-26 20:40:59.077945 | Catcher 2 | INFO] #12     PointerRouter.route (package:flutter/src/gestures/pointer_router.dart:127:7)
+I/flutter ( 1792): [2023-09-26 20:40:59.077969 | Catcher 2 | INFO] #13     GestureBinding.handleEvent (package:flutter/src/gestures/binding.dart:488:19)
+I/flutter ( 1792): [2023-09-26 20:40:59.078002 | Catcher 2 | INFO] #14     GestureBinding.dispatchEvent (package:flutter/src/gestures/binding.dart:468:22)
+I/flutter ( 1792): [2023-09-26 20:40:59.078036 | Catcher 2 | INFO] #15     RendererBinding.dispatchEvent (package:flutter/src/rendering/binding.dart:333:11)
+I/flutter ( 1792): [2023-09-26 20:40:59.078077 | Catcher 2 | INFO] #16     GestureBinding._handlePointerEventImmediately (package:flutter/src/gestures/binding.dart:413:7)
+I/flutter ( 1792): [2023-09-26 20:40:59.078123 | Catcher 2 | INFO] #17     GestureBinding.handlePointerEvent (package:flutter/src/gestures/binding.dart:376:5)
+I/flutter ( 1792): [2023-09-26 20:40:59.078174 | Catcher 2 | INFO] #18     GestureBinding._flushPointerEventQueue (package:flutter/src/gestures/binding.dart:323:7)
+I/flutter ( 1792): [2023-09-26 20:40:59.078209 | Catcher 2 | INFO] #19     GestureBinding._handlePointerDataPacket (package:flutter/src/gestures/binding.dart:292:9)
+I/flutter ( 1792): [2023-09-26 20:40:59.078250 | Catcher 2 | INFO] #20     _invoke1 (dart:ui/hooks.dart:186:13)
+I/flutter ( 1792): [2023-09-26 20:40:59.078286 | Catcher 2 | INFO] #21     PlatformDispatcher._dispatchPointerDataPacket (dart:ui/platform_dispatcher.dart:424:7)
+I/flutter ( 1792): [2023-09-26 20:40:59.078310 | Catcher 2 | INFO] #22     _dispatchPointerDataPacket (dart:ui/hooks.dart:119:31)
+I/flutter ( 1792): [2023-09-26 20:40:59.078340 | Catcher 2 | INFO]
+I/flutter ( 1792): [2023-09-26 20:40:59.078397 | Catcher 2 | INFO] ======================================================================
 ```
 <p align="center">
   <i>Console handler output</i>
 </p>
 
-## Catcher usage
+## Catcher 2 usage
 
 ### Adding navigator key
-In order to make work Page Report Mode and Dialog Report Mode, you must include navigator key. Catcher plugin exposes key which must be included in your MaterialApp or WidgetApp:
+In order to make work Page Report Mode and Dialog Report Mode, you must include navigator key. Catcher 2 plugin exposes key which must be included in your MaterialApp or WidgetApp:
 
 ```dart
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       //********************************************
-      navigatorKey: Catcher.navigatorKey,
+      navigatorKey: Catcher2.navigatorKey,
       //********************************************
       home: Scaffold(
           appBar: AppBar(
@@ -241,35 +243,35 @@ In order to make work Page Report Mode and Dialog Report Mode, you must include 
   }
 
 ```
-You need to provide this key, because Catcher needs context of navigator to show dialogs/pages. There is no need to include this navigator key if you won't use Page/Dialog Report Mode.
-You can also provide your own navigator key if need to. You can provide it with Catcher constructor (see below). Please check custom navigator key example to see basic example.
+You need to provide this key, because Catcher 2 needs context of navigator to show dialogs/pages. There is no need to include this navigator key if you won't use Page/Dialog Report Mode.
+You can also provide your own navigator key if need to. You can provide it with Catcher 2 constructor (see below). Please check custom navigator key example to see basic example.
 
-### Catcher configuration
-Catcher instance needs rootWidget or runAppFunction in setup time. Please provide one of it.
+### Catcher 2 configuration
+Catcher 2 instance needs rootWidget or runAppFunction in setup time. Please provide one of it.
 
 * rootWidget (optional) - instance of your root application widget
 * runAppFunction (optional) - function where runApp() will be called
-* debugConfig (optional) - config used when Catcher detects that application runs in debug mode
-* releaseConfig (optional) - config used when Catcher detects that application runs in release mode
-* profileConfig (optional) - config used when Catcher detects that application runs in profile mode
-* enableLogger (optional) - enable/disable internal Catcher logs
-* navigatorKey (optional) - provide optional navigator key from outside of Catcher
-* ensureInitialized (optional) - should Catcher run WidgetsFlutterBinding.ensureInitialized() during initialization
+* debugConfig (optional) - config used when Catcher 2 detects that application runs in debug mode
+* releaseConfig (optional) - config used when Catcher 2 detects that application runs in release mode
+* profileConfig (optional) - config used when Catcher 2 detects that application runs in profile mode
+* enableLogger (optional) - enable/disable internal Catcher 2 logs
+* navigatorKey (optional) - provide optional navigator key from outside of Catcher 2
+* ensureInitialized (optional) - should Catcher 2 run WidgetsFlutterBinding.ensureInitialized() during initialization
 
 ```dart
 main() {
-  CatcherOptions debugOptions =
-  CatcherOptions(DialogReportMode(), [ConsoleHandler()]);
-  CatcherOptions releaseOptions = CatcherOptions(DialogReportMode(), [
+  Catcher2Options debugOptions =
+  Catcher2Options(DialogReportMode(), [ConsoleHandler()]);
+  Catcher2Options releaseOptions = Catcher2Options(DialogReportMode(), [
     EmailManualHandler(["recipient@email.com"])
   ]);
-  CatcherOptions profileOptions = CatcherOptions(
+  Catcher2Options profileOptions = Catcher2Options(
     NotificationReportMode(), [ConsoleHandler(), ToastHandler()],
     handlerTimeout: 10000, customParameters: {"example"c: "example_parameter"},);
-  Catcher(rootWidget: MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions, profileConfig: profileOptions, enableLogger: false, navigatorKey: navigatorKey);
+  Catcher2(rootWidget: MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions, profileConfig: profileOptions, enableLogger: false, navigatorKey: navigatorKey);
 }
 ```
-CatcherOptions parameters:
+Catcher2Options parameters:
 handlers - list of handlers, which will process report, see handlers to get more information.   
 handlerTimeout - timeout in milliseconds, this parameter describes max time of handling report by handler.   
 reportMode - describes how error report will be shown to user, see report modes to get more information.   
@@ -284,23 +286,23 @@ filterFunction - function used to filter errors which shouldn't be handled.
 
 
 ### Report caught exception
-Catcher won't process exceptions caught in try/catch block. You can send exception from try catch block to Catcher:
+Catcher 2 won't process exceptions caught in try/catch block. You can send exception from try catch block to Catcher 2:
 
 ```dart
 try {
   ...
 } catch (error,stackTrace) {
-  Catcher.reportCheckedError(error, stackTrace);
+  Catcher2.reportCheckedError(error, stackTrace);
 }
 ```
 
 ### Localization
-Catcher allows to create localizations for Report modes. To add localization support, you need setup
+Catcher 2 allows to create localizations for Report modes. To add localization support, you need setup
 few things:
 
 Add navigatorKey in your `MaterialApp`:
 ```dart
- navigatorKey: Catcher.navigatorKey,
+ navigatorKey: Catcher2.navigatorKey,
 ```
 
 Add Flutter localizations delegates and locales in your MaterialApp:
@@ -315,9 +317,9 @@ Add Flutter localizations delegates and locales in your MaterialApp:
       ],
 ```
 
-Add localizationOptions in `CatcherOptions`:
+Add localizationOptions in `Catcher2Options`:
 ```dart
-CatcherOptions(
+Catcher2Options(
 ...
     localizationOptions: [
         LocalizationOptions("pl", notificationReportModeTitle: "My translation" ...),
@@ -399,11 +401,11 @@ LocalizationOptions.buildDefaultDutchOptions();
 Complete Example:
 ```dart
 import 'package:flutter/material.dart';
-import 'package:catcher/catcher.dart';
+import 'package:catcher_2/catcher_2.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 main() {
-  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
+  Catcher2Options debugOptions = Catcher2Options(DialogReportMode(), [
     ConsoleHandler(),
     HttpHandler(HttpRequestType.post, Uri.parse("https://httpstat.us/200"),
         printLogs: true)
@@ -425,11 +427,11 @@ main() {
         toastHandlerDescription: "Wystąpił błąd:",
     ) 
   ]);
-  CatcherOptions releaseOptions = CatcherOptions(NotificationReportMode(), [
+  Catcher2Options releaseOptions = Catcher2Options(NotificationReportMode(), [
     EmailManualHandler(["recipient@email.com"])
   ]);
 
-  Catcher(rootWidget: MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
+  Catcher2(rootWidget: MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
 }
 
 class MyApp extends StatefulWidget {
@@ -446,7 +448,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      navigatorKey: Catcher.navigatorKey,
+      navigatorKey: Catcher2.navigatorKey,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -504,7 +506,7 @@ See localization options to change default texts.
 
 
 <p align="center">
-<img width="250px" src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/6.png"><br/>
+<img width="250px" src="https://raw.githubusercontent.com/ThexXTURBOXx/catcher_2/master/screenshots/6.png"><br/>
   <i>Dialog report mode</i>
 </p>
 
@@ -522,7 +524,7 @@ See localization options to change default texts.
 
 
 <p align="center">
-<img width="250px" src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/7.png"><br/>
+<img width="250px" src="https://raw.githubusercontent.com/ThexXTURBOXx/catcher_2/master/screenshots/7.png"><br/>
   <i>Page report mode</i>
 </p>
 
@@ -550,9 +552,9 @@ ConsoleHandler(
 ```dart
 I/flutter ( 4820): ------- APP INFO -------
 I/flutter ( 4820): version: 1.0
-I/flutter ( 4820): appName: catcher_example
+I/flutter ( 4820): appName: catcher_2_example
 I/flutter ( 4820): buildNumber: 1
-I/flutter ( 4820): packageName: com.jhomlala.catcherexample
+I/flutter ( 4820): packageName: com.jhomlala.catcher_2_example
 I/flutter ( 4820): 
 ```
 
@@ -585,15 +587,15 @@ I/flutter ( 4820): versionSdk: 28
 I/flutter ( 4820): versionSecurityPatch: 2018-08-05
 ```
 
-* enableCustomParameters (optional) - display in log section with custom parameters passed to Catcher constructor
+* enableCustomParameters (optional) - display in log section with custom parameters passed to Catcher 2 constructor
 
 * enableStackTrace (optional) - display in log section with stack trace:
 
 ```dart
 I/flutter ( 5073): ------- STACK TRACE -------
-I/flutter ( 5073): #0      _MyAppState.generateError (package:catcher_example/main.dart:38:5)
+I/flutter ( 5073): #0      _MyAppState.generateError (package:catcher_2_example/main.dart:38:5)
 I/flutter ( 5073): <asynchronous suspension>
-I/flutter ( 5073): #1      _MyAppState.build.<anonymous closure> (package:catcher_example/main.dart:31:69)
+I/flutter ( 5073): #1      _MyAppState.build.<anonymous closure> (package:catcher_2_example/main.dart:31:69)
 I/flutter ( 5073): #2      _InkResponseState._handleTap (package:flutter/src/material/ink_well.dart:507:14)
 I/flutter ( 5073): #3      _InkResponseState.build.<anonymous closure> (package:flutter/src/material/ink_well.dart:562:30)
 I/flutter ( 5073): #4      GestureRecognizer.invokeCallback (package:flutter/src/gestures/recognizer.dart:102:24)
@@ -639,7 +641,7 @@ Email Manual Handler parameters:
 Email handler can be used to send automatically email with error reports. Email handler has multiple configuration parameters. Few of them are required, other are optional. These parameters are required:
 
 ```dart
- EmailAutoHandler("smtp.gmail.com", 587, "somefakeemail@gmail.com", "Catcher",
+ EmailAutoHandler("smtp.gmail.com", 587, "somefakeemail@gmail.com", "Catcher 2",
           "FakePassword", ["myemail@gmail.com"])
 ```
 We need to setup email smtp server, email account and recipient. Currently, only Gmail was tested and worked. You can try use other email providers, but there can be errors.  
@@ -648,7 +650,7 @@ List of all parameters:
  
 * smtpHost (required) - host address of your email, for example host for gmail is smtp.gmail.com  
 * smtpPort (required) - smtp port of your email, for example port for gmail is 587  
-* senderEmail (required) - email from which Catcher will send email (it will be sender of error emails)  
+* senderEmail (required) - email from which Catcher 2 will send email (it will be sender of error emails)  
 * senderName (required) - name of sender email
 * senderPassword (required) - password for sender email 
 * recipients (required) - list which contains recipient emails   
@@ -664,7 +666,7 @@ List of all parameters:
 
 Example email:
 <p align="center">
-<img src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/3.png">
+<img src="https://raw.githubusercontent.com/ThexXTURBOXx/catcher_2/master/screenshots/3.png">
 </p>
 
 #### Http Handler
@@ -687,10 +689,10 @@ All parameters list:
 * enableCustomParameters (optional) - please look in console handler description
 
 You can try using example backend server which handles logs. It's written in Java 8 and Spring Framework and uses material design.
-You can find code of backend server here: https://github.com/jhomlala/catcher/tree/master/backend
+You can find code of backend server here: https://github.com/ThexXTURBOXx/catcher_2/tree/master/backend
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/4.png">
+<img src="https://raw.githubusercontent.com/ThexXTURBOXx/catcher_2/master/screenshots/4.png">
 </p>
 
 Note: Remember to add Internet permission in Android Manifest:
@@ -704,12 +706,12 @@ File handler allows to store logs in file. Minimal example:
 ```dart
 main() {
   String path = "/storage/emulated/0/log.txt";
-  CatcherOptions debugOptions = CatcherOptions(
+  Catcher2Options debugOptions = Catcher2Options(
       DialogReportMode(), [FileHandler(File(path), printLogs: true)]);
-  CatcherOptions releaseOptions =
-      CatcherOptions(DialogReportMode(), [FileHandler(File(path))]);
+  Catcher2Options releaseOptions =
+      Catcher2Options(DialogReportMode(), [FileHandler(File(path))]);
 
-  Catcher(rootWidget: MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
+  Catcher2(rootWidget: MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
 }
 ```
 
@@ -722,13 +724,13 @@ All parameters list:
 * printLogs (optional) - enable/disable debug logs
 * handleWhenRejected - please look in console handler description
 
-Example of logging to file in external directory: https://github.com/jhomlala/catcher/blob/master/example/lib/file_example.dart
+Example of logging to file in external directory: https://github.com/ThexXTURBOXx/catcher_2/blob/master/example/lib/file_example.dart
 
-If you want to get file path with path_provider lib, you need to call Catcher constructor with
-ensureInitialized = true. Then you need to pass your catcher config with updateConfig.
+If you want to get file path with path_provider lib, you need to call Catcher 2 constructor with
+ensureInitialized = true. Then you need to pass your catcher 2 config with updateConfig.
 This is required because WidgetBindings ensureInitialized must be called first before accessing
 path_provider methods.
-See example here: https://github.com/jhomlala/catcher/blob/master/example/lib/file_example.dart
+See example here: https://github.com/ThexXTURBOXx/catcher_2/blob/master/example/lib/file_example.dart
 
 #### Toast Handler
 Toast handler allows to show short message in toast. Minimal example:
@@ -743,7 +745,7 @@ All parameters list:
 * handleWhenRejected - please look in console handler description
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/5.png" width="250px">
+<img src="https://raw.githubusercontent.com/ThexXTURBOXx/catcher_2/master/screenshots/5.png" width="250px">
 </p>
 
 #### Sentry Handler
@@ -753,13 +755,13 @@ Sentry.io page and then copy DSN link. Example:
 ```dart
 main() {
 
-  CatcherOptions debugOptions = CatcherOptions(
+  Catcher2Options debugOptions = Catcher2Options(
       DialogReportMode(), [SentryHandler(SentryClient("YOUR_DSN_HERE"))]);
-  CatcherOptions releaseOptions = CatcherOptions(NotificationReportMode(), [
+  Catcher2Options releaseOptions = Catcher2Options(NotificationReportMode(), [
     EmailManualHandler(["recipient@email.com"])
   ]);
 
-  Catcher(rootWidget: MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
+  Catcher2(rootWidget: MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
 }
 ```
 
@@ -768,8 +770,8 @@ All parameters list:
 * enableDeviceParameters (optional) - please look in console handler description
 * enableApplicationParameters (optional) - please look in console handler description
 * enableCustomParameters (optional) - please look in console handler description
-* customEnvironment (optional) - custom environment string, if null, Catcher will generate it
-* customRelease (optional) - custom release string , if null, Catcher will generate it
+* customEnvironment (optional) - custom environment string, if null, Catcher 2 will generate it
+* customRelease (optional) - custom release string , if null, Catcher 2 will generate it
 * printLogs (optional) - enable/disable debug logs
 
 #### Slack Handler
@@ -780,11 +782,11 @@ works: https://api.slack.com/incoming-webhooks.
 ```dart
 main() {
 
- CatcherOptions debugOptions = CatcherOptions(SilentReportMode(), [
+ Catcher2Options debugOptions = Catcher2Options(SilentReportMode(), [
      SlackHandler(
          "<web_hook_url>",
-         "#catcher",
-         username: "CatcherTest",
+         "#catcher2",
+         username: "Catcher2Test",
          iconEmoji: ":thinking_face:",
          enableDeviceParameters: true,
          enableApplicationParameters: true,
@@ -792,13 +794,13 @@ main() {
          enableStackTrace: true,
          printLogs: true),
    ]);
-   Catcher(rootWidget: MyApp(), debugConfig: debugOptions);
+   Catcher2(rootWidget: MyApp(), debugConfig: debugOptions);
 }
 ```
 
 All parameters list:
 * webhookUrl (required) - url of your webhook
-* channel (required) - your channel name (i.e. #catcher)
+* channel (required) - your channel name (i.e. #catcher2)
 * username (optional) - name of the integration bot
 * iconEmoji (optional) - avatar of the integration bot
 * enableDeviceParameters (optional) - please look in console handler description
@@ -814,7 +816,7 @@ works: https://support.discordapp.com/hc/en-us/articles/228383668-Intro-to-Webho
 
 ```dart
 main() {
- CatcherOptions debugOptions = CatcherOptions(SilentReportMode(), [
+ Catcher2Options debugOptions = Catcher2Options(SilentReportMode(), [
      DiscordHandler(
          "<web_hook_url>",
          enableDeviceParameters: true,
@@ -824,7 +826,7 @@ main() {
          printLogs: true),
    ]);
 
-   Catcher(rootWidget: MyApp(), debugConfig: debugOptions);
+   Catcher2(rootWidget: MyApp(), debugConfig: debugOptions);
 }
 ```
 
@@ -843,7 +845,7 @@ Snackbar handler allows to show customized snackbar message.
 
 ```dart
 void main() {
-  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
+  Catcher2Options debugOptions = Catcher2Options(DialogReportMode(), [
     SnackbarHandler(
       Duration(seconds: 5),
       backgroundColor: Colors.green,
@@ -864,7 +866,7 @@ void main() {
     ),
   ]);
 
-  Catcher(
+  Catcher2(
     runAppFunction: () {
       runApp(MyApp());
     },
@@ -898,7 +900,7 @@ Crashlytics handler has been removed from core package. You can re-enable it in 
 Explicit exception report handler map allows you to setup report handler for specific exception. For example if you want to setup Console Handler for FormatException, you can write:
 ```dart
 var explicitMap = {"FormatException": ConsoleHandler()};
-CatcherOptions debugOptions = CatcherOptions(
+Catcher2Options debugOptions = Catcher2Options(
       DialogReportMode(),
       [
         ConsoleHandler(),
@@ -914,7 +916,7 @@ Now if `FormatException` will be caught, then Console Handler will be used. Warn
 Same as explicit report handler map, but it's for report mode. Let's say you want to use specific report mode for some exception:
 ```dart
  var explicitReportModesMap = {"FormatException": NotificationReportMode()};
-  CatcherOptions debugOptions = CatcherOptions(
+  Catcher2Options debugOptions = Catcher2Options(
       DialogReportMode(),
       [
         ConsoleHandler(),
@@ -923,7 +925,7 @@ Same as explicit report handler map, but it's for report mode. Let's say you wan
       ],
       explicitExceptionReportModesMap: explicitReportModesMap,);
 ```
-When `FormatException` will be caught, then NotificationReportMode will be used. For other exceptions, Catcher will use DialogReportMode.
+When `FormatException` will be caught, then NotificationReportMode will be used. For other exceptions, Catcher 2 will use DialogReportMode.
 
 
 
@@ -933,10 +935,10 @@ You can add error widget which will replace red screen of death. To add this int
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      navigatorKey: Catcher.navigatorKey,
+      navigatorKey: Catcher2.navigatorKey,
       //********************************************
       builder: (BuildContext context, Widget widget) {
-        Catcher.addDefaultErrorWidget(
+        Catcher2.addDefaultErrorWidget(
             showStacktrace: true,
             title: "Custom error title",
             description: "Custom error description",
@@ -952,7 +954,7 @@ You can add error widget which will replace red screen of death. To add this int
     );
   }
 ```
-You need to add in your MaterialApp or CupertinoApp builder method with ```Catcher.addDefaultErrorWidget()```. This will add error handler for each widget in your app.
+You need to add in your MaterialApp or CupertinoApp builder method with ```Catcher2.addDefaultErrorWidget()```. This will add error handler for each widget in your app.
 
 You can provide optional parameters:
 * showStacktrace - show/hide stacktrace
@@ -968,7 +970,7 @@ Error widget will replace your widget if he fails to render. If width of widget 
 		<td>With error widget</td><td>Without error widget</td>
 	</tr>
 		<tr>
-		<td><img src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/8.png" width="250px"></td><td><img src="https://raw.githubusercontent.com/jhomlala/catcher/master/screenshots/9.png" width="250px"></td>
+		<td><img src="https://raw.githubusercontent.com/ThexXTURBOXx/catcher_2/master/screenshots/8.png" width="250px"></td><td><img src="https://raw.githubusercontent.com/ThexXTURBOXx/catcher_2/master/screenshots/9.png" width="250px"></td>
 	</tr>
  </table>
 </p>
@@ -976,7 +978,7 @@ Error widget will replace your widget if he fails to render. If width of widget 
 ### Current config
 You can get currently used config by using:
 ```dart
-CatcherOptions options = catcher.getCurrentConfig();
+Catcher2Options options = catcher2.getCurrentConfig();
 ```
 This can be used for example to change custom parameters in runtime.
 
@@ -984,16 +986,16 @@ This can be used for example to change custom parameters in runtime.
 Send test exception:
 
 ```dart
-Catcher.sendTestException();
+Catcher2.sendTestException();
 ```
 
 ### Update config
-You can update Catcher config during runtime:
+You can update Catcher 2 config during runtime:
 ```dart
-///Catcher instance initialized
-Catcher catcher;
-catcher.updateConfig(
-     debugConfig: CatcherOptions(
+/// Catcher 2 instance initialized
+Catcher2 catcher2;
+catcher2.updateConfig(
+     debugConfig: Catcher2Options(
        PageReportMode(),
        [ConsoleHandler()],
      ),
@@ -1001,13 +1003,13 @@ catcher.updateConfig(
 ```
 
 ### Screenshots
-Catcher can create screenshots automatically and include them in report handlers. To add screenshot
-support in your app, simply wrap your root widget with CatcherScreenshot widget:
+Catcher 2 can create screenshots automatically and include them in report handlers. To add screenshot
+support in your app, simply wrap your root widget with Catcher2Screenshot widget:
 ```dart
 MaterialApp(
-      navigatorKey: Catcher.navigatorKey,
-      home: CatcherScreenshot(
-        catcher: Catcher.getInstance(),
+      navigatorKey: Catcher2.navigatorKey,
+      home: Catcher2Screenshot(
+        catcher2: Catcher2.getInstance(),
         child: Scaffold(
           appBar: AppBar(
             title: const Text('Plugin example app'),
@@ -1017,10 +1019,10 @@ MaterialApp(
       ),
     );
 ```
-Also you need to provide directory path, where Catcher will store screenshot files: 
+Also you need to provide directory path, where Catcher 2 will store screenshot files: 
 
 ```dart
-  CatcherOptions debugOptions = CatcherOptions(
+  Catcher2Options debugOptions = Catcher2Options(
     DialogReportMode(),
     [
       ToastHandler(),

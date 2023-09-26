@@ -1,26 +1,28 @@
-import 'package:catcher/catcher.dart';
-import 'package:catcher/model/platform_type.dart';
+import 'package:catcher_2/catcher_2.dart';
+import 'package:catcher_2/model/platform_type.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  CatcherOptions debugOptions = CatcherOptions(CustomPageReportMode(), [
-    EmailManualHandler(["recipient@email.com"]),
-    ConsoleHandler()
+  final debugOptions = Catcher2Options(CustomPageReportMode(), [
+    EmailManualHandler(['recipient@email.com']),
+    ConsoleHandler(),
   ]);
-  CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
-    EmailManualHandler(["recipient@email.com"])
+  final releaseOptions = Catcher2Options(PageReportMode(), [
+    EmailManualHandler(['recipient@email.com']),
   ]);
 
-  Catcher(
-    rootWidget: MyApp(),
+  Catcher2(
+    rootWidget: const MyApp(),
     debugConfig: debugOptions,
     releaseConfig: releaseOptions,
   );
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -30,31 +32,28 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: Catcher.navigatorKey,
-      home: Scaffold(
+  Widget build(BuildContext context) => MaterialApp(
+        navigatorKey: Catcher2.navigatorKey,
+        home: Scaffold(
           appBar: AppBar(
             title: const Text('Plugin example app'),
           ),
-          body: ChildWidget()),
-    );
-  }
+          body: const ChildWidget(),
+        ),
+      );
 }
 
 class ChildWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: TextButton(
-        child: Text("Generate error"),
-        onPressed: () => generateError(),
-      ),
-    );
-  }
+  const ChildWidget({super.key});
 
-  void generateError() async {
-    Catcher.sendTestException();
+  @override
+  Widget build(BuildContext context) => TextButton(
+        onPressed: generateError,
+        child: const Text('Generate error'),
+      );
+
+  Future<void> generateError() async {
+    Catcher2.sendTestException();
   }
 }
 
@@ -66,18 +65,22 @@ class CustomPageReportMode extends ReportMode {
     }
   }
 
-  void _navigateToPageWidget(Report report, BuildContext context) async {
+  Future<void> _navigateToPageWidget(
+    Report report,
+    BuildContext context,
+  ) async {
     await Future<void>.delayed(Duration.zero);
-    Navigator.push<void>(
+    if (!context.mounted) {
+      return;
+    }
+    await Navigator.push<void>(
       context,
       MaterialPageRoute(builder: (context) => CustomPage(this, report)),
     );
   }
 
   @override
-  bool isContextRequired() {
-    return true;
-  }
+  bool isContextRequired() => true;
 
   @override
   List<PlatformType> getSupportedPlatforms() =>
@@ -88,30 +91,29 @@ class CustomPage extends StatelessWidget {
   final ReportMode reportMode;
   final Report report;
 
-  CustomPage(this.reportMode, this.report);
+  const CustomPage(this.reportMode, this.report, {super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text("Test"),
+          title: const Text('Test'),
         ),
-        body: Container(
-          child: Row(children: [
+        body: Row(
+          children: [
             ElevatedButton(
-              child: Text("Send report"),
+              child: const Text('Send report'),
               onPressed: () {
                 reportMode.onActionConfirmed(report);
               },
             ),
             ElevatedButton(
-              child: Text("Cancel report"),
+              child: const Text('Cancel report'),
               onPressed: () {
                 reportMode.onActionRejected(report);
                 Navigator.pop(context);
               },
-            )
-          ]),
-        ));
-  }
+            ),
+          ],
+        ),
+      );
 }

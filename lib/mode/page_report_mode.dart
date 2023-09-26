@@ -1,6 +1,6 @@
-import 'package:catcher/catcher.dart';
-import 'package:catcher/model/platform_type.dart';
-import 'package:catcher/utils/catcher_utils.dart';
+import 'package:catcher_2/catcher_2.dart';
+import 'package:catcher_2/model/platform_type.dart';
+import 'package:catcher_2/utils/catcher_2_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -18,9 +18,15 @@ class PageReportMode extends ReportMode {
     }
   }
 
-  void _navigateToPageWidget(Report report, BuildContext context) async {
+  Future<void> _navigateToPageWidget(
+    Report report,
+    BuildContext context,
+  ) async {
     await Future<void>.delayed(Duration.zero);
-    Navigator.push<void>(
+    if (!context.mounted) {
+      return;
+    }
+    await Navigator.push<void>(
       context,
       MaterialPageRoute(
         builder: (context) => PageWidget(this, report),
@@ -29,9 +35,7 @@ class PageReportMode extends ReportMode {
   }
 
   @override
-  bool isContextRequired() {
-    return true;
-  }
+  bool isContextRequired() => true;
 
   @override
   List<PlatformType> getSupportedPlatforms() => [
@@ -55,132 +59,120 @@ class PageWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  PageWidgetState createState() {
-    return PageWidgetState();
-  }
+  PageWidgetState createState() => PageWidgetState();
 }
 
 class PageWidgetState extends State<PageWidget> {
   @override
-  Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        widget.pageReportMode.onActionRejected(widget.report);
-        return true;
-      },
-      child: Builder(
-        builder: (context) => CatcherUtils.isCupertinoAppAncestor(context)
-            ? _buildCupertinoPage()
-            : _buildMaterialPage(),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => WillPopScope(
+        onWillPop: () async {
+          widget.pageReportMode.onActionRejected(widget.report);
+          return true;
+        },
+        child: Builder(
+          builder: (context) => Catcher2Utils.isCupertinoAppAncestor(context)
+              ? _buildCupertinoPage()
+              : _buildMaterialPage(),
+        ),
+      );
 
-  Widget _buildMaterialPage() {
-    return Scaffold(
-      appBar: AppBar(
-        title:
-            Text(widget.pageReportMode.localizationOptions.pageReportModeTitle),
-      ),
-      body: _buildInnerWidget(),
-    );
-  }
-
-  Widget _buildCupertinoPage() {
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(
-        middle:
-            Text(widget.pageReportMode.localizationOptions.pageReportModeTitle),
-      ),
-      child: SafeArea(
-        child: _buildInnerWidget(),
-      ),
-    );
-  }
-
-  Widget _buildInnerWidget() {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      decoration: const BoxDecoration(color: Colors.white),
-      child: Column(
-        children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 10),
+  Widget _buildMaterialPage() => Scaffold(
+        appBar: AppBar(
+          title: Text(
+            widget.pageReportMode.localizationOptions.pageReportModeTitle,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-              widget
-                  .pageReportMode.localizationOptions.pageReportModeDescription,
-              style: _getTextStyle(15),
-              textAlign: TextAlign.center,
+        ),
+        body: _buildInnerWidget(),
+      );
+
+  Widget _buildCupertinoPage() => CupertinoPageScaffold(
+        navigationBar: CupertinoNavigationBar(
+          middle: Text(
+            widget.pageReportMode.localizationOptions.pageReportModeTitle,
+          ),
+        ),
+        child: SafeArea(
+          child: _buildInnerWidget(),
+        ),
+      );
+
+  Widget _buildInnerWidget() => Container(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        decoration: const BoxDecoration(color: Colors.white),
+        child: Column(
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(top: 10),
             ),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(top: 20),
-          ),
-          Expanded(
-            child: Padding(
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: _getStackTraceWidget(),
+              child: Text(
+                widget.pageReportMode.localizationOptions
+                    .pageReportModeDescription,
+                style: _getTextStyle(15),
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TextButton(
-                onPressed: () => _onAcceptClicked(),
-                child: Text(
-                  widget
-                      .pageReportMode.localizationOptions.pageReportModeAccept,
-                ),
+            const Padding(
+              padding: EdgeInsets.only(top: 20),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: _getStackTraceWidget(),
               ),
-              TextButton(
-                onPressed: () => _onCancelClicked(),
-                child: Text(
-                  widget
-                      .pageReportMode.localizationOptions.pageReportModeCancel,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                TextButton(
+                  onPressed: _onAcceptClicked,
+                  child: Text(
+                    widget.pageReportMode.localizationOptions
+                        .pageReportModeAccept,
+                  ),
                 ),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
+                TextButton(
+                  onPressed: _onCancelClicked,
+                  child: Text(
+                    widget.pageReportMode.localizationOptions
+                        .pageReportModeCancel,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
 
-  TextStyle _getTextStyle(double fontSize) {
-    return TextStyle(
-      fontSize: fontSize,
-      decoration: TextDecoration.none,
-    );
-  }
+  TextStyle _getTextStyle(double fontSize) => TextStyle(
+        fontSize: fontSize,
+        decoration: TextDecoration.none,
+      );
 
   Widget _getStackTraceWidget() {
     if (widget.pageReportMode.showStackTrace) {
-      String error = "";
+      var error = '';
       if (widget.report.error != null) {
         error = widget.report.error.toString();
       } else if (widget.report.errorDetails != null) {
         error = widget.report.errorDetails.toString();
       }
 
-      final List<String> items = [
+      final items = <String>[
         error,
-        ...widget.report.stackTrace.toString().split("\n"),
+        ...widget.report.stackTrace.toString().split('\n'),
       ];
       return SizedBox(
-        height: 300.0,
+        height: 300,
         child: ListView.builder(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8),
           itemCount: items.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Text(
-              // ignore: unnecessary_string_interpolations
-              '${items[index]}',
-              style: _getTextStyle(10),
-            );
-          },
+          itemBuilder: (context, index) => Text(
+            // ignore: unnecessary_string_interpolations
+            '${items[index]}',
+            style: _getTextStyle(10),
+          ),
         ),
       );
     } else {

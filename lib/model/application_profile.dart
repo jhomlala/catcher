@@ -1,11 +1,11 @@
-///Available application run modes.
+/// Available application run modes.
 enum ApplicationProfile {
-  ///Debug mode
+  /// Debug mode
   debug,
 
-  ///Release mode
+  /// Release mode
   release,
 
-  ///Profile mode
+  /// Profile mode
   profile,
 }

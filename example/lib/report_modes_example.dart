@@ -1,4 +1,4 @@
-import 'package:catcher/catcher.dart';
+import 'package:catcher_2/catcher_2.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,16 +16,18 @@ void main() {
       cancelText: "Back");*/
 
   //page:
-  ReportMode reportMode = PageReportMode(showStackTrace: false);
+  final ReportMode reportMode = PageReportMode(showStackTrace: false);
 
-  CatcherOptions debugOptions = CatcherOptions(reportMode, [ConsoleHandler()]);
+  final debugOptions = Catcher2Options(reportMode, [ConsoleHandler()]);
 
-  Catcher(rootWidget: MyApp(), debugConfig: debugOptions);
+  Catcher2(rootWidget: const MyApp(), debugConfig: debugOptions);
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -35,27 +37,27 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: Catcher.navigatorKey,
-      home: Scaffold(
+  Widget build(BuildContext context) => MaterialApp(
+        navigatorKey: Catcher2.navigatorKey,
+        home: Scaffold(
           appBar: AppBar(
             title: const Text('Plugin example app'),
           ),
-          body: ChildWidget()),
-    );
-  }
+          body: const ChildWidget(),
+        ),
+      );
 }
 
 class ChildWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        child: TextButton(
-            child: Text("Generate error"), onPressed: () => generateError()));
-  }
+  const ChildWidget({super.key});
 
-  void generateError() async {
-    throw "Test exception";
+  @override
+  Widget build(BuildContext context) => TextButton(
+        onPressed: generateError,
+        child: const Text('Generate error'),
+      );
+
+  Future<void> generateError() async {
+    throw Exception('Test exception');
   }
 }

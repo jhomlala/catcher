@@ -1,10 +1,10 @@
-/*import 'package:catcher/model/platform_type.dart';
-import 'package:catcher/model/report.dart';
-import 'package:catcher/model/report_handler.dart';
+/*import 'package:catcher_2/model/platform_type.dart';
+import 'package:catcher_2/model/report.dart';
+import 'package:catcher_2/model/report_handler.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
-import 'package:catcher/catcher.dart';
+import 'package:catcher_2/catcher_2.dart';
 
 class CrashlyticsHandler extends ReportHandler {
   final Logger _logger = Logger("CrashlyticsHandler");
@@ -44,9 +44,11 @@ class CrashlyticsHandler extends ReportHandler {
       crashlytics.log(_getLogMessage(report));
       if (report.errorDetails != null) {
         // ignore: cast_nullable_to_non_nullable
-        await crashlytics.recordFlutterError(report.errorDetails as FlutterErrorDetails);
+        await crashlytics.recordFlutterError(
+        report.errorDetails as FlutterErrorDetails);
       } else {
-        await crashlytics.recordError(report.error, report.stackTrace as StackTrace);
+        await crashlytics.recordError(report.error,
+        report.stackTrace as StackTrace);
       }
       _printLog("Crashlytics report sent");
       return true;
@@ -88,15 +90,15 @@ class CrashlyticsHandler extends ReportHandler {
 
 
 main() {
-  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
+  Catcher2Options debugOptions = Catcher2Options(DialogReportMode(), [
     CrashlyticsHandler(),
     ConsoleHandler()
   ]);
-  CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
+  Catcher2Options releaseOptions = Catcher2Options(PageReportMode(), [
     EmailManualHandler(["recipient@email.com"])
   ]);
 
-  Catcher(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
+  Catcher2(MyApp(), debugConfig: debugOptions, releaseConfig: releaseOptions);
 }
 
 class MyApp extends StatefulWidget {
@@ -113,7 +115,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      navigatorKey: Catcher.navigatorKey,
+      navigatorKey: Catcher2.navigatorKey,
       home: Scaffold(
           appBar: AppBar(
             title: const Text('Plugin example app'),
@@ -135,6 +137,6 @@ class ChildWidget extends StatelessWidget {
   }
 
   void generateError() async {
-    Catcher.sendTestException();
+    Catcher2.sendTestException();
   }
 }*/

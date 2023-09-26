@@ -1,51 +1,56 @@
-import 'package:catcher/catcher.dart';
+import 'package:catcher_2/catcher_2.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
+  final debugOptions = Catcher2Options(DialogReportMode(), [
     SnackbarHandler(
-      Duration(seconds: 5),
+      const Duration(seconds: 5),
       backgroundColor: Colors.green,
       elevation: 2,
-      margin: EdgeInsets.all(16),
-      padding: EdgeInsets.all(16),
+      margin: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       behavior: SnackBarBehavior.floating,
       action: SnackBarAction(
-          label: "Button",
-          onPressed: () {
-            print("Click!");
-          }),
-      textStyle: TextStyle(
+        label: 'Button',
+        onPressed: () {
+          // ignore: avoid_print
+          print('Click!');
+        },
+      ),
+      textStyle: const TextStyle(
         color: Colors.white,
         fontSize: 16,
       ),
     ),
   ]);
-  CatcherOptions releaseOptions = CatcherOptions(DialogReportMode(), [
+  final releaseOptions = Catcher2Options(DialogReportMode(), [
     SnackbarHandler(
-      Duration(seconds: 5),
+      const Duration(seconds: 5),
       backgroundColor: Colors.green,
       elevation: 2,
-      padding: EdgeInsets.all(16),
-      textStyle: TextStyle(
+      padding: const EdgeInsets.all(16),
+      textStyle: const TextStyle(
         color: Colors.white,
         fontSize: 16,
       ),
     ),
   ]);
 
-  Catcher(
-      runAppFunction: () {
-        runApp(MyApp());
-      },
-      debugConfig: debugOptions,
-      releaseConfig: releaseOptions);
+  Catcher2(
+    runAppFunction: () {
+      runApp(const MyApp());
+    },
+    debugConfig: debugOptions,
+    releaseConfig: releaseOptions,
+  );
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -55,31 +60,27 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: Catcher.navigatorKey,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Snackbar handler example'),
+  Widget build(BuildContext context) => MaterialApp(
+        navigatorKey: Catcher2.navigatorKey,
+        home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Snackbar handler example'),
+          ),
+          body: const ChildWidget(),
         ),
-        body: ChildWidget(),
-      ),
-    );
-  }
+      );
 }
 
 class ChildWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: TextButton(
-        child: Text("Generate error"),
-        onPressed: () => generateError(),
-      ),
-    );
-  }
+  const ChildWidget({super.key});
 
-  void generateError() async {
-    Catcher.sendTestException();
+  @override
+  Widget build(BuildContext context) => TextButton(
+        onPressed: generateError,
+        child: const Text('Generate error'),
+      );
+
+  Future<void> generateError() async {
+    Catcher2.sendTestException();
   }
 }
