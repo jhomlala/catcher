@@ -1,3 +1,6 @@
+## 1.0.0-alpha.2
+* Add `senderUsername` to set an explicit username for SMTP authentication
+
 ## 1.0.0-alpha.1
 * Added migration guide
 
