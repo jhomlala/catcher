@@ -1,8 +1,12 @@
+## 1.0.0-alpha.1
+* Added migration guide
+
 ## 1.0.0-alpha.0
 * [BREAKING_CHANGE] Rebrand to `catcher_2`
+* [BREAKING_CHANGE] Fix compatibility with newer versions of Flutter. Only SDK `>=3.0.0` is supported now
 * [BREAKING_CHANGE] Update to `dio` 5.x. This has an effect on the `HttpHandler`
-* [BREAKING_CHANGE] Update to `sentry` 7.x. Only SDK `>=2.17.0` is supported now
-* Fix compatibility with newer versions of Flutter
+* [BREAKING_CHANGE] Update to `sentry` 7.x
+* Fix compatibility with AGP 8.x
 * Fix wrong stack trace being sent to Sentry
 * Fix a few typos in the README
 * Fix many other errors as well
