@@ -667,6 +667,7 @@ List of all parameters:
 * senderName (required) - name of sender email
 * senderPassword (required) - password for sender email 
 * recipients (required) - list which contains recipient emails   
+* senderUsername (optional) - set an explicit username for the SMTP authentication
 * enableSSL (optional) - if your email provider supports SSL, you can enable this option
 * enableDeviceParameters (optional) - please look in console handler description
 * enableApplicationParameters (optional) - please look in console handler description
