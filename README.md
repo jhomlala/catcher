@@ -41,6 +41,9 @@ If you used `catcher` correctly (and without extra hackage) before, it should be
 - `Catcher` -> `Catcher2`
 - `catcher` -> `catcher_2` (only in very few places you need to use `catcher2` instead)
 
+Also note the following:
+- `HttpHandler` had some breaking changes due to the upgrade to `dio` 5.x
+
 If you are still unsure or something is not working as well as before, please [open a new issue](https://github.com/ThexXTURBOXx/catcher_2/issues/new/choose).
 
 ## Table of contents
