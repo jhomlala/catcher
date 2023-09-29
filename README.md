@@ -35,6 +35,14 @@ Then add this import:
 import 'package:catcher_2/catcher_2.dart';
 ```
 
+## Upgrading from `catcher`
+
+If you used `catcher` correctly (and without extra hackage) before, it should be sufficient to replace the following strings *everywhere*:
+- `Catcher` -> `Catcher2`
+- `catcher` -> `catcher_2` (only in very few places you need to use `catcher2` instead)
+
+If you are still unsure or something is not working as well as before, please [open a new issue](https://github.com/ThexXTURBOXx/catcher_2/issues/new/choose).
+
 ## Table of contents
 [Platform support](#platform-support)   
 [Basic example](#basic-example)  
