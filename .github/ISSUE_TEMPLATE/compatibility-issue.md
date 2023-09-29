@@ -1,21 +1,19 @@
 ---
-name: Bug report
-about: Create a report to help us improve
+name: Compatibility issue
+about: Something is not compatible with the original catcher plugin?
 title: ''
-labels: bug
+labels: compatibility
 assignees: ThexXTURBOXx
 
 ---
 
-## Describe the bug
-A clear and concise description of what the bug is.
+## Description
+A clear and concise description of what the issue is.
 
 ## To Reproduce
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+```dart
+Code to reproduce the behavior
+```
 
 ## Expected behavior
 A clear and concise description of what you expected to happen.
