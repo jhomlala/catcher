@@ -7,15 +7,15 @@ on:
 
 jobs:
   check-format:
-      name: Check format using flutter format
-      runs-on: ubuntu-latest
-      container: ghcr.io/cirruslabs/flutter:stable
+    name: Check format using flutter format
+    runs-on: ubuntu-latest
+    container: ghcr.io/cirruslabs/flutter:stable
 
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v4
-        - name: Check format
-          run: dart format --output=none --set-exit-if-changed .
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Check format
+        run: dart format --output=none --set-exit-if-changed .
 
   lint:
     name: Lint
