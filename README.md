@@ -7,9 +7,10 @@
 **This project is a continuation of [catcher](https://github.com/jhomlala/catcher) by Jakub Homlala with many new features and bug fixes.**
 
 [![pub package](https://img.shields.io/pub/v/catcher_2.svg)](https://pub.dartlang.org/packages/catcher_2)
-[![pub package](https://img.shields.io/github/license/ThexXTURBOXx/catcher_2.svg?style=flat)](https://github.com/ThexXTURBOXx/catcher_2)
-[![pub package](https://img.shields.io/badge/platform-flutter-blue.svg)](https://github.com/ThexXTURBOXx/catcher_2)
-[![pub package](https://img.shields.io/badge/Awesome-Flutter-blue.svg?longCache=true&style=flat-square)](https://github.com/Solido/awesome-flutter)
+[![CI](https://github.com/ThexXTURBOXx/catcher_2/actions/workflows/ci.yml/badge.svg)](https://github.com/ThexXTURBOXx/catcher_2/actions/workflows/ci.yml)
+[![license](https://img.shields.io/github/license/ThexXTURBOXx/catcher_2.svg?style=flat)](https://github.com/ThexXTURBOXx/catcher_2)
+[![flutter](https://img.shields.io/badge/platform-flutter-blue.svg)](https://github.com/ThexXTURBOXx/catcher_2)
+[![awesome flutter](https://img.shields.io/badge/Awesome-Flutter-blue.svg?longCache=true&style=flat-square)](https://github.com/Solido/awesome-flutter)
 
 
 Catcher 2 is Flutter plugin which automatically catches error/exceptions and handle them. Catcher 2 offers multiple way to handle errors.
