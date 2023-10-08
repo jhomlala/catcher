@@ -1,4 +1,5 @@
-## 1.0.0-alpha.2
+## 1.0.0
+* Stable version arrived, yay!
 * Add `senderUsername` to set an explicit username for SMTP authentication
 
 ## 1.0.0-alpha.1
