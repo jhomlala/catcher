@@ -183,15 +183,17 @@ class Catcher2 implements ReportModeAction {
   }
 
   Future _setupErrorHooks() async {
-    FlutterError.onError = (details) async {
-      await _reportError(
+    FlutterError.onError = (details) {
+      _reportError(
         details.exception,
         details.stack,
         errorDetails: details,
       );
+      _currentConfig.onFlutterError?.call(details);
     };
     PlatformDispatcher.instance.onError = (error, stack) {
       _reportError(error, stack);
+      _currentConfig.onPlatformError?.call(error, stack);
       return true;
     };
 

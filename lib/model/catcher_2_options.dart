@@ -6,6 +6,7 @@ import 'package:catcher_2/model/report.dart';
 import 'package:catcher_2/model/report_handler.dart';
 import 'package:catcher_2/model/report_mode.dart';
 import 'package:catcher_2/utils/catcher_2_logger.dart';
+import 'package:flutter/foundation.dart';
 
 class Catcher2Options {
   /// Handlers that should be used
@@ -51,6 +52,16 @@ class Catcher2Options {
   /// milliseconds.
   final int reportOccurrenceTimeout;
 
+  /// Function which should additionally be called when an error is caught using
+  /// the [FlutterError.onError] mechanism. Useful if other packages also need
+  /// to override this behaviour (such as integration tests).
+  final void Function(FlutterErrorDetails details)? onFlutterError;
+
+  /// Function which should additionally be called when an error is caught using
+  /// the [PlatformDispatcher.instance.onError] mechanism. Useful if other
+  /// packages also need to override this behaviour.
+  final void Function(Object error, StackTrace stack)? onPlatformError;
+
   /// Logger instance.
   final Catcher2Logger? logger;
 
@@ -68,6 +79,8 @@ class Catcher2Options {
     this.excludedParameters = const [],
     this.filterFunction,
     this.reportOccurrenceTimeout = 3000,
+    this.onFlutterError,
+    this.onPlatformError,
     this.logger,
   });
 
@@ -85,6 +98,8 @@ class Catcher2Options {
         excludedParameters = const [],
         filterFunction = null,
         reportOccurrenceTimeout = 3000,
+        onFlutterError = null,
+        onPlatformError = null,
         logger = Catcher2Logger();
 
   /// Builds default catcher 2 options debug instance
@@ -101,6 +116,8 @@ class Catcher2Options {
         excludedParameters = const [],
         filterFunction = null,
         reportOccurrenceTimeout = 3000,
+        onFlutterError = null,
+        onPlatformError = null,
         logger = Catcher2Logger();
 
   /// Builds default catcher 2 options profile instance
@@ -117,5 +134,7 @@ class Catcher2Options {
         excludedParameters = const [],
         filterFunction = null,
         reportOccurrenceTimeout = 3000,
+        onFlutterError = null,
+        onPlatformError = null,
         logger = Catcher2Logger();
 }
