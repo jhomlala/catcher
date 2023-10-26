@@ -7,10 +7,10 @@ class Catcher2Screenshot extends StatefulWidget {
   final Catcher2 catcher2;
 
   const Catcher2Screenshot({
-    Key? key,
+    super.key,
     required this.child,
     required this.catcher2,
-  }) : super(key: key);
+  });
 
   @override
   State<Catcher2Screenshot> createState() => Catcher2ScreenshotState();

@@ -133,8 +133,8 @@ class FlutterToastPage extends StatefulWidget {
     this.backgroundColor,
     this.textColor,
     this.textSize, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<FlutterToastPage> createState() => _FlutterToastPageState();

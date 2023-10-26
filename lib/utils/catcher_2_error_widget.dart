@@ -8,17 +8,16 @@ class Catcher2ErrorWidget extends StatelessWidget {
   final double maxWidthForSmallMode;
 
   const Catcher2ErrorWidget({
-    Key? key,
+    super.key,
     this.details,
     required this.showStacktrace,
     required this.title,
     required this.description,
     required this.maxWidthForSmallMode,
-  })  : assert(
+  }) : assert(
           maxWidthForSmallMode > 0,
           'maxWidthForSmallMode must be positive',
-        ),
-        super(key: key);
+        );
 
   @override
   Widget build(BuildContext context) => LayoutBuilder(

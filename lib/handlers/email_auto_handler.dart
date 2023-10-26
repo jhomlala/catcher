@@ -28,21 +28,13 @@ class EmailAutoHandler extends BaseEmailHandler {
     this.enableSsl = false,
     this.sendHtml = true,
     this.printLogs = false,
-    String? emailTitle,
-    String? emailHeader,
-    bool enableDeviceParameters = true,
-    bool enableApplicationParameters = true,
-    bool enableStackTrace = true,
-    bool enableCustomParameters = true,
-  })  : assert(recipients.isNotEmpty, "Recipients can't be null or empty"),
-        super(
-          enableDeviceParameters: enableDeviceParameters,
-          enableApplicationParameters: enableApplicationParameters,
-          enableStackTrace: enableStackTrace,
-          enableCustomParameters: enableCustomParameters,
-          emailTitle: emailTitle,
-          emailHeader: emailHeader,
-        );
+    super.emailTitle,
+    super.emailHeader,
+    super.enableDeviceParameters = true,
+    super.enableApplicationParameters = true,
+    super.enableStackTrace = true,
+    super.enableCustomParameters = true,
+  }) : assert(recipients.isNotEmpty, "Recipients can't be null or empty");
 
   @override
   Future<bool> handle(Report error, BuildContext? context) => _sendMail(error);

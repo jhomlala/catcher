@@ -55,8 +55,8 @@ class PageWidget extends StatefulWidget {
   const PageWidget(
     this.pageReportMode,
     this.report, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   PageWidgetState createState() => PageWidgetState();
