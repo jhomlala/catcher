@@ -1,6 +1,6 @@
 name: catcher_2
 description: Plugin for error catching which provides multiple handlers for dealing with errors when they are not caught by the developer.
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/ThexXTURBOXx/catcher_2
 repository: https://github.com/ThexXTURBOXx/catcher_2
 issue_tracker: https://github.com/ThexXTURBOXx/catcher_2/issues

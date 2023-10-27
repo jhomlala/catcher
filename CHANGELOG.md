@@ -1,3 +1,8 @@
+## 1.0.1
+* Fix initialisation order ([#10](https://github.com/ThexXTURBOXx/catcher_2/issues/10))
+* Allow additional, custom error handlers ([#11](https://github.com/ThexXTURBOXx/catcher_2/issues/11))
+* Update `flutter_lints` and clean up implementation
+
 ## 1.0.0
 * Stable version arrived, yay!
 * Add `senderUsername` to set an explicit username for SMTP authentication
