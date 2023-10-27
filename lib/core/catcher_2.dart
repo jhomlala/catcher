@@ -79,12 +79,13 @@ class Catcher2 implements ReportModeAction {
     _configureNavigatorKey(navigatorKey);
     _setupCurrentConfig();
     _configureLogger();
-    _setupErrorHooks();
     _setupReportModeActionInReportMode();
     _setupScreenshotManager();
 
     _loadDeviceInfo();
     _loadApplicationInfo();
+
+    _setupErrorHooks();
 
     if (_currentConfig.handlers.isEmpty) {
       _logger.warning(
@@ -152,9 +153,9 @@ class Catcher2 implements ReportModeAction {
       this.releaseConfig = releaseConfig;
     }
     _setupCurrentConfig();
+    _configureLogger();
     _setupReportModeActionInReportMode();
     _setupScreenshotManager();
-    _configureLogger();
     _localizationOptions = null;
   }
 
