@@ -27,6 +27,7 @@ If applicable, add screenshots to help explain your problem.
  - Device: [e.g. iPhone 6, Desktop Computer]
  - OS: [e.g. iOS 8.1, Windows 10 21H2]
  - Browser: [e.g. Stock, Chrome, Safari, Firefox]
+ - Flutter version: [e.g. 3.13.9]
  - `catcher_2` version: [e.g. 1.0.0]
 
 ## Additional context
