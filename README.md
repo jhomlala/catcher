@@ -36,6 +36,8 @@ Then add this import:
 import 'package:catcher_2/catcher_2.dart';
 ```
 
+ANd now you can use all the features as demonstrated below!
+
 ## Upgrading from `catcher`
 
 If you used `catcher` correctly (and without extra hackage) before, it should be sufficient to replace the following strings *everywhere*:
@@ -297,6 +299,8 @@ handleSilentError - should handle silent errors reported, see FlutterErrorDetail
 screenshotsPath - path where screenshots will be saved.   
 excludedParameters - parameters which will be excluded from report.   
 filterFunction - function used to filter errors which shouldn't be handled.   
+onFlutterError - additional error handler for Flutter errors. Set this to `FlutterError.onError` when using Catcher 2 within test suites.
+onPlatformError - additional error handler for platform errors. Set this to `PlatformDispatcher.instance.onError` when using Catcher 2 within test suites.
 
 
 ### Report caught exception
