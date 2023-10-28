@@ -1,3 +1,7 @@
+## 1.0.2
+* Add error resilience to calls to 3rd party libraries
+* Improve documentation
+
 ## 1.0.1
 * Fix initialisation order ([#10](https://github.com/ThexXTURBOXx/catcher_2/issues/10))
 * Allow additional, custom error handlers ([#11](https://github.com/ThexXTURBOXx/catcher_2/issues/11))
