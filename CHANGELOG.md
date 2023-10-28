@@ -1,3 +1,7 @@
+## 1.0.4
+* Cleanup in many places (also makes a few things more robust)
+* Fix `null` path for screenshot manager ([#12](https://github.com/ThexXTURBOXx/catcher_2/issues/12))
+
 ## 1.0.3
 * Add even more error resilience to calls to 3rd party libraries
 
