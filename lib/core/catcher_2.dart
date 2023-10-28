@@ -23,10 +23,13 @@ class Catcher2 implements ReportModeAction {
   static late Catcher2 _instance;
   static GlobalKey<NavigatorState>? _navigatorKey;
 
-  /// Root widget which will be ran
+  /// Root widget that is run using [runApp], see also [runAppFunction] if you
+  /// want to customise how the widget is run
   final Widget? rootWidget;
 
-  /// Run app function which will be ran
+  /// The function to be executed after setup, should at least call [runApp].
+  /// See also [rootWidget] if no special configuration is necessary and only a
+  /// call to [runApp] is enough.
   final void Function()? runAppFunction;
 
   /// Instance of catcher 2 config used in release mode
