@@ -4,12 +4,6 @@ import 'package:catcher_2/model/report_handler.dart';
 import 'package:flutter/material.dart';
 
 class ConsoleHandler extends ReportHandler {
-  final bool enableDeviceParameters;
-  final bool enableApplicationParameters;
-  final bool enableStackTrace;
-  final bool enableCustomParameters;
-  final bool handleWhenRejected;
-
   ConsoleHandler({
     this.enableDeviceParameters = true,
     this.enableApplicationParameters = true,
@@ -18,15 +12,22 @@ class ConsoleHandler extends ReportHandler {
     this.handleWhenRejected = false,
   });
 
+  final bool enableDeviceParameters;
+  final bool enableApplicationParameters;
+  final bool enableStackTrace;
+  final bool enableCustomParameters;
+  final bool handleWhenRejected;
+
   @override
   Future<bool> handle(Report error, BuildContext? context) {
-    logger.info(
-      '============================== '
-      'CATCHER 2 LOG '
-      '==============================',
-    );
-    logger.info('Crash occurred on ${error.dateTime}');
-    logger.info('');
+    logger
+      ..info(
+        '============================== '
+        'CATCHER 2 LOG '
+        '==============================',
+      )
+      ..info('Crash occurred on ${error.dateTime}')
+      ..info('');
     if (enableDeviceParameters) {
       _printDeviceParametersFormatted(error.deviceParameters);
       logger.info('');
@@ -35,9 +36,10 @@ class ConsoleHandler extends ReportHandler {
       _printApplicationParametersFormatted(error.applicationParameters);
       logger.info('');
     }
-    logger.info('---------- ERROR ----------');
-    logger.info('${error.error}');
-    logger.info('');
+    logger
+      ..info('---------- ERROR ----------')
+      ..info('${error.error}')
+      ..info('');
     if (enableStackTrace) {
       _printStackTraceFormatted(error.stackTrace as StackTrace?);
     }

@@ -54,7 +54,7 @@ class ChildWidget extends StatelessWidget {
   const ChildWidget({super.key});
 
   @override
-  Widget build(BuildContext context) => Container(
+  Widget build(BuildContext context) => ColoredBox(
         color: Colors.orange,
         child: TextButton(
           onPressed: generateError,

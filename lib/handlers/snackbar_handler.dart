@@ -5,6 +5,23 @@ import 'package:flutter/material.dart';
 
 /// Handler which displays error report as snack bar.
 class SnackbarHandler extends ReportHandler {
+  SnackbarHandler(
+    this.duration, {
+    this.backgroundColor,
+    this.elevation,
+    this.margin,
+    this.padding,
+    this.width,
+    this.shape,
+    this.behavior,
+    this.action,
+    this.animation,
+    this.onVisible,
+    this.customMessage,
+    this.textStyle,
+    this.printLogs = false,
+  });
+
   /// See [SnackBar] docs for details.
   final Duration duration;
 
@@ -46,23 +63,6 @@ class SnackbarHandler extends ReportHandler {
 
   /// Enable additional logs printing
   final bool printLogs;
-
-  SnackbarHandler(
-    this.duration, {
-    this.backgroundColor,
-    this.elevation,
-    this.margin,
-    this.padding,
-    this.width,
-    this.shape,
-    this.behavior,
-    this.action,
-    this.animation,
-    this.onVisible,
-    this.customMessage,
-    this.textStyle,
-    this.printLogs = false,
-  });
 
   /// Handle report. If there's scaffold messenger in provided context, then
   /// snackbar will be shown.

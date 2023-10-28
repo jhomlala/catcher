@@ -7,6 +7,16 @@ import 'package:catcher_2/model/report_handler.dart';
 import 'package:flutter/material.dart';
 
 class FileHandler extends ReportHandler {
+  FileHandler(
+    this.file, {
+    this.enableDeviceParameters = true,
+    this.enableApplicationParameters = true,
+    this.enableStackTrace = true,
+    this.enableCustomParameters = true,
+    this.printLogs = false,
+    this.handleWhenRejected = false,
+  });
+
   final File file;
   final bool enableDeviceParameters;
   final bool enableApplicationParameters;
@@ -18,16 +28,6 @@ class FileHandler extends ReportHandler {
   late IOSink _sink;
   bool _fileValidated = false;
   bool _fileValidationResult = false;
-
-  FileHandler(
-    this.file, {
-    this.enableDeviceParameters = true,
-    this.enableApplicationParameters = true,
-    this.enableStackTrace = true,
-    this.enableCustomParameters = true,
-    this.printLogs = false,
-    this.handleWhenRejected = false,
-  });
 
   @override
   Future<bool> handle(Report error, BuildContext? context) async {
@@ -60,8 +60,7 @@ class FileHandler extends ReportHandler {
       if (!exists) {
         file.createSync();
       }
-      final sink = file.openWrite(mode: FileMode.append);
-      sink.write('');
+      final sink = file.openWrite(mode: FileMode.append)..write('');
       await sink.flush();
       await sink.close();
       return true;

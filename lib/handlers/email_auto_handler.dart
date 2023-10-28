@@ -6,17 +6,6 @@ import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 
 class EmailAutoHandler extends BaseEmailHandler {
-  final String smtpHost;
-  final int smtpPort;
-  final String senderEmail;
-  final String senderName;
-  final String senderPassword;
-  final String? senderUsername;
-  final bool enableSsl;
-  final List<String> recipients;
-  final bool sendHtml;
-  final bool printLogs;
-
   EmailAutoHandler(
     this.smtpHost,
     this.smtpPort,
@@ -35,6 +24,16 @@ class EmailAutoHandler extends BaseEmailHandler {
     super.enableStackTrace = true,
     super.enableCustomParameters = true,
   }) : assert(recipients.isNotEmpty, "Recipients can't be null or empty");
+  final String smtpHost;
+  final int smtpPort;
+  final String senderEmail;
+  final String senderName;
+  final String senderPassword;
+  final String? senderUsername;
+  final bool enableSsl;
+  final List<String> recipients;
+  final bool sendHtml;
+  final bool printLogs;
 
   @override
   Future<bool> handle(Report error, BuildContext? context) => _sendMail(error);

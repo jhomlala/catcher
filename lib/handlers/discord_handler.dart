@@ -9,6 +9,16 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class DiscordHandler extends ReportHandler {
+  DiscordHandler(
+    this.webhookUrl, {
+    this.printLogs = false,
+    this.enableDeviceParameters = false,
+    this.enableApplicationParameters = false,
+    this.enableStackTrace = false,
+    this.enableCustomParameters = false,
+    this.customMessageBuilder,
+  });
+
   final Dio _dio = Dio();
 
   final String webhookUrl;
@@ -20,23 +30,12 @@ class DiscordHandler extends ReportHandler {
   final bool enableCustomParameters;
   final FutureOr<String> Function(Report report)? customMessageBuilder;
 
-  DiscordHandler(
-    this.webhookUrl, {
-    this.printLogs = false,
-    this.enableDeviceParameters = false,
-    this.enableApplicationParameters = false,
-    this.enableStackTrace = false,
-    this.enableCustomParameters = false,
-    this.customMessageBuilder,
-  });
-
   @override
   Future<bool> handle(Report error, BuildContext? context) async {
-    if (error.platformType != PlatformType.web) {
-      if (!(await Catcher2Utils.isInternetConnectionAvailable())) {
-        _printLog('No internet connection available');
-        return false;
-      }
+    if (error.platformType != PlatformType.web &&
+        !(await Catcher2Utils.isInternetConnectionAvailable())) {
+      _printLog('No internet connection available');
+      return false;
     }
 
     var message = '';
@@ -75,8 +74,8 @@ class DiscordHandler extends ReportHandler {
   }
 
   String _buildMessage(Report report) {
-    final stringBuffer = StringBuffer();
-    stringBuffer.write('**Error:**\n${report.error}\n\n');
+    final stringBuffer = StringBuffer()
+      ..write('**Error:**\n${report.error}\n\n');
     if (enableStackTrace) {
       stringBuffer.write('**Stack trace:**\n${report.stackTrace}\n\n');
     }

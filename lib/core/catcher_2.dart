@@ -20,6 +20,23 @@ import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class Catcher2 implements ReportModeAction {
+  /// Builds catcher 2 instance
+  Catcher2({
+    this.rootWidget,
+    this.runAppFunction,
+    this.releaseConfig,
+    this.debugConfig,
+    this.profileConfig,
+    this.enableLogger = true,
+    this.ensureInitialized = false,
+    GlobalKey<NavigatorState>? navigatorKey,
+  }) : assert(
+          rootWidget != null || runAppFunction != null,
+          'You need to provide rootWidget or runAppFunction',
+        ) {
+    _configure(navigatorKey);
+  }
+
   static late Catcher2 _instance;
   static GlobalKey<NavigatorState>? _navigatorKey;
 
@@ -60,23 +77,6 @@ class Catcher2 implements ReportModeAction {
   /// Instance of navigator key
   static GlobalKey<NavigatorState>? get navigatorKey => _navigatorKey;
 
-  /// Builds catcher 2 instance
-  Catcher2({
-    this.rootWidget,
-    this.runAppFunction,
-    this.releaseConfig,
-    this.debugConfig,
-    this.profileConfig,
-    this.enableLogger = true,
-    this.ensureInitialized = false,
-    GlobalKey<NavigatorState>? navigatorKey,
-  }) : assert(
-          rootWidget != null || runAppFunction != null,
-          'You need to provide rootWidget or runAppFunction',
-        ) {
-    _configure(navigatorKey);
-  }
-
   void _configure(GlobalKey<NavigatorState>? navigatorKey) {
     _instance = this;
     _initWidgetsBinding();
@@ -112,32 +112,14 @@ class Catcher2 implements ReportModeAction {
   void _setupCurrentConfig() {
     switch (ApplicationProfileManager.getApplicationProfile()) {
       case ApplicationProfile.release:
-        {
-          if (releaseConfig != null) {
-            _currentConfig = releaseConfig!;
-          } else {
-            _currentConfig = Catcher2Options.getDefaultReleaseOptions();
-          }
-          break;
-        }
+        _currentConfig =
+            releaseConfig ?? Catcher2Options.getDefaultReleaseOptions();
       case ApplicationProfile.debug:
-        {
-          if (debugConfig != null) {
-            _currentConfig = debugConfig!;
-          } else {
-            _currentConfig = Catcher2Options.getDefaultDebugOptions();
-          }
-          break;
-        }
+        _currentConfig =
+            debugConfig ?? Catcher2Options.getDefaultDebugOptions();
       case ApplicationProfile.profile:
-        {
-          if (profileConfig != null) {
-            _currentConfig = profileConfig!;
-          } else {
-            _currentConfig = Catcher2Options.getDefaultProfileOptions();
-          }
-          break;
-        }
+        _currentConfig =
+            profileConfig ?? Catcher2Options.getDefaultProfileOptions();
     }
   }
 
@@ -205,7 +187,7 @@ class Catcher2 implements ReportModeAction {
     /// Web doesn't have Isolate error listener support
     if (!ApplicationProfileManager.isWeb()) {
       Isolate.current.addErrorListener(
-        RawReceivePort((dynamic pair) async {
+        RawReceivePort((pair) async {
           final isolateError = pair as List<dynamic>;
           await _reportError(
             isolateError.first.toString(),
@@ -231,11 +213,7 @@ class Catcher2 implements ReportModeAction {
   }
 
   void _configureLogger() {
-    if (_currentConfig.logger != null) {
-      _logger = _currentConfig.logger!;
-    } else {
-      _logger = Catcher2Logger();
-    }
+    _logger = _currentConfig.logger ?? Catcher2Logger();
     if (enableLogger) {
       _logger.setup();
     }
@@ -426,7 +404,7 @@ class Catcher2 implements ReportModeAction {
       if (context != null) {
         locale = Localizations.localeOf(context);
       }
-      if (_currentConfig.localizationOptions.isNotEmpty == true) {
+      if (_currentConfig.localizationOptions.isNotEmpty) {
         for (final options in _currentConfig.localizationOptions) {
           if (options.languageCode.toLowerCase() ==
               locale.languageCode.toLowerCase()) {
@@ -489,7 +467,7 @@ class Catcher2 implements ReportModeAction {
 
   /// Report checked error (error caught in try-catch block). Catcher 2 will
   /// treat this as normal exception and pass it to handlers.
-  static void reportCheckedError(dynamic error, dynamic stackTrace) {
+  static void reportCheckedError(error, stackTrace) {
     dynamic errorValue = error;
     dynamic stackTraceValue = stackTrace;
     errorValue ??= 'undefined error';
@@ -498,12 +476,11 @@ class Catcher2 implements ReportModeAction {
   }
 
   Future<void> _reportError(
-    dynamic error,
-    dynamic stackTrace, {
+    error,
+    stackTrace, {
     FlutterErrorDetails? errorDetails,
   }) async {
-    if ((errorDetails?.silent ?? false) &&
-        _currentConfig.handleSilentError == false) {
+    if ((errorDetails?.silent ?? false) && !_currentConfig.handleSilentError) {
       _logger.info(
         'Report error skipped for error: $error. HandleSilentError is false.',
       );
@@ -543,7 +520,7 @@ class Catcher2 implements ReportModeAction {
     }
 
     if (_currentConfig.filterFunction != null &&
-        _currentConfig.filterFunction!(report) == false) {
+        !_currentConfig.filterFunction!(report)) {
       _logger.fine(
         "Error: '$error' has been filtered from Catcher 2 logs. "
         'Report will be skipped.',
@@ -590,7 +567,7 @@ class Catcher2 implements ReportModeAction {
     return reportMode.getSupportedPlatforms().contains(report.platformType);
   }
 
-  ReportMode? _getReportModeFromExplicitExceptionReportModeMap(dynamic error) {
+  ReportMode? _getReportModeFromExplicitExceptionReportModeMap(error) {
     final errorName = error != null ? error.toString().toLowerCase() : '';
     ReportMode? reportMode;
     _currentConfig.explicitExceptionReportModesMap.forEach((key, value) {
@@ -603,7 +580,7 @@ class Catcher2 implements ReportModeAction {
   }
 
   ReportHandler? _getReportHandlerFromExplicitExceptionHandlerMap(
-    dynamic error,
+    error,
   ) {
     final errorName = error != null ? error.toString().toLowerCase() : '';
     ReportHandler? reportHandler;
@@ -648,13 +625,8 @@ class Catcher2 implements ReportModeAction {
       return;
     }
 
-    reportHandler
-        .handle(report, _getContext())
-        .catchError((dynamic handlerError) {
-      _logger.warning(
-        'Error occurred in $reportHandler: '
-        '$handlerError',
-      );
+    reportHandler.handle(report, _getContext()).catchError((handlerError) {
+      _logger.warning('Error occurred in $reportHandler: $handlerError');
       return true; // Shut up warnings
     }).then((result) {
       _logger.info('${report.runtimeType} result: $result');
@@ -679,7 +651,7 @@ class Catcher2 implements ReportModeAction {
     Report report,
     ReportHandler reportHandler,
   ) {
-    if (reportHandler.getSupportedPlatforms().isEmpty == true) {
+    if (reportHandler.getSupportedPlatforms().isEmpty) {
       return false;
     }
     return reportHandler.getSupportedPlatforms().contains(report.platformType);

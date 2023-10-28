@@ -5,10 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mailer/flutter_mailer.dart';
 
 class EmailManualHandler extends BaseEmailHandler {
-  final List<String> recipients;
-  final bool sendHtml;
-  final bool printLogs;
-
   EmailManualHandler(
     this.recipients, {
     this.sendHtml = true,
@@ -19,7 +15,10 @@ class EmailManualHandler extends BaseEmailHandler {
     super.enableApplicationParameters = true,
     super.enableStackTrace = true,
     super.enableCustomParameters = true,
-  }) : assert(recipients.isNotEmpty, "Recipients can't be null or empty");
+  }) : assert(recipients.isNotEmpty, "Recipients can't be empty");
+  final List<String> recipients;
+  final bool sendHtml;
+  final bool printLogs;
 
   @override
   Future<bool> handle(Report error, BuildContext? context) async =>

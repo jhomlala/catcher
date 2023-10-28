@@ -5,14 +5,6 @@ import 'package:catcher_2/model/report_handler.dart';
 
 /// Base class for all email handlers.
 abstract class BaseEmailHandler extends ReportHandler {
-  final bool enableDeviceParameters;
-  final bool enableApplicationParameters;
-  final bool enableStackTrace;
-  final bool enableCustomParameters;
-  final String? emailTitle;
-  final String? emailHeader;
-  final HtmlEscape _htmlEscape = const HtmlEscape();
-
   BaseEmailHandler({
     required this.enableDeviceParameters,
     required this.enableApplicationParameters,
@@ -21,6 +13,14 @@ abstract class BaseEmailHandler extends ReportHandler {
     this.emailTitle,
     this.emailHeader,
   });
+
+  final bool enableDeviceParameters;
+  final bool enableApplicationParameters;
+  final bool enableStackTrace;
+  final bool enableCustomParameters;
+  final String? emailTitle;
+  final String? emailHeader;
+  final HtmlEscape _htmlEscape = const HtmlEscape();
 
   /// Setup email title from [report].
   String getEmailTitle(Report report) {
@@ -35,13 +35,15 @@ abstract class BaseEmailHandler extends ReportHandler {
   String setupHtmlMessageText(Report report) {
     final buffer = StringBuffer();
     if (emailHeader?.isNotEmpty ?? false) {
-      buffer.write(_escapeHtmlValue(emailHeader ?? ''));
-      buffer.write('<hr><br>');
+      buffer
+        ..write(_escapeHtmlValue(emailHeader ?? ''))
+        ..write('<hr><br>');
     }
 
-    buffer.write('<h2>Error:</h2>');
-    buffer.write(_escapeHtmlValue(report.error.toString()));
-    buffer.write('<hr><br>');
+    buffer
+      ..write('<h2>Error:</h2>')
+      ..write(_escapeHtmlValue(report.error.toString()))
+      ..write('<hr><br>');
     if (enableStackTrace) {
       buffer.write('<h2>Stack trace:</h2>');
 
@@ -82,24 +84,26 @@ abstract class BaseEmailHandler extends ReportHandler {
   }
 
   /// Escape html value from [value].
-  String _escapeHtmlValue(dynamic value) =>
-      _htmlEscape.convert(value.toString());
+  String _escapeHtmlValue(value) => _htmlEscape.convert(value.toString());
 
   /// Setup raw text email message from [report].
   String setupRawMessageText(Report report) {
     final buffer = StringBuffer();
-    if (emailHeader?.isNotEmpty == false) {
-      buffer.write(emailHeader);
-      buffer.write('\n\n');
+    if (emailHeader?.isNotEmpty ?? false) {
+      buffer
+        ..write(emailHeader)
+        ..write('\n\n');
     }
 
-    buffer.write('Error:\n');
-    buffer.write(report.error.toString());
-    buffer.write('\n\n');
+    buffer
+      ..write('Error:\n')
+      ..write(report.error.toString())
+      ..write('\n\n');
     if (enableStackTrace) {
-      buffer.write('Stack trace:\n');
-      buffer.write(report.stackTrace.toString());
-      buffer.write('\n\n');
+      buffer
+        ..write('Stack trace:\n')
+        ..write(report.stackTrace.toString())
+        ..write('\n\n');
     }
     if (enableDeviceParameters) {
       buffer.write('Device parameters:\n');

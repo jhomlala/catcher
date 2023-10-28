@@ -1,21 +1,4 @@
 class LocalizationOptions {
-  final String languageCode;
-  final String notificationReportModeTitle;
-  final String notificationReportModeContent;
-
-  final String dialogReportModeTitle;
-  final String dialogReportModeDescription;
-  final String dialogReportModeAccept;
-  final String dialogReportModeCancel;
-
-  final String pageReportModeTitle;
-  final String pageReportModeDescription;
-  final String pageReportModeAccept;
-  final String pageReportModeCancel;
-
-  final String toastHandlerDescription;
-  final String snackbarHandlerDescription;
-
   LocalizationOptions(
     this.languageCode, {
     this.notificationReportModeTitle = 'Application error occurred',
@@ -335,9 +318,25 @@ class LocalizationOptions {
         toastHandlerDescription: 'Es ist ein Fehler aufgetreten:',
         snackbarHandlerDescription: 'Es ist ein Fehler aufgetreten:',
       );
+  final String languageCode;
+  final String notificationReportModeTitle;
+  final String notificationReportModeContent;
 
-  /// Helper method used to copy values of current LocalizationOptions with new
-  /// values passed in method.
+  final String dialogReportModeTitle;
+  final String dialogReportModeDescription;
+  final String dialogReportModeAccept;
+  final String dialogReportModeCancel;
+
+  final String pageReportModeTitle;
+  final String pageReportModeDescription;
+  final String pageReportModeAccept;
+  final String pageReportModeCancel;
+
+  final String toastHandlerDescription;
+  final String snackbarHandlerDescription;
+
+  /// Helper method used to copy values of current [LocalizationOptions] with
+  /// new values passed in method.
   LocalizationOptions copyWith({
     String? languageCode,
     String? notificationReportModeTitle,

@@ -1,3 +1,4 @@
+/// Sub-library of Catcher 2 providing a way to handle screenshots.
 library screenshot;
 
 import 'dart:async';
@@ -13,13 +14,10 @@ import 'package:flutter/widgets.dart';
 /// Manager which takes screenshot of configured widget. Screenshot will be
 /// saved to file which can be reused later.
 class Catcher2ScreenshotManager {
+  Catcher2ScreenshotManager(this._logger) : _containerKey = GlobalKey();
   final Catcher2Logger _logger;
-  late GlobalKey _containerKey;
+  final GlobalKey _containerKey;
   String? _path;
-
-  Catcher2ScreenshotManager(this._logger) {
-    _containerKey = GlobalKey();
-  }
 
   /// Unique global key used to create screenshot
   GlobalKey get containerKey => _containerKey;
@@ -40,7 +38,7 @@ class Catcher2ScreenshotManager {
       );
 
       if (content != null) {
-        return _saveFile(content);
+        return saveFile(content);
       }
     } catch (exception) {
       _logger.warning('Failed to create screenshot file: $exception');
@@ -48,8 +46,8 @@ class Catcher2ScreenshotManager {
     return null;
   }
 
-  Future<File> _saveFile(Uint8List fileContent) async {
-    assert(_path != null && _path!.isNotEmpty, '_path is empty');
+  Future<File> saveFile(Uint8List fileContent) async {
+    assert(_path != null && _path!.isNotEmpty, 'path is empty');
     final name = 'catcher_2_${DateTime.now().microsecondsSinceEpoch}.png';
     final file = await File('$_path/$name').create(recursive: true);
     file.writeAsBytesSync(fileContent);
@@ -66,9 +64,7 @@ class Catcher2ScreenshotManager {
           pixelRatio: pixelRatio,
         );
         final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-        final pngBytes = byteData?.buffer.asUint8List();
-
-        return pngBytes;
+        return byteData?.buffer.asUint8List();
       });
 
   Future<ui.Image> _captureAsUiImage({
@@ -76,25 +72,19 @@ class Catcher2ScreenshotManager {
     Duration delay = const Duration(milliseconds: 20),
   }) =>
       Future.delayed(delay, () async {
-        // ignore: cast_nullable_to_non_nullable
         final boundary = _containerKey.currentContext?.findRenderObject()
-            as RenderRepaintBoundary;
+            as RenderRepaintBoundary?;
 
-        // ignore: unnecessary_null_comparison
         if (boundary == null) {
           throw StateError('No boundary found');
         }
 
         final context = _containerKey.currentContext;
         var pixelRatioValue = pixelRatio;
-        if (pixelRatioValue == null) {
-          if (context != null) {
-            pixelRatioValue =
-                pixelRatioValue ?? MediaQuery.of(context).devicePixelRatio;
-          }
+        if (pixelRatioValue == null && context != null) {
+          pixelRatioValue = MediaQuery.of(context).devicePixelRatio;
         }
-        final image = await boundary.toImage(pixelRatio: pixelRatio ?? 1);
-        return image;
+        return boundary.toImage(pixelRatio: pixelRatio ?? 1);
       });
 
   /// Update screenshots directory path.

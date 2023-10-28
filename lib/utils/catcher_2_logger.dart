@@ -19,22 +19,14 @@ class Catcher2Logger {
   }
 
   /// Log info message.
-  void info(String message) {
-    _logger.info(message);
-  }
+  void info(String message) => _logger.info(message);
 
   /// Log fine message.
-  void fine(String message) {
-    _logger.fine(message);
-  }
+  void fine(String message) => _logger.fine(message);
 
   /// Log warning message.
-  void warning(String message) {
-    _logger.warning(message);
-  }
+  void warning(String message) => _logger.warning(message);
 
   /// Log severe message.
-  void severe(String message) {
-    _logger.severe(message);
-  }
+  void severe(String message) => _logger.severe(message);
 }

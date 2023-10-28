@@ -5,6 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:sentry/sentry.dart';
 
 class SentryHandler extends ReportHandler {
+  SentryHandler(
+    this.sentryClient, {
+    this.userContext,
+    this.enableDeviceParameters = true,
+    this.enableApplicationParameters = true,
+    this.enableCustomParameters = true,
+    this.printLogs = true,
+    this.customEnvironment,
+    this.customRelease,
+  });
+
   /// Sentry Client instance
   final SentryClient sentryClient;
 
@@ -28,17 +39,6 @@ class SentryHandler extends ReportHandler {
 
   /// Enable additional logs printing
   final bool printLogs;
-
-  SentryHandler(
-    this.sentryClient, {
-    this.userContext,
-    this.enableDeviceParameters = true,
-    this.enableApplicationParameters = true,
-    this.enableCustomParameters = true,
-    this.printLogs = true,
-    this.customEnvironment,
-    this.customRelease,
-  });
 
   @override
   Future<bool> handle(Report error, BuildContext? context) async {
@@ -99,12 +99,9 @@ class SentryHandler extends ReportHandler {
 
   Map<String, String> changeToSentryMap(Map<String, dynamic> map) {
     final sentryMap = <String, String>{};
-    map.forEach((key, dynamic value) {
-      if (value.toString().isEmpty) {
-        sentryMap[key] = 'none';
-      } else {
-        sentryMap[key] = value.toString();
-      }
+    map.forEach((key, value) {
+      final val = value.toString();
+      sentryMap[key] = val.isNotEmpty ? val : 'none';
     });
     return sentryMap;
   }

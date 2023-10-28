@@ -5,11 +5,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PageReportMode extends ReportMode {
-  final bool showStackTrace;
-
   PageReportMode({
     this.showStackTrace = true,
   });
+
+  final bool showStackTrace;
 
   @override
   void requestAction(Report report, BuildContext? context) {
@@ -49,14 +49,14 @@ class PageReportMode extends ReportMode {
 }
 
 class PageWidget extends StatefulWidget {
-  final PageReportMode pageReportMode;
-  final Report report;
-
   const PageWidget(
     this.pageReportMode,
     this.report, {
     super.key,
   });
+
+  final PageReportMode pageReportMode;
+  final Report report;
 
   @override
   PageWidgetState createState() => PageWidgetState();
@@ -169,8 +169,7 @@ class PageWidgetState extends State<PageWidget> {
           padding: const EdgeInsets.all(8),
           itemCount: items.length,
           itemBuilder: (context, index) => Text(
-            // ignore: unnecessary_string_interpolations
-            '${items[index]}',
+            items[index],
             style: _getTextStyle(10),
           ),
         ),

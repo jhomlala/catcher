@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 
 class Catcher2ErrorWidget extends StatelessWidget {
-  final FlutterErrorDetails? details;
-  final bool showStacktrace;
-  final String title;
-  final String description;
-  final double maxWidthForSmallMode;
-
   const Catcher2ErrorWidget({
     super.key,
     this.details,
@@ -18,16 +12,18 @@ class Catcher2ErrorWidget extends StatelessWidget {
           maxWidthForSmallMode > 0,
           'maxWidthForSmallMode must be positive',
         );
+  final FlutterErrorDetails? details;
+  final bool showStacktrace;
+  final String title;
+  final String description;
+  final double maxWidthForSmallMode;
 
   @override
   Widget build(BuildContext context) => LayoutBuilder(
-        builder: (context, constraint) {
-          if (constraint.maxWidth < maxWidthForSmallMode) {
-            return _buildSmallErrorWidget();
-          } else {
-            return _buildNormalErrorWidget();
-          }
-        },
+        builder: (context, constraint) =>
+            constraint.maxWidth < maxWidthForSmallMode
+                ? _buildSmallErrorWidget()
+                : _buildNormalErrorWidget(),
       );
 
   Widget _buildSmallErrorWidget() => const Center(
@@ -71,8 +67,9 @@ class Catcher2ErrorWidget extends StatelessWidget {
     if (showStacktrace) {
       final items = <String>[];
       if (details != null) {
-        items.add(details!.exception.toString());
-        items.addAll(details!.stack.toString().split('\n'));
+        items
+          ..add(details!.exception.toString())
+          ..addAll(details!.stack.toString().split('\n'));
       }
       return ListView.builder(
         padding: const EdgeInsets.all(8),
@@ -81,11 +78,7 @@ class Catcher2ErrorWidget extends StatelessWidget {
         itemCount: items.length,
         itemBuilder: (context, index) {
           final line = items[index];
-          if (line.isNotEmpty == true) {
-            return Text(line);
-          } else {
-            return const SizedBox();
-          }
+          return line.isNotEmpty ? Text(line) : const SizedBox();
         },
       );
     } else {

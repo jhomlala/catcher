@@ -20,9 +20,9 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-  final GlobalKey<NavigatorState> navigatorKey;
-
   const MyApp(this.navigatorKey, {super.key});
+
+  final GlobalKey<NavigatorState> navigatorKey;
 
   @override
   State<MyApp> createState() => _MyAppState();

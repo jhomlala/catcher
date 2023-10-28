@@ -8,14 +8,14 @@ abstract class ReportHandler {
   /// Logger instance
   late Catcher2Logger logger;
 
+  /// Localization settings
+  LocalizationOptions? _localizationOptions;
+
   /// Method called when report has been accepted by user
   Future<bool> handle(Report error, BuildContext? context);
 
   /// Get list of supported platforms
   List<PlatformType> getSupportedPlatforms();
-
-  /// Location settings
-  LocalizationOptions? _localizationOptions;
 
   /// Get currently used localization options
   LocalizationOptions get localizationOptions =>

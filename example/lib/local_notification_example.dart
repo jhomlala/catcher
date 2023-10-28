@@ -59,6 +59,12 @@ class ChildWidget extends StatelessWidget {
 }
 
 class NotificationReportMode extends ReportMode {
+  NotificationReportMode({
+    this.channelId = 'Catcher 2',
+    this.channelName = 'Catcher 2',
+    this.channelDescription = 'Catcher 2 default channel',
+    this.icon = '@mipmap/ic_launcher',
+  });
   late FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin;
   late Report _lastReport;
 
@@ -66,13 +72,6 @@ class NotificationReportMode extends ReportMode {
   final String channelName;
   final String channelDescription;
   final String icon;
-
-  NotificationReportMode({
-    this.channelId = 'Catcher 2',
-    this.channelName = 'Catcher 2',
-    this.channelDescription = 'Catcher 2 default channel',
-    this.icon = '@mipmap/ic_launcher',
-  });
 
   @override
   set reportModeAction(ReportModeAction reportModeAction) {

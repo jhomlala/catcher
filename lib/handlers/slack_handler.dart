@@ -9,6 +9,19 @@ import 'package:flutter/material.dart';
 
 /// Slack webhook API doesn't allow file attachments
 class SlackHandler extends ReportHandler {
+  SlackHandler(
+    this.webhookUrl,
+    this.channel, {
+    this.username = 'Catcher 2',
+    this.iconEmoji = ':bangbang:',
+    this.printLogs = false,
+    this.enableDeviceParameters = false,
+    this.enableApplicationParameters = false,
+    this.enableStackTrace = false,
+    this.enableCustomParameters = false,
+    this.customMessageBuilder,
+  });
+
   final Dio _dio = Dio();
 
   final String webhookUrl;
@@ -22,19 +35,6 @@ class SlackHandler extends ReportHandler {
   final bool enableStackTrace;
   final bool enableCustomParameters;
   final FutureOr<String> Function(Report report)? customMessageBuilder;
-
-  SlackHandler(
-    this.webhookUrl,
-    this.channel, {
-    this.username = 'Catcher 2',
-    this.iconEmoji = ':bangbang:',
-    this.printLogs = false,
-    this.enableDeviceParameters = false,
-    this.enableApplicationParameters = false,
-    this.enableStackTrace = false,
-    this.enableCustomParameters = false,
-    this.customMessageBuilder,
-  });
 
   @override
   Future<bool> handle(Report error, BuildContext? context) async {
@@ -71,8 +71,8 @@ class SlackHandler extends ReportHandler {
   }
 
   String _buildMessage(Report report) {
-    final stringBuffer = StringBuffer();
-    stringBuffer.write('*Error:* ```${report.error}```\n');
+    final stringBuffer = StringBuffer()
+      ..write('*Error:* ```${report.error}```\n');
     if (enableStackTrace) {
       stringBuffer.write('*Stack trace:* ```${report.stackTrace}```\n');
     }

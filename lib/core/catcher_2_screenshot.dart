@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 
 /// Screenshot widget used to create screenshot of all child widgets.
 class Catcher2Screenshot extends StatefulWidget {
-  final Widget child;
-  final Catcher2 catcher2;
-
   const Catcher2Screenshot({
     super.key,
     required this.child,
     required this.catcher2,
   });
+
+  final Widget child;
+  final Catcher2 catcher2;
 
   @override
   State<Catcher2Screenshot> createState() => Catcher2ScreenshotState();

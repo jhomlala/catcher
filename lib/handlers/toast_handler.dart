@@ -8,15 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class ToastHandler extends ReportHandler {
-  final ToastHandlerGravity gravity;
-  final ToastHandlerLength length;
-  final Color backgroundColor;
-  final Color textColor;
-  final double textSize;
-  final String? customMessage;
-  final bool handleWhenRejected;
-  FToast? fToast;
-
   ToastHandler({
     this.gravity = ToastHandlerGravity.bottom,
     this.length = ToastHandlerLength.long,
@@ -26,6 +17,14 @@ class ToastHandler extends ReportHandler {
     this.customMessage,
     this.handleWhenRejected = false,
   });
+
+  final ToastHandlerGravity gravity;
+  final ToastHandlerLength length;
+  final Color backgroundColor;
+  final Color textColor;
+  final double textSize;
+  final String? customMessage;
+  final bool handleWhenRejected;
 
   @override
   Future<bool> handle(Report error, BuildContext? context) async {
@@ -77,29 +76,15 @@ class ToastHandler extends ReportHandler {
     }
   }
 
-  Toast _getLength() {
-    if (length == ToastHandlerLength.long) {
-      return Toast.LENGTH_LONG;
-    } else {
-      return Toast.LENGTH_SHORT;
-    }
-  }
+  Toast _getLength() => length == ToastHandlerLength.long
+      ? Toast.LENGTH_LONG
+      : Toast.LENGTH_SHORT;
 
-  int _getLengthIos() {
-    if (length == ToastHandlerLength.long) {
-      return 5;
-    } else {
-      return 1;
-    }
-  }
+  int _getLengthIos() => length == ToastHandlerLength.long ? 5 : 1;
 
-  String _getErrorMessage(Report error) {
-    if (customMessage?.isNotEmpty ?? false) {
-      return customMessage!;
-    } else {
-      return '${localizationOptions.toastHandlerDescription} ${error.error}';
-    }
-  }
+  String _getErrorMessage(Report error) => customMessage?.isNotEmpty ?? false
+      ? customMessage!
+      : '${localizationOptions.toastHandlerDescription} ${error.error}';
 
   @override
   List<PlatformType> getSupportedPlatforms() => [
@@ -119,13 +104,6 @@ class ToastHandler extends ReportHandler {
 }
 
 class FlutterToastPage extends StatefulWidget {
-  final String text;
-  final ToastGravity gravity;
-  final Duration duration;
-  final Color backgroundColor;
-  final Color textColor;
-  final double textSize;
-
   const FlutterToastPage(
     this.text,
     this.gravity,
@@ -135,6 +113,13 @@ class FlutterToastPage extends StatefulWidget {
     this.textSize, {
     super.key,
   });
+
+  final String text;
+  final ToastGravity gravity;
+  final Duration duration;
+  final Color backgroundColor;
+  final Color textColor;
+  final double textSize;
 
   @override
   State<FlutterToastPage> createState() => _FlutterToastPageState();
@@ -157,7 +142,7 @@ class _FlutterToastPageState extends State<FlutterToastPage> {
 
   void showToast() {
     _fToast.showToast(
-      child: Container(
+      child: ColoredBox(
         color: widget.backgroundColor,
         child: Text(
           widget.text,

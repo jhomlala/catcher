@@ -9,6 +9,18 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class HttpHandler extends ReportHandler {
+  HttpHandler(
+    this.requestType,
+    this.endpointUri, {
+    Map<String, dynamic>? headers,
+    this.requestTimeout = const Duration(seconds: 5),
+    this.responseTimeout = const Duration(seconds: 5),
+    this.printLogs = false,
+    this.enableDeviceParameters = true,
+    this.enableApplicationParameters = true,
+    this.enableStackTrace = true,
+    this.enableCustomParameters = false,
+  }) : headers = headers ?? <String, dynamic>{};
   final Dio _dio = Dio();
 
   final HttpRequestType requestType;
@@ -22,26 +34,12 @@ class HttpHandler extends ReportHandler {
   final bool enableStackTrace;
   final bool enableCustomParameters;
 
-  HttpHandler(
-    this.requestType,
-    this.endpointUri, {
-    Map<String, dynamic>? headers,
-    this.requestTimeout = const Duration(seconds: 5),
-    this.responseTimeout = const Duration(seconds: 5),
-    this.printLogs = false,
-    this.enableDeviceParameters = true,
-    this.enableApplicationParameters = true,
-    this.enableStackTrace = true,
-    this.enableCustomParameters = false,
-  }) : headers = headers ?? <String, dynamic>{};
-
   @override
   Future<bool> handle(Report error, BuildContext? context) async {
-    if (error.platformType != PlatformType.web) {
-      if (!(await Catcher2Utils.isInternetConnectionAvailable())) {
-        _printLog('No internet connection available');
-        return false;
-      }
+    if (error.platformType != PlatformType.web &&
+        !(await Catcher2Utils.isInternetConnectionAvailable())) {
+      _printLog('No internet connection available');
+      return false;
     }
 
     if (requestType == HttpRequestType.post) {
@@ -59,7 +57,7 @@ class HttpHandler extends ReportHandler {
         enableCustomParameters: enableCustomParameters,
       );
       final mutableHeaders = HashMap<String, dynamic>();
-      if (headers.isNotEmpty == true) {
+      if (headers.isNotEmpty) {
         mutableHeaders.addAll(headers);
       }
 
