@@ -27,7 +27,7 @@ dependencies:
   dio: ^5.0.1
   flutter:
     sdk: flutter
-  flutter_local_notifications: ^15.1.1
+  flutter_local_notifications: ^16.1.0
   flutter_localizations:
     sdk: flutter
   path_provider: ^2.0.1

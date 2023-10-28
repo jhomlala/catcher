@@ -43,6 +43,7 @@ void main() {
     runAppFunction: () {
       runApp(const MyApp());
     },
+    ensureInitialized: true,
     debugConfig: debugOptions,
     releaseConfig: releaseOptions,
   );
