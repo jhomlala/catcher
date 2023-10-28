@@ -247,39 +247,43 @@ class Catcher2 implements ReportModeAction {
   }
 
   void _loadDeviceInfo() {
-    final deviceInfo = DeviceInfoPlugin();
-    if (ApplicationProfileManager.isWeb()) {
-      deviceInfo.webBrowserInfo.then((webBrowserInfo) {
-        _loadWebParameters(webBrowserInfo);
-        _removeExcludedParameters();
-      });
-    } else if (ApplicationProfileManager.isLinux()) {
-      deviceInfo.linuxInfo.then((linuxDeviceInfo) {
-        _loadLinuxParameters(linuxDeviceInfo);
-        _removeExcludedParameters();
-      });
-    } else if (ApplicationProfileManager.isWindows()) {
-      deviceInfo.windowsInfo.then((windowsInfo) {
-        _loadWindowsParameters(windowsInfo);
-        _removeExcludedParameters();
-      });
-    } else if (ApplicationProfileManager.isMacOS()) {
-      deviceInfo.macOsInfo.then((macOsDeviceInfo) {
-        _loadMacOSParameters(macOsDeviceInfo);
-        _removeExcludedParameters();
-      });
-    } else if (ApplicationProfileManager.isAndroid()) {
-      deviceInfo.androidInfo.then((androidInfo) {
-        _loadAndroidParameters(androidInfo);
-        _removeExcludedParameters();
-      });
-    } else if (ApplicationProfileManager.isIos()) {
-      deviceInfo.iosInfo.then((iosInfo) {
-        _loadIosParameters(iosInfo);
-        _removeExcludedParameters();
-      });
-    } else {
-      _logger.info("Couldn't load device info for unsupported device type.");
+    try {
+      final deviceInfo = DeviceInfoPlugin();
+      if (ApplicationProfileManager.isWeb()) {
+        deviceInfo.webBrowserInfo.then((webBrowserInfo) {
+          _loadWebParameters(webBrowserInfo);
+          _removeExcludedParameters();
+        });
+      } else if (ApplicationProfileManager.isLinux()) {
+        deviceInfo.linuxInfo.then((linuxDeviceInfo) {
+          _loadLinuxParameters(linuxDeviceInfo);
+          _removeExcludedParameters();
+        });
+      } else if (ApplicationProfileManager.isWindows()) {
+        deviceInfo.windowsInfo.then((windowsInfo) {
+          _loadWindowsParameters(windowsInfo);
+          _removeExcludedParameters();
+        });
+      } else if (ApplicationProfileManager.isMacOS()) {
+        deviceInfo.macOsInfo.then((macOsDeviceInfo) {
+          _loadMacOSParameters(macOsDeviceInfo);
+          _removeExcludedParameters();
+        });
+      } else if (ApplicationProfileManager.isAndroid()) {
+        deviceInfo.androidInfo.then((androidInfo) {
+          _loadAndroidParameters(androidInfo);
+          _removeExcludedParameters();
+        });
+      } else if (ApplicationProfileManager.isIos()) {
+        deviceInfo.iosInfo.then((iosInfo) {
+          _loadIosParameters(iosInfo);
+          _removeExcludedParameters();
+        });
+      } else {
+        _logger.info("Couldn't load device info for unsupported device type.");
+      }
+    } catch (exception) {
+      _logger.warning("Couldn't load device info due to error: $exception");
     }
   }
 
@@ -410,15 +414,20 @@ class Catcher2 implements ReportModeAction {
   }
 
   void _loadApplicationInfo() {
-    _applicationParameters['environment'] =
-        describeEnum(ApplicationProfileManager.getApplicationProfile());
+    try {
+      _applicationParameters['environment'] =
+          describeEnum(ApplicationProfileManager.getApplicationProfile());
 
-    PackageInfo.fromPlatform().then((packageInfo) {
-      _applicationParameters['version'] = packageInfo.version;
-      _applicationParameters['appName'] = packageInfo.appName;
-      _applicationParameters['buildNumber'] = packageInfo.buildNumber;
-      _applicationParameters['packageName'] = packageInfo.packageName;
-    });
+      PackageInfo.fromPlatform().then((packageInfo) {
+        _applicationParameters['version'] = packageInfo.version;
+        _applicationParameters['appName'] = packageInfo.appName;
+        _applicationParameters['buildNumber'] = packageInfo.buildNumber;
+        _applicationParameters['packageName'] = packageInfo.packageName;
+      });
+    } catch (exception) {
+      _logger
+          .warning("Couldn't load application info due to error: $exception");
+    }
   }
 
   /// We need to setup localizations lazily because context needed to setup
