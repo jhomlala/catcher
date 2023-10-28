@@ -79,6 +79,7 @@ class Catcher2 implements ReportModeAction {
 
   void _configure(GlobalKey<NavigatorState>? navigatorKey) {
     _instance = this;
+    _initWidgetsBinding();
     _configureNavigatorKey(navigatorKey);
     _setupCurrentConfig();
     _configureLogger();
@@ -215,10 +216,8 @@ class Catcher2 implements ReportModeAction {
     }
 
     if (rootWidget != null) {
-      _initWidgetsBinding();
       runApp(rootWidget!);
     } else if (runAppFunction != null) {
-      _initWidgetsBinding();
       runAppFunction!();
     } else {
       throw ArgumentError('Provide rootWidget or runAppFunction to Catcher 2.');
@@ -246,42 +245,31 @@ class Catcher2 implements ReportModeAction {
     }
   }
 
-  void _loadDeviceInfo() {
+  Future<void> _loadDeviceInfo() async {
     try {
       final deviceInfo = DeviceInfoPlugin();
       if (ApplicationProfileManager.isWeb()) {
-        deviceInfo.webBrowserInfo.then((webBrowserInfo) {
-          _loadWebParameters(webBrowserInfo);
-          _removeExcludedParameters();
-        });
+        final webBrowserInfo = await deviceInfo.webBrowserInfo;
+        _loadWebParameters(webBrowserInfo);
       } else if (ApplicationProfileManager.isLinux()) {
-        deviceInfo.linuxInfo.then((linuxDeviceInfo) {
-          _loadLinuxParameters(linuxDeviceInfo);
-          _removeExcludedParameters();
-        });
+        final linuxDeviceInfo = await deviceInfo.linuxInfo;
+        _loadLinuxParameters(linuxDeviceInfo);
       } else if (ApplicationProfileManager.isWindows()) {
-        deviceInfo.windowsInfo.then((windowsInfo) {
-          _loadWindowsParameters(windowsInfo);
-          _removeExcludedParameters();
-        });
+        final windowsInfo = await deviceInfo.windowsInfo;
+        _loadWindowsParameters(windowsInfo);
       } else if (ApplicationProfileManager.isMacOS()) {
-        deviceInfo.macOsInfo.then((macOsDeviceInfo) {
-          _loadMacOSParameters(macOsDeviceInfo);
-          _removeExcludedParameters();
-        });
+        final macOsDeviceInfo = await deviceInfo.macOsInfo;
+        _loadMacOSParameters(macOsDeviceInfo);
       } else if (ApplicationProfileManager.isAndroid()) {
-        deviceInfo.androidInfo.then((androidInfo) {
-          _loadAndroidParameters(androidInfo);
-          _removeExcludedParameters();
-        });
+        final androidInfo = await deviceInfo.androidInfo;
+        _loadAndroidParameters(androidInfo);
       } else if (ApplicationProfileManager.isIos()) {
-        deviceInfo.iosInfo.then((iosInfo) {
-          _loadIosParameters(iosInfo);
-          _removeExcludedParameters();
-        });
+        final iosInfo = await deviceInfo.iosInfo;
+        _loadIosParameters(iosInfo);
       } else {
         _logger.info("Couldn't load device info for unsupported device type.");
       }
+      _removeExcludedParameters();
     } catch (exception) {
       _logger.warning("Couldn't load device info due to error: $exception");
     }
@@ -338,7 +326,7 @@ class Catcher2 implements ReportModeAction {
     }
   }
 
-  Future<void> _loadWebParameters(WebBrowserInfo webBrowserInfo) async {
+  void _loadWebParameters(WebBrowserInfo webBrowserInfo) {
     try {
       _deviceParameters['language'] = webBrowserInfo.language;
       _deviceParameters['appCodeName'] = webBrowserInfo.appCodeName;
@@ -413,17 +401,16 @@ class Catcher2 implements ReportModeAction {
     }
   }
 
-  void _loadApplicationInfo() {
+  Future<void> _loadApplicationInfo() async {
     try {
       _applicationParameters['environment'] =
           describeEnum(ApplicationProfileManager.getApplicationProfile());
 
-      PackageInfo.fromPlatform().then((packageInfo) {
-        _applicationParameters['version'] = packageInfo.version;
-        _applicationParameters['appName'] = packageInfo.appName;
-        _applicationParameters['buildNumber'] = packageInfo.buildNumber;
-        _applicationParameters['packageName'] = packageInfo.packageName;
-      });
+      final packageInfo = await PackageInfo.fromPlatform();
+      _applicationParameters['version'] = packageInfo.version;
+      _applicationParameters['appName'] = packageInfo.appName;
+      _applicationParameters['buildNumber'] = packageInfo.buildNumber;
+      _applicationParameters['packageName'] = packageInfo.packageName;
     } catch (exception) {
       _logger
           .warning("Couldn't load application info due to error: $exception");
