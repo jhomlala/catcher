@@ -31,7 +31,7 @@ class Catcher2ScreenshotManager {
     Duration delay = const Duration(milliseconds: 20),
   }) async {
     try {
-      if (_path?.isEmpty ?? false) {
+      if (_path?.isEmpty ?? true) {
         return null;
       }
       final content = await _capture(
@@ -40,7 +40,7 @@ class Catcher2ScreenshotManager {
       );
 
       if (content != null) {
-        return saveFile(content);
+        return _saveFile(content);
       }
     } catch (exception) {
       _logger.warning('Failed to create screenshot file: $exception');
@@ -48,7 +48,8 @@ class Catcher2ScreenshotManager {
     return null;
   }
 
-  Future<File> saveFile(Uint8List fileContent) async {
+  Future<File> _saveFile(Uint8List fileContent) async {
+    assert(_path != null && _path!.isNotEmpty, '_path is empty');
     final name = 'catcher_2_${DateTime.now().microsecondsSinceEpoch}.png';
     final file = await File('$_path/$name').create(recursive: true);
     file.writeAsBytesSync(fileContent);
