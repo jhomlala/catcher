@@ -1,3 +1,6 @@
+## 1.0.3
+* Add even more error resilience to calls to 3rd party libraries
+
 ## 1.0.2
 * Add error resilience to calls to 3rd party libraries
 * Improve documentation
