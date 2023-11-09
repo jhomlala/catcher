@@ -3,6 +3,14 @@ description: Plugin for error catching which provides multiple handlers for deal
 version: 0.8.0
 #author: Jakub Homlala <jhomlala@gmail.com>
 homepage: https://github.com/jhomlala/catcher
+repository: https://github.com/jhomlala/catcher
+issue_tracker: https://github.com/jhomlala/catcher/issues
+topis:
+  - error
+  - errors
+  - logs
+  - devtools
+  - tool
 
 environment:
   sdk: '>=2.19.6 <3.0.0'
