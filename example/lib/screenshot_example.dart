@@ -57,13 +57,13 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: Catcher.navigatorKey,
-      home: CatcherScreenshot(
-        catcher: Catcher.getInstance(),
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text('Plugin example app'),
-          ),
-          body: const ChildWidget(),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Plugin example app'),
+        ),
+        body: CatcherScreenshot(
+          catcher: Catcher.getInstance(),
+          child: const ChildWidget(),
         ),
       ),
     );
