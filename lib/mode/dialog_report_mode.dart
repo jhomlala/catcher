@@ -11,13 +11,12 @@ class DialogReportMode extends ReportMode {
     _showDialog(report, context);
   }
 
-  Future _showDialog(Report report, BuildContext? context) async {
+  Future<void> _showDialog(Report report, BuildContext? context) async {
     await Future<void>.delayed(Duration.zero);
     if (context != null) {
       if (CatcherUtils.isCupertinoAppAncestor(context)) {
         return showCupertinoDialog<void>(
           context: context,
-          barrierDismissible: false,
           builder: (context) => _buildCupertinoDialog(report, context),
         );
       } else {

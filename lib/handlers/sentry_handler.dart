@@ -41,58 +41,58 @@ class SentryHandler extends ReportHandler {
   });
 
   @override
-  Future<bool> handle(Report error, BuildContext? context) async {
+  Future<bool> handle(Report report, BuildContext? context) async {
     try {
-      _printLog("Logging to sentry...");
+      _printLog('Logging to sentry...');
 
       final tags = <String, dynamic>{};
       if (enableApplicationParameters) {
-        tags.addAll(error.applicationParameters);
+        tags.addAll(report.applicationParameters);
       }
       if (enableDeviceParameters) {
-        tags.addAll(error.deviceParameters);
+        tags.addAll(report.deviceParameters);
       }
       if (enableCustomParameters) {
-        tags.addAll(error.customParameters);
+        tags.addAll(report.customParameters);
       }
 
-      final event = buildEvent(error, tags);
+      final event = buildEvent(report, tags);
       await sentryClient.captureEvent(event);
 
-      _printLog("Logged to sentry!");
+      _printLog('Logged to sentry!');
       return true;
     } catch (exception, stackTrace) {
-      _printLog("Failed to send sentry event: $exception $stackTrace");
+      _printLog('Failed to send sentry event: $exception $stackTrace');
       return false;
     }
   }
 
   String _getApplicationVersion(Report report) {
-    String applicationVersion = "";
+    var applicationVersion = '';
     final applicationParameters = report.applicationParameters;
-    if (applicationParameters.containsKey("appName")) {
-      applicationVersion += (applicationParameters["appName"] as String?)!;
+    if (applicationParameters.containsKey('appName')) {
+      applicationVersion += (applicationParameters['appName'] as String?)!;
     }
-    if (applicationParameters.containsKey("version")) {
-      applicationVersion += " ${applicationParameters["version"]}";
+    if (applicationParameters.containsKey('version')) {
+      applicationVersion += ' ${applicationParameters['version']}';
     }
     if (applicationVersion.isEmpty) {
-      applicationVersion = "?";
+      applicationVersion = '?';
     }
     return applicationVersion;
   }
 
   SentryEvent buildEvent(Report report, Map<String, dynamic> tags) {
     return SentryEvent(
-      logger: "Catcher",
-      serverName: "Catcher",
+      logger: 'Catcher',
+      serverName: 'Catcher',
       release: customRelease ?? _getApplicationVersion(report),
       environment: customEnvironment ??
-          (report.applicationParameters["environment"] as String?),
-      message: const SentryMessage("Error handled by Catcher"),
+          (report.applicationParameters['environment'] as String?),
+      message: const SentryMessage('Error handled by Catcher'),
       throwable: report.error,
       level: SentryLevel.error,
-      culprit: "",
+      culprit: '',
       tags: changeToSentryMap(tags),
       user: userContext,
     );
@@ -102,7 +102,7 @@ class SentryHandler extends ReportHandler {
     final sentryMap = <String, String>{};
     map.forEach((key, dynamic value) {
       if (value.toString().isEmpty) {
-        sentryMap[key] = "none";
+        sentryMap[key] = 'none';
       } else {
         sentryMap[key] = value.toString();
       }

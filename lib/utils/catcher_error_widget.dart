@@ -8,14 +8,13 @@ class CatcherErrorWidget extends StatelessWidget {
   final double maxWidthForSmallMode;
 
   const CatcherErrorWidget({
-    Key? key,
-    this.details,
     required this.showStacktrace,
     required this.title,
     required this.description,
     required this.maxWidthForSmallMode,
-  })  : assert(maxWidthForSmallMode > 0),
-        super(key: key);
+    super.key,
+    this.details,
+  }) : assert(maxWidthForSmallMode > 0, '');
 
   @override
   Widget build(BuildContext context) {
@@ -75,18 +74,19 @@ class CatcherErrorWidget extends StatelessWidget {
 
   Widget _buildStackTraceWidget() {
     if (showStacktrace) {
-      final List<String> items = [];
+      final items = <String>[];
       if (details != null) {
-        items.add(details!.exception.toString());
-        items.addAll(details!.stack.toString().split("\n"));
+        items
+          ..add(details!.exception.toString())
+          ..addAll(details!.stack.toString().split('\n'));
       }
       return ListView.builder(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8),
         shrinkWrap: true,
         physics: const ClampingScrollPhysics(),
         itemCount: items.length,
         itemBuilder: (BuildContext context, int index) {
-          final String line = items[index];
+          final line = items[index];
           if (line.isNotEmpty == true) {
             return Text(line);
           } else {
@@ -100,9 +100,9 @@ class CatcherErrorWidget extends StatelessWidget {
   }
 
   String _getDescription() {
-    String descriptionText = description;
+    var descriptionText = description;
     if (showStacktrace) {
-      descriptionText += " See details below.";
+      descriptionText += ' See details below.';
     }
     return descriptionText;
   }

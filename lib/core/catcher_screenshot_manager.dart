@@ -1,5 +1,3 @@
-library screenshot;
-
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
@@ -31,10 +29,10 @@ class CatcherScreenshotManager {
     Duration delay = const Duration(milliseconds: 20),
   }) async {
     try {
-      if (_path?.isEmpty == true) {
+      if (_path?.isEmpty ?? false == true) {
         return null;
       }
-      final Uint8List? content = await _capture(
+      final content = await _capture(
         pixelRatio: pixelRatio,
         delay: delay,
       );
@@ -43,14 +41,14 @@ class CatcherScreenshotManager {
         return saveFile(content);
       }
     } catch (exception) {
-      _logger.warning("Failed to create screenshot file: $exception");
+      _logger.warning('Failed to create screenshot file: $exception');
     }
     return null;
   }
 
   Future<File> saveFile(Uint8List fileContent) async {
-    final name = "catcher_${DateTime.now().microsecondsSinceEpoch}.png";
-    final File file = await File("$_path/$name").create(recursive: true);
+    final name = 'catcher_${DateTime.now().microsecondsSinceEpoch}.png';
+    final file = await File('$_path/$name').create(recursive: true);
     file.writeAsBytesSync(fileContent);
     return file;
   }
@@ -60,13 +58,12 @@ class CatcherScreenshotManager {
     Duration? delay = const Duration(milliseconds: 20),
   }) {
     return Future.delayed(delay ?? const Duration(milliseconds: 20), () async {
-      final ui.Image image = await _captureAsUiImage(
+      final image = await _captureAsUiImage(
         delay: Duration.zero,
         pixelRatio: pixelRatio,
       );
-      final ByteData? byteData =
-          await image.toByteData(format: ui.ImageByteFormat.png);
-      final Uint8List? pngBytes = byteData?.buffer.asUint8List();
+      final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+      final pngBytes = byteData?.buffer.asUint8List();
 
       return pngBytes;
     });
@@ -78,24 +75,23 @@ class CatcherScreenshotManager {
   }) {
     return Future.delayed(delay, () async {
       // ignore: cast_nullable_to_non_nullable
-      final RenderRepaintBoundary boundary = _containerKey.currentContext
-          ?.findRenderObject() as RenderRepaintBoundary;
+      final boundary = _containerKey.currentContext?.findRenderObject()
+          as RenderRepaintBoundary;
 
       // ignore: unnecessary_null_comparison
       if (boundary == null) {
-        throw StateError("No boundary found");
+        throw StateError('No boundary found');
       }
 
-      final BuildContext? context = _containerKey.currentContext;
-      double? pixelRatioValue = pixelRatio;
+      final context = _containerKey.currentContext;
+      var pixelRatioValue = pixelRatio;
       if (pixelRatioValue == null) {
         if (context != null) {
           pixelRatioValue =
               pixelRatioValue ?? MediaQuery.of(context).devicePixelRatio;
         }
       }
-      final ui.Image image =
-          await boundary.toImage(pixelRatio: pixelRatio ?? 1);
+      final image = await boundary.toImage(pixelRatio: pixelRatio ?? 1);
       return image;
     });
   }

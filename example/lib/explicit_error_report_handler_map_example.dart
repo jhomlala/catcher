@@ -2,29 +2,37 @@ import 'package:catcher/catcher.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  var explicitMap = {"FormatException": ConsoleHandler()};
-  CatcherOptions debugOptions = CatcherOptions(
-      DialogReportMode(),
-      [
-        ConsoleHandler(),
-        HttpHandler(HttpRequestType.post, Uri.parse("https://httpstat.us/200"),
-            printLogs: true)
-      ],
-      explicitExceptionHandlersMap: explicitMap);
-  CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
-    EmailManualHandler(["recipient@email.com"])
+  final explicitMap = {'FormatException': ConsoleHandler()};
+  final debugOptions = CatcherOptions(
+    DialogReportMode(),
+    [
+      ConsoleHandler(),
+      HttpHandler(
+        HttpRequestType.post,
+        Uri.parse('https://httpstat.us/200'),
+        printLogs: true,
+      )
+    ],
+    explicitExceptionHandlersMap: explicitMap,
+  );
+  final releaseOptions = CatcherOptions(PageReportMode(), [
+    EmailManualHandler(['recipient@email.com'])
   ]);
 
   Catcher(
-    rootWidget: MyApp(),
+    rootWidget: const MyApp(),
     debugConfig: debugOptions,
     releaseConfig: releaseOptions,
   );
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<StatefulWidget> createState() {
+    return _MyAppState();
+  }
 }
 
 class _MyAppState extends State<MyApp> {
@@ -38,26 +46,27 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       navigatorKey: Catcher.navigatorKey,
       home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Plugin example app'),
-          ),
-          body: ChildWidget()),
+        appBar: AppBar(
+          title: const Text('Plugin example app'),
+        ),
+        body: const ChildWidget(),
+      ),
     );
   }
 }
 
 class ChildWidget extends StatelessWidget {
+  const ChildWidget({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: TextButton(
-        child: Text("Generate error"),
-        onPressed: () => generateError(),
-      ),
+    return TextButton(
+      onPressed: generateError,
+      child: const Text('Generate error'),
     );
   }
 
-  void generateError() async {
-    throw new FormatException("Example Error");
+  Future<void> generateError() async {
+    throw const FormatException('Example Error');
   }
 }

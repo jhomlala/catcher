@@ -36,21 +36,21 @@ class EmailManualHandler extends BaseEmailHandler {
 
   Future<bool> _sendEmail(Report report) async {
     try {
-      final MailOptions mailOptions = MailOptions(
+      final mailOptions = MailOptions(
         body: _getEmailBody(report),
         subject: getEmailTitle(report),
         recipients: recipients,
         isHTML: sendHtml,
         attachments: [
-          report.screenshot?.path ?? "",
+          report.screenshot?.path ?? '',
         ],
       );
-      _printLog("Creating mail request");
+      _printLog('Creating mail request');
       await FlutterMailer.send(mailOptions);
-      _printLog("Creating mail request success");
+      _printLog('Creating mail request success');
       return true;
     } catch (exc, stackTrace) {
-      _printLog("Exception occurred: $exc stack: $stackTrace");
+      _printLog('Exception occurred: $exc stack: $stackTrace');
       return false;
     }
   }
