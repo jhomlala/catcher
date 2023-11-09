@@ -5,7 +5,7 @@ version: 0.8.0
 homepage: https://github.com/jhomlala/catcher
 repository: https://github.com/jhomlala/catcher
 issue_tracker: https://github.com/jhomlala/catcher/issues
-topis:
+topics:
   - error
   - errors
   - logs
