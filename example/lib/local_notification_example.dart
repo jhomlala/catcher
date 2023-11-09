@@ -4,24 +4,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 void main() {
-  CatcherOptions debugOptions = CatcherOptions(NotificationReportMode(), [
-    EmailManualHandler(["recipient@email.com"]),
-    ConsoleHandler()
+  final debugOptions = CatcherOptions(NotificationReportMode(), [
+    EmailManualHandler(['recipient@email.com']),
+    ConsoleHandler(),
   ]);
-  CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
-    EmailManualHandler(["recipient@email.com"])
+  final releaseOptions = CatcherOptions(PageReportMode(), [
+    EmailManualHandler(['recipient@email.com']),
   ]);
 
   Catcher(
-    rootWidget: MyApp(),
+    rootWidget: const MyApp(),
     debugConfig: debugOptions,
     releaseConfig: releaseOptions,
   );
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<StatefulWidget> createState() {
+    return _MyAppState();
+  }
 }
 
 class _MyAppState extends State<MyApp> {
@@ -38,21 +42,24 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: ChildWidget(),
+        body: const ChildWidget(),
       ),
     );
   }
 }
 
 class ChildWidget extends StatelessWidget {
+  const ChildWidget({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: TextButton(
-            child: Text("Generate error"), onPressed: () => generateError()));
+    return TextButton(
+      onPressed: generateError,
+      child: const Text('Generate error'),
+    );
   }
 
-  void generateError() async {
+  Future<void> generateError() async {
     Catcher.sendTestException();
   }
 }
@@ -66,14 +73,15 @@ class NotificationReportMode extends ReportMode {
   final String channelDescription;
   final String icon;
 
-  NotificationReportMode(
-      {this.channelId = "Catcher",
-      this.channelName = "Catcher",
-      this.channelDescription = "Catcher default channel",
-      this.icon = "@mipmap/ic_launcher"});
+  NotificationReportMode({
+    this.channelId = 'Catcher',
+    this.channelName = 'Catcher',
+    this.channelDescription = 'Catcher default channel',
+    this.icon = '@mipmap/ic_launcher',
+  });
 
   @override
-  setReportModeAction(ReportModeAction reportModeAction) {
+  void setReportModeAction(ReportModeAction reportModeAction) {
     _initializeNotificationsPlugin();
     return super.setReportModeAction(reportModeAction);
   }
@@ -83,15 +91,18 @@ class NotificationReportMode extends ReportMode {
   /// mode, only notification report mode from second catcher options will be
   /// initialized correctly. That's why init is delayed.
   void _initializeNotificationsPlugin() {
-    _flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
-    var initializationSettingsAndroid = new AndroidInitializationSettings(icon);
-    var initializationSettingsIOS = new IOSInitializationSettings();
-    var initializationSettings = new InitializationSettings(
+    _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    final initializationSettingsAndroid = AndroidInitializationSettings(icon);
+    const initializationSettingsIOS = DarwinInitializationSettings();
+    final initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsIOS,
     );
-    _flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: onSelectedNotification);
+
+    _flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse: onSelectedNotification,
+    );
   }
 
   @override
@@ -100,28 +111,30 @@ class NotificationReportMode extends ReportMode {
     _sendNotification();
   }
 
-  Future onSelectedNotification(String? payload) {
+  Future<void> onSelectedNotification(NotificationResponse response) {
     onActionConfirmed(_lastReport);
     return Future<int>.value(0);
   }
 
-  void _sendNotification() async {
-    var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
-        channelId, channelName,
-        channelDescription: channelDescription,
-        importance: Importance.defaultImportance,
-        priority: Priority.defaultPriority);
-    var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
-    var platformChannelSpecifics = new NotificationDetails(
-        android: androidPlatformChannelSpecifics,
-        iOS: iOSPlatformChannelSpecifics);
+  Future<void> _sendNotification() async {
+    final androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      channelId,
+      channelName,
+      channelDescription: channelDescription,
+    );
+    const iOSPlatformChannelSpecifics = DarwinNotificationDetails();
+    final platformChannelSpecifics = NotificationDetails(
+      android: androidPlatformChannelSpecifics,
+      iOS: iOSPlatformChannelSpecifics,
+    );
 
     await _flutterLocalNotificationsPlugin.show(
-        0,
-        localizationOptions.notificationReportModeTitle,
-        localizationOptions.notificationReportModeContent,
-        platformChannelSpecifics,
-        payload: "");
+      0,
+      localizationOptions.notificationReportModeTitle,
+      localizationOptions.notificationReportModeContent,
+      platformChannelSpecifics,
+      payload: '',
+    );
   }
 
   @override

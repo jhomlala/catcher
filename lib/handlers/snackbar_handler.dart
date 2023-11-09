@@ -70,7 +70,7 @@ class SnackbarHandler extends ReportHandler {
   Future<bool> handle(Report error, BuildContext? context) async {
     try {
       if (!_hasScaffoldMessenger(context!)) {
-        _printLog("Passed context has no ScaffoldMessenger in widget ancestor");
+        _printLog('Passed context has no ScaffoldMessenger in widget ancestor');
         return false;
       }
 
@@ -95,7 +95,7 @@ class SnackbarHandler extends ReportHandler {
       );
       return true;
     } catch (exception, stackTrace) {
-      _printLog("Failed to show snackbar: $exception, $stackTrace");
+      _printLog('Failed to show snackbar: $exception, $stackTrace');
       return false;
     }
   }
@@ -105,7 +105,7 @@ class SnackbarHandler extends ReportHandler {
     try {
       return context.findAncestorWidgetOfExactType<ScaffoldMessenger>() != null;
     } catch (exception, stackTrace) {
-      _printLog("_hasScaffoldMessenger failed: $exception, $stackTrace");
+      _printLog('_hasScaffoldMessenger failed: $exception, $stackTrace');
       return false;
     }
   }
@@ -115,7 +115,7 @@ class SnackbarHandler extends ReportHandler {
     if (customMessage?.isNotEmpty == true) {
       return customMessage!;
     } else {
-      return "${localizationOptions.toastHandlerDescription} ${error.error}";
+      return '${localizationOptions.toastHandlerDescription} ${error.error}';
     }
   }
 

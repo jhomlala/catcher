@@ -6,7 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() async {
-  var catcher = Catcher(rootWidget: MyApp(), ensureInitialized: true);
+  final catcher = Catcher(rootWidget: const MyApp(), ensureInitialized: true);
   Directory? externalDir;
   if (Platform.isAndroid || Platform.isIOS) {
     externalDir = await getExternalStorageDirectory();
@@ -14,23 +14,30 @@ void main() async {
   if (Platform.isMacOS) {
     externalDir = await getApplicationDocumentsDirectory();
   }
-  String path = "";
+  var path = '';
   if (externalDir != null) {
-    path = externalDir.path.toString() + "/log.txt";
+    path = '${externalDir.path}/log.txt';
   }
-  print("PATH: " + path);
 
-  CatcherOptions debugOptions = CatcherOptions(
-      DialogReportMode(), [FileHandler(File(path), printLogs: true)]);
-  CatcherOptions releaseOptions =
+  final debugOptions = CatcherOptions(
+    DialogReportMode(),
+    [FileHandler(File(path), printLogs: true)],
+  );
+  final releaseOptions =
       CatcherOptions(DialogReportMode(), [FileHandler(File(path))]);
   catcher.updateConfig(
-      debugConfig: debugOptions, releaseConfig: releaseOptions);
+    debugConfig: debugOptions,
+    releaseConfig: releaseOptions,
+  );
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<StatefulWidget> createState() {
+    return _MyAppState();
+  }
 }
 
 class _MyAppState extends State<MyApp> {
@@ -44,42 +51,43 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       navigatorKey: Catcher.navigatorKey,
       home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Plugin example app'),
-          ),
-          body: ChildWidget()),
+        appBar: AppBar(
+          title: const Text('Plugin example app'),
+        ),
+        body: const ChildWidget(),
+      ),
     );
   }
 }
 
 class ChildWidget extends StatelessWidget {
+  const ChildWidget({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          TextButton(
-            child: Text("Check permission"),
-            onPressed: checkPermissions,
-          ),
-          TextButton(
-            child: Text("Generate error"),
-            onPressed: () => generateError(),
-          )
-        ],
-      ),
+    return Column(
+      children: [
+        TextButton(
+          onPressed: checkPermissions,
+          child: const Text('Check permission'),
+        ),
+        TextButton(
+          onPressed: generateError,
+          child: const Text('Generate error'),
+        ),
+      ],
     );
   }
 
-  void checkPermissions() async {
-    var status = await Permission.storage.status;
-    print("Status: $status");
+  Future<void> checkPermissions() async {
+    final status = await Permission.storage.status;
+    print('Status: $status');
     if (!status.isGranted) {
-      print("Requested");
+      print('Requested');
     }
   }
 
-  void generateError() async {
-    throw "Test exception";
+  Future<void> generateError() async {
+    throw Exception('Test exception');
   }
 }

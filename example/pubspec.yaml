@@ -27,9 +27,12 @@ dependencies:
     sdk: flutter
   path_provider: ^2.0.1
   path_provider_macos: ^2.0.0
-  dio: ^4.0.0
-  permission_handler: ^8.1.4+2
-  flutter_local_notifications: ^9.0.0
+  dio: ^5.3.3
+  permission_handler: ^11.0.1
+  flutter_local_notifications: ^16.1.0
+  sentry: ^7.12.0
+  catcher:
+    path: ../
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -39,8 +42,6 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  catcher:
-    path: ../
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -20,8 +20,8 @@ class CatcherOptions {
   /// Localization options (translations)
   final List<LocalizationOptions> localizationOptions;
 
-  /// Explicit report modes map which will be used to trigger specific report mode
-  /// for specific error
+  /// Explicit report modes map which will be used to trigger specific report
+  /// mode for specific error
   final Map<String, ReportMode> explicitExceptionReportModesMap;
 
   /// Explicit report handler map which will be used to trigger specific report
@@ -64,7 +64,7 @@ class CatcherOptions {
     this.explicitExceptionReportModesMap = const {},
     this.explicitExceptionHandlersMap = const {},
     this.handleSilentError = true,
-    this.screenshotsPath = "",
+    this.screenshotsPath = '',
     this.excludedParameters = const [],
     this.filterFunction,
     this.reportOccurrenceTimeout = 3000,
@@ -81,7 +81,7 @@ class CatcherOptions {
         explicitExceptionReportModesMap = {},
         explicitExceptionHandlersMap = {},
         handleSilentError = true,
-        screenshotsPath = "",
+        screenshotsPath = '',
         excludedParameters = const [],
         filterFunction = null,
         reportOccurrenceTimeout = 3000,
@@ -97,7 +97,7 @@ class CatcherOptions {
         explicitExceptionReportModesMap = {},
         explicitExceptionHandlersMap = {},
         handleSilentError = true,
-        screenshotsPath = "",
+        screenshotsPath = '',
         excludedParameters = const [],
         filterFunction = null,
         reportOccurrenceTimeout = 3000,
@@ -113,7 +113,7 @@ class CatcherOptions {
         explicitExceptionReportModesMap = {},
         explicitExceptionHandlersMap = {},
         handleSilentError = true,
-        screenshotsPath = "",
+        screenshotsPath = '',
         excludedParameters = const [],
         filterFunction = null,
         reportOccurrenceTimeout = 3000,

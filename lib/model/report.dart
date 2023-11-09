@@ -52,23 +52,23 @@ class Report {
     bool enableStackTrace = true,
     bool enableCustomParameters = false,
   }) {
-    final Map<String, dynamic> json = <String, dynamic>{
-      "error": error.toString(),
-      "customParameters": customParameters,
-      "dateTime": dateTime.toIso8601String(),
-      "platformType": describeEnum(platformType),
+    final json = <String, dynamic>{
+      'error': error.toString(),
+      'customParameters': customParameters,
+      'dateTime': dateTime.toIso8601String(),
+      'platformType': describeEnum(platformType),
     };
     if (enableDeviceParameters) {
-      json["deviceParameters"] = deviceParameters;
+      json['deviceParameters'] = deviceParameters;
     }
     if (enableApplicationParameters) {
-      json["applicationParameters"] = applicationParameters;
+      json['applicationParameters'] = applicationParameters;
     }
     if (enableStackTrace) {
-      json["stackTrace"] = stackTrace.toString();
+      json['stackTrace'] = stackTrace.toString();
     }
     if (enableCustomParameters) {
-      json["customParameters"] = customParameters;
+      json['customParameters'] = customParameters;
     }
     return json;
   }

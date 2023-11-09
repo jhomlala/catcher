@@ -2,23 +2,27 @@ import 'package:catcher/catcher.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  CatcherOptions debugOptions = CatcherOptions(SilentReportMode(), [
+  final debugOptions = CatcherOptions(SilentReportMode(), [
     ConsoleHandler(),
   ]);
-  CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
-    EmailManualHandler(["recipient@email.com"])
+  final releaseOptions = CatcherOptions(PageReportMode(), [
+    EmailManualHandler(['recipient@email.com']),
   ]);
 
   Catcher(
-    rootWidget: MyApp(),
+    rootWidget: const MyApp(),
     debugConfig: debugOptions,
     releaseConfig: releaseOptions,
   );
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<StatefulWidget> createState() {
+    return _MyAppState();
+  }
 }
 
 class _MyAppState extends State<MyApp> {
@@ -33,10 +37,9 @@ class _MyAppState extends State<MyApp> {
       navigatorKey: Catcher.navigatorKey,
       builder: (BuildContext context, Widget? widget) {
         Catcher.addDefaultErrorWidget(
-            showStacktrace: true,
-            title: "Custom title",
-            description: "Custom description",
-            maxWidthForSmallMode: 150);
+          title: 'Custom title',
+          description: 'Custom description',
+        );
         return widget!;
       },
       home: Scaffold(
@@ -55,23 +58,26 @@ class _MyAppState extends State<MyApp> {
 
   ///Trigger "small" mode
   Widget _buildSmallErrorWidget() {
-    return GridView.count(crossAxisCount: 3, children: [
-      ChildWidget(),
-      ChildWidget(),
-      ChildWidget(),
-    ]);
+    return GridView.count(
+      crossAxisCount: 3,
+      children: const [
+        ChildWidget(),
+        ChildWidget(),
+        ChildWidget(),
+      ],
+    );
   }
 }
 
 class ChildWidget extends StatelessWidget {
+  const ChildWidget({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: TextButton(child: Text("Test"), onPressed: generateError),
-    );
+    return TextButton(onPressed: generateError, child: const Text('Test'));
   }
 
-  void generateError() async {
+  Future<void> generateError() async {
     Catcher.sendTestException();
   }
 }

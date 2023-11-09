@@ -26,8 +26,8 @@ class SlackHandler extends ReportHandler {
   SlackHandler(
     this.webhookUrl,
     this.channel, {
-    this.username = "Catcher",
-    this.iconEmoji = ":bangbang:",
+    this.username = 'Catcher',
+    this.iconEmoji = ':bangbang:',
     this.printLogs = false,
     this.enableDeviceParameters = false,
     this.enableApplicationParameters = false,
@@ -40,10 +40,10 @@ class SlackHandler extends ReportHandler {
   Future<bool> handle(Report report, BuildContext? context) async {
     try {
       if (!(await CatcherUtils.isInternetConnectionAvailable())) {
-        _printLog("No internet connection available");
+        _printLog('No internet connection available');
         return false;
       }
-      String message = "";
+      var message = '';
       if (customMessageBuilder != null) {
         message = await customMessageBuilder!(report);
       } else {
@@ -51,54 +51,54 @@ class SlackHandler extends ReportHandler {
       }
 
       final data = {
-        "text": message,
-        "channel": channel,
-        "username": username,
-        "icon_emoji": iconEmoji
+        'text': message,
+        'channel': channel,
+        'username': username,
+        'icon_emoji': iconEmoji,
       };
-      _printLog("Sending request to Slack server...");
-      final Response response =
-          await _dio.post<dynamic>(webhookUrl, data: data);
+      _printLog('Sending request to Slack server...');
+      final response = await _dio.post<dynamic>(webhookUrl, data: data);
       _printLog(
-        "Server responded with code: ${response.statusCode} and message: ${response.statusMessage}",
+        'Server responded with code: ${response.statusCode} and message:'
+        ' ${response.statusMessage}',
       );
       final statusCode = response.statusCode ?? 0;
       return statusCode >= 200 && statusCode < 300;
     } catch (exception) {
-      _printLog("Failed to send slack message: $exception");
+      _printLog('Failed to send slack message: $exception');
       return false;
     }
   }
 
   String _buildMessage(Report report) {
-    final StringBuffer stringBuffer = StringBuffer();
-    stringBuffer.write("*Error:* ```${report.error}```\n");
+    final stringBuffer = StringBuffer()
+      ..write('*Error:* ```${report.error}```\n');
     if (enableStackTrace) {
-      stringBuffer.write("*Stack trace:* ```${report.stackTrace}```\n");
+      stringBuffer.write('*Stack trace:* ```${report.stackTrace}```\n');
     }
     if (enableDeviceParameters && report.deviceParameters.isNotEmpty) {
-      stringBuffer.write("*Device parameters:* ```");
+      stringBuffer.write('*Device parameters:* ```');
       for (final entry in report.deviceParameters.entries) {
-        stringBuffer.write("${entry.key}: ${entry.value}\n");
+        stringBuffer.write('${entry.key}: ${entry.value}\n');
       }
-      stringBuffer.write("```\n");
+      stringBuffer.write('```\n');
     }
 
     if (enableApplicationParameters &&
         report.applicationParameters.isNotEmpty) {
-      stringBuffer.write("*Application parameters:* ```");
+      stringBuffer.write('*Application parameters:* ```');
       for (final entry in report.applicationParameters.entries) {
-        stringBuffer.write("${entry.key}: ${entry.value}\n");
+        stringBuffer.write('${entry.key}: ${entry.value}\n');
       }
-      stringBuffer.write("```\n");
+      stringBuffer.write('```\n');
     }
 
     if (enableCustomParameters && report.customParameters.isNotEmpty) {
-      stringBuffer.write("*Custom parameters:* ```");
+      stringBuffer.write('*Custom parameters:* ```');
       for (final entry in report.customParameters.entries) {
-        stringBuffer.write("${entry.key}: ${entry.value}\n");
+        stringBuffer.write('${entry.key}: ${entry.value}\n');
       }
-      stringBuffer.write("```\n");
+      stringBuffer.write('```\n');
     }
     return stringBuffer.toString();
   }

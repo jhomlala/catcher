@@ -2,23 +2,27 @@ import 'package:catcher/catcher.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
-    ConsoleHandler(),
-    ToastHandler(),
-  ], filterFunction: (Report report) {
-    if (report.error is ArgumentError) {
-      return false;
-    } else {
-      return true;
-    }
-  });
-  CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
-    EmailManualHandler(["recipient@email.com"])
+  final debugOptions = CatcherOptions(
+    DialogReportMode(),
+    [
+      ConsoleHandler(),
+      ToastHandler(),
+    ],
+    filterFunction: (Report report) {
+      if (report.error is ArgumentError) {
+        return false;
+      } else {
+        return true;
+      }
+    },
+  );
+  final releaseOptions = CatcherOptions(PageReportMode(), [
+    EmailManualHandler(['recipient@email.com']),
   ]);
 
   Catcher(
     runAppFunction: () {
-      runApp(MyApp());
+      runApp(const MyApp());
     },
     debugConfig: debugOptions,
     releaseConfig: releaseOptions,
@@ -26,8 +30,12 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<StatefulWidget> createState() {
+    return _MyAppState();
+  }
 }
 
 class _MyAppState extends State<MyApp> {
@@ -47,12 +55,12 @@ class _MyAppState extends State<MyApp> {
         body: Column(
           children: [
             TextButton(
-              child: Text("Generate normal error"),
-              onPressed: () => generateNormalError(),
+              onPressed: generateNormalError,
+              child: const Text('Generate normal error'),
             ),
             TextButton(
-              child: Text("Generate filtered error"),
-              onPressed: () => generateFilteredError(),
+              onPressed: generateFilteredError,
+              child: const Text('Generate filtered error'),
             ),
           ],
         ),
@@ -60,11 +68,11 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  void generateNormalError() async {
-    throw StateError("Example error");
+  Future<void> generateNormalError() async {
+    throw StateError('Example error');
   }
 
-  void generateFilteredError() async {
-    throw ArgumentError("Example error");
+  Future<void> generateFilteredError() async {
+    throw ArgumentError('Example error');
   }
 }

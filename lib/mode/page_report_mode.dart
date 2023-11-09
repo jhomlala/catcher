@@ -18,9 +18,12 @@ class PageReportMode extends ReportMode {
     }
   }
 
-  void _navigateToPageWidget(Report report, BuildContext context) async {
+  Future<void> _navigateToPageWidget(
+    Report report,
+    BuildContext context,
+  ) async {
     await Future<void>.delayed(Duration.zero);
-    Navigator.push<void>(
+    await Navigator.push<void>(
       context,
       MaterialPageRoute(
         builder: (context) => PageWidget(this, report),
@@ -51,8 +54,8 @@ class PageWidget extends StatefulWidget {
   const PageWidget(
     this.pageReportMode,
     this.report, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   PageWidgetState createState() {
@@ -129,21 +132,21 @@ class PageWidgetState extends State<PageWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               TextButton(
-                onPressed: () => _onAcceptClicked(),
+                onPressed: _onAcceptClicked,
                 child: Text(
                   widget
                       .pageReportMode.localizationOptions.pageReportModeAccept,
                 ),
               ),
               TextButton(
-                onPressed: () => _onCancelClicked(),
+                onPressed: _onCancelClicked,
                 child: Text(
                   widget
                       .pageReportMode.localizationOptions.pageReportModeCancel,
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
     );
@@ -158,21 +161,21 @@ class PageWidgetState extends State<PageWidget> {
 
   Widget _getStackTraceWidget() {
     if (widget.pageReportMode.showStackTrace) {
-      String error = "";
+      var error = '';
       if (widget.report.error != null) {
         error = widget.report.error.toString();
       } else if (widget.report.errorDetails != null) {
         error = widget.report.errorDetails.toString();
       }
 
-      final List<String> items = [
+      final items = <String>[
         error,
-        ...widget.report.stackTrace.toString().split("\n"),
+        ...widget.report.stackTrace.toString().split('\n'),
       ];
       return SizedBox(
-        height: 300.0,
+        height: 300,
         child: ListView.builder(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8),
           itemCount: items.length,
           itemBuilder: (BuildContext context, int index) {
             return Text(

@@ -4,28 +4,33 @@ import 'package:flutter/material.dart';
 late Catcher catcher;
 
 void main() {
-  Map<String, dynamic> customParameters = new Map<String, dynamic>();
-  customParameters["First"] = "First parameter";
-  CatcherOptions debugOptions = CatcherOptions(
-      PageReportMode(),
-      [
-        ConsoleHandler(enableCustomParameters: true),
-      ],
-      customParameters: customParameters);
-  CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
-    EmailManualHandler(["recipient@email.com"])
+  final customParameters = <String, dynamic>{};
+  customParameters['First'] = 'First parameter';
+  final debugOptions = CatcherOptions(
+    PageReportMode(),
+    [
+      ConsoleHandler(enableCustomParameters: true),
+    ],
+    customParameters: customParameters,
+  );
+  final releaseOptions = CatcherOptions(PageReportMode(), [
+    EmailManualHandler(['recipient@email.com']),
   ]);
 
   catcher = Catcher(
-    rootWidget: MyApp(),
+    rootWidget: const MyApp(),
     debugConfig: debugOptions,
     releaseConfig: releaseOptions,
   );
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<StatefulWidget> createState() {
+    return _MyAppState();
+  }
 }
 
 class _MyAppState extends State<MyApp> {
@@ -39,33 +44,40 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       navigatorKey: Catcher.navigatorKey,
       home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Plugin example app'),
-          ),
-          body: ChildWidget()),
+        appBar: AppBar(
+          title: const Text('Plugin example app'),
+        ),
+        body: const ChildWidget(),
+      ),
     );
   }
 }
 
 class ChildWidget extends StatelessWidget {
+  const ChildWidget({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Column(children: [
-      ElevatedButton(
-          child: Text("Change custom parameters"),
-          onPressed: _changeCustomParameters),
-      ElevatedButton(
-          child: Text("Generate error"), onPressed: () => generateError())
-    ]));
+    return Column(
+      children: [
+        ElevatedButton(
+          onPressed: _changeCustomParameters,
+          child: const Text('Change custom parameters'),
+        ),
+        ElevatedButton(
+          onPressed: generateError,
+          child: const Text('Generate error'),
+        ),
+      ],
+    );
   }
 
-  void generateError() async {
+  Future<void> generateError() async {
     Catcher.sendTestException();
   }
 
   void _changeCustomParameters() {
-    CatcherOptions options = catcher.getCurrentConfig()!;
-    options.customParameters["Second"] = "Second parameter";
+    final options = catcher.getCurrentConfig()!;
+    options.customParameters['Second'] = 'Second parameter';
   }
 }

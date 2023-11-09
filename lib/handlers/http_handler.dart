@@ -36,16 +36,16 @@ class HttpHandler extends ReportHandler {
   }) : headers = headers ?? <String, dynamic>{};
 
   @override
-  Future<bool> handle(Report error, BuildContext? context) async {
-    if (error.platformType != PlatformType.web) {
+  Future<bool> handle(Report report, BuildContext? context) async {
+    if (report.platformType != PlatformType.web) {
       if (!(await CatcherUtils.isInternetConnectionAvailable())) {
-        _printLog("No internet connection available");
+        _printLog('No internet connection available');
         return false;
       }
     }
 
     if (requestType == HttpRequestType.post) {
-      return _sendPost(error);
+      return _sendPost(report);
     }
     return true;
   }
@@ -58,25 +58,24 @@ class HttpHandler extends ReportHandler {
         enableStackTrace: enableStackTrace,
         enableCustomParameters: enableCustomParameters,
       );
-      final HashMap<String, dynamic> mutableHeaders =
-          HashMap<String, dynamic>();
+      final mutableHeaders = HashMap<String, dynamic>();
       if (headers.isNotEmpty == true) {
         mutableHeaders.addAll(headers);
       }
 
-      final Options options = Options(
-        sendTimeout: requestTimeout,
-        receiveTimeout: responseTimeout,
+      final options = Options(
+        sendTimeout: Duration(milliseconds: requestTimeout),
+        receiveTimeout: Duration(milliseconds: responseTimeout),
         headers: mutableHeaders,
       );
 
-      Response? response;
-      _printLog("Calling: ${endpointUri.toString()}");
+      Response<dynamic>? response;
+      _printLog('Calling: $endpointUri');
       if (report.screenshot != null) {
-        final screenshotPath = report.screenshot?.path ?? "";
-        final FormData formData = FormData.fromMap(<String, dynamic>{
-          "payload_json": json,
-          "file": await MultipartFile.fromFile(screenshotPath)
+        final screenshotPath = report.screenshot?.path ?? '';
+        final formData = FormData.fromMap(<String, dynamic>{
+          'payload_json': json,
+          'file': await MultipartFile.fromFile(screenshotPath),
         });
         response = await _dio.post<dynamic>(
           endpointUri.toString(),
@@ -91,11 +90,12 @@ class HttpHandler extends ReportHandler {
         );
       }
       _printLog(
-        "HttpHandler response status: ${response.statusCode!} body: ${response.data!}",
+        'HttpHandler response status: ${response.statusCode!} body:'
+        ' ${response.data!}',
       );
       return true;
     } catch (error, stackTrace) {
-      _printLog("HttpHandler error: $error, stackTrace: $stackTrace");
+      _printLog('HttpHandler error: $error, stackTrace: $stackTrace');
       return false;
     }
   }

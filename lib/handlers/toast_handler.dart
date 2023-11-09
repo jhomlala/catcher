@@ -28,12 +28,12 @@ class ToastHandler extends ReportHandler {
   });
 
   @override
-  Future<bool> handle(Report error, BuildContext? buildContext) async {
+  Future<bool> handle(Report report, BuildContext? context) async {
     if (ApplicationProfileManager.isAndroid() ||
         ApplicationProfileManager.isIos() ||
         ApplicationProfileManager.isWeb()) {
-      Fluttertoast.showToast(
-        msg: _getErrorMessage(error),
+      await Fluttertoast.showToast(
+        msg: _getErrorMessage(report),
         toastLength: _getLength(),
         gravity: _getGravity(),
         timeInSecForIosWeb: _getLengthIos(),
@@ -46,11 +46,11 @@ class ToastHandler extends ReportHandler {
         const Duration(milliseconds: 500),
         () {
           Navigator.push<void>(
-            buildContext!,
+            context!,
             PageRouteBuilder(
               opaque: false,
               pageBuilder: (_, __, ___) => FlutterToastPage(
-                _getErrorMessage(error),
+                _getErrorMessage(report),
                 _getGravity(),
                 Duration(seconds: _getLengthIos()),
                 backgroundColor,
@@ -97,7 +97,7 @@ class ToastHandler extends ReportHandler {
     if (customMessage?.isNotEmpty == true) {
       return customMessage!;
     } else {
-      return "${localizationOptions.toastHandlerDescription} ${error.error}";
+      return '${localizationOptions.toastHandlerDescription} ${error.error}';
     }
   }
 
@@ -137,11 +137,13 @@ class FlutterToastPage extends StatefulWidget {
     this.backgroundColor,
     this.textColor,
     this.textSize, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
-  _FlutterToastPageState createState() => _FlutterToastPageState();
+  State<StatefulWidget> createState() {
+    return _FlutterToastPageState();
+  }
 }
 
 class _FlutterToastPageState extends State<FlutterToastPage> {
@@ -161,7 +163,7 @@ class _FlutterToastPageState extends State<FlutterToastPage> {
 
   void showToast() {
     _fToast.showToast(
-      child: Container(
+      child: ColoredBox(
         color: widget.backgroundColor,
         child: Text(
           widget.text,

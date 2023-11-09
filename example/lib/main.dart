@@ -4,29 +4,31 @@ import 'package:sentry/sentry.dart';
 
 void main() {
   ///Configure your debug options (settings used in development mode)
-  CatcherOptions debugOptions = CatcherOptions(
+  final debugOptions = CatcherOptions(
     ///Show information about caught error in dialog
     DialogReportMode(),
     [
       ///Send logs to HTTP server
-      HttpHandler(HttpRequestType.post,
-          Uri.parse("https://jsonplaceholder.typicode.com/posts"),
-          printLogs: true),
+      HttpHandler(
+        HttpRequestType.post,
+        Uri.parse('https://jsonplaceholder.typicode.com/posts'),
+        printLogs: true,
+      ),
 
       ///Print logs in console
-      ConsoleHandler()
+      ConsoleHandler(),
     ],
   );
 
   ///Configure your production options (settings used in release mode)
-  CatcherOptions releaseOptions = CatcherOptions(
+  final releaseOptions = CatcherOptions(
     ///Show new page with information about caught error
     PageReportMode(),
     [
       ///Send logs to Sentry
       SentryHandler(
         SentryClient(
-          SentryOptions(dsn: "<DSN>"),
+          SentryOptions(dsn: '<DSN>'),
         ),
       ),
 
@@ -39,7 +41,7 @@ void main() {
   ///error to your configured services!
   Catcher(
     runAppFunction: () {
-      runApp(MyApp());
+      runApp(const MyApp());
     },
     debugConfig: debugOptions,
     releaseConfig: releaseOptions,
@@ -47,8 +49,12 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<StatefulWidget> createState() {
+    return _MyAppState();
+  }
 }
 
 class _MyAppState extends State<MyApp> {
@@ -65,27 +71,27 @@ class _MyAppState extends State<MyApp> {
       navigatorKey: Catcher.navigatorKey,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Catcher example"),
+          title: const Text('Catcher example'),
         ),
-        body: ChildWidget(),
+        body: const ChildWidget(),
       ),
     );
   }
 }
 
 class ChildWidget extends StatelessWidget {
+  const ChildWidget({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: TextButton(
-        child: Text("Generate error"),
-        onPressed: () => generateError(),
-      ),
+    return TextButton(
+      onPressed: generateError,
+      child: const Text('Generate error'),
     );
   }
 
   ///Simply just trigger some error.
-  void generateError() async {
+  Future<void> generateError() async {
     Catcher.sendTestException();
   }
 }

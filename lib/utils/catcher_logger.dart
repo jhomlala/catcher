@@ -2,7 +2,7 @@ import 'package:logging/logging.dart';
 
 ///Class used to provide logger for Catcher.
 class CatcherLogger {
-  final Logger _logger = Logger("Catcher");
+  final Logger _logger = Logger('Catcher');
 
   ///Setup logger configuration.
   void setup() {
@@ -11,7 +11,8 @@ class CatcherLogger {
       (LogRecord rec) {
         // ignore: avoid_print
         print(
-          '[${rec.time} | ${rec.loggerName} | ${rec.level.name}] ${rec.message}',
+          '[${rec.time} | ${rec.loggerName} | ${rec.level.name}] '
+          '${rec.message}',
         );
       },
     );

@@ -2,15 +2,15 @@ import 'package:catcher/catcher.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
-    EmailManualHandler(["recipient@email.com"]),
-    ConsoleHandler()
+  final debugOptions = CatcherOptions(DialogReportMode(), [
+    EmailManualHandler(['recipient@email.com']),
+    ConsoleHandler(),
   ]);
-  CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
-    EmailManualHandler(["recipient@email.com"])
+  final releaseOptions = CatcherOptions(PageReportMode(), [
+    EmailManualHandler(['recipient@email.com']),
   ]);
 
-  GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
+  final navigatorKey = GlobalKey<NavigatorState>();
   Catcher(
     rootWidget: MyApp(navigatorKey),
     debugConfig: debugOptions,
@@ -22,10 +22,12 @@ void main() {
 class MyApp extends StatefulWidget {
   final GlobalKey<NavigatorState> navigatorKey;
 
-  const MyApp(this.navigatorKey);
+  const MyApp(this.navigatorKey, {Key? key}) : super(key: key);
 
   @override
-  _MyAppState createState() => _MyAppState();
+  State<StatefulWidget> createState() {
+    return _MyAppState();
+  }
 }
 
 class _MyAppState extends State<MyApp> {
@@ -39,23 +41,27 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       navigatorKey: widget.navigatorKey,
       home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Plugin example app'),
-          ),
-          body: ChildWidget()),
+        appBar: AppBar(
+          title: const Text('Plugin example app'),
+        ),
+        body: const ChildWidget(),
+      ),
     );
   }
 }
 
 class ChildWidget extends StatelessWidget {
+  const ChildWidget({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: TextButton(
-            child: Text("Generate error"), onPressed: () => generateError()));
+    return TextButton(
+      onPressed: generateError,
+      child: const Text('Generate error'),
+    );
   }
 
-  void generateError() async {
+  Future<void> generateError() async {
     Catcher.sendTestException();
   }
 }

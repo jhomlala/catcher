@@ -3,26 +3,33 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  CatcherOptions debugOptions = CatcherOptions(DialogReportMode(), [
+  final debugOptions = CatcherOptions(DialogReportMode(), [
     //EmailManualHandler(["recipient@email.com"]),
-    HttpHandler(HttpRequestType.post,
-        Uri.parse("https://jsonplaceholder.typicode.com/posts"),
-        printLogs: true),
-    ConsoleHandler()
+    HttpHandler(
+      HttpRequestType.post,
+      Uri.parse('https://jsonplaceholder.typicode.com/posts'),
+      printLogs: true,
+    ),
+    ConsoleHandler(),
   ]);
-  CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
-    EmailManualHandler(["recipient@email.com"])
+  final releaseOptions = CatcherOptions(PageReportMode(), [
+    EmailManualHandler(['recipient@email.com']),
   ]);
 
   Catcher(
-      rootWidget: MyApp(),
-      debugConfig: debugOptions,
-      releaseConfig: releaseOptions);
+    rootWidget: const MyApp(),
+    debugConfig: debugOptions,
+    releaseConfig: releaseOptions,
+  );
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<StatefulWidget> createState() {
+    return _MyAppState();
+  }
 }
 
 class _MyAppState extends State<MyApp> {
@@ -35,9 +42,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return CupertinoApp(
       navigatorKey: Catcher.navigatorKey,
-      home: CupertinoPageScaffold(
+      home: const CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
-          middle: const Text('Cupertino example'),
+          middle: Text('Cupertino example'),
         ),
         child: SafeArea(
           child: ChildWidget(),
@@ -48,18 +55,20 @@ class _MyAppState extends State<MyApp> {
 }
 
 class ChildWidget extends StatelessWidget {
+  const ChildWidget({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ColoredBox(
       color: Colors.orange,
       child: TextButton(
-        child: Text("Generate error"),
-        onPressed: () => generateError(),
+        onPressed: generateError,
+        child: const Text('Generate error'),
       ),
     );
   }
 
-  void generateError() async {
+  Future<void> generateError() async {
     Catcher.sendTestException();
   }
 }

@@ -43,8 +43,8 @@ class EmailAutoHandler extends BaseEmailHandler {
         );
 
   @override
-  Future<bool> handle(Report error, BuildContext? context) {
-    return _sendMail(error);
+  Future<bool> handle(Report report, BuildContext? context) {
+    return _sendMail(report);
   }
 
   Future<bool> _sendMail(Report report) async {
@@ -62,14 +62,14 @@ class EmailAutoHandler extends BaseEmailHandler {
       if (sendHtml) {
         message.html = setupHtmlMessageText(report);
       }
-      _printLog("Sending email...");
+      _printLog('Sending email...');
 
       final result = await send(message, _setupSmtpServer());
 
       _printLog(
-        "Email result: mail: ${result.mail} "
-        "sending start time: ${result.messageSendingStart} "
-        "sending end time: ${result.messageSendingEnd}",
+        'Email result: mail: ${result.mail} '
+        'sending start time: ${result.messageSendingStart} '
+        'sending end time: ${result.messageSendingEnd}',
       );
 
       return true;

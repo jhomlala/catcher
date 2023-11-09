@@ -44,9 +44,11 @@ class CrashlyticsHandler extends ReportHandler {
       crashlytics.log(_getLogMessage(report));
       if (report.errorDetails != null) {
         // ignore: cast_nullable_to_non_nullable
-        await crashlytics.recordFlutterError(report.errorDetails as FlutterErrorDetails);
+        await crashlytics.recordFlutterError(report.errorDetails as
+        FlutterErrorDetails);
       } else {
-        await crashlytics.recordError(report.error, report.stackTrace as StackTrace);
+        await crashlytics.recordError(report.error, report.stackTrace as
+         StackTrace);
       }
       _printLog("Crashlytics report sent");
       return true;

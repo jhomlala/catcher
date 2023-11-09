@@ -2,30 +2,37 @@ import 'package:catcher/catcher.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  var explicitReportModesMap = {"FormatException": PageReportMode()};
-  CatcherOptions debugOptions = CatcherOptions(
+  final explicitReportModesMap = {'FormatException': PageReportMode()};
+  final debugOptions = CatcherOptions(
     DialogReportMode(),
     [
       ConsoleHandler(),
-      HttpHandler(HttpRequestType.post, Uri.parse("https://httpstat.us/200"),
-          printLogs: true)
+      HttpHandler(
+        HttpRequestType.post,
+        Uri.parse('https://httpstat.us/200'),
+        printLogs: true,
+      ),
     ],
     explicitExceptionReportModesMap: explicitReportModesMap,
   );
-  CatcherOptions releaseOptions = CatcherOptions(PageReportMode(), [
-    EmailManualHandler(["recipient@email.com"])
+  final releaseOptions = CatcherOptions(PageReportMode(), [
+    EmailManualHandler(['recipient@email.com']),
   ]);
 
   Catcher(
-    rootWidget: MyApp(),
+    rootWidget: const MyApp(),
     debugConfig: debugOptions,
     releaseConfig: releaseOptions,
   );
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
-  _MyAppState createState() => _MyAppState();
+  State<StatefulWidget> createState() {
+    return _MyAppState();
+  }
 }
 
 class _MyAppState extends State<MyApp> {
@@ -39,35 +46,39 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       navigatorKey: Catcher.navigatorKey,
       home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Plugin example app'),
-          ),
-          body: ChildWidget()),
+        appBar: AppBar(
+          title: const Text('Plugin example app'),
+        ),
+        body: const ChildWidget(),
+      ),
     );
   }
 }
 
 class ChildWidget extends StatelessWidget {
+  const ChildWidget({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(children: <Widget>[
+    return Column(
+      children: <Widget>[
         TextButton(
-            child: Text("Generate first error"),
-            onPressed: () => generateFirstError()),
+          onPressed: generateFirstError,
+          child: const Text('Generate first error'),
+        ),
         TextButton(
-          child: Text("Generate second error"),
-          onPressed: () => generateSecondError(),
-        )
-      ]),
+          onPressed: generateSecondError,
+          child: const Text('Generate second error'),
+        ),
+      ],
     );
   }
 
-  void generateFirstError() async {
-    throw new FormatException("Example Error");
+  Future<void> generateFirstError() async {
+    throw const FormatException('Example Error');
   }
 
-  void generateSecondError() async {
-    throw new ArgumentError("Normal error");
+  Future<void> generateSecondError() async {
+    throw ArgumentError('Normal error');
   }
 }
