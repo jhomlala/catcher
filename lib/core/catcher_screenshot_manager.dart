@@ -89,7 +89,7 @@ class CatcherScreenshotManager {
             _containerKey.currentContext?.findRenderObject();
 
         print(containerKey.currentContext);
-        print( _containerKey.currentContext?.findRenderObject());
+        print(_containerKey.currentContext?.findRenderObject());
         if (findRenderObject == null) {
           return null;
         }
