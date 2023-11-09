@@ -11,6 +11,7 @@ class EmailAutoHandler extends BaseEmailHandler {
   final String senderEmail;
   final String senderName;
   final String senderPassword;
+  final String? senderUsername;
   final bool enableSsl;
   final List<String> recipients;
   final bool sendHtml;
@@ -23,6 +24,7 @@ class EmailAutoHandler extends BaseEmailHandler {
     this.senderName,
     this.senderPassword,
     this.recipients, {
+    this.senderUsername,
     this.enableSsl = false,
     this.sendHtml = true,
     this.printLogs = false,
@@ -85,7 +87,7 @@ class EmailAutoHandler extends BaseEmailHandler {
       smtpHost,
       port: smtpPort,
       ssl: enableSsl,
-      username: senderEmail,
+      username: senderUsername ?? senderEmail,
       password: senderPassword,
     );
   }
