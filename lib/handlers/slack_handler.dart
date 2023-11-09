@@ -54,7 +54,7 @@ class SlackHandler extends ReportHandler {
         'text': message,
         'channel': channel,
         'username': username,
-        'icon_emoji': iconEmoji
+        'icon_emoji': iconEmoji,
       };
       _printLog('Sending request to Slack server...');
       final response = await _dio.post<dynamic>(webhookUrl, data: data);

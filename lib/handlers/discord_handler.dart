@@ -115,7 +115,7 @@ class DiscordHandler extends ReportHandler {
         final screenshotPath = screenshot.path;
         final formData = FormData.fromMap(<String, dynamic>{
           'content': content,
-          'file': await MultipartFile.fromFile(screenshotPath)
+          'file': await MultipartFile.fromFile(screenshotPath),
         });
         response = await _dio.post<dynamic>(webhookUrl, data: formData);
       } else {

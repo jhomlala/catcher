@@ -74,7 +74,7 @@ class ChildWidget extends StatelessWidget {
         TextButton(
           onPressed: generateError,
           child: const Text('Generate error'),
-        )
+        ),
       ],
     );
   }

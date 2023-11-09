@@ -12,14 +12,14 @@ void main() {
         Uri.parse('https://jsonplaceholder.typicode.com/posts'),
         printLogs: true,
       ),
-      ConsoleHandler()
+      ConsoleHandler(),
     ],
 
     //Exclude these parameters from report. These params are device info params.
     excludedParameters: ['androidId', 'model'],
   );
   final releaseOptions = CatcherOptions(PageReportMode(), [
-    EmailManualHandler(['recipient@email.com'])
+    EmailManualHandler(['recipient@email.com']),
   ]);
 
   Catcher(

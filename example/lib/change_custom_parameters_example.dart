@@ -14,7 +14,7 @@ void main() {
     customParameters: customParameters,
   );
   final releaseOptions = CatcherOptions(PageReportMode(), [
-    EmailManualHandler(['recipient@email.com'])
+    EmailManualHandler(['recipient@email.com']),
   ]);
 
   catcher = Catcher(
@@ -67,7 +67,7 @@ class ChildWidget extends StatelessWidget {
         ElevatedButton(
           onPressed: generateError,
           child: const Text('Generate error'),
-        )
+        ),
       ],
     );
   }

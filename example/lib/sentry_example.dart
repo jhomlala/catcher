@@ -6,10 +6,10 @@ void main() {
   final debugOptions = CatcherOptions(DialogReportMode(), [
     SentryHandler(
       SentryClient(SentryOptions(dsn: 'YOUR DSN HERE')),
-    )
+    ),
   ]);
   final releaseOptions = CatcherOptions(PageReportMode(), [
-    EmailManualHandler(['recipient@email.com'])
+    EmailManualHandler(['recipient@email.com']),
   ]);
 
   Catcher(

@@ -11,7 +11,7 @@ void main() {
         HttpRequestType.post,
         Uri.parse('https://httpstat.us/200'),
         printLogs: true,
-      )
+      ),
     ],
     localizationOptions: [
       LocalizationOptions(
@@ -40,11 +40,11 @@ void main() {
             ' wysłać raport lub odrzuć aby odrzucić raport.',
         pageReportModeAccept: 'Akceptuj',
         pageReportModeCancel: 'Odrzuć',
-      )
+      ),
     ],
   );
   final releaseOptions = CatcherOptions(PageReportMode(), [
-    EmailManualHandler(['recipient@email.com'])
+    EmailManualHandler(['recipient@email.com']),
   ]);
 
   Catcher(

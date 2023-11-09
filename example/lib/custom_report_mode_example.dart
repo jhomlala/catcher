@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 void main() {
   final debugOptions = CatcherOptions(CustomPageReportMode(), [
     EmailManualHandler(['recipient@email.com']),
-    ConsoleHandler()
+    ConsoleHandler(),
   ]);
   final releaseOptions = CatcherOptions(PageReportMode(), [
-    EmailManualHandler(['recipient@email.com'])
+    EmailManualHandler(['recipient@email.com']),
   ]);
 
   Catcher(
@@ -118,7 +118,7 @@ class CustomPage extends StatelessWidget {
               reportMode.onActionRejected(report);
               Navigator.pop(context);
             },
-          )
+          ),
         ],
       ),
     );

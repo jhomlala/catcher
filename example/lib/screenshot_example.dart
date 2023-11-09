@@ -26,11 +26,11 @@ void main() async {
         emailTitle: 'Sample Title',
         emailHeader: 'Sample Header',
         printLogs: true,
-      )
+      ),
     ],
     customParameters: <String, dynamic>{
       'Test': 'Test12345',
-      'Test2': 'Test54321'
+      'Test2': 'Test54321',
     },
     screenshotsPath: path,
   );

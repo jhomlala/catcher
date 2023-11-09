@@ -75,7 +75,7 @@ class HttpHandler extends ReportHandler {
         final screenshotPath = report.screenshot?.path ?? '';
         final formData = FormData.fromMap(<String, dynamic>{
           'payload_json': json,
-          'file': await MultipartFile.fromFile(screenshotPath)
+          'file': await MultipartFile.fromFile(screenshotPath),
         });
         response = await _dio.post<dynamic>(
           endpointUri.toString(),

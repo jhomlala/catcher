@@ -16,7 +16,7 @@ void main() {
       ),
 
       ///Print logs in console
-      ConsoleHandler()
+      ConsoleHandler(),
     ],
   );
 

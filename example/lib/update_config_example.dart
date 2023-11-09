@@ -11,10 +11,10 @@ void main() {
       Uri.parse('https://jsonplaceholder.typicode.com/posts'),
       printLogs: true,
     ),
-    ConsoleHandler()
+    ConsoleHandler(),
   ]);
   final releaseOptions = CatcherOptions(PageReportMode(), [
-    EmailManualHandler(['recipient@email.com'])
+    EmailManualHandler(['recipient@email.com']),
   ]);
 
   catcher = Catcher(

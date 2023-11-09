@@ -11,12 +11,12 @@ void main() {
         HttpRequestType.post,
         Uri.parse('https://httpstat.us/200'),
         printLogs: true,
-      )
+      ),
     ],
     explicitExceptionReportModesMap: explicitReportModesMap,
   );
   final releaseOptions = CatcherOptions(PageReportMode(), [
-    EmailManualHandler(['recipient@email.com'])
+    EmailManualHandler(['recipient@email.com']),
   ]);
 
   Catcher(
@@ -69,7 +69,7 @@ class ChildWidget extends StatelessWidget {
         TextButton(
           onPressed: generateSecondError,
           child: const Text('Generate second error'),
-        )
+        ),
       ],
     );
   }

@@ -146,7 +146,7 @@ class PageWidgetState extends State<PageWidget> {
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
     );

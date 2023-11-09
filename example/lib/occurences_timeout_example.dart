@@ -11,7 +11,7 @@ void main() {
     reportOccurrenceTimeout: 30000,
   );
   final releaseOptions = CatcherOptions(PageReportMode(), [
-    EmailManualHandler(['recipient@email.com'])
+    EmailManualHandler(['recipient@email.com']),
   ]);
 
   Catcher(

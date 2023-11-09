@@ -57,7 +57,7 @@ class CatcherErrorWidget extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 10),
-            _buildStackTraceWidget()
+            _buildStackTraceWidget(),
           ],
         ),
       ),
