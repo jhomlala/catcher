@@ -71,17 +71,19 @@ class CatcherScreenshotManager {
 
   Future<ui.Image> _captureAsUiImage({
     double? pixelRatio,
-    Duration delay = const Duration(milliseconds: 20),
+    Duration delay = const Duration(milliseconds: 100),
   }) {
     return Future.delayed(delay, () async {
       // ignore: cast_nullable_to_non_nullable
-      final boundary = _containerKey.currentContext?.findRenderObject()
-          as RenderRepaintBoundary;
+
+      final renderObject = _containerKey.currentContext?.findRenderObject();
 
       // ignore: unnecessary_null_comparison
-      if (boundary == null) {
+      if (renderObject == null) {
         throw StateError('No boundary found');
       }
+
+      final boundary = renderObject as RenderRepaintBoundary;
 
       final context = _containerKey.currentContext;
       var pixelRatioValue = pixelRatio;

@@ -1,6 +1,8 @@
 ## 0.8.0
 * [BREAKING_CHANGE] Updated min android version to 22 and target/compile version to 34.
 * Updated dependencies version
+* Replaced lint with very_good_analysis package
+* Fixed screenshot manger not creating screenshots.
 
 ## 0.7.0
 * [BREAKING_CHANGE] Update to Flutter 3 by Nico Mexis (https://github.com/ThexXTURBOXx).
