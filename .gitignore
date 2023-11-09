@@ -13,7 +13,6 @@ ios/Runner/GeneratedPluginRegistrant.*
 example/macos/Flutter/
 example/linux/flutter/
 
-*.txt
 android/.gradle
 
 .flutter-plugins
