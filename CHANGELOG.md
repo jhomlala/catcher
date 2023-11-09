@@ -1,3 +1,7 @@
+## 0.8.0
+* [BREAKING_CHANGE] Updated min android version to 22 and target/compile version to 34.
+* Updated dependencies version
+
 ## 0.7.0
 * [BREAKING_CHANGE] Update to Flutter 3 by Nico Mexis (https://github.com/ThexXTURBOXx).
 * [BREAKING_CHANGE] Update device_info_plus and added android_id plugin by Nico Mexis (https://github.com/ThexXTURBOXx).
