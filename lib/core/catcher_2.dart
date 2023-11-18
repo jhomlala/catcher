@@ -382,7 +382,7 @@ class Catcher2 implements ReportModeAction {
   Future<void> _loadApplicationInfo() async {
     try {
       _applicationParameters['environment'] =
-          describeEnum(ApplicationProfileManager.getApplicationProfile());
+          ApplicationProfileManager.getApplicationProfile().name;
 
       final packageInfo = await PackageInfo.fromPlatform();
       _applicationParameters['version'] = packageInfo.version;
@@ -536,8 +536,7 @@ class Catcher2 implements ReportModeAction {
     }
     if (!isReportModeSupportedInPlatform(report, reportMode)) {
       _logger.warning(
-        '$reportMode in not supported for ${describeEnum(report.platformType)} '
-        'platform',
+        '$reportMode in not supported for ${report.platformType.name} platform',
       );
       return;
     }
@@ -610,10 +609,8 @@ class Catcher2 implements ReportModeAction {
 
   void _handleReport(Report report, ReportHandler reportHandler) {
     if (!isReportHandlerSupportedInPlatform(report, reportHandler)) {
-      _logger.warning(
-        '$reportHandler in not supported for '
-        '${describeEnum(report.platformType)} platform',
-      );
+      _logger.warning('$reportHandler in not supported for '
+          '${report.platformType.name} platform');
       return;
     }
 

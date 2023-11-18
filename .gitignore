@@ -35,6 +35,7 @@ pubspec_overrides.yaml
 .pub-cache/
 .pub/
 /build/
+local.properties
 
 # Symbolication related
 app.*.symbols
