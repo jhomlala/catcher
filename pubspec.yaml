@@ -35,7 +35,7 @@ dependencies:
   fluttertoast: ^8.0.8
   logging: ^1.0.2
   mailer: ^6.0.0
-  package_info_plus: ^4.0.0
+  package_info_plus: '>=4.0.0 <6.0.0'
   sentry: ^7.2.0
   universal_io: ^2.0.4
 
