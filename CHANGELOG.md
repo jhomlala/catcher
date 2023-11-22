@@ -1,3 +1,7 @@
+## 1.0.5
+* Allow `package_info_plus` versions `5.x`
+* Update to Flutter `3.16`
+
 ## 1.0.4
 * Cleanup in many places (also makes a few things more robust)
 * Fix `null` path for screenshot manager ([#12](https://github.com/ThexXTURBOXx/catcher_2/issues/12))
