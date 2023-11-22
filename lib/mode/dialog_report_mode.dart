@@ -34,6 +34,7 @@ class DialogReportMode extends ReportMode {
   }
 
   Widget _buildCupertinoDialog(Report report, BuildContext context) =>
+      // ignore: deprecated_member_use
       WillPopScope(
         onWillPop: () async {
           super.onActionRejected(report);
@@ -56,6 +57,7 @@ class DialogReportMode extends ReportMode {
       );
 
   Widget _buildMaterialDialog(Report report, BuildContext context) =>
+      // ignore: deprecated_member_use
       WillPopScope(
         onWillPop: () async {
           super.onActionRejected(report);

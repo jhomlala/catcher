@@ -64,6 +64,7 @@ class PageWidget extends StatefulWidget {
 
 class PageWidgetState extends State<PageWidget> {
   @override
+  // ignore: deprecated_member_use
   Widget build(BuildContext context) => WillPopScope(
         onWillPop: () async {
           widget.pageReportMode.onActionRejected(widget.report);
