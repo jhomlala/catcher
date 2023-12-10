@@ -1,3 +1,8 @@
+## 1.0.6
+* Add Arabic translation ([#265](https://github.com/jhomlala/catcher/pull/265))
+* Improve Russian translation ([#256](https://github.com/jhomlala/catcher/pull/256))
+* Merge upstream `catcher` changes (only smaller things)
+
 ## 1.0.5
 * Allow `package_info_plus` versions `5.x`
 * Update to Flutter `3.16`
