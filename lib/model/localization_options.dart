@@ -25,6 +25,30 @@ class LocalizationOptions {
   factory LocalizationOptions.buildDefaultEnglishOptions() =>
       LocalizationOptions('en');
 
+  factory LocalizationOptions.buildDefaultArabicOptions() =>
+      LocalizationOptions(
+        'ar',
+        notificationReportModeTitle: 'حدث خطأ في التطبيق',
+        notificationReportModeContent:
+            'انقر هنا لإرسال تقرير الخطأ إلى فريق الدعم.',
+        dialogReportModeTitle: 'حدث خطأ',
+        dialogReportModeDescription: 'حدث خطأ غير متوقع في التطبيق.'
+            ' تقرير الخطأ جاهز للإرسال إلى فريق الدعم.'
+            ' الرجاء النقر فوق "قبول" لإرسال تقرير الخطأ'
+            ' أو "إلغاء" لرفض.',
+        dialogReportModeAccept: 'قبول',
+        dialogReportModeCancel: 'إلغاء',
+        pageReportModeTitle: 'حدث خطأ',
+        pageReportModeDescription: 'حدث خطأ غير متوقع في التطبيق.'
+            ' تقرير الخطأ جاهز للإرسال إلى فريق الدعم.'
+            ' الرجاء النقر فوق "قبول" لإرسال تقرير الخطأ'
+            ' أو "إلغاء" للرفض.',
+        pageReportModeAccept: 'قبول',
+        pageReportModeCancel: 'إلغاء',
+        toastHandlerDescription: 'حدث خطأ:',
+        snackbarHandlerDescription: 'حدث خطأ:',
+      );
+
   factory LocalizationOptions.buildDefaultChineseOptions() =>
       LocalizationOptions(
         'zh',
@@ -318,6 +342,7 @@ class LocalizationOptions {
         toastHandlerDescription: 'Es ist ein Fehler aufgetreten:',
         snackbarHandlerDescription: 'Es ist ein Fehler aufgetreten:',
       );
+
   final String languageCode;
   final String notificationReportModeTitle;
   final String notificationReportModeContent;

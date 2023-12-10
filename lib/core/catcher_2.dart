@@ -422,8 +422,8 @@ class Catcher2 implements ReportModeAction {
     String language,
   ) {
     switch (language.toLowerCase()) {
-      case 'en':
-        return LocalizationOptions.buildDefaultEnglishOptions();
+      case 'ar':
+        return LocalizationOptions.buildDefaultArabicOptions();
       case 'zh':
         return LocalizationOptions.buildDefaultChineseOptions();
       case 'hi':
@@ -448,7 +448,7 @@ class Catcher2 implements ReportModeAction {
         return LocalizationOptions.buildDefaultDutchOptions();
       case 'de':
         return LocalizationOptions.buildDefaultGermanOptions();
-      default:
+      default: // Also covers 'en'
         return LocalizationOptions.buildDefaultEnglishOptions();
     }
   }
