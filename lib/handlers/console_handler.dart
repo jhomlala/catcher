@@ -19,32 +19,32 @@ class ConsoleHandler extends ReportHandler {
   final bool handleWhenRejected;
 
   @override
-  Future<bool> handle(Report error, BuildContext? context) {
+  Future<bool> handle(Report report, BuildContext? context) {
     logger
       ..info(
         '============================== '
         'CATCHER 2 LOG '
         '==============================',
       )
-      ..info('Crash occurred on ${error.dateTime}')
+      ..info('Crash occurred on ${report.dateTime}')
       ..info('');
     if (enableDeviceParameters) {
-      _printDeviceParametersFormatted(error.deviceParameters);
+      _printDeviceParametersFormatted(report.deviceParameters);
       logger.info('');
     }
     if (enableApplicationParameters) {
-      _printApplicationParametersFormatted(error.applicationParameters);
+      _printApplicationParametersFormatted(report.applicationParameters);
       logger.info('');
     }
     logger
       ..info('---------- ERROR ----------')
-      ..info('${error.error}')
+      ..info('${report.error}')
       ..info('');
     if (enableStackTrace) {
-      _printStackTraceFormatted(error.stackTrace as StackTrace?);
+      _printStackTraceFormatted(report.stackTrace as StackTrace?);
     }
     if (enableCustomParameters) {
-      _printCustomParametersFormatted(error.customParameters);
+      _printCustomParametersFormatted(report.customParameters);
     }
     logger.info(
       '======================================================================',

@@ -12,7 +12,7 @@ abstract class ReportHandler {
   LocalizationOptions? _localizationOptions;
 
   /// Method called when report has been accepted by user
-  Future<bool> handle(Report error, BuildContext? context);
+  Future<bool> handle(Report report, BuildContext? context);
 
   /// Get list of supported platforms
   List<PlatformType> getSupportedPlatforms();

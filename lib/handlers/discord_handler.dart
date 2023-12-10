@@ -31,8 +31,8 @@ class DiscordHandler extends ReportHandler {
   final FutureOr<String> Function(Report report)? customMessageBuilder;
 
   @override
-  Future<bool> handle(Report error, BuildContext? context) async {
-    if (error.platformType != PlatformType.web &&
+  Future<bool> handle(Report report, BuildContext? context) async {
+    if (report.platformType != PlatformType.web &&
         !(await Catcher2Utils.isInternetConnectionAvailable())) {
       _printLog('No internet connection available');
       return false;
@@ -40,16 +40,16 @@ class DiscordHandler extends ReportHandler {
 
     var message = '';
     if (customMessageBuilder != null) {
-      message = await customMessageBuilder!(error);
+      message = await customMessageBuilder!(report);
     } else {
-      message = _buildMessage(error);
+      message = _buildMessage(report);
     }
     final messages = _setupMessages(message);
 
     for (final value in messages) {
       final isLastMessage = messages.indexOf(value) == messages.length - 1;
       final result =
-          await _sendContent(value, isLastMessage ? error.screenshot : null);
+          await _sendContent(value, isLastMessage ? report.screenshot : null);
       if (!result) {
         return result;
       }
@@ -109,7 +109,7 @@ class DiscordHandler extends ReportHandler {
   Future<bool> _sendContent(String content, File? screenshot) async {
     try {
       _printLog('Sending request to Discord server...');
-      Response? response;
+      Response<dynamic>? response;
       if (screenshot != null) {
         final screenshotPath = screenshot.path;
         final formData = FormData.fromMap(<String, dynamic>{

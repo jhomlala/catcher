@@ -7,7 +7,6 @@ void main() {
     HttpRequestType.post,
     Uri.parse('https://jsonplaceholder.typicode.com/posts'),
     printLogs: true,
-    enableCustomParameters: false,
     enableStackTrace: false,
     enableApplicationParameters: false,
     enableDeviceParameters: false,

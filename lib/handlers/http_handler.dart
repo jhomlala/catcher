@@ -35,15 +35,15 @@ class HttpHandler extends ReportHandler {
   final bool enableCustomParameters;
 
   @override
-  Future<bool> handle(Report error, BuildContext? context) async {
-    if (error.platformType != PlatformType.web &&
+  Future<bool> handle(Report report, BuildContext? context) async {
+    if (report.platformType != PlatformType.web &&
         !(await Catcher2Utils.isInternetConnectionAvailable())) {
       _printLog('No internet connection available');
       return false;
     }
 
     if (requestType == HttpRequestType.post) {
-      return _sendPost(error);
+      return _sendPost(report);
     }
     return true;
   }
@@ -67,7 +67,7 @@ class HttpHandler extends ReportHandler {
         headers: mutableHeaders,
       );
 
-      Response? response;
+      Response<dynamic>? response;
       _printLog('Calling: $endpointUri');
       if (report.screenshot != null) {
         final screenshotPath = report.screenshot?.path ?? '';

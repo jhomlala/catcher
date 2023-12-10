@@ -41,23 +41,23 @@ class SentryHandler extends ReportHandler {
   final bool printLogs;
 
   @override
-  Future<bool> handle(Report error, BuildContext? context) async {
+  Future<bool> handle(Report report, BuildContext? context) async {
     try {
       _printLog('Logging to sentry...');
 
       final tags = <String, dynamic>{};
       if (enableApplicationParameters) {
-        tags.addAll(error.applicationParameters);
+        tags.addAll(report.applicationParameters);
       }
       if (enableDeviceParameters) {
-        tags.addAll(error.deviceParameters);
+        tags.addAll(report.deviceParameters);
       }
       if (enableCustomParameters) {
-        tags.addAll(error.customParameters);
+        tags.addAll(report.customParameters);
       }
 
-      final event = buildEvent(error, tags);
-      await sentryClient.captureEvent(event, stackTrace: error.stackTrace);
+      final event = buildEvent(report, tags);
+      await sentryClient.captureEvent(event, stackTrace: report.stackTrace);
 
       _printLog('Logged to sentry!');
       return true;

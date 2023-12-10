@@ -37,7 +37,7 @@ class SlackHandler extends ReportHandler {
   final FutureOr<String> Function(Report report)? customMessageBuilder;
 
   @override
-  Future<bool> handle(Report error, BuildContext? context) async {
+  Future<bool> handle(Report report, BuildContext? context) async {
     try {
       if (!(await Catcher2Utils.isInternetConnectionAvailable())) {
         _printLog('No internet connection available');
@@ -45,9 +45,9 @@ class SlackHandler extends ReportHandler {
       }
       var message = '';
       if (customMessageBuilder != null) {
-        message = await customMessageBuilder!(error);
+        message = await customMessageBuilder!(report);
       } else {
-        message = _buildMessage(error);
+        message = _buildMessage(report);
       }
 
       final data = {

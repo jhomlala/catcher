@@ -36,7 +36,8 @@ class EmailAutoHandler extends BaseEmailHandler {
   final bool printLogs;
 
   @override
-  Future<bool> handle(Report error, BuildContext? context) => _sendMail(error);
+  Future<bool> handle(Report report, BuildContext? context) =>
+      _sendMail(report);
 
   Future<bool> _sendMail(Report report) async {
     try {

@@ -27,12 +27,12 @@ class ToastHandler extends ReportHandler {
   final bool handleWhenRejected;
 
   @override
-  Future<bool> handle(Report error, BuildContext? context) async {
+  Future<bool> handle(Report report, BuildContext? context) async {
     if (ApplicationProfileManager.isAndroid() ||
         ApplicationProfileManager.isIos() ||
         ApplicationProfileManager.isWeb()) {
       await Fluttertoast.showToast(
-        msg: _getErrorMessage(error),
+        msg: _getErrorMessage(report),
         toastLength: _getLength(),
         gravity: _getGravity(),
         timeInSecForIosWeb: _getLengthIos(),
@@ -49,7 +49,7 @@ class ToastHandler extends ReportHandler {
             PageRouteBuilder(
               opaque: false,
               pageBuilder: (_, __, ___) => FlutterToastPage(
-                _getErrorMessage(error),
+                _getErrorMessage(report),
                 _getGravity(),
                 Duration(seconds: _getLengthIos()),
                 backgroundColor,

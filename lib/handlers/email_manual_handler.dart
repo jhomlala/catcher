@@ -21,8 +21,8 @@ class EmailManualHandler extends BaseEmailHandler {
   final bool printLogs;
 
   @override
-  Future<bool> handle(Report error, BuildContext? context) async =>
-      _sendEmail(error);
+  Future<bool> handle(Report report, BuildContext? context) async =>
+      _sendEmail(report);
 
   Future<bool> _sendEmail(Report report) async {
     try {

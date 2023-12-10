@@ -23,7 +23,7 @@ class Catcher2ScreenshotManager {
   GlobalKey get containerKey => _containerKey;
 
   /// Create screenshot and save it in file. File will be created in directory
-  /// specified in Catcher2Options.
+  /// specified in `Catcher2Options`.
   Future<File?> captureAndSave({
     double? pixelRatio,
     Duration delay = const Duration(milliseconds: 20),
@@ -56,35 +56,50 @@ class Catcher2ScreenshotManager {
 
   Future<Uint8List?> _capture({
     double? pixelRatio,
-    Duration? delay = const Duration(milliseconds: 20),
+    Duration delay = const Duration(milliseconds: 20),
   }) =>
-      Future.delayed(delay ?? const Duration(milliseconds: 20), () async {
-        final image = await _captureAsUiImage(
-          delay: Duration.zero,
-          pixelRatio: pixelRatio,
-        );
-        final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-        return byteData?.buffer.asUint8List();
+      //Delay is required. See Issue https://github.com/flutter/flutter/issues/22308
+      Future.delayed(delay, () async {
+        try {
+          final image = await captureAsUiImage(
+            delay: Duration.zero,
+            pixelRatio: pixelRatio,
+          );
+          final byteData =
+              await image?.toByteData(format: ui.ImageByteFormat.png);
+          image?.dispose();
+          return byteData?.buffer.asUint8List();
+        } catch (exception) {
+          _logger.severe('Failed to capture screenshot: $exception');
+        }
+        return null;
       });
 
-  Future<ui.Image> _captureAsUiImage({
+  Future<ui.Image?> captureAsUiImage({
     double? pixelRatio,
     Duration delay = const Duration(milliseconds: 20),
   }) =>
+      //Delay is required. See Issue https://github.com/flutter/flutter/issues/22308
       Future.delayed(delay, () async {
-        final boundary = _containerKey.currentContext?.findRenderObject()
-            as RenderRepaintBoundary?;
+        try {
+          final findRenderObject =
+              _containerKey.currentContext?.findRenderObject();
 
-        if (boundary == null) {
-          throw StateError('No boundary found');
-        }
+          if (findRenderObject == null) {
+            return null;
+          }
 
-        final context = _containerKey.currentContext;
-        var pixelRatioValue = pixelRatio;
-        if (pixelRatioValue == null && context != null) {
-          pixelRatioValue = MediaQuery.of(context).devicePixelRatio;
+          final boundary = findRenderObject as RenderRepaintBoundary;
+          final context = _containerKey.currentContext;
+          var pixelRatioValue = pixelRatio;
+          if (pixelRatioValue == null && context != null) {
+            pixelRatioValue = MediaQuery.of(context).devicePixelRatio;
+          }
+          return await boundary.toImage(pixelRatio: pixelRatioValue ?? 1);
+        } catch (exception) {
+          _logger.severe('Failed to capture screenshot: $exception');
         }
-        return boundary.toImage(pixelRatio: pixelRatio ?? 1);
+        return null;
       });
 
   /// Update screenshots directory path.

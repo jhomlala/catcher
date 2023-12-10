@@ -169,9 +169,9 @@ class Catcher2 implements ReportModeAction {
     }
   }
 
-  Future _setupErrorHooks() async {
-    FlutterError.onError = (details) {
-      _reportError(
+  Future<void> _setupErrorHooks() async {
+    FlutterError.onError = (details) async {
+      await _reportError(
         details.exception,
         details.stack,
         errorDetails: details,
@@ -254,10 +254,8 @@ class Catcher2 implements ReportModeAction {
   }
 
   /// Remove excluded parameters from device parameters.
-  void _removeExcludedParameters() {
-    _deviceParameters
-        .removeWhere((k, v) => _currentConfig.excludedParameters.contains(k));
-  }
+  void _removeExcludedParameters() =>
+      _currentConfig.excludedParameters.forEach(_deviceParameters.remove);
 
   void _loadLinuxParameters(LinuxDeviceInfo linuxDeviceInfo) {
     try {

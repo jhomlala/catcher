@@ -30,13 +30,13 @@ class FileHandler extends ReportHandler {
   bool _fileValidationResult = false;
 
   @override
-  Future<bool> handle(Report error, BuildContext? context) async {
+  Future<bool> handle(Report report, BuildContext? context) async {
     try {
       if (!_fileValidated) {
         _fileValidationResult = await _checkFile();
         _fileValidated = true;
       }
-      return await _processReport(error);
+      return await _processReport(report);
     } catch (exc, stackTrace) {
       _printLog('Exception occurred: $exc stack: $stackTrace');
       return false;
@@ -70,7 +70,7 @@ class FileHandler extends ReportHandler {
     }
   }
 
-  Future _openFile() async {
+  Future<void> _openFile() async {
     _sink = file.openWrite(mode: FileMode.append);
     _printLog('Opened file');
   }
@@ -79,7 +79,7 @@ class FileHandler extends ReportHandler {
     _sink.add(utf8.encode('$text\n'));
   }
 
-  Future _closeFile() async {
+  Future<void> _closeFile() async {
     await _sink.flush();
     await _sink.close();
     _printLog('Closed file');
