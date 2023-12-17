@@ -41,7 +41,7 @@ class ConsoleHandler extends ReportHandler {
       ..info('${report.error}')
       ..info('');
     if (enableStackTrace) {
-      _printStackTraceFormatted(report.stackTrace as StackTrace?);
+      _printStackTraceFormatted(report.stackTrace);
     }
     if (enableCustomParameters) {
       _printCustomParametersFormatted(report.customParameters);
@@ -75,9 +75,9 @@ class ConsoleHandler extends ReportHandler {
     }
   }
 
-  void _printStackTraceFormatted(StackTrace? stackTrace) {
+  void _printStackTraceFormatted(stackTrace) {
     logger.info('------- STACK TRACE -------');
-    stackTrace.toString().split('\n').forEach((entry) => logger.info(entry));
+    stackTrace?.toString().split('\n').forEach((entry) => logger.info(entry));
   }
 
   @override
