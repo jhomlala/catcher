@@ -1,3 +1,6 @@
+## 1.0.7
+* Fix stack trace in console handler (Thanks to [@MilovdZee](https://github.com/MilovdZee) in [#16](https://github.com/ThexXTURBOXx/catcher_2/pull/16))
+
 ## 1.0.6
 * Add Arabic translation ([#265](https://github.com/jhomlala/catcher/pull/265))
 * Improve Russian translation ([#256](https://github.com/jhomlala/catcher/pull/256))
