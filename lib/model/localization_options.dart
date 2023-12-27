@@ -351,6 +351,31 @@ class LocalizationOptions {
     );
   }
 
+  static LocalizationOptions buildDefaultTurkishOptions() {
+    return LocalizationOptions(
+      'tr',
+      notificationReportModeTitle: 'Bir Uygulama Hatası Meydana Geldi',
+      notificationReportModeContent:
+          'Destek ekibine hata raporu göndermek için buraya tıklayın.',
+      dialogReportModeTitle: 'Çökme',
+      dialogReportModeDescription:
+          'Uygulamada beklenmeyen bir hata meydana geldi. '
+          'Hata raporu, destek ekibine gönderilmeye hazır. '
+          "Hata raporunu göndermek için Kabul Et'e veya raporu reddetmek için İptal'e tıklayın.",
+      dialogReportModeAccept: 'Kabul Et',
+      dialogReportModeCancel: 'İptal',
+      pageReportModeTitle: 'Çökme',
+      pageReportModeDescription:
+          'Uygulamada beklenmeyen bir hata meydana geldi. Hata raporu '
+          'destek ekibine gönderilmeye hazır. Lütfen hata raporunu göndermek '
+          "için Kabul Et'e tıklayın veya raporu reddetmek için İptal'e tıklayın.",
+      pageReportModeAccept: 'Kabul Et',
+      pageReportModeCancel: 'İptal',
+      toastHandlerDescription: 'Bir hata meydana geldi:',
+      snackbarHandlerDescription: 'Bir hata meydana geldi:',
+    );
+  }
+
   ///Helper method used to copy values of current LocalizationOptions with new
   ///values passed in method.
   LocalizationOptions copyWith({

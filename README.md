@@ -391,6 +391,9 @@ LocalizationOptions.buildDefaultKoreanOptions();
 ```dart
 LocalizationOptions.buildDefaultDutchOptions();
 ```
+```dart
+LocalizationOptions.buildDefaultTurkishOptions();
+```
 
 Complete Example:
 ```dart
