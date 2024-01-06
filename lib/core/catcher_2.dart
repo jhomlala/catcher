@@ -534,7 +534,7 @@ class Catcher2 implements ReportModeAction {
     }
     if (!isReportModeSupportedInPlatform(report, reportMode)) {
       _logger.warning(
-        '$reportMode in not supported for ${report.platformType.name} platform',
+        '$reportMode is not supported for ${report.platformType.name} platform',
       );
       return;
     }
@@ -557,12 +557,8 @@ class Catcher2 implements ReportModeAction {
 
   /// Check if given report mode is enabled in current platform. Only supported
   /// handlers in given report mode can be used.
-  bool isReportModeSupportedInPlatform(Report report, ReportMode reportMode) {
-    if (reportMode.getSupportedPlatforms().isEmpty) {
-      return false;
-    }
-    return reportMode.getSupportedPlatforms().contains(report.platformType);
-  }
+  bool isReportModeSupportedInPlatform(Report report, ReportMode reportMode) =>
+      reportMode.getSupportedPlatforms().contains(report.platformType);
 
   ReportMode? _getReportModeFromExplicitExceptionReportModeMap(error) {
     final errorName = error != null ? error.toString().toLowerCase() : '';
