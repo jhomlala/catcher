@@ -24,7 +24,7 @@ dependencies:
   fluttertoast: ^8.2.3
   device_info_plus: ^9.1.0
   device_info_plus_platform_interface: ^7.0.0
-  package_info_plus: ^4.2.0
+  package_info_plus: ^5.0.1
   mailer: ^6.0.1
   dio: ^5.3.3
   flutter_mailer: ^2.0.0
