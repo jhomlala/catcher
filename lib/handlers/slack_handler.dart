@@ -12,6 +12,7 @@ class SlackHandler extends ReportHandler {
   SlackHandler(
     this.webhookUrl,
     this.channel, {
+    this.apiToken,
     this.username = 'Catcher 2',
     this.iconEmoji = ':bangbang:',
     this.printLogs = false,
@@ -25,6 +26,7 @@ class SlackHandler extends ReportHandler {
   final Dio _dio = Dio();
 
   final String webhookUrl;
+  final String? apiToken;
   final String channel;
   final String username;
   final String iconEmoji;
@@ -50,6 +52,8 @@ class SlackHandler extends ReportHandler {
         message = _buildMessage(report);
       }
 
+      final screenshot = report.screenshot;
+
       final data = {
         'text': message,
         'channel': channel,
@@ -57,11 +61,33 @@ class SlackHandler extends ReportHandler {
         'icon_emoji': iconEmoji,
       };
       _printLog('Sending request to Slack server...');
+
       final response = await _dio.post<dynamic>(webhookUrl, data: data);
       _printLog(
         'Server responded with code: ${response.statusCode} and '
-        'message: ${response.statusMessage}',
+            'message: ${response.statusMessage}',
       );
+
+      if (apiToken != null && screenshot != null) {
+        final screenshotPath = screenshot.path;
+        final formData = FormData.fromMap(<String, dynamic>{
+          'channels': channel,
+          'file': await MultipartFile.fromFile(screenshotPath),
+        });
+        final responseFile = await _dio.post<dynamic>(
+          'https://slack.com/api/files.upload',
+          data: formData,
+          options: Options(
+            contentType: Headers.multipartFormDataContentType,
+            headers: {'Authorization': 'Bearer $apiToken'},
+          ),
+        );
+        _printLog(
+          'Server responded upload file with code: ${responseFile.statusCode} and '
+              'message upload file: ${responseFile.statusMessage}',
+        );
+      }
+
       final statusCode = response.statusCode ?? 0;
       return statusCode >= 200 && statusCode < 300;
     } catch (exception) {
