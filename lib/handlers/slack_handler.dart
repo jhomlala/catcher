@@ -54,19 +54,13 @@ class SlackHandler extends ReportHandler {
 
       final screenshot = report.screenshot;
 
-      final data = {
+      final data = <String, dynamic>{
         'text': message,
         'channel': channel,
         'username': username,
         'icon_emoji': iconEmoji,
       };
       _printLog('Sending request to Slack server...');
-
-      final response = await _dio.post<dynamic>(webhookUrl, data: data);
-      _printLog(
-        'Server responded with code: ${response.statusCode} and '
-            'message: ${response.statusMessage}',
-      );
 
       if (apiToken != null && screenshot != null) {
         final screenshotPath = screenshot.path;
@@ -82,11 +76,25 @@ class SlackHandler extends ReportHandler {
             headers: {'Authorization': 'Bearer $apiToken'},
           ),
         );
+        data.addAll({
+          'attachments': [
+            {
+              'image_url': responseFile.data['file']['url_private'],
+              'text': 'Error Screenshot',
+            },
+          ],
+        });
         _printLog(
           'Server responded upload file with code: ${responseFile.statusCode} and '
-              'message upload file: ${responseFile.statusMessage}',
+          'message upload file: ${responseFile.statusMessage}',
         );
       }
+
+      final response = await _dio.post<dynamic>(webhookUrl, data: data);
+      _printLog(
+        'Server responded with code: ${response.statusCode} and '
+        'message: ${response.statusMessage}',
+      );
 
       final statusCode = response.statusCode ?? 0;
       return statusCode >= 200 && statusCode < 300;
