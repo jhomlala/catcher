@@ -448,6 +448,8 @@ class Catcher2 implements ReportModeAction {
         return LocalizationOptions.buildDefaultDutchOptions();
       case 'de':
         return LocalizationOptions.buildDefaultGermanOptions();
+      case 'tr':
+        return LocalizationOptions.buildDefaultTurkishOptions();
       default: // Also covers 'en'
         return LocalizationOptions.buildDefaultEnglishOptions();
     }
