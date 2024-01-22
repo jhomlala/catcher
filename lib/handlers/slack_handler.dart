@@ -65,6 +65,7 @@ class SlackHandler extends ReportHandler {
       if (apiToken != null && screenshot != null) {
         final screenshotPath = screenshot.path;
         final formData = FormData.fromMap(<String, dynamic>{
+          'token': apiToken,
           'channels': channel,
           'file': await MultipartFile.fromFile(screenshotPath),
         });
@@ -73,20 +74,23 @@ class SlackHandler extends ReportHandler {
           data: formData,
           options: Options(
             contentType: Headers.multipartFormDataContentType,
-            headers: {'Authorization': 'Bearer $apiToken'},
           ),
         );
-        data.addAll({
-          'attachments': [
-            {
-              'image_url': responseFile.data['file']['url_private'],
-              'text': 'Error Screenshot',
-            },
-          ],
-        });
+        if (responseFile.data != null &&
+            responseFile.data['file'] != null &&
+            responseFile.data['file']['url_private'] != null) {
+          data.addAll({
+            'attachments': [
+              {
+                'image_url': responseFile.data['file']['url_private'],
+                'text': 'Error Screenshot',
+              },
+            ],
+          });
+        }
         _printLog(
-          'Server responded upload file with code: ${responseFile.statusCode} and '
-          'message upload file: ${responseFile.statusMessage}',
+          'Server responded upload file with code: ${responseFile.statusCode} '
+          'and message upload file: ${responseFile.statusMessage}',
         );
       }
 

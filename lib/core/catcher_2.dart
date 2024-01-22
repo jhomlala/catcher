@@ -494,7 +494,11 @@ class Catcher2 implements ReportModeAction {
 
     File? screenshot;
     if (!ApplicationProfileManager.isWeb()) {
-      screenshot = await screenshotManager.captureAndSave();
+      try {
+        screenshot = await screenshotManager.captureAndSave();
+      } catch (e) {
+        _logger.warning('Failed to create screenshot file: $e');
+      }
     }
 
     final report = Report(
