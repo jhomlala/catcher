@@ -1,3 +1,7 @@
+## 1.1.0
+* Add screenshot support for Slack (Thanks to [@ramaarf](https://github.com/ramaarf) in [#18](https://github.com/ThexXTURBOXx/catcher_2/pull/18))
+* Add Turkish translation (Thanks to [@anilaydinn](https://github.com/anilaydinn) in [#266](https://github.com/jhomlala/catcher/pull/266))
+
 ## 1.0.7
 * Fix stack trace in console handler (Thanks to [@MilovdZee](https://github.com/MilovdZee) in [#16](https://github.com/ThexXTURBOXx/catcher_2/pull/16))
 
