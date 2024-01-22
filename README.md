@@ -415,6 +415,10 @@ LocalizationOptions.buildDefaultGermanOptions();
 ```dart
 LocalizationOptions.buildDefaultDutchOptions();
 ```
+* arabic
+```dart
+LocalizationOptions.buildDefaultArabicOptions();
+```
 
 Complete Example:
 ```dart
