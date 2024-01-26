@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:catcher_2/model/platform_type.dart';
 import 'package:catcher_2/model/report.dart';
 import 'package:catcher_2/model/report_handler.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry/sentry.dart';
 
@@ -57,7 +59,31 @@ class SentryHandler extends ReportHandler {
       }
 
       final event = buildEvent(report, tags);
-      await sentryClient.captureEvent(event, stackTrace: report.stackTrace);
+
+      // If we have a screenshot and we're not in web, then upload screenshot
+      // to Sentry. Screenshot isn't supported in web (not by Sentry or catcher)
+      // and the code relies on File from dart:io that does not work in web
+      // either because we do not have access to the file system in web.
+      SentryAttachment? screenshotAttachment;
+      try {
+        if (report.screenshot != null && !kIsWeb) {
+          final screenshotPath = report.screenshot!.path;
+          final file = File(screenshotPath);
+          final bytes = await file.readAsBytes();
+          screenshotAttachment = SentryAttachment.fromScreenshotData(bytes);
+          _printLog('Created screenshot attachment');
+        }
+      } catch (exception, stackTrace) {
+        _printLog('Failed to read screenshot data: $exception $stackTrace');
+      }
+
+      await sentryClient.captureEvent(
+        event,
+        stackTrace: report.stackTrace,
+        hint: screenshotAttachment != null
+            ? Hint.withScreenshot(screenshotAttachment)
+            : null,
+      );
 
       _printLog('Logged to sentry!');
       return true;
