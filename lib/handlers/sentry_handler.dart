@@ -65,11 +65,12 @@ class SentryHandler extends ReportHandler {
       // and the code relies on File from dart:io that does not work in web
       // either because we do not have access to the file system in web.
       SentryAttachment? screenshotAttachment;
+      File? screenshotFile;
       try {
         if (report.screenshot != null && !kIsWeb) {
           final screenshotPath = report.screenshot!.path;
-          final file = File(screenshotPath);
-          final bytes = await file.readAsBytes();
+          screenshotFile = File(screenshotPath);
+          final bytes = await screenshotFile.readAsBytes();
           screenshotAttachment = SentryAttachment.fromScreenshotData(bytes);
           _printLog('Created screenshot attachment');
         }
@@ -84,6 +85,12 @@ class SentryHandler extends ReportHandler {
             ? Hint.withScreenshot(screenshotAttachment)
             : null,
       );
+
+      if (screenshotFile != null) {
+        // Cleanup screenshot file after submission to save space on device.
+        await screenshotFile.delete();
+        _printLog('Screenshot file removed from device (cleanup)');
+      }
 
       _printLog('Logged to sentry!');
       return true;
