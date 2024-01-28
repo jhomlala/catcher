@@ -170,6 +170,7 @@ class Catcher2 implements ReportModeAction {
   }
 
   Future<void> _setupErrorHooks() async {
+    // FlutterError.onError catches SYNCHRONOUS errors for all platforms
     FlutterError.onError = (details) async {
       await _reportError(
         details.exception,
@@ -178,14 +179,20 @@ class Catcher2 implements ReportModeAction {
       );
       _currentConfig.onFlutterError?.call(details);
     };
-    PlatformDispatcher.instance.onError = (error, stack) {
-      _reportError(error, stack);
-      _currentConfig.onPlatformError?.call(error, stack);
-      return true;
-    };
+
+    // PlatformDispatcher.instance.onError catches ASYNCHRONOUS errors, but it
+    // does not work for web, most likely due to this issue:
+    // https://github.com/flutter/flutter/issues/100277
+    if (!kIsWeb) {
+      PlatformDispatcher.instance.onError = (error, stack) {
+        _reportError(error, stack);
+        _currentConfig.onPlatformError?.call(error, stack);
+        return true;
+      };
+    }
 
     /// Web doesn't have Isolate error listener support
-    if (!ApplicationProfileManager.isWeb()) {
+    if (!kIsWeb) {
       Isolate.current.addErrorListener(
         RawReceivePort((pair) async {
           final isolateError = pair as List<dynamic>;
@@ -197,6 +204,26 @@ class Catcher2 implements ReportModeAction {
       );
     }
 
+    if (!kIsWeb) {
+      // This isn't web, we can just run the app, no need for runZoneGuarded
+      // since async errors are caught by PlatformDispatcher.instance.onError.
+      _runApp();
+    } else {
+      // We are in a web environment so we need runZoneGuarded to catch async
+      // exceptions.
+      unawaited(
+        runZonedGuarded<Future<void>>(
+          () async => _runApp(),
+          (error, stack) {
+            _reportError(error, stack);
+            _currentConfig.onPlatformError?.call(error, stack);
+          },
+        ),
+      );
+    }
+  }
+
+  void _runApp() {
     if (rootWidget != null) {
       runApp(rootWidget!);
     } else if (runAppFunction != null) {
