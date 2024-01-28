@@ -79,17 +79,20 @@ class Catcher2 implements ReportModeAction {
 
   void _configure(GlobalKey<NavigatorState>? navigatorKey) {
     _instance = this;
-    _initWidgetsBinding();
     _configureNavigatorKey(navigatorKey);
     _setupCurrentConfig();
     _configureLogger();
     _setupReportModeActionInReportMode();
     _setupScreenshotManager();
 
+    _setupErrorHooks();
+
+    _initWidgetBindingAndRunApp();
+
+    // Loading device and application info requires that the widgets binding is
+    // initialized so we need to run it after we init WidgetsFlutterBinding.
     _loadDeviceInfo();
     _loadApplicationInfo();
-
-    _setupErrorHooks();
 
     if (_currentConfig.handlers.isEmpty) {
       _logger.warning(
@@ -203,17 +206,25 @@ class Catcher2 implements ReportModeAction {
         }).sendPort,
       );
     }
+  }
 
+  void _initWidgetBindingAndRunApp() {
     if (!kIsWeb) {
       // This isn't web, we can just run the app, no need for runZoneGuarded
       // since async errors are caught by PlatformDispatcher.instance.onError.
+      _initWidgetsBindingIfNeeded();
       _runApp();
     } else {
       // We are in a web environment so we need runZoneGuarded to catch async
       // exceptions.
       unawaited(
         runZonedGuarded<Future<void>>(
-          () async => _runApp(),
+          () async {
+            // It is important that we run init widgets binding inside the
+            // runZonedGuarded call to be able to catch the async execeptions.
+            _initWidgetsBindingIfNeeded();
+            _runApp();
+          },
           (error, stack) {
             _reportError(error, stack);
             _currentConfig.onPlatformError?.call(error, stack);
@@ -233,7 +244,7 @@ class Catcher2 implements ReportModeAction {
     }
   }
 
-  void _initWidgetsBinding() {
+  void _initWidgetsBindingIfNeeded() {
     if (ensureInitialized) {
       WidgetsFlutterBinding.ensureInitialized();
     }
