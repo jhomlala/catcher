@@ -107,7 +107,7 @@ class SentryHandler extends ReportHandler {
       applicationVersion += (applicationParameters['appName'] as String?)!;
     }
     if (applicationParameters.containsKey('version')) {
-      applicationVersion += " ${applicationParameters["version"]}";
+      applicationVersion += "@${applicationParameters["version"]}";
     }
     if (applicationVersion.isEmpty) {
       applicationVersion = '?';
