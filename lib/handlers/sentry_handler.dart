@@ -122,7 +122,7 @@ class SentryHandler extends ReportHandler {
         release: customRelease ?? _getApplicationVersion(report),
         environment: customEnvironment ??
             (report.applicationParameters['environment'] as String?),
-        message: const SentryMessage('Error handled by Catcher 2'),
+        message: SentryMessage(report.error.toString()),
         throwable: report.error,
         level: SentryLevel.error,
         culprit: '',
