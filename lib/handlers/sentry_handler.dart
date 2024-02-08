@@ -9,6 +9,8 @@ import 'package:sentry/sentry.dart';
 class SentryHandler extends ReportHandler {
   SentryHandler(
     this.sentryClient, {
+    this.serverName = 'Catcher 2',
+    this.loggerName = 'Catcher 2',
     this.userContext,
     this.enableDeviceParameters = true,
     this.enableApplicationParameters = true,
@@ -20,6 +22,8 @@ class SentryHandler extends ReportHandler {
 
   /// Sentry Client instance
   final SentryClient sentryClient;
+  final String serverName;
+  final String loggerName;
 
   /// User data
   SentryUser? userContext;
@@ -117,8 +121,8 @@ class SentryHandler extends ReportHandler {
 
   SentryEvent buildEvent(Report report, Map<String, dynamic> tags) =>
       SentryEvent(
-        logger: 'Catcher 2',
-        serverName: 'Catcher 2',
+        logger: loggerName,
+        serverName: serverName,
         release: customRelease ?? _getApplicationVersion(report),
         environment: customEnvironment ??
             (report.applicationParameters['environment'] as String?),
