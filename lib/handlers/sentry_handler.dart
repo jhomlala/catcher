@@ -108,7 +108,8 @@ class SentryHandler extends ReportHandler {
     var applicationVersion = '';
     final applicationParameters = report.applicationParameters;
     if (applicationParameters.containsKey('appName')) {
-      applicationVersion += (applicationParameters['appName'] as String?)!;
+      applicationVersion +=
+          (applicationParameters['appName'] as String?)!.toLowerCase();
     }
     if (applicationParameters.containsKey('version')) {
       applicationVersion += "@${applicationParameters["version"]}";
