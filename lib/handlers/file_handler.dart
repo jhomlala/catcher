@@ -6,9 +6,12 @@ import 'package:catcher_2/model/report.dart';
 import 'package:catcher_2/model/report_handler.dart';
 import 'package:flutter/material.dart';
 
+typedef FileSupplier = File Function();
+
 class FileHandler extends ReportHandler {
   FileHandler(
     this.file, {
+    this.fileSupplier,
     this.enableDeviceParameters = true,
     this.enableApplicationParameters = true,
     this.enableStackTrace = true,
@@ -17,7 +20,12 @@ class FileHandler extends ReportHandler {
     this.handleWhenRejected = false,
   });
 
+  /// A file that should be written to. Is overwritten by [fileSupplier].
   final File file;
+
+  /// Function that returns a file that should be written to. If this is set,
+  /// [file] has no effect.
+  final FileSupplier? fileSupplier;
   final bool enableDeviceParameters;
   final bool enableApplicationParameters;
   final bool enableStackTrace;
@@ -25,7 +33,8 @@ class FileHandler extends ReportHandler {
   final bool printLogs;
   final bool handleWhenRejected;
 
-  late IOSink _sink;
+  File? _openedFile;
+  IOSink? _sink;
   bool _fileValidated = false;
   bool _fileValidationResult = false;
 
@@ -55,12 +64,15 @@ class FileHandler extends ReportHandler {
   }
 
   Future<bool> _checkFile() async {
+    if (_openedFile == null) {
+      return false;
+    }
     try {
-      final exists = file.existsSync();
+      final exists = _openedFile!.existsSync();
       if (!exists) {
-        file.createSync();
+        _openedFile!.createSync();
       }
-      final sink = file.openWrite(mode: FileMode.append)..write('');
+      final sink = _openedFile!.openWrite(mode: FileMode.append)..write('');
       await sink.flush();
       await sink.close();
       return true;
@@ -71,17 +83,18 @@ class FileHandler extends ReportHandler {
   }
 
   Future<void> _openFile() async {
-    _sink = file.openWrite(mode: FileMode.append);
+    _openedFile = fileSupplier != null ? fileSupplier!() : file;
+    _sink = _openedFile!.openWrite(mode: FileMode.append);
     _printLog('Opened file');
   }
 
   void _writeLineToFile(String text) {
-    _sink.add(utf8.encode('$text\n'));
+    _sink?.add(utf8.encode('$text\n'));
   }
 
   Future<void> _closeFile() async {
-    await _sink.flush();
-    await _sink.close();
+    await _sink?.flush();
+    await _sink?.close();
     _printLog('Closed file');
   }
 
