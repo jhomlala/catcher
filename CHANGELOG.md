@@ -1,3 +1,7 @@
+## 1.2.1
+* Add `fileSupplier` to `FileHandler` ([#21](https://github.com/ThexXTURBOXx/catcher_2/issues/21) and [#22](https://github.com/ThexXTURBOXx/catcher_2/issues/22))
+* Allow `sentry` versions `8.x`
+
 ## 1.2.0
 * Add screenshot support for Sentry (Thanks to [@mikeesouth](https://github.com/mikeesouth) in [#20](https://github.com/ThexXTURBOXx/catcher_2/pull/20))
 
