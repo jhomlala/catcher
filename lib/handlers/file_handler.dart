@@ -6,7 +6,7 @@ import 'package:catcher_2/model/report.dart';
 import 'package:catcher_2/model/report_handler.dart';
 import 'package:flutter/material.dart';
 
-typedef FileSupplier = File Function();
+typedef FileSupplier = File Function(Report);
 
 class FileHandler extends ReportHandler {
   FileHandler(
@@ -54,7 +54,7 @@ class FileHandler extends ReportHandler {
 
   Future<bool> _processReport(Report report) async {
     if (_fileValidationResult) {
-      await _openFile();
+      await _openFile(report);
       await _writeReportToFile(report);
       await _closeFile();
       return true;
@@ -82,8 +82,8 @@ class FileHandler extends ReportHandler {
     }
   }
 
-  Future<void> _openFile() async {
-    _openedFile = fileSupplier != null ? fileSupplier!() : file;
+  Future<void> _openFile(Report report) async {
+    _openedFile = fileSupplier != null ? fileSupplier!(report) : file;
     _sink = _openedFile!.openWrite(mode: FileMode.append);
     _printLog('Opened file');
   }
