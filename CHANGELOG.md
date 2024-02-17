@@ -1,3 +1,7 @@
+## 1.2.2
+* Fix a few typos in the README (Thanks to [@mrclauss](https://github.com/mrclauss) in [#23](https://github.com/ThexXTURBOXx/catcher_2/pull/23))
+* Fix lint for Flutter `3.19.x`
+
 ## 1.2.1
 * Add `fileSupplier` to `FileHandler` ([#21](https://github.com/ThexXTURBOXx/catcher_2/issues/21) and [#22](https://github.com/ThexXTURBOXx/catcher_2/issues/22))
 * Allow `sentry` versions `8.x`
