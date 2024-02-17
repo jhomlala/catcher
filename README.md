@@ -13,9 +13,9 @@
 [![awesome flutter](https://img.shields.io/badge/Awesome-Flutter-blue.svg?longCache=true&style=flat-square)](https://github.com/Solido/awesome-flutter)
 
 
-Catcher 2 is Flutter plugin which automatically catches errors/exceptions and handle them. Catcher 2 offers multiple ways to handle errors.
-Catcher 2 is heavily inspired from ACRA: https://github.com/ACRA/acra.
-Catcher 2 supports Android, iOS, Web, Linux, Windows and MacOS platforms.
+Catcher 2 is a Flutter plugin which automatically catches errors/exceptions and offers multiple ways to handle them.<br/>
+It is heavily inspired from ACRA: https://github.com/ACRA/acra.<br/>
+It supports Android, iOS, Web, Linux, Windows and MacOS platforms.
 
 
 ## Install
@@ -23,7 +23,7 @@ Catcher 2 supports Android, iOS, Web, Linux, Windows and MacOS platforms.
 Add this line to your **pubspec.yaml**:
 ```yaml
 dependencies:
-  catcher_2: ^1.2.1
+  catcher_2: ^1.0.0
 ```
 
 Then run this command:
