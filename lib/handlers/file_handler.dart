@@ -40,6 +40,7 @@ class FileHandler extends ReportHandler {
 
   @override
   Future<bool> handle(Report report, BuildContext? context) async {
+    _openedFile = fileSupplier != null ? fileSupplier!(report) : file;
     try {
       if (!_fileValidated) {
         _fileValidationResult = await _checkFile();
@@ -83,7 +84,6 @@ class FileHandler extends ReportHandler {
   }
 
   Future<void> _openFile(Report report) async {
-    _openedFile = fileSupplier != null ? fileSupplier!(report) : file;
     _sink = _openedFile!.openWrite(mode: FileMode.append);
     _printLog('Opened file');
   }
