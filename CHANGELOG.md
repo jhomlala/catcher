@@ -1,3 +1,6 @@
+## 1.2.3
+* Fix `FileHandler` and optimize it
+
 ## 1.2.2
 * Fix a few typos in the README (Thanks to [@mrclauss](https://github.com/mrclauss) in [#23](https://github.com/ThexXTURBOXx/catcher_2/pull/23))
 * Fix lint for Flutter `3.19.x`
