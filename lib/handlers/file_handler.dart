@@ -55,7 +55,7 @@ class FileHandler extends ReportHandler {
 
   Future<bool> _processReport(Report report) async {
     if (_fileValidationResult) {
-      await _openFile(report);
+      await _openFile();
       await _writeReportToFile(report);
       await _closeFile();
       return true;
@@ -83,7 +83,11 @@ class FileHandler extends ReportHandler {
     }
   }
 
-  Future<void> _openFile(Report report) async {
+  Future<void> _openFile() async {
+    if (_openedFile == null) {
+      _printLog('Could not open file');
+      return;
+    }
     _sink = _openedFile!.openWrite(mode: FileMode.append);
     _printLog('Opened file');
   }
