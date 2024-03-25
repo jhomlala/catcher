@@ -1,8 +1,8 @@
-import 'package:catcher/catcher.dart';
+import 'package:catcher_2/catcher_2.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  final debugOptions = CatcherOptions(DialogReportMode(), [
+  final debugOptions = Catcher2Options(DialogReportMode(), [
     SnackbarHandler(
       const Duration(seconds: 5),
       backgroundColor: Colors.green,
@@ -14,6 +14,7 @@ void main() {
       action: SnackBarAction(
         label: 'Button',
         onPressed: () {
+          // ignore: avoid_print
           print('Click!');
         },
       ),
@@ -23,7 +24,7 @@ void main() {
       ),
     ),
   ]);
-  final releaseOptions = CatcherOptions(DialogReportMode(), [
+  final releaseOptions = Catcher2Options(DialogReportMode(), [
     SnackbarHandler(
       const Duration(seconds: 5),
       backgroundColor: Colors.green,
@@ -36,7 +37,7 @@ void main() {
     ),
   ]);
 
-  Catcher(
+  Catcher2(
     runAppFunction: () {
       runApp(const MyApp());
     },
@@ -46,12 +47,10 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
-  State<StatefulWidget> createState() {
-    return _MyAppState();
-  }
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -61,31 +60,27 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: Catcher.navigatorKey,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Snackbar handler example'),
+  Widget build(BuildContext context) => MaterialApp(
+        navigatorKey: Catcher2.navigatorKey,
+        home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Snackbar handler example'),
+          ),
+          body: const ChildWidget(),
         ),
-        body: const ChildWidget(),
-      ),
-    );
-  }
+      );
 }
 
 class ChildWidget extends StatelessWidget {
-  const ChildWidget({Key? key}) : super(key: key);
+  const ChildWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: generateError,
-      child: const Text('Generate error'),
-    );
-  }
+  Widget build(BuildContext context) => TextButton(
+        onPressed: generateError,
+        child: const Text('Generate error'),
+      );
 
   Future<void> generateError() async {
-    Catcher.sendTestException();
+    Catcher2.sendTestException();
   }
 }

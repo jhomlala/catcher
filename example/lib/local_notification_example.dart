@@ -1,18 +1,18 @@
-import 'package:catcher/catcher.dart';
-import 'package:catcher/model/platform_type.dart';
+import 'package:catcher_2/catcher_2.dart';
+import 'package:catcher_2/model/platform_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 void main() {
-  final debugOptions = CatcherOptions(NotificationReportMode(), [
+  final debugOptions = Catcher2Options(NotificationReportMode(), [
     EmailManualHandler(['recipient@email.com']),
     ConsoleHandler(),
   ]);
-  final releaseOptions = CatcherOptions(PageReportMode(), [
+  final releaseOptions = Catcher2Options(PageReportMode(), [
     EmailManualHandler(['recipient@email.com']),
   ]);
 
-  Catcher(
+  Catcher2(
     rootWidget: const MyApp(),
     debugConfig: debugOptions,
     releaseConfig: releaseOptions,
@@ -20,12 +20,10 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
-  State<StatefulWidget> createState() {
-    return _MyAppState();
-  }
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -35,36 +33,38 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: Catcher.navigatorKey,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
+  Widget build(BuildContext context) => MaterialApp(
+        navigatorKey: Catcher2.navigatorKey,
+        home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Plugin example app'),
+          ),
+          body: const ChildWidget(),
         ),
-        body: const ChildWidget(),
-      ),
-    );
-  }
+      );
 }
 
 class ChildWidget extends StatelessWidget {
-  const ChildWidget({Key? key}) : super(key: key);
+  const ChildWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: generateError,
-      child: const Text('Generate error'),
-    );
-  }
+  Widget build(BuildContext context) => TextButton(
+        onPressed: generateError,
+        child: const Text('Generate error'),
+      );
 
   Future<void> generateError() async {
-    Catcher.sendTestException();
+    Catcher2.sendTestException();
   }
 }
 
 class NotificationReportMode extends ReportMode {
+  NotificationReportMode({
+    this.channelId = 'Catcher 2',
+    this.channelName = 'Catcher 2',
+    this.channelDescription = 'Catcher 2 default channel',
+    this.icon = '@mipmap/ic_launcher',
+  });
   late FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin;
   late Report _lastReport;
 
@@ -73,17 +73,10 @@ class NotificationReportMode extends ReportMode {
   final String channelDescription;
   final String icon;
 
-  NotificationReportMode({
-    this.channelId = 'Catcher',
-    this.channelName = 'Catcher',
-    this.channelDescription = 'Catcher default channel',
-    this.icon = '@mipmap/ic_launcher',
-  });
-
   @override
-  void setReportModeAction(ReportModeAction reportModeAction) {
+  set reportModeAction(ReportModeAction reportModeAction) {
     _initializeNotificationsPlugin();
-    return super.setReportModeAction(reportModeAction);
+    super.reportModeAction = reportModeAction;
   }
 
   /// We need to init notifications plugin after constructor. If we init
@@ -98,7 +91,6 @@ class NotificationReportMode extends ReportMode {
       android: initializationSettingsAndroid,
       iOS: initializationSettingsIOS,
     );
-
     _flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
       onDidReceiveNotificationResponse: onSelectedNotification,
@@ -111,7 +103,7 @@ class NotificationReportMode extends ReportMode {
     _sendNotification();
   }
 
-  Future<void> onSelectedNotification(NotificationResponse response) {
+  Future onSelectedNotification(NotificationResponse details) {
     onActionConfirmed(_lastReport);
     return Future<int>.value(0);
   }
@@ -121,6 +113,8 @@ class NotificationReportMode extends ReportMode {
       channelId,
       channelName,
       channelDescription: channelDescription,
+      importance: Importance.defaultImportance,
+      priority: Priority.defaultPriority,
     );
     const iOSPlatformChannelSpecifics = DarwinNotificationDetails();
     final platformChannelSpecifics = NotificationDetails(

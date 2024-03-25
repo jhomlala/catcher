@@ -1,14 +1,24 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:catcher/model/platform_type.dart';
-import 'package:catcher/model/report.dart';
-import 'package:catcher/model/report_handler.dart';
-import 'package:catcher/utils/catcher_utils.dart';
+import 'package:catcher_2/model/platform_type.dart';
+import 'package:catcher_2/model/report.dart';
+import 'package:catcher_2/model/report_handler.dart';
+import 'package:catcher_2/utils/catcher_2_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class DiscordHandler extends ReportHandler {
+  DiscordHandler(
+    this.webhookUrl, {
+    this.printLogs = false,
+    this.enableDeviceParameters = false,
+    this.enableApplicationParameters = false,
+    this.enableStackTrace = false,
+    this.enableCustomParameters = false,
+    this.customMessageBuilder,
+  });
+
   final Dio _dio = Dio();
 
   final String webhookUrl;
@@ -20,23 +30,12 @@ class DiscordHandler extends ReportHandler {
   final bool enableCustomParameters;
   final FutureOr<String> Function(Report report)? customMessageBuilder;
 
-  DiscordHandler(
-    this.webhookUrl, {
-    this.printLogs = false,
-    this.enableDeviceParameters = false,
-    this.enableApplicationParameters = false,
-    this.enableStackTrace = false,
-    this.enableCustomParameters = false,
-    this.customMessageBuilder,
-  });
-
   @override
   Future<bool> handle(Report report, BuildContext? context) async {
-    if (report.platformType != PlatformType.web) {
-      if (!(await CatcherUtils.isInternetConnectionAvailable())) {
-        _printLog('No internet connection available');
-        return false;
-      }
+    if (report.platformType != PlatformType.web &&
+        !(await Catcher2Utils.isInternetConnectionAvailable())) {
+      _printLog('No internet connection available');
+      return false;
     }
 
     var message = '';
@@ -126,8 +125,8 @@ class DiscordHandler extends ReportHandler {
       }
 
       _printLog(
-        'Server responded with code: ${response.statusCode} and message:'
-        ' ${response.statusMessage}',
+        'Server responded with code: ${response.statusCode} and message: '
+        '${response.statusMessage}',
       );
       final statusCode = response.statusCode ?? 0;
       return statusCode >= 200 && statusCode < 300;

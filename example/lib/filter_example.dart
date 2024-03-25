@@ -1,14 +1,14 @@
-import 'package:catcher/catcher.dart';
+import 'package:catcher_2/catcher_2.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  final debugOptions = CatcherOptions(
+  final debugOptions = Catcher2Options(
     DialogReportMode(),
     [
       ConsoleHandler(),
       ToastHandler(),
     ],
-    filterFunction: (Report report) {
+    filterFunction: (report) {
       if (report.error is ArgumentError) {
         return false;
       } else {
@@ -16,11 +16,11 @@ void main() {
       }
     },
   );
-  final releaseOptions = CatcherOptions(PageReportMode(), [
+  final releaseOptions = Catcher2Options(PageReportMode(), [
     EmailManualHandler(['recipient@email.com']),
   ]);
 
-  Catcher(
+  Catcher2(
     runAppFunction: () {
       runApp(const MyApp());
     },
@@ -30,12 +30,10 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
-  State<StatefulWidget> createState() {
-    return _MyAppState();
-  }
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -45,28 +43,26 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: Catcher.navigatorKey,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Filter example'),
+  Widget build(BuildContext context) => MaterialApp(
+        navigatorKey: Catcher2.navigatorKey,
+        home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Filter example'),
+          ),
+          body: Column(
+            children: [
+              TextButton(
+                onPressed: generateNormalError,
+                child: const Text('Generate normal error'),
+              ),
+              TextButton(
+                onPressed: generateFilteredError,
+                child: const Text('Generate filtered error'),
+              ),
+            ],
+          ),
         ),
-        body: Column(
-          children: [
-            TextButton(
-              onPressed: generateNormalError,
-              child: const Text('Generate normal error'),
-            ),
-            TextButton(
-              onPressed: generateFilteredError,
-              child: const Text('Generate filtered error'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+      );
 
   Future<void> generateNormalError() async {
     throw StateError('Example error');
