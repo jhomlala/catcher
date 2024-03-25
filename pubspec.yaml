@@ -27,7 +27,7 @@ environment:
   flutter: ">=3.0.0"
 
 dependencies:
-  device_info_plus: ^9.0.0
+  device_info_plus: '>=9.0.0 <11.0.0'
   device_info_plus_platform_interface: ^7.0.0
   dio: ^5.0.1
   flutter:
