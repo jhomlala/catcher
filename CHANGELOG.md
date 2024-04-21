@@ -1,3 +1,6 @@
+## 1.2.5
+* Allow `package_info_plus` versions `7.x`
+
 ## 1.2.4
 * Allow `package_info_plus` versions `6.x` (Thanks to [@bartektartanus](https://github.com/bartektartanus) in [#28](https://github.com/ThexXTURBOXx/catcher_2/pull/28))
 * Allow `device_info_plus` versions `10.x`
