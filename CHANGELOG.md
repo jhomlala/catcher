@@ -1,5 +1,6 @@
 ## 1.2.6
 * Allow `package_info_plus` versions `8.x`
+* Remove direct dependency on `device_info_plus_platform_interface` (why was this there anyway?)
 
 ## 1.2.5
 * Allow `package_info_plus` versions `7.x`
