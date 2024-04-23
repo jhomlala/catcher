@@ -1,3 +1,6 @@
+## 1.2.6
+* Allow `package_info_plus` versions `8.x`
+
 ## 1.2.5
 * Allow `package_info_plus` versions `7.x`
 
