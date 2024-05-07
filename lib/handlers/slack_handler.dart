@@ -166,7 +166,6 @@ class SlackHandler extends ReportHandler {
           responseFileComplete.data['ok'] != true) {
         return {};
       }
-      _printLog(responseFileComplete.data['files'][0]['url_private']);
 
       return {
         'attachments': [
