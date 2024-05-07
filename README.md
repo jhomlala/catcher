@@ -827,7 +827,9 @@ main() {
 
 All parameters list:
 * webhookUrl (required) - url of your webhook
-* channel (required) - your channel name (i.e. #catcher2)
+* channel (required) - your channel name (e.g. #catcher2)
+* apiToken (optional) - your API token, only needed for screenshots (e.g. xxxx-xxxxxxxxx-xxxx)
+* channelId (optional) - your screenshot channel ID, only needed for screenshots (e.g. C0NF841BK)
 * username (optional) - name of the integration bot
 * iconEmoji (optional) - avatar of the integration bot
 * enableDeviceParameters (optional) - please look in console handler description
