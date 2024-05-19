@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:isolate';
 
 import 'package:catcher_2/core/application_profile_manager.dart';
@@ -14,6 +13,7 @@ import 'package:catcher_2/model/report_handler.dart';
 import 'package:catcher_2/model/report_mode.dart';
 import 'package:catcher_2/utils/catcher_2_error_widget.dart';
 import 'package:catcher_2/utils/catcher_2_logger.dart';
+import 'package:cross_file/cross_file.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -460,7 +460,9 @@ class Catcher2 implements ReportModeAction {
     screenshotManager = Catcher2ScreenshotManager(_logger);
     final screenshotsPath = _currentConfig.screenshotsPath;
     if (!ApplicationProfileManager.isWeb() && screenshotsPath.isEmpty) {
-      _logger.warning("Screenshots path is empty. Screenshots won't work.");
+      _logger.warning(
+        "Screenshots path is empty. Screenshots won't be saved locally.",
+      );
     }
     screenshotManager.path = screenshotsPath;
   }
@@ -494,13 +496,11 @@ class Catcher2 implements ReportModeAction {
 
     _cleanPastReportsOccurrences();
 
-    File? screenshot;
-    if (!ApplicationProfileManager.isWeb()) {
-      try {
-        screenshot = await screenshotManager.captureAndSave();
-      } catch (e) {
-        _logger.warning('Failed to create screenshot file: $e');
-      }
+    XFile? screenshot;
+    try {
+      screenshot = await screenshotManager.captureAndSave();
+    } catch (e) {
+      _logger.warning('Failed to create screenshot file: $e');
     }
 
     final report = Report(

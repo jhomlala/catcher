@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:catcher_2/model/platform_type.dart';
 import 'package:catcher_2/model/report.dart';
@@ -66,18 +67,21 @@ class SlackHandler extends ReportHandler {
 
       if (screenshot != null) {
         data.addAll(
-          await _tryUploadScreenshot(screenshot: XFile(screenshot.path)),
+          await _tryUploadScreenshot(screenshot: screenshot),
         );
       }
 
-      final response = await _dio.post<dynamic>(webhookUrl, data: data);
+      final response = await _dio.post<dynamic>(
+        webhookUrl,
+        data: json.encode(data),
+        options: Options(contentType: Headers.formUrlEncodedContentType),
+      );
       _printLog(
         'Server responded with code: ${response.statusCode} and '
         'message: ${response.statusMessage}',
       );
 
-      final statusCode = response.statusCode ?? 0;
-      return statusCode >= 200 && statusCode < 300;
+      return response.ok;
     } catch (exception) {
       _printLog('Failed to send slack message: $exception');
       return false;
@@ -96,8 +100,7 @@ class SlackHandler extends ReportHandler {
     }
 
     try {
-      final screenshotPath = screenshot.path;
-      final name = 'catcher_2_${DateTime.now().microsecondsSinceEpoch}.png';
+      final name = screenshot.name;
 
       final formData = FormData.fromMap(<String, dynamic>{
         'token': apiToken,
@@ -125,16 +128,21 @@ class SlackHandler extends ReportHandler {
       }
 
       final formDataPost = FormData.fromMap(<String, dynamic>{
-        'file': await MultipartFile.fromFile(screenshotPath),
+        'token': apiToken,
+        'file': MultipartFile.fromBytes(
+          await screenshot.readAsBytes(),
+          filename: screenshot.name,
+        ),
       });
       final responseFilePost = await _dio.post<dynamic>(
         responseFile.data['upload_url'],
         data: formDataPost,
         options: Options(
           contentType: Headers.multipartFormDataContentType,
+          validateStatus: (e) => true,
         ),
       );
-      if (responseFilePost.statusCode != 200) {
+      if (!responseFilePost.ok) {
         _printLog(
           'Server responded to upload file post with code: '
           '${responseFilePost.statusCode} '
@@ -171,7 +179,8 @@ class SlackHandler extends ReportHandler {
         'attachments': [
           {
             'image_url': responseFileComplete.data['files'][0]['url_private'],
-            'text': responseFileComplete.data['files'][0]['permalink'],
+            'text': 'Screenshot will soon be available here: '
+                '${responseFileComplete.data['files'][0]['permalink']}',
           },
         ],
       };
