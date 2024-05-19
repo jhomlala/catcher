@@ -195,8 +195,18 @@ class Catcher2 implements ReportModeAction {
           );
         }).sendPort,
       );
+      _runApp();
+    } else {
+      // Due to https://github.com/flutter/flutter/issues/100277
+      // this is still needed... As soon as proper error catching support
+      // for Web is implemented, this branch should be removed and just
+      // _runApp should be called, the same as in the other branch
+      // without the Isolate[...] stuff.
+      runZonedGuarded(_runApp, _reportError);
     }
+  }
 
+  void _runApp() {
     if (rootWidget != null) {
       runApp(rootWidget!);
     } else if (runAppFunction != null) {
