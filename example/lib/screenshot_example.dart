@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:catcher/catcher.dart';
+import 'package:catcher_2/catcher_2.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
 void main() async {
-  final catcher = Catcher(rootWidget: const MyApp(), ensureInitialized: true);
+  final catcher2 = Catcher2(rootWidget: const MyApp(), ensureInitialized: true);
   Directory? externalDir;
   if (Platform.isAndroid) {
     externalDir = await getExternalStorageDirectory();
@@ -18,11 +18,16 @@ void main() async {
     path = externalDir.path;
   }
 
-  final debugOptions = CatcherOptions(
+  final debugOptions = Catcher2Options(
     DialogReportMode(),
     [
       EmailManualHandler(
         ['email1@email.com', 'email2@email.com'],
+        enableDeviceParameters: true,
+        enableStackTrace: true,
+        enableCustomParameters: true,
+        enableApplicationParameters: true,
+        sendHtml: true,
         emailTitle: 'Sample Title',
         emailHeader: 'Sample Header',
         printLogs: true,
@@ -35,16 +40,14 @@ void main() async {
     screenshotsPath: path,
   );
 
-  catcher.updateConfig(debugConfig: debugOptions);
+  catcher2.updateConfig(debugConfig: debugOptions);
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
-  State<StatefulWidget> createState() {
-    return _MyAppState();
-  }
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -54,34 +57,30 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: Catcher.navigatorKey,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
+  Widget build(BuildContext context) => MaterialApp(
+        navigatorKey: Catcher2.navigatorKey,
+        home: Catcher2Screenshot(
+          catcher2: Catcher2.getInstance(),
+          child: Scaffold(
+            appBar: AppBar(
+              title: const Text('Plugin example app'),
+            ),
+            body: const ChildWidget(),
+          ),
         ),
-        body: CatcherScreenshot(
-          catcher: Catcher.getInstance(),
-          child: const ChildWidget(),
-        ),
-      ),
-    );
-  }
+      );
 }
 
 class ChildWidget extends StatelessWidget {
-  const ChildWidget({Key? key}) : super(key: key);
+  const ChildWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: generateError,
-      child: const Text('Generate error'),
-    );
-  }
+  Widget build(BuildContext context) => TextButton(
+        onPressed: generateError,
+        child: const Text('Generate error'),
+      );
 
   Future<void> generateError() async {
-    Catcher.sendTestException();
+    Catcher2.sendTestException();
   }
 }

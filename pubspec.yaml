@@ -1,55 +1,55 @@
-name: catcher
+name: catcher_2
 description: Plugin for error catching which provides multiple handlers for dealing with errors when they are not caught by the developer.
-version: 0.8.0
-#author: Jakub Homlala <jhomlala@gmail.com>
-homepage: https://github.com/jhomlala/catcher
-repository: https://github.com/jhomlala/catcher
-issue_tracker: https://github.com/jhomlala/catcher/issues
+version: 1.3.0
+homepage: https://github.com/ThexXTURBOXx/catcher_2
+repository: https://github.com/ThexXTURBOXx/catcher_2
+issue_tracker: https://github.com/ThexXTURBOXx/catcher_2/issues
+
+funding:
+  - https://github.com/sponsors/ThexXTURBOXx
+
+screenshots:
+  - description: 'The catcher_2 logo'
+    path: screenshots/logo.png
+  - description: 'catcher_2 in action with notifications'
+    path: screenshots/1.png
+  - description: 'catcher_2 in action with emails'
+    path: screenshots/3.png
+  - description: 'catcher_2 in action with dialogs'
+    path: screenshots/6.png
+
 topics:
-  - error
+  - analysis
   - errors
-  - logs
-  - devtools
+  - flutter
+  - logging
   - tool
 
 environment:
-  sdk: '>=2.19.6 <4.0.0'
+  sdk: '>=3.0.0 <4.0.0'
   flutter: ">=3.0.0"
 
 dependencies:
+  cross_file: ^0.3.0
+  device_info_plus: '>=9.0.0 <11.0.0'
+  dio: ^5.0.1
   flutter:
     sdk: flutter
-  flutter_web_plugins:
-    sdk: flutter
-  fluttertoast: ^8.2.3
-  device_info_plus: ^9.1.0
-  device_info_plus_platform_interface: ^7.0.0
-  package_info_plus: ^4.2.0
-  mailer: ^6.0.1
-  dio: ^5.3.3
   flutter_mailer: ^2.0.0
+  fluttertoast: ^8.0.8
   logging: ^1.0.2
-  sentry: ^7.12.0
+  mailer: ^6.0.0
+  package_info_plus: '>=4.0.0 <9.0.0'
+  sentry: '>=7.2.0 <9.0.0'
   universal_io: ^2.0.4
-  very_good_analysis: ^5.1.0
 
 dev_dependencies:
-  lint: ^2.1.2
+  flutter_lints: ^4.0.0
 
-flutter:
-  plugin:
-    platforms:
-      android:
-        package: com.jhomlala.catcher
-        pluginClass: CatcherPlugin
-      ios:
-        pluginClass: CatcherPlugin
-      web:
-        pluginClass: CatcherWebPlugin
-        fileName: catcher_web_plugin.dart
-      macos:
-        pluginClass: CatcherPlugin
-      windows:
-        pluginClass: CatcherPlugin
-      linux:
-        pluginClass: CatcherPlugin
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+  web:
+  windows:

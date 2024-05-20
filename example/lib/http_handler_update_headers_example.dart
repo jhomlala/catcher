@@ -1,4 +1,4 @@
-import 'package:catcher/catcher.dart';
+import 'package:catcher_2/catcher_2.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,12 +14,12 @@ void main() {
 
   ///Init catcher
   final debugOptions =
-      CatcherOptions(DialogReportMode(), [httpHandler, ConsoleHandler()]);
-  final releaseOptions = CatcherOptions(PageReportMode(), [
+      Catcher2Options(DialogReportMode(), [httpHandler, ConsoleHandler()]);
+  final releaseOptions = Catcher2Options(PageReportMode(), [
     EmailManualHandler(['recipient@email.com']),
   ]);
 
-  Catcher(
+  Catcher2(
     rootWidget: const MyApp(),
     debugConfig: debugOptions,
     releaseConfig: releaseOptions,
@@ -32,12 +32,10 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
-  State<StatefulWidget> createState() {
-    return _MyAppState();
-  }
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -47,31 +45,27 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: Catcher.navigatorKey,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
+  Widget build(BuildContext context) => MaterialApp(
+        navigatorKey: Catcher2.navigatorKey,
+        home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Plugin example app'),
+          ),
+          body: const ChildWidget(),
         ),
-        body: const ChildWidget(),
-      ),
-    );
-  }
+      );
 }
 
 class ChildWidget extends StatelessWidget {
-  const ChildWidget({Key? key}) : super(key: key);
+  const ChildWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: generateError,
-      child: const Text('Generate error'),
-    );
-  }
+  Widget build(BuildContext context) => TextButton(
+        onPressed: generateError,
+        child: const Text('Generate error'),
+      );
 
   Future<void> generateError() async {
-    Catcher.sendTestException();
+    Catcher2.sendTestException();
   }
 }

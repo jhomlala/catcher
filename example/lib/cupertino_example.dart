@@ -1,9 +1,9 @@
-import 'package:catcher/catcher.dart';
+import 'package:catcher_2/catcher_2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  final debugOptions = CatcherOptions(DialogReportMode(), [
+  final debugOptions = Catcher2Options(DialogReportMode(), [
     //EmailManualHandler(["recipient@email.com"]),
     HttpHandler(
       HttpRequestType.post,
@@ -12,11 +12,11 @@ void main() {
     ),
     ConsoleHandler(),
   ]);
-  final releaseOptions = CatcherOptions(PageReportMode(), [
+  final releaseOptions = Catcher2Options(PageReportMode(), [
     EmailManualHandler(['recipient@email.com']),
   ]);
 
-  Catcher(
+  Catcher2(
     rootWidget: const MyApp(),
     debugConfig: debugOptions,
     releaseConfig: releaseOptions,
@@ -24,12 +24,10 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
-  State<StatefulWidget> createState() {
-    return _MyAppState();
-  }
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -39,36 +37,32 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return CupertinoApp(
-      navigatorKey: Catcher.navigatorKey,
-      home: const CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(
-          middle: Text('Cupertino example'),
+  Widget build(BuildContext context) => CupertinoApp(
+        navigatorKey: Catcher2.navigatorKey,
+        home: const CupertinoPageScaffold(
+          navigationBar: CupertinoNavigationBar(
+            middle: Text('Cupertino example'),
+          ),
+          child: SafeArea(
+            child: ChildWidget(),
+          ),
         ),
-        child: SafeArea(
-          child: ChildWidget(),
-        ),
-      ),
-    );
-  }
+      );
 }
 
 class ChildWidget extends StatelessWidget {
-  const ChildWidget({Key? key}) : super(key: key);
+  const ChildWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return ColoredBox(
-      color: Colors.orange,
-      child: TextButton(
-        onPressed: generateError,
-        child: const Text('Generate error'),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => ColoredBox(
+        color: Colors.orange,
+        child: TextButton(
+          onPressed: generateError,
+          child: const Text('Generate error'),
+        ),
+      );
 
   Future<void> generateError() async {
-    Catcher.sendTestException();
+    Catcher2.sendTestException();
   }
 }

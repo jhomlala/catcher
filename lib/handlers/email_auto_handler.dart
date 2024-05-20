@@ -1,21 +1,15 @@
-import 'package:catcher/handlers/base_email_handler.dart';
-import 'package:catcher/model/platform_type.dart';
-import 'package:catcher/model/report.dart';
+import 'dart:async';
+
+import 'package:catcher_2/catcher_2.dart';
+import 'package:catcher_2/handlers/base_email_handler.dart';
+import 'package:catcher_2/model/platform_type.dart';
+import 'package:catcher_2/model/report.dart';
+import 'package:cross_file/cross_file.dart';
 import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
 
 class EmailAutoHandler extends BaseEmailHandler {
-  final String smtpHost;
-  final int smtpPort;
-  final String senderEmail;
-  final String senderName;
-  final String senderPassword;
-  final bool enableSsl;
-  final List<String> recipients;
-  final bool sendHtml;
-  final bool printLogs;
-
   EmailAutoHandler(
     this.smtpHost,
     this.smtpPort,
@@ -23,29 +17,31 @@ class EmailAutoHandler extends BaseEmailHandler {
     this.senderName,
     this.senderPassword,
     this.recipients, {
+    this.senderUsername,
     this.enableSsl = false,
     this.sendHtml = true,
     this.printLogs = false,
-    String? emailTitle,
-    String? emailHeader,
-    bool enableDeviceParameters = true,
-    bool enableApplicationParameters = true,
-    bool enableStackTrace = true,
-    bool enableCustomParameters = true,
-  })  : assert(recipients.isNotEmpty, "Recipients can't be null or empty"),
-        super(
-          enableDeviceParameters,
-          enableApplicationParameters,
-          enableStackTrace,
-          enableCustomParameters,
-          emailTitle,
-          emailHeader,
-        );
+    super.emailTitle,
+    super.emailHeader,
+    super.enableDeviceParameters = true,
+    super.enableApplicationParameters = true,
+    super.enableStackTrace = true,
+    super.enableCustomParameters = true,
+  }) : assert(recipients.isNotEmpty, "Recipients can't be null or empty");
+  final String smtpHost;
+  final int smtpPort;
+  final String senderEmail;
+  final String senderName;
+  final String senderPassword;
+  final String? senderUsername;
+  final bool enableSsl;
+  final List<String> recipients;
+  final bool sendHtml;
+  final bool printLogs;
 
   @override
-  Future<bool> handle(Report report, BuildContext? context) {
-    return _sendMail(report);
-  }
+  Future<bool> handle(Report report, BuildContext? context) =>
+      _sendMail(report);
 
   Future<bool> _sendMail(Report report) async {
     try {
@@ -56,7 +52,7 @@ class EmailAutoHandler extends BaseEmailHandler {
         ..text = setupRawMessageText(report);
 
       if (report.screenshot != null) {
-        message.attachments = [FileAttachment(report.screenshot!)];
+        message.attachments = [XFilePngAttachment(report.screenshot!)];
       }
 
       if (sendHtml) {
@@ -80,15 +76,13 @@ class EmailAutoHandler extends BaseEmailHandler {
     }
   }
 
-  SmtpServer _setupSmtpServer() {
-    return SmtpServer(
-      smtpHost,
-      port: smtpPort,
-      ssl: enableSsl,
-      username: senderEmail,
-      password: senderPassword,
-    );
-  }
+  SmtpServer _setupSmtpServer() => SmtpServer(
+        smtpHost,
+        port: smtpPort,
+        ssl: enableSsl,
+        username: senderUsername ?? senderEmail,
+        password: senderPassword,
+      );
 
   void _printLog(String log) {
     if (printLogs) {
@@ -105,4 +99,15 @@ class EmailAutoHandler extends BaseEmailHandler {
         PlatformType.macOS,
         PlatformType.windows,
       ];
+}
+
+class XFilePngAttachment extends Attachment {
+  XFilePngAttachment(this._xFile) {
+    contentType = 'image/png';
+  }
+
+  final XFile _xFile;
+
+  @override
+  Stream<List<int>> asStream() => _xFile.openRead();
 }

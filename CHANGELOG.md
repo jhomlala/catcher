@@ -1,9 +1,81 @@
-## 0.8.0
-* [BREAKING_CHANGE] Updated min android version to 22 and target/compile version to 34.
-* Updated dependencies version.
-* Replaced lint with very_good_analysis package.
-* Fixed screenshot manger not creating screenshots.
-* Update pub.dev metadata.
+## 1.3.0
+* Migrate Slack screenshot API calls to `files.*UploadExternal` (you now need to specify also a `channelId` in the `SlackHandler` for that!)
+
+## 1.2.6
+* Allow `package_info_plus` versions `8.x`
+* Remove direct dependency on `device_info_plus_platform_interface` (why was this there anyway?)
+
+## 1.2.5
+* Allow `package_info_plus` versions `7.x`
+
+## 1.2.4
+* Allow `package_info_plus` versions `6.x` (Thanks to [@bartektartanus](https://github.com/bartektartanus) in [#28](https://github.com/ThexXTURBOXx/catcher_2/pull/28))
+* Allow `device_info_plus` versions `10.x`
+
+## 1.2.3
+* Fix `FileHandler` and optimize it
+
+## 1.2.2
+* Fix a few typos in the README (Thanks to [@mrclauss](https://github.com/mrclauss) in [#23](https://github.com/ThexXTURBOXx/catcher_2/pull/23))
+* Fix lint for Flutter `3.19.x`
+
+## 1.2.1
+* Add `fileSupplier` to `FileHandler` ([#21](https://github.com/ThexXTURBOXx/catcher_2/issues/21) and [#22](https://github.com/ThexXTURBOXx/catcher_2/issues/22))
+* Allow `sentry` versions `8.x`
+
+## 1.2.0
+* Add screenshot support for Sentry (Thanks to [@mikeesouth](https://github.com/mikeesouth) in [#20](https://github.com/ThexXTURBOXx/catcher_2/pull/20))
+
+## 1.1.0
+* Add screenshot support for Slack (Thanks to [@ramaarf](https://github.com/ramaarf) in [#18](https://github.com/ThexXTURBOXx/catcher_2/pull/18))
+* Add Turkish translation (Thanks to [@anilaydinn](https://github.com/anilaydinn) in [#266](https://github.com/jhomlala/catcher/pull/266))
+
+## 1.0.7
+* Fix stack trace in console handler (Thanks to [@MilovdZee](https://github.com/MilovdZee) in [#16](https://github.com/ThexXTURBOXx/catcher_2/pull/16))
+
+## 1.0.6
+* Add Arabic translation ([#265](https://github.com/jhomlala/catcher/pull/265))
+* Improve Russian translation ([#256](https://github.com/jhomlala/catcher/pull/256))
+* Merge upstream `catcher` changes (only smaller things)
+
+## 1.0.5
+* Allow `package_info_plus` versions `5.x`
+* Update to Flutter `3.16`
+
+## 1.0.4
+* Cleanup in many places (also makes a few things more robust)
+* Fix `null` path for screenshot manager ([#12](https://github.com/ThexXTURBOXx/catcher_2/issues/12))
+
+## 1.0.3
+* Add even more error resilience to calls to 3rd party libraries
+
+## 1.0.2
+* Add error resilience to calls to 3rd party libraries
+* Improve documentation
+
+## 1.0.1
+* Fix initialisation order ([#10](https://github.com/ThexXTURBOXx/catcher_2/issues/10))
+* Allow additional, custom error handlers ([#11](https://github.com/ThexXTURBOXx/catcher_2/issues/11))
+* Update `flutter_lints` and clean up implementation
+
+## 1.0.0
+* Stable version arrived, yay!
+* Add `senderUsername` to set an explicit username for SMTP authentication
+
+## 1.0.0-alpha.1
+* Added migration guide
+
+## 1.0.0-alpha.0
+* [BREAKING_CHANGE] Rebrand to `catcher_2`
+* [BREAKING_CHANGE] Fix compatibility with newer versions of Flutter. Only SDK `>=3.0.0` is supported now
+* [BREAKING_CHANGE] Update to `dio` 5.x. This has an effect on the `HttpHandler`
+* [BREAKING_CHANGE] Update to `sentry` 7.x
+* Fix compatibility with AGP 8.x
+* Fix wrong stack trace being sent to Sentry
+* Fix a few typos in the README
+* Fix many other errors as well
+* Update package dependencies
+* Update example dependencies
 
 ## 0.7.0
 * [BREAKING_CHANGE] Update to Flutter 3 by Nico Mexis (https://github.com/ThexXTURBOXx).

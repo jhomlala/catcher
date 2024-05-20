@@ -1,15 +1,9 @@
-import 'package:catcher/model/platform_type.dart';
-import 'package:catcher/model/report.dart';
-import 'package:catcher/model/report_handler.dart';
+import 'package:catcher_2/model/platform_type.dart';
+import 'package:catcher_2/model/report.dart';
+import 'package:catcher_2/model/report_handler.dart';
 import 'package:flutter/material.dart';
 
 class ConsoleHandler extends ReportHandler {
-  final bool enableDeviceParameters;
-  final bool enableApplicationParameters;
-  final bool enableStackTrace;
-  final bool enableCustomParameters;
-  final bool handleWhenRejected;
-
   ConsoleHandler({
     this.enableDeviceParameters = true,
     this.enableApplicationParameters = true,
@@ -18,11 +12,19 @@ class ConsoleHandler extends ReportHandler {
     this.handleWhenRejected = false,
   });
 
+  final bool enableDeviceParameters;
+  final bool enableApplicationParameters;
+  final bool enableStackTrace;
+  final bool enableCustomParameters;
+  final bool handleWhenRejected;
+
   @override
   Future<bool> handle(Report report, BuildContext? context) {
     logger
       ..info(
-        '============================ CATCHER LOG ============================',
+        '============================== '
+        'CATCHER 2 LOG '
+        '==============================',
       )
       ..info('Crash occurred on ${report.dateTime}')
       ..info('');
@@ -39,7 +41,7 @@ class ConsoleHandler extends ReportHandler {
       ..info('${report.error}')
       ..info('');
     if (enableStackTrace) {
-      _printStackTraceFormatted(report.stackTrace as StackTrace?);
+      _printStackTraceFormatted(report.stackTrace);
     }
     if (enableCustomParameters) {
       _printCustomParametersFormatted(report.customParameters);
@@ -73,11 +75,9 @@ class ConsoleHandler extends ReportHandler {
     }
   }
 
-  void _printStackTraceFormatted(StackTrace? stackTrace) {
+  void _printStackTraceFormatted(stackTrace) {
     logger.info('------- STACK TRACE -------');
-    for (final entry in stackTrace.toString().split('\n')) {
-      logger.info(entry);
-    }
+    stackTrace?.toString().split('\n').forEach((entry) => logger.info(entry));
   }
 
   @override
@@ -91,7 +91,5 @@ class ConsoleHandler extends ReportHandler {
       ];
 
   @override
-  bool shouldHandleWhenRejected() {
-    return handleWhenRejected;
-  }
+  bool shouldHandleWhenRejected() => handleWhenRejected;
 }

@@ -1,52 +1,10 @@
-import 'package:catcher/model/platform_type.dart';
-import 'package:catcher/model/report.dart';
-import 'package:catcher/model/report_handler.dart';
+import 'package:catcher_2/model/platform_type.dart';
+import 'package:catcher_2/model/report.dart';
+import 'package:catcher_2/model/report_handler.dart';
 import 'package:flutter/material.dart';
 
-///Handler which displays error report as snack bar.
+/// Handler which displays error report as snack bar.
 class SnackbarHandler extends ReportHandler {
-  ///See [SnackBar] docs for details.
-  final Duration duration;
-
-  ///See [SnackBar] docs for details.
-  final Color? backgroundColor;
-
-  ///See [SnackBar] docs for details.
-  final double? elevation;
-
-  ///See [SnackBar] docs for details.
-  final EdgeInsetsGeometry? margin;
-
-  ///See [SnackBar] docs for details.
-  final EdgeInsetsGeometry? padding;
-
-  ///See [SnackBar] docs for details.
-  final double? width;
-
-  ///See [SnackBar] docs for details.
-  final ShapeBorder? shape;
-
-  ///See [SnackBar] docs for details.
-  final SnackBarBehavior? behavior;
-
-  ///See [SnackBar] docs for details.
-  final SnackBarAction? action;
-
-  ///See [SnackBar] docs for details.
-  final Animation<double>? animation;
-
-  ///See [SnackBar] docs for details.
-  final VoidCallback? onVisible;
-
-  ///Custom message which can be displayed instead default one.
-  final String? customMessage;
-
-  ///Custom text style for text displayed within snackbar.
-  final TextStyle? textStyle;
-
-  ///Enable additional logs printing
-  final bool printLogs;
-
   SnackbarHandler(
     this.duration, {
     this.backgroundColor,
@@ -64,8 +22,50 @@ class SnackbarHandler extends ReportHandler {
     this.printLogs = false,
   });
 
-  ///Handle report. If there's scaffold messenger in provided context, then
-  ///snackbar will be shown.
+  /// See [SnackBar] docs for details.
+  final Duration duration;
+
+  /// See [SnackBar] docs for details.
+  final Color? backgroundColor;
+
+  /// See [SnackBar] docs for details.
+  final double? elevation;
+
+  /// See [SnackBar] docs for details.
+  final EdgeInsetsGeometry? margin;
+
+  /// See [SnackBar] docs for details.
+  final EdgeInsetsGeometry? padding;
+
+  /// See [SnackBar] docs for details.
+  final double? width;
+
+  /// See [SnackBar] docs for details.
+  final ShapeBorder? shape;
+
+  /// See [SnackBar] docs for details.
+  final SnackBarBehavior? behavior;
+
+  /// See [SnackBar] docs for details.
+  final SnackBarAction? action;
+
+  /// See [SnackBar] docs for details.
+  final Animation<double>? animation;
+
+  /// See [SnackBar] docs for details.
+  final VoidCallback? onVisible;
+
+  /// Custom message which can be displayed instead default one.
+  final String? customMessage;
+
+  /// Custom text style for text displayed within snackbar.
+  final TextStyle? textStyle;
+
+  /// Enable additional logs printing
+  final bool printLogs;
+
+  /// Handle report. If there's scaffold messenger in provided context, then
+  /// snackbar will be shown.
   @override
   Future<bool> handle(Report error, BuildContext? context) async {
     try {
@@ -100,7 +100,7 @@ class SnackbarHandler extends ReportHandler {
     }
   }
 
-  ///Checks whether context has scaffold messenger.
+  /// Checks whether context has scaffold messenger.
   bool _hasScaffoldMessenger(BuildContext context) {
     try {
       return context.findAncestorWidgetOfExactType<ScaffoldMessenger>() != null;
@@ -110,9 +110,9 @@ class SnackbarHandler extends ReportHandler {
     }
   }
 
-  ///Get error message based on configuration and report.
+  /// Get error message based on configuration and report.
   String _getErrorMessage(Report error) {
-    if (customMessage?.isNotEmpty == true) {
+    if (customMessage?.isNotEmpty ?? false) {
       return customMessage!;
     } else {
       return '${localizationOptions.toastHandlerDescription} ${error.error}';
@@ -126,9 +126,7 @@ class SnackbarHandler extends ReportHandler {
   }
 
   @override
-  bool isContextRequired() {
-    return true;
-  }
+  bool isContextRequired() => true;
 
   @override
   List<PlatformType> getSupportedPlatforms() => [

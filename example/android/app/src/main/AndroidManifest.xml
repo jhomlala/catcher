@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.jhomlala.catcher_example">
-   <application
-        android:label="catcher_example"
+    package="com.jhomlala.catcher_2_example">
+    <application
+        android:label="catcher_2_example"
+        android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
@@ -37,6 +38,4 @@
             <data android:scheme="mailto" />
         </intent>
     </queries>
-
-
 </manifest>

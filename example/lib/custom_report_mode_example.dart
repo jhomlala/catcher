@@ -1,17 +1,17 @@
-import 'package:catcher/catcher.dart';
-import 'package:catcher/model/platform_type.dart';
+import 'package:catcher_2/catcher_2.dart';
+import 'package:catcher_2/model/platform_type.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  final debugOptions = CatcherOptions(CustomPageReportMode(), [
+  final debugOptions = Catcher2Options(CustomPageReportMode(), [
     EmailManualHandler(['recipient@email.com']),
     ConsoleHandler(),
   ]);
-  final releaseOptions = CatcherOptions(PageReportMode(), [
+  final releaseOptions = Catcher2Options(PageReportMode(), [
     EmailManualHandler(['recipient@email.com']),
   ]);
 
-  Catcher(
+  Catcher2(
     rootWidget: const MyApp(),
     debugConfig: debugOptions,
     releaseConfig: releaseOptions,
@@ -19,12 +19,10 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
-  State<StatefulWidget> createState() {
-    return _MyAppState();
-  }
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -34,32 +32,28 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: Catcher.navigatorKey,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
+  Widget build(BuildContext context) => MaterialApp(
+        navigatorKey: Catcher2.navigatorKey,
+        home: Scaffold(
+          appBar: AppBar(
+            title: const Text('Plugin example app'),
+          ),
+          body: const ChildWidget(),
         ),
-        body: const ChildWidget(),
-      ),
-    );
-  }
+      );
 }
 
 class ChildWidget extends StatelessWidget {
-  const ChildWidget({Key? key}) : super(key: key);
+  const ChildWidget({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: generateError,
-      child: const Text('Generate error'),
-    );
-  }
+  Widget build(BuildContext context) => TextButton(
+        onPressed: generateError,
+        child: const Text('Generate error'),
+      );
 
   Future<void> generateError() async {
-    Catcher.sendTestException();
+    Catcher2.sendTestException();
   }
 }
 
@@ -76,6 +70,9 @@ class CustomPageReportMode extends ReportMode {
     BuildContext context,
   ) async {
     await Future<void>.delayed(Duration.zero);
+    if (!context.mounted) {
+      return;
+    }
     await Navigator.push<void>(
       context,
       MaterialPageRoute(builder: (context) => CustomPage(this, report)),
@@ -83,9 +80,7 @@ class CustomPageReportMode extends ReportMode {
   }
 
   @override
-  bool isContextRequired() {
-    return true;
-  }
+  bool isContextRequired() => true;
 
   @override
   List<PlatformType> getSupportedPlatforms() =>
@@ -93,34 +88,31 @@ class CustomPageReportMode extends ReportMode {
 }
 
 class CustomPage extends StatelessWidget {
+  const CustomPage(this.reportMode, this.report, {super.key});
   final ReportMode reportMode;
   final Report report;
 
-  const CustomPage(this.reportMode, this.report, {Key? key}) : super(key: key);
-
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Test'),
-      ),
-      body: Row(
-        children: [
-          ElevatedButton(
-            child: const Text('Send report'),
-            onPressed: () {
-              reportMode.onActionConfirmed(report);
-            },
-          ),
-          ElevatedButton(
-            child: const Text('Cancel report'),
-            onPressed: () {
-              reportMode.onActionRejected(report);
-              Navigator.pop(context);
-            },
-          ),
-        ],
-      ),
-    );
-  }
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: const Text('Test'),
+        ),
+        body: Row(
+          children: [
+            ElevatedButton(
+              child: const Text('Send report'),
+              onPressed: () {
+                reportMode.onActionConfirmed(report);
+              },
+            ),
+            ElevatedButton(
+              child: const Text('Cancel report'),
+              onPressed: () {
+                reportMode.onActionRejected(report);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      );
 }
