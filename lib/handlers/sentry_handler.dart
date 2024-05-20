@@ -10,6 +10,8 @@ import 'package:sentry/sentry.dart';
 class SentryHandler extends ReportHandler {
   SentryHandler(
     this.sentryClient, {
+    this.serverName = 'Catcher 2',
+    this.loggerName = 'Catcher 2',
     this.userContext,
     this.enableDeviceParameters = true,
     this.enableApplicationParameters = true,
@@ -21,6 +23,8 @@ class SentryHandler extends ReportHandler {
 
   /// Sentry Client instance
   final SentryClient sentryClient;
+  final String serverName;
+  final String loggerName;
 
   /// User data
   SentryUser? userContext;
@@ -66,11 +70,12 @@ class SentryHandler extends ReportHandler {
       // and the code relies on File from dart:io that does not work in web
       // either because we do not have access to the file system in web.
       SentryAttachment? screenshotAttachment;
+      File? screenshotFile;
       try {
         if (report.screenshot != null && !kIsWeb) {
           final screenshotPath = report.screenshot!.path;
-          final file = File(screenshotPath);
-          final bytes = await file.readAsBytes();
+          screenshotFile = File(screenshotPath);
+          final bytes = await screenshotFile.readAsBytes();
           screenshotAttachment = SentryAttachment.fromScreenshotData(bytes);
           _printLog('Created screenshot attachment');
         }
@@ -86,6 +91,12 @@ class SentryHandler extends ReportHandler {
             : null,
       );
 
+      if (screenshotFile != null) {
+        // Cleanup screenshot file after submission to save space on device.
+        await screenshotFile.delete();
+        _printLog('Screenshot file removed from device (cleanup)');
+      }
+
       _printLog('Logged to sentry!');
       return true;
     } catch (exception, stackTrace) {
@@ -98,10 +109,11 @@ class SentryHandler extends ReportHandler {
     var applicationVersion = '';
     final applicationParameters = report.applicationParameters;
     if (applicationParameters.containsKey('appName')) {
-      applicationVersion += (applicationParameters['appName'] as String?)!;
+      applicationVersion +=
+          (applicationParameters['appName'] as String?)!.toLowerCase();
     }
     if (applicationParameters.containsKey('version')) {
-      applicationVersion += " ${applicationParameters["version"]}";
+      applicationVersion += "@${applicationParameters["version"]}";
     }
     if (applicationVersion.isEmpty) {
       applicationVersion = '?';
@@ -111,12 +123,12 @@ class SentryHandler extends ReportHandler {
 
   SentryEvent buildEvent(Report report, Map<String, dynamic> tags) =>
       SentryEvent(
-        logger: 'Catcher 2',
-        serverName: 'Catcher 2',
+        logger: loggerName,
+        serverName: serverName,
         release: customRelease ?? _getApplicationVersion(report),
         environment: customEnvironment ??
             (report.applicationParameters['environment'] as String?),
-        message: const SentryMessage('Error handled by Catcher 2'),
+        message: SentryMessage(report.error.toString()),
         throwable: report.error,
         level: SentryLevel.error,
         culprit: '',

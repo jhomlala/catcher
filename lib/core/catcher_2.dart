@@ -79,17 +79,20 @@ class Catcher2 implements ReportModeAction {
 
   void _configure(GlobalKey<NavigatorState>? navigatorKey) {
     _instance = this;
-    _initWidgetsBinding();
     _configureNavigatorKey(navigatorKey);
     _setupCurrentConfig();
     _configureLogger();
     _setupReportModeActionInReportMode();
     _setupScreenshotManager();
 
+    _setupErrorHooks();
+
+    _initWidgetBindingAndRunApp();
+
+    // Loading device and application info requires that the widgets binding is
+    // initialized so we need to run it after we init WidgetsFlutterBinding.
     _loadDeviceInfo();
     _loadApplicationInfo();
-
-    _setupErrorHooks();
 
     if (_currentConfig.handlers.isEmpty) {
       _logger.warning(
@@ -170,6 +173,7 @@ class Catcher2 implements ReportModeAction {
   }
 
   Future<void> _setupErrorHooks() async {
+    // FlutterError.onError catches SYNCHRONOUS errors for all platforms
     FlutterError.onError = (details) async {
       await _reportError(
         details.exception,
@@ -178,14 +182,20 @@ class Catcher2 implements ReportModeAction {
       );
       _currentConfig.onFlutterError?.call(details);
     };
-    PlatformDispatcher.instance.onError = (error, stack) {
-      _reportError(error, stack);
-      _currentConfig.onPlatformError?.call(error, stack);
-      return true;
-    };
+
+    // PlatformDispatcher.instance.onError catches ASYNCHRONOUS errors, but it
+    // does not work for web, most likely due to this issue:
+    // https://github.com/flutter/flutter/issues/100277
+    if (!kIsWeb) {
+      PlatformDispatcher.instance.onError = (error, stack) {
+        _reportError(error, stack);
+        _currentConfig.onPlatformError?.call(error, stack);
+        return true;
+      };
+    }
 
     /// Web doesn't have Isolate error listener support
-    if (!ApplicationProfileManager.isWeb()) {
+    if (!kIsWeb) {
       Isolate.current.addErrorListener(
         RawReceivePort((pair) async {
           final isolateError = pair as List<dynamic>;
@@ -195,14 +205,32 @@ class Catcher2 implements ReportModeAction {
           );
         }).sendPort,
       );
+    }
+  }
+
+  void _initWidgetBindingAndRunApp() {
+    if (!kIsWeb) {
+      // This isn't web, we can just run the app, no need for runZoneGuarded
+      // since async errors are caught by PlatformDispatcher.instance.onError.
+      _initWidgetsBindingIfNeeded();
       _runApp();
     } else {
-      // Due to https://github.com/flutter/flutter/issues/100277
-      // this is still needed... As soon as proper error catching support
-      // for Web is implemented, this branch should be removed and just
-      // _runApp should be called, the same as in the other branch
-      // without the Isolate[...] stuff.
-      runZonedGuarded(_runApp, _reportError);
+      // We are in a web environment so we need runZoneGuarded to catch async
+      // exceptions.
+      unawaited(
+        runZonedGuarded<Future<void>>(
+          () async {
+            // It is important that we run init widgets binding inside the
+            // runZonedGuarded call to be able to catch the async execeptions.
+            _initWidgetsBindingIfNeeded();
+            _runApp();
+          },
+          (error, stack) {
+            _reportError(error, stack);
+            _currentConfig.onPlatformError?.call(error, stack);
+          },
+        ),
+      );
     }
   }
 
@@ -216,7 +244,7 @@ class Catcher2 implements ReportModeAction {
     }
   }
 
-  void _initWidgetsBinding() {
+  void _initWidgetsBindingIfNeeded() {
     if (ensureInitialized) {
       WidgetsFlutterBinding.ensureInitialized();
     }
