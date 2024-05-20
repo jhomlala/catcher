@@ -13,9 +13,9 @@
 [![awesome flutter](https://img.shields.io/badge/Awesome-Flutter-blue.svg?longCache=true&style=flat-square)](https://github.com/Solido/awesome-flutter)
 
 
-Catcher 2 is Flutter plugin which automatically catches error/exceptions and handle them. Catcher 2 offers multiple way to handle errors.
-Catcher 2 is heavily inspired from ACRA: https://github.com/ACRA/acra.
-Catcher 2 supports Android, iOS, Web, Linux, Windows and MacOS platforms.
+Catcher 2 is a Flutter plugin which automatically catches errors/exceptions and offers multiple ways to handle them.<br/>
+It is heavily inspired from ACRA: https://github.com/ACRA/acra.<br/>
+It supports Android, iOS, Web, Linux, Windows and MacOS platforms.
 
 
 ## Install
@@ -36,7 +36,7 @@ Then add this import:
 import 'package:catcher_2/catcher_2.dart';
 ```
 
-ANd now you can use all the features as demonstrated below!
+And now you can use all the features as demonstrated below!
 
 ## Upgrading from `catcher`
 
@@ -241,7 +241,7 @@ I/flutter ( 1792): [2023-09-26 20:40:59.078397 | Catcher 2 | INFO] =============
 ## Catcher 2 usage
 
 ### Adding navigator key
-In order to make work Page Report Mode and Dialog Report Mode, you must include navigator key. Catcher 2 plugin exposes key which must be included in your MaterialApp or WidgetApp:
+In order to make Page Report Mode and Dialog Report Mode work, you must include navigator key. Catcher 2 plugin exposes the key which must be included in your MaterialApp or WidgetApp:
 
 ```dart
   @override
@@ -360,7 +360,7 @@ You can add translate for given parameters:
 * toastHandlerDescription - toast handler message
 
 
-If you want to override default english texts, just add simply localization options for "en" language.
+If you want to override default English texts, just simply add localization options for "en" language.
 
 There are build in support for languages:
 * english
@@ -555,12 +555,12 @@ See localization options to change default texts.
 </p>
 
 ### Handlers
-Handlers are an last point in error processing flow. They are doing specific task with error report, for example logging report to console.
+Handlers are an last point in error processing flow. They are doing specific tasks with error reports, for example logging report to console.
 
 #### Console Handler
 
 
-Console Handler is the default and basic handler. It show crash log in console. Console logger allows you to parametrize log output:
+Console Handler is the default and basic handler. It shows crash log in console. Console logger allows you to parametrize log output:
 
 ```dart
 ConsoleHandler(
@@ -827,7 +827,9 @@ main() {
 
 All parameters list:
 * webhookUrl (required) - url of your webhook
-* channel (required) - your channel name (i.e. #catcher2)
+* channel (required) - your channel name (e.g. #catcher2)
+* apiToken (optional) - your API token, only needed for screenshots (e.g. xxxx-xxxxxxxxx-xxxx)
+* channelId (optional) - your screenshot channel ID, only needed for screenshots (e.g. C0NF841BK)
 * username (optional) - name of the integration bot
 * iconEmoji (optional) - avatar of the integration bot
 * enableDeviceParameters (optional) - please look in console handler description

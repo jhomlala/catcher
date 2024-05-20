@@ -27,14 +27,15 @@ dependencies:
   dio: ^5.0.1
   flutter:
     sdk: flutter
-  flutter_local_notifications: ^16.1.0
+  flutter_local_notifications: ^17.0.0
   flutter_localizations:
     sdk: flutter
   path_provider: ^2.0.1
   permission_handler: ^11.0.0
-  sentry: ^7.2.0
+  sentry: '>=7.2.0 <9.0.0'
 
 dev_dependencies:
+  flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
 

@@ -1,3 +1,31 @@
+## 1.3.0
+* Migrate Slack screenshot API calls to `files.*UploadExternal` (you now need to specify also a `channelId` in the `SlackHandler` for that!)
+
+## 1.2.6
+* Allow `package_info_plus` versions `8.x`
+* Remove direct dependency on `device_info_plus_platform_interface` (why was this there anyway?)
+
+## 1.2.5
+* Allow `package_info_plus` versions `7.x`
+
+## 1.2.4
+* Allow `package_info_plus` versions `6.x` (Thanks to [@bartektartanus](https://github.com/bartektartanus) in [#28](https://github.com/ThexXTURBOXx/catcher_2/pull/28))
+* Allow `device_info_plus` versions `10.x`
+
+## 1.2.3
+* Fix `FileHandler` and optimize it
+
+## 1.2.2
+* Fix a few typos in the README (Thanks to [@mrclauss](https://github.com/mrclauss) in [#23](https://github.com/ThexXTURBOXx/catcher_2/pull/23))
+* Fix lint for Flutter `3.19.x`
+
+## 1.2.1
+* Add `fileSupplier` to `FileHandler` ([#21](https://github.com/ThexXTURBOXx/catcher_2/issues/21) and [#22](https://github.com/ThexXTURBOXx/catcher_2/issues/22))
+* Allow `sentry` versions `8.x`
+
+## 1.2.0
+* Add screenshot support for Sentry (Thanks to [@mikeesouth](https://github.com/mikeesouth) in [#20](https://github.com/ThexXTURBOXx/catcher_2/pull/20))
+
 ## 1.1.0
 * Add screenshot support for Slack (Thanks to [@ramaarf](https://github.com/ramaarf) in [#18](https://github.com/ThexXTURBOXx/catcher_2/pull/18))
 * Add Turkish translation (Thanks to [@anilaydinn](https://github.com/anilaydinn) in [#266](https://github.com/jhomlala/catcher/pull/266))

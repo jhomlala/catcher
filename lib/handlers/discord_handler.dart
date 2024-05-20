@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:catcher_2/model/platform_type.dart';
 import 'package:catcher_2/model/report.dart';
 import 'package:catcher_2/model/report_handler.dart';
 import 'package:catcher_2/utils/catcher_2_utils.dart';
+import 'package:cross_file/cross_file.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -106,30 +106,36 @@ class DiscordHandler extends ReportHandler {
     return stringBuffer.toString();
   }
 
-  Future<bool> _sendContent(String content, File? screenshot) async {
+  Future<bool> _sendContent(String content, XFile? screenshot) async {
     try {
       _printLog('Sending request to Discord server...');
       Response<dynamic>? response;
+
+      final data = <String, dynamic>{
+        'content': content,
+      };
+
       if (screenshot != null) {
-        final screenshotPath = screenshot.path;
-        final formData = FormData.fromMap(<String, dynamic>{
-          'content': content,
-          'file': await MultipartFile.fromFile(screenshotPath),
-        });
-        response = await _dio.post<dynamic>(webhookUrl, data: formData);
-      } else {
-        final data = {
-          'content': content,
-        };
-        response = await _dio.post<dynamic>(webhookUrl, data: data);
+        data.addAll(
+          {
+            'file': MultipartFile.fromBytes(
+              await screenshot.readAsBytes(),
+              filename: screenshot.name,
+            ),
+          },
+        );
       }
+
+      response = await _dio.post<dynamic>(
+        webhookUrl,
+        data: FormData.fromMap(data),
+      );
 
       _printLog(
         'Server responded with code: ${response.statusCode} and message: '
         '${response.statusMessage}',
       );
-      final statusCode = response.statusCode ?? 0;
-      return statusCode >= 200 && statusCode < 300;
+      return response.ok;
     } catch (exception) {
       _printLog('Failed to send data to Discord server: $exception');
       return false;

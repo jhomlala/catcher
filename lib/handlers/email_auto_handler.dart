@@ -1,6 +1,10 @@
+import 'dart:async';
+
+import 'package:catcher_2/catcher_2.dart';
 import 'package:catcher_2/handlers/base_email_handler.dart';
 import 'package:catcher_2/model/platform_type.dart';
 import 'package:catcher_2/model/report.dart';
+import 'package:cross_file/cross_file.dart';
 import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
@@ -48,7 +52,7 @@ class EmailAutoHandler extends BaseEmailHandler {
         ..text = setupRawMessageText(report);
 
       if (report.screenshot != null) {
-        message.attachments = [FileAttachment(report.screenshot!)];
+        message.attachments = [XFilePngAttachment(report.screenshot!)];
       }
 
       if (sendHtml) {
@@ -95,4 +99,15 @@ class EmailAutoHandler extends BaseEmailHandler {
         PlatformType.macOS,
         PlatformType.windows,
       ];
+}
+
+class XFilePngAttachment extends Attachment {
+  XFilePngAttachment(this._xFile) {
+    contentType = 'image/png';
+  }
+
+  final XFile _xFile;
+
+  @override
+  Stream<List<int>> asStream() => _xFile.openRead();
 }

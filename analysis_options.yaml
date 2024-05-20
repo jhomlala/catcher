@@ -44,16 +44,16 @@ linter:
   rules:
     - always_declare_return_types
     - always_put_control_body_on_new_line
-    #- always_put_required_named_parameters_first
-    - always_require_non_null_named_parameters
+    # - always_put_required_named_parameters_first
     # - always_specify_types
     - always_use_package_imports
     - annotate_overrides
+    - annotate_redeclares
     - avoid_annotating_with_dynamic
     - avoid_bool_literals_in_conditional_expressions
     # - avoid_catches_without_on_clauses
     - avoid_catching_errors
-    #- avoid_classes_with_only_static_members
+    # - avoid_classes_with_only_static_members
     - avoid_double_and_int_checks
     # - avoid_dynamic_calls
     - avoid_empty_else
@@ -70,12 +70,10 @@ linter:
     - avoid_positional_boolean_parameters
     - avoid_print
     - avoid_private_typedef_functions
-    #- avoid_redundant_argument_values
+    # - avoid_redundant_argument_values
     - avoid_relative_lib_imports
     - avoid_renaming_method_parameters
     - avoid_return_types_on_setters
-    - avoid_returning_null
-    - avoid_returning_null_for_future
     - avoid_returning_null_for_void
     - avoid_returning_this
     - avoid_setters_without_getters
@@ -107,9 +105,9 @@ linter:
     - depend_on_referenced_packages
     - deprecated_consistency
     - deprecated_member_use_from_same_package
-    #- diagnostic_describe_all_properties
+    # - diagnostic_describe_all_properties
     - directives_ordering
-    #- discarded_futures
+    # - discarded_futures
     - do_not_use_environment
     - empty_catches
     - empty_constructor_bodies

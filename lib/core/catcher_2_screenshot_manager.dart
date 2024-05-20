@@ -2,11 +2,11 @@
 library screenshot;
 
 import 'dart:async';
-import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:catcher_2/utils/catcher_2_logger.dart';
+import 'package:cross_file/cross_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -24,14 +24,11 @@ class Catcher2ScreenshotManager {
 
   /// Create screenshot and save it in file. File will be created in directory
   /// specified in `Catcher2Options`.
-  Future<File?> captureAndSave({
+  Future<XFile?> captureAndSave({
     double? pixelRatio,
     Duration delay = const Duration(milliseconds: 20),
   }) async {
     try {
-      if (_path?.isEmpty ?? true) {
-        return null;
-      }
       final content = await _capture(
         pixelRatio: pixelRatio,
         delay: delay,
@@ -46,11 +43,13 @@ class Catcher2ScreenshotManager {
     return null;
   }
 
-  Future<File> saveFile(Uint8List fileContent) async {
-    assert(_path != null && _path!.isNotEmpty, 'path is empty');
+  Future<XFile> saveFile(Uint8List fileContent) async {
     final name = 'catcher_2_${DateTime.now().microsecondsSinceEpoch}.png';
-    final file = await File('$_path/$name').create(recursive: true);
-    file.writeAsBytesSync(fileContent);
+    final path = (_path?.isEmpty ?? true) ? name : '$_path/$name';
+    final file = XFile.fromData(fileContent, path: path, name: name);
+    if (_path != null && _path!.isNotEmpty) {
+      await file.saveTo(path);
+    }
     return file;
   }
 

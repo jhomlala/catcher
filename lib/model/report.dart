@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:catcher_2/model/platform_type.dart';
+import 'package:cross_file/cross_file.dart';
 import 'package:flutter/foundation.dart';
 
 class Report {
@@ -43,7 +42,7 @@ class Report {
 
   /// Screenshot of screen where error happens. Screenshot won't work everywhere
   /// (i.e. web platform), so this may be null.
-  final File? screenshot;
+  final XFile? screenshot;
 
   /// Creates json from current instance
   Map<String, dynamic> toJson({
