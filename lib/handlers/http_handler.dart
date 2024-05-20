@@ -70,10 +70,12 @@ class HttpHandler extends ReportHandler {
       Response<dynamic>? response;
       _printLog('Calling: $endpointUri');
       if (report.screenshot != null) {
-        final screenshotPath = report.screenshot?.path ?? '';
         final formData = FormData.fromMap(<String, dynamic>{
           'payload_json': json,
-          'file': await MultipartFile.fromFile(screenshotPath),
+          'file': MultipartFile.fromBytes(
+            await report.screenshot!.readAsBytes(),
+            filename: report.screenshot!.name,
+          ),
         });
         response = await _dio.post<dynamic>(
           endpointUri.toString(),

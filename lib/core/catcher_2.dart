@@ -87,7 +87,7 @@ class Catcher2 implements ReportModeAction {
 
     _setupErrorHooks();
 
-    _initWidgetBindingAndRunApp();
+    _initWidgetsBindingAndRunApp();
 
     // Loading device and application info requires that the widgets binding is
     // initialized so we need to run it after we init WidgetsFlutterBinding.
@@ -184,17 +184,15 @@ class Catcher2 implements ReportModeAction {
     };
 
     // PlatformDispatcher.instance.onError catches ASYNCHRONOUS errors, but it
-    // does not work for web, most likely due to this issue:
+    // currently does not work for Web, most likely due to this issue:
     // https://github.com/flutter/flutter/issues/100277
-    if (!kIsWeb) {
-      PlatformDispatcher.instance.onError = (error, stack) {
-        _reportError(error, stack);
-        _currentConfig.onPlatformError?.call(error, stack);
-        return true;
-      };
-    }
+    PlatformDispatcher.instance.onError = (error, stack) {
+      _reportError(error, stack);
+      _currentConfig.onPlatformError?.call(error, stack);
+      return true;
+    };
 
-    /// Web doesn't have Isolate error listener support
+    // Web doesn't have Isolate error listener support
     if (!kIsWeb) {
       Isolate.current.addErrorListener(
         RawReceivePort((pair) async {
@@ -208,21 +206,17 @@ class Catcher2 implements ReportModeAction {
     }
   }
 
-  void _initWidgetBindingAndRunApp() {
-    if (!kIsWeb) {
-      // This isn't web, we can just run the app, no need for runZoneGuarded
-      // since async errors are caught by PlatformDispatcher.instance.onError.
-      _initWidgetsBindingIfNeeded();
-      _runApp();
-    } else {
-      // We are in a web environment so we need runZoneGuarded to catch async
-      // exceptions.
+  void _initWidgetsBindingAndRunApp() {
+    if (kIsWeb) {
+      // Due to https://github.com/flutter/flutter/issues/100277
+      // this is still needed... As soon as proper error catching support
+      // for Web is implemented, this branch should be merged with the other.
       unawaited(
         runZonedGuarded<Future<void>>(
           () async {
             // It is important that we run init widgets binding inside the
-            // runZonedGuarded call to be able to catch the async execeptions.
-            _initWidgetsBindingIfNeeded();
+            // runZonedGuarded call to be able to catch the async exceptions.
+            _initWidgetsBinding();
             _runApp();
           },
           (error, stack) {
@@ -231,6 +225,11 @@ class Catcher2 implements ReportModeAction {
           },
         ),
       );
+    } else {
+      // This isn't Web, we can just run the app, no need for runZoneGuarded
+      // since async errors are caught by PlatformDispatcher.instance.onError.
+      _initWidgetsBinding();
+      _runApp();
     }
   }
 
@@ -244,7 +243,7 @@ class Catcher2 implements ReportModeAction {
     }
   }
 
-  void _initWidgetsBindingIfNeeded() {
+  void _initWidgetsBinding() {
     if (ensureInitialized) {
       WidgetsFlutterBinding.ensureInitialized();
     }
