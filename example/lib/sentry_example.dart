@@ -20,7 +20,7 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
 }
 
 class ChildWidget extends StatelessWidget {
-  const ChildWidget({Key? key}) : super(key: key);
+  const ChildWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

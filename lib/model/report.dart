@@ -56,7 +56,7 @@ class Report {
       'error': error.toString(),
       'customParameters': customParameters,
       'dateTime': dateTime.toIso8601String(),
-      'platformType': describeEnum(platformType),
+      'platformType': platformType.name,
     };
     if (enableDeviceParameters) {
       json['deviceParameters'] = deviceParameters;

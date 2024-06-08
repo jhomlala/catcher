@@ -15,7 +15,6 @@ import 'package:catcher/model/report_mode.dart';
 import 'package:catcher/utils/catcher_error_widget.dart';
 import 'package:catcher/utils/catcher_logger.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -410,7 +409,7 @@ class Catcher extends ReportModeAction {
 
   void _loadApplicationInfo() {
     _applicationParameters['environment'] =
-        describeEnum(ApplicationProfileManager.getApplicationProfile());
+        ApplicationProfileManager.getApplicationProfile().name;
 
     PackageInfo.fromPlatform().then((packageInfo) {
       _applicationParameters['version'] = packageInfo.version;
@@ -562,7 +561,7 @@ class Catcher extends ReportModeAction {
     }
     if (!isReportModeSupportedInPlatform(report, reportMode)) {
       _logger.warning(
-        '$reportMode in not supported for ${describeEnum(report.platformType)}'
+        '$reportMode in not supported for ${report.platformType.name}'
         'platform',
       );
       return;
@@ -638,7 +637,7 @@ class Catcher extends ReportModeAction {
     if (!isReportHandlerSupportedInPlatform(report, reportHandler)) {
       _logger.warning(
         '$reportHandler in not supported for '
-        '${describeEnum(report.platformType)} platform',
+        '${report.platformType.name} platform',
       );
       return;
     }
