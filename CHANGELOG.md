@@ -1,3 +1,9 @@
+## 1.0.0-dev1
+* [BREAKING_CHANGE] Changed format of Catcher from plugin to package.
+* [BREAKING_CHANGE] Updated Dart SDK min version to 3.0.0 and Flutter version to 3.3.0.
+* Regenerated example project.
+* Updated dependencies.
+
 ## 0.8.0
 * [BREAKING_CHANGE] Updated min android version to 22 and target/compile version to 34.
 * Updated dependencies version.
