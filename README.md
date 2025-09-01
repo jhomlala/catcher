@@ -4,7 +4,7 @@
 
 # Catcher
 
-[![pub package](https://img.shields.io/pub/v/catcher.svg)](https://pub.dartlang.org/packages/catcher)
+[![pub package](https://img.shields.io/pub/v/catcher.svg)](https://pub.dev/packages/catcher)
 [![pub package](https://img.shields.io/github/license/jhomlala/catcher.svg?style=flat)](https://github.com/jhomlala/catcher)
 [![pub package](https://img.shields.io/badge/platform-flutter-blue.svg)](https://github.com/jhomlala/catcher)
 [![pub package](https://img.shields.io/badge/Awesome-Flutter-blue.svg?longCache=true&style=flat-square)](https://github.com/Solido/awesome-flutter)
@@ -12,7 +12,7 @@
 
 Catcher is Flutter plugin which automatically catches error/exceptions and handle them. Catcher offers multiple way to handle errors.
 Catcher is heavily inspired from ACRA: https://github.com/ACRA/acra.
-Catcher supports Android, iOS, Web, Linux, Windows and MacOS platforms.
+Catcher supports Android, iOS, Web, Linux, Windows and macOS platforms.
 
 
 ## Install
