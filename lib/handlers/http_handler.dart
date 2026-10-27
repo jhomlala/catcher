@@ -1,49 +1,41 @@
 import 'dart:collection';
 
-import 'package:catcher/model/http_request_type.dart';
-import 'package:catcher/model/platform_type.dart';
-import 'package:catcher/model/report.dart';
-import 'package:catcher/model/report_handler.dart';
-import 'package:catcher/utils/catcher_utils.dart';
+import 'package:catcher_2/model/http_request_type.dart';
+import 'package:catcher_2/model/platform_type.dart';
+import 'package:catcher_2/model/report.dart';
+import 'package:catcher_2/model/report_handler.dart';
+import 'package:cross_file/cross_file.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class HttpHandler extends ReportHandler {
-  final Dio _dio = Dio();
-
-  final HttpRequestType requestType;
-  final Uri endpointUri;
-  final Map<String, dynamic> headers;
-  final int requestTimeout;
-  final int responseTimeout;
-  final bool printLogs;
-  final bool enableDeviceParameters;
-  final bool enableApplicationParameters;
-  final bool enableStackTrace;
-  final bool enableCustomParameters;
-
   HttpHandler(
     this.requestType,
     this.endpointUri, {
     Map<String, dynamic>? headers,
-    this.requestTimeout = 5000,
-    this.responseTimeout = 5000,
+    this.requestTimeout = const Duration(seconds: 5),
+    this.responseTimeout = const Duration(seconds: 5),
     this.printLogs = false,
     this.enableDeviceParameters = true,
     this.enableApplicationParameters = true,
     this.enableStackTrace = true,
     this.enableCustomParameters = false,
   }) : headers = headers ?? <String, dynamic>{};
+  final Dio _dio = Dio();
+
+  final HttpRequestType requestType;
+  final Uri endpointUri;
+  final Map<String, dynamic> headers;
+  final Duration requestTimeout;
+  final Duration responseTimeout;
+  final bool printLogs;
+  final bool enableDeviceParameters;
+  final bool enableApplicationParameters;
+  final bool enableStackTrace;
+  final bool enableCustomParameters;
 
   @override
   Future<bool> handle(Report report, BuildContext? context) async {
-    if (report.platformType != PlatformType.web) {
-      if (!(await CatcherUtils.isInternetConnectionAvailable())) {
-        _printLog('No internet connection available');
-        return false;
-      }
-    }
-
     if (requestType == HttpRequestType.post) {
       return _sendPost(report);
     }
@@ -59,23 +51,26 @@ class HttpHandler extends ReportHandler {
         enableCustomParameters: enableCustomParameters,
       );
       final mutableHeaders = HashMap<String, dynamic>();
-      if (headers.isNotEmpty == true) {
+      if (headers.isNotEmpty) {
         mutableHeaders.addAll(headers);
       }
 
       final options = Options(
-        sendTimeout: Duration(milliseconds: requestTimeout),
-        receiveTimeout: Duration(milliseconds: responseTimeout),
+        sendTimeout: requestTimeout,
+        receiveTimeout: responseTimeout,
         headers: mutableHeaders,
       );
 
       Response<dynamic>? response;
       _printLog('Calling: $endpointUri');
-      if (report.screenshot != null) {
-        final screenshotPath = report.screenshot?.path ?? '';
+      XFile? screenshot = report.screenshot;
+      if (screenshot != null) {
         final formData = FormData.fromMap(<String, dynamic>{
           'payload_json': json,
-          'file': await MultipartFile.fromFile(screenshotPath),
+          'file': MultipartFile.fromBytes(
+            await screenshot.readAsBytes(),
+            filename: await screenshot.name(),
+          ),
         });
         response = await _dio.post<dynamic>(
           endpointUri.toString(),
@@ -90,8 +85,8 @@ class HttpHandler extends ReportHandler {
         );
       }
       _printLog(
-        'HttpHandler response status: ${response.statusCode!} body:'
-        ' ${response.data!}',
+        'HttpHandler response status: ${response.statusCode!} '
+        'body: ${response.data!}',
       );
       return true;
     } catch (error, stackTrace) {
@@ -107,17 +102,15 @@ class HttpHandler extends ReportHandler {
   }
 
   @override
-  String toString() {
-    return 'HttpHandler';
-  }
+  String toString() => 'HttpHandler';
 
   @override
   List<PlatformType> getSupportedPlatforms() => [
-        PlatformType.android,
-        PlatformType.iOS,
-        PlatformType.web,
-        PlatformType.linux,
-        PlatformType.macOS,
-        PlatformType.windows,
-      ];
+    PlatformType.android,
+    PlatformType.iOS,
+    PlatformType.web,
+    PlatformType.linux,
+    PlatformType.macOS,
+    PlatformType.windows,
+  ];
 }

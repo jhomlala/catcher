@@ -1,11 +1,11 @@
 {
-    "name": "example",
-    "short_name": "example",
+    "name": "catcher_2_example",
+    "short_name": "catcher_2_example",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A project to showcase Catcher.",
+    "description": "Demonstrates how to use the catcher_2 plugin.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

@@ -6,31 +6,29 @@ on:
   workflow_dispatch:
 
 jobs:
-  check-format:
-    name: Check format using dart format.
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Flutter Action
-        uses: subosito/flutter-action@v2
-      - name: Check format
-        run: dart format . --set-exit-if-changed
-
   lint:
     name: Lint
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Flutter Action
+        uses: actions/checkout@v7
+
+      - name: Install Flutter
         uses: subosito/flutter-action@v2
-      - name: Install Package Dependencies
-        run: flutter packages get
-      - name: Get dependencies for example
+        with:
+          channel: 'stable'
+
+      - name: Setup Pana
+        run: flutter pub global activate pana
+
+      - name: Get dependencies
         run: flutter pub get
-        working-directory: example
-      - name: Lint using flutter analyze
-        run: flutter analyze .
+
+      - name: Lint
+        run: dart format -o none --set-exit-if-changed .
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Pana
+        run: pana

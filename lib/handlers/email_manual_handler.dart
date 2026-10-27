@@ -1,49 +1,44 @@
-import 'package:catcher/handlers/base_email_handler.dart';
-import 'package:catcher/model/platform_type.dart';
-import 'package:catcher/model/report.dart';
-import 'package:flutter/material.dart';
+import 'package:catcher_2/handlers/base_email_handler.dart';
+import 'package:catcher_2/model/platform_type.dart';
+import 'package:catcher_2/model/report.dart';
+import 'package:cross_file/cross_file.dart';
 import 'package:flutter_mailer/flutter_mailer.dart';
+import 'package:material_ui/material_ui.dart';
 
 class EmailManualHandler extends BaseEmailHandler {
-  final List<String> recipients;
-  final bool sendHtml;
-  final bool printLogs;
-
   EmailManualHandler(
     this.recipients, {
     this.sendHtml = true,
     this.printLogs = false,
-    String? emailTitle,
-    String? emailHeader,
-    bool enableDeviceParameters = true,
-    bool enableApplicationParameters = true,
-    bool enableStackTrace = true,
-    bool enableCustomParameters = true,
-  })  : assert(recipients.isNotEmpty, "Recipients can't be null or empty"),
-        super(
-          enableDeviceParameters,
-          enableApplicationParameters,
-          enableStackTrace,
-          enableCustomParameters,
-          emailTitle,
-          emailHeader,
-        );
+    super.emailTitle,
+    super.emailHeader,
+    super.enableDeviceParameters = true,
+    super.enableApplicationParameters = true,
+    super.enableStackTrace = true,
+    super.enableCustomParameters = true,
+  }) : assert(recipients.isNotEmpty, "Recipients can't be empty");
+  final List<String> recipients;
+  final bool sendHtml;
+  final bool printLogs;
 
   @override
-  Future<bool> handle(Report report, BuildContext? context) async {
-    return _sendEmail(report);
-  }
+  Future<bool> handle(Report report, BuildContext? context) async =>
+      _sendEmail(report);
 
   Future<bool> _sendEmail(Report report) async {
     try {
+      final attachments = <String>[];
+      XFile? screenshot = report.screenshot;
+      if (screenshot != null && screenshot is FileSystemXFile) {
+        attachments.add(screenshot.path);
+      }
+
       final mailOptions = MailOptions(
         body: _getEmailBody(report),
         subject: getEmailTitle(report),
         recipients: recipients,
         isHTML: sendHtml,
-        attachments: [
-          report.screenshot?.path ?? '',
-        ],
+        attachments: attachments,
       );
       _printLog('Creating mail request');
       await FlutterMailer.send(mailOptions);
@@ -71,7 +66,7 @@ class EmailManualHandler extends BaseEmailHandler {
 
   @override
   List<PlatformType> getSupportedPlatforms() => [
-        PlatformType.android,
-        PlatformType.iOS,
-      ];
+    PlatformType.android,
+    PlatformType.iOS,
+  ];
 }

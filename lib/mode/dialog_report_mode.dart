@@ -1,9 +1,9 @@
-import 'package:catcher/model/platform_type.dart';
-import 'package:catcher/model/report.dart';
-import 'package:catcher/model/report_mode.dart';
-import 'package:catcher/utils/catcher_utils.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:catcher_2/model/platform_type.dart';
+import 'package:catcher_2/model/report.dart';
+import 'package:catcher_2/model/report_mode.dart';
+import 'package:catcher_2/utils/catcher_2_utils.dart';
+import 'package:cupertino_ui/cupertino_ui.dart';
+import 'package:material_ui/material_ui.dart';
 
 class DialogReportMode extends ReportMode {
   @override
@@ -14,7 +14,10 @@ class DialogReportMode extends ReportMode {
   Future<void> _showDialog(Report report, BuildContext? context) async {
     await Future<void>.delayed(Duration.zero);
     if (context != null) {
-      if (CatcherUtils.isCupertinoAppAncestor(context)) {
+      if (!context.mounted) {
+        return;
+      }
+      if (Catcher2Utils.isCupertinoAppAncestor(context)) {
         return showCupertinoDialog<void>(
           context: context,
           builder: (context) => _buildCupertinoDialog(report, context),
@@ -29,49 +32,51 @@ class DialogReportMode extends ReportMode {
     }
   }
 
-  Widget _buildCupertinoDialog(Report report, BuildContext context) {
-    return PopScope(
-      onPopInvoked: (_) async {
-        super.onActionRejected(report);
-      },
-      child: CupertinoAlertDialog(
-        title: Text(localizationOptions.dialogReportModeTitle),
-        content: Text(localizationOptions.dialogReportModeDescription),
-        actions: <Widget>[
-          CupertinoDialogAction(
-            onPressed: () => _onAcceptReportClicked(context, report),
-            child: Text(localizationOptions.dialogReportModeAccept),
-          ),
-          CupertinoDialogAction(
-            onPressed: () => _onCancelReportClicked(context, report),
-            child: Text(localizationOptions.dialogReportModeCancel),
-          ),
-        ],
-      ),
-    );
-  }
+  Widget _buildCupertinoDialog(Report report, BuildContext context) =>
+      // ignore: deprecated_member_use
+      WillPopScope(
+        onWillPop: () async {
+          super.onActionRejected(report);
+          return true;
+        },
+        child: CupertinoAlertDialog(
+          title: Text(localizationOptions.dialogReportModeTitle),
+          content: Text(localizationOptions.dialogReportModeDescription),
+          actions: <Widget>[
+            CupertinoDialogAction(
+              onPressed: () => _onAcceptReportClicked(context, report),
+              child: Text(localizationOptions.dialogReportModeAccept),
+            ),
+            CupertinoDialogAction(
+              onPressed: () => _onCancelReportClicked(context, report),
+              child: Text(localizationOptions.dialogReportModeCancel),
+            ),
+          ],
+        ),
+      );
 
-  Widget _buildMaterialDialog(Report report, BuildContext context) {
-    return PopScope(
-      onPopInvoked: (_) async {
-        super.onActionRejected(report);
-      },
-      child: AlertDialog(
-        title: Text(localizationOptions.dialogReportModeTitle),
-        content: Text(localizationOptions.dialogReportModeDescription),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => _onAcceptReportClicked(context, report),
-            child: Text(localizationOptions.dialogReportModeAccept),
-          ),
-          TextButton(
-            onPressed: () => _onCancelReportClicked(context, report),
-            child: Text(localizationOptions.dialogReportModeCancel),
-          ),
-        ],
-      ),
-    );
-  }
+  Widget _buildMaterialDialog(Report report, BuildContext context) =>
+      // ignore: deprecated_member_use
+      WillPopScope(
+        onWillPop: () async {
+          super.onActionRejected(report);
+          return true;
+        },
+        child: AlertDialog(
+          title: Text(localizationOptions.dialogReportModeTitle),
+          content: Text(localizationOptions.dialogReportModeDescription),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => _onAcceptReportClicked(context, report),
+              child: Text(localizationOptions.dialogReportModeAccept),
+            ),
+            TextButton(
+              onPressed: () => _onCancelReportClicked(context, report),
+              child: Text(localizationOptions.dialogReportModeCancel),
+            ),
+          ],
+        ),
+      );
 
   void _onAcceptReportClicked(BuildContext context, Report report) {
     super.onActionConfirmed(report);
@@ -84,17 +89,15 @@ class DialogReportMode extends ReportMode {
   }
 
   @override
-  bool isContextRequired() {
-    return true;
-  }
+  bool isContextRequired() => true;
 
   @override
   List<PlatformType> getSupportedPlatforms() => [
-        PlatformType.android,
-        PlatformType.iOS,
-        PlatformType.web,
-        PlatformType.linux,
-        PlatformType.macOS,
-        PlatformType.windows,
-      ];
+    PlatformType.android,
+    PlatformType.iOS,
+    PlatformType.web,
+    PlatformType.linux,
+    PlatformType.macOS,
+    PlatformType.windows,
+  ];
 }

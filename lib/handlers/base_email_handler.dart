@@ -1,10 +1,19 @@
 import 'dart:convert';
 
-import 'package:catcher/model/report.dart';
-import 'package:catcher/model/report_handler.dart';
+import 'package:catcher_2/model/report.dart';
+import 'package:catcher_2/model/report_handler.dart';
 
-///Base class for all email handlers.
+/// Base class for all email handlers.
 abstract class BaseEmailHandler extends ReportHandler {
+  BaseEmailHandler({
+    required this.enableDeviceParameters,
+    required this.enableApplicationParameters,
+    required this.enableStackTrace,
+    required this.enableCustomParameters,
+    this.emailTitle,
+    this.emailHeader,
+  });
+
   final bool enableDeviceParameters;
   final bool enableApplicationParameters;
   final bool enableStackTrace;
@@ -13,28 +22,19 @@ abstract class BaseEmailHandler extends ReportHandler {
   final String? emailHeader;
   final HtmlEscape _htmlEscape = const HtmlEscape();
 
-  BaseEmailHandler(
-    this.enableDeviceParameters,
-    this.enableApplicationParameters,
-    this.enableStackTrace,
-    this.enableCustomParameters,
-    this.emailTitle,
-    this.emailHeader,
-  );
-
-  ///Setup email title from [report].
+  /// Setup email title from [report].
   String getEmailTitle(Report report) {
-    if (emailTitle?.isNotEmpty ?? false == true) {
+    if (emailTitle?.isNotEmpty ?? false) {
       return emailTitle!;
     } else {
       return 'Error report: >> ${report.error} <<';
     }
   }
 
-  ///Setup html email message from [report].
+  /// Setup html email message from [report].
   String setupHtmlMessageText(Report report) {
     final buffer = StringBuffer();
-    if (emailHeader?.isNotEmpty == true) {
+    if (emailHeader?.isNotEmpty ?? false) {
       buffer
         ..write(_escapeHtmlValue(emailHeader ?? ''))
         ..write('<hr><br>');
@@ -50,23 +50,25 @@ abstract class BaseEmailHandler extends ReportHandler {
       _escapeHtmlValue(report.stackTrace.toString())
           .split('\n')
           .forEach((element) {
-        buffer.write('$element<br>');
-      });
+            buffer.write('$element<br>');
+          });
       buffer.write('<hr><br>');
     }
     if (enableDeviceParameters) {
       buffer.write('<h2>Device parameters:</h2>');
       for (final entry in report.deviceParameters.entries) {
-        buffer
-            .write('<b>${entry.key}</b>: ${_escapeHtmlValue(entry.value)}<br>');
+        buffer.write(
+          '<b>${entry.key}</b>: ${_escapeHtmlValue(entry.value)}<br>',
+        );
       }
       buffer.write('<hr><br>');
     }
     if (enableApplicationParameters) {
       buffer.write('<h2>Application parameters:</h2>');
       for (final entry in report.applicationParameters.entries) {
-        buffer
-            .write('<b>${entry.key}</b>: ${_escapeHtmlValue(entry.value)}<br>');
+        buffer.write(
+          '<b>${entry.key}</b>: ${_escapeHtmlValue(entry.value)}<br>',
+        );
       }
       buffer.write('<br><br>');
     }
@@ -74,8 +76,9 @@ abstract class BaseEmailHandler extends ReportHandler {
     if (enableCustomParameters) {
       buffer.write('<h2>Custom parameters:</h2>');
       for (final entry in report.customParameters.entries) {
-        buffer
-            .write('<b>${entry.key}</b>: ${_escapeHtmlValue(entry.value)}<br>');
+        buffer.write(
+          '<b>${entry.key}</b>: ${_escapeHtmlValue(entry.value)}<br>',
+        );
       }
       buffer.write('<br><br>');
     }
@@ -83,15 +86,14 @@ abstract class BaseEmailHandler extends ReportHandler {
     return buffer.toString();
   }
 
-  ///Escape html value from [value].
-  String _escapeHtmlValue(dynamic value) {
-    return _htmlEscape.convert(value.toString());
-  }
+  /// Escape html value from [value].
+  String _escapeHtmlValue(dynamic value) =>
+      _htmlEscape.convert(value.toString());
 
-  ///Setup raw text email message from [report].
+  /// Setup raw text email message from [report].
   String setupRawMessageText(Report report) {
     final buffer = StringBuffer();
-    if (emailHeader?.isNotEmpty == true) {
+    if (emailHeader?.isNotEmpty ?? false) {
       buffer
         ..write(emailHeader)
         ..write('\n\n');

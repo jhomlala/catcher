@@ -1,4 +1,4 @@
-import 'package:catcher/model/application_profile.dart';
+import 'package:catcher_2/model/application_profile.dart';
 import 'package:flutter/foundation.dart';
 import 'package:universal_io/io.dart';
 
@@ -15,25 +15,25 @@ class ApplicationProfileManager {
       return ApplicationProfile.profile;
     }
 
-    ///Fallback
+    /// Fallback
     return ApplicationProfile.debug;
   }
 
-  /// Check if current platform is web
+  /// Check if current platform is Web
   static bool isWeb() => kIsWeb;
 
-  /// Check if current platform is android
-  static bool isAndroid() => Platform.isAndroid;
+  /// Check if current platform is Android
+  static bool isAndroid() => !kIsWeb && Platform.isAndroid;
 
-  /// Check if current platform is ios
-  static bool isIos() => Platform.isIOS;
+  /// Check if current platform is iOS
+  static bool isIos() => !kIsWeb && Platform.isIOS;
 
-  ///Check if current platform is linux
-  static bool isLinux() => Platform.isLinux;
+  /// Check if current platform is Linux
+  static bool isLinux() => !kIsWeb && Platform.isLinux;
 
-  ///Check if current platform is windows
-  static bool isWindows() => Platform.isWindows;
+  /// Check if current platform is Windows
+  static bool isWindows() => !kIsWeb && Platform.isWindows;
 
-  ///Check if current platform is macOS
-  static bool isMacOS() => Platform.isMacOS;
+  /// Check if current platform is macOS
+  static bool isMacOS() => !kIsWeb && Platform.isMacOS;
 }

@@ -1,15 +1,9 @@
-import 'package:catcher/model/platform_type.dart';
-import 'package:catcher/model/report.dart';
-import 'package:catcher/model/report_handler.dart';
-import 'package:flutter/material.dart';
+import 'package:catcher_2/model/platform_type.dart';
+import 'package:catcher_2/model/report.dart';
+import 'package:catcher_2/model/report_handler.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ConsoleHandler extends ReportHandler {
-  final bool enableDeviceParameters;
-  final bool enableApplicationParameters;
-  final bool enableStackTrace;
-  final bool enableCustomParameters;
-  final bool handleWhenRejected;
-
   ConsoleHandler({
     this.enableDeviceParameters = true,
     this.enableApplicationParameters = true,
@@ -18,11 +12,19 @@ class ConsoleHandler extends ReportHandler {
     this.handleWhenRejected = false,
   });
 
+  final bool enableDeviceParameters;
+  final bool enableApplicationParameters;
+  final bool enableStackTrace;
+  final bool enableCustomParameters;
+  final bool handleWhenRejected;
+
   @override
   Future<bool> handle(Report report, BuildContext? context) {
     logger
       ..info(
-        '============================ CATCHER LOG ============================',
+        '============================== '
+        'CATCHER 2 LOG '
+        '==============================',
       )
       ..info('Crash occurred on ${report.dateTime}')
       ..info('');
@@ -39,7 +41,7 @@ class ConsoleHandler extends ReportHandler {
       ..info('${report.error}')
       ..info('');
     if (enableStackTrace) {
-      _printStackTraceFormatted(report.stackTrace as StackTrace?);
+      _printStackTraceFormatted(report.stackTrace);
     }
     if (enableCustomParameters) {
       _printCustomParametersFormatted(report.customParameters);
@@ -51,6 +53,7 @@ class ConsoleHandler extends ReportHandler {
   }
 
   void _printDeviceParametersFormatted(Map<String, dynamic> deviceParameters) {
+    if (deviceParameters.isEmpty) return;
     logger.info('------- DEVICE INFO -------');
     for (final entry in deviceParameters.entries) {
       logger.info('${entry.key}: ${entry.value}');
@@ -60,38 +63,37 @@ class ConsoleHandler extends ReportHandler {
   void _printApplicationParametersFormatted(
     Map<String, dynamic> applicationParameters,
   ) {
+    if (applicationParameters.isEmpty) return;
     logger.info('------- APP INFO -------');
     for (final entry in applicationParameters.entries) {
       logger.info('${entry.key}: ${entry.value}');
     }
   }
 
+  void _printStackTraceFormatted(dynamic stackTrace) {
+    if (stackTrace == null) return;
+    logger.info('------- STACK TRACE -------');
+    stackTrace?.toString().split('\n').forEach((entry) => logger.info(entry));
+  }
+
   void _printCustomParametersFormatted(Map<String, dynamic> customParameters) {
+    if (customParameters.isEmpty) return;
     logger.info('------- CUSTOM INFO -------');
     for (final entry in customParameters.entries) {
       logger.info('${entry.key}: ${entry.value}');
     }
   }
 
-  void _printStackTraceFormatted(StackTrace? stackTrace) {
-    logger.info('------- STACK TRACE -------');
-    for (final entry in stackTrace.toString().split('\n')) {
-      logger.info(entry);
-    }
-  }
-
   @override
   List<PlatformType> getSupportedPlatforms() => [
-        PlatformType.android,
-        PlatformType.iOS,
-        PlatformType.web,
-        PlatformType.linux,
-        PlatformType.macOS,
-        PlatformType.windows,
-      ];
+    PlatformType.android,
+    PlatformType.iOS,
+    PlatformType.web,
+    PlatformType.linux,
+    PlatformType.macOS,
+    PlatformType.windows,
+  ];
 
   @override
-  bool shouldHandleWhenRejected() {
-    return handleWhenRejected;
-  }
+  bool shouldHandleWhenRejected() => handleWhenRejected;
 }

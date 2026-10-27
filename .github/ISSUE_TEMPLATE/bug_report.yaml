@@ -1,0 +1,91 @@
+name: Bug report
+description: Create a bug report to help us improve
+title: '[Bug]: <Choose an appropriate title>'
+labels:
+  - bug
+assignees:
+  - ThexXTURBOXx
+body:
+  - type: textarea
+    attributes:
+      label: Description
+      description: A clear and concise description of the problem
+      placeholder: Currently, I am trying to [...]
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Minimal Reproduction
+      description: Provide steps to reproduce the problem
+      placeholder: 'Steps to reproduce the behaviour: [...]'
+      value: |-
+        Steps to reproduce the behaviour:
+
+        1. Use the following code:
+            ```dart
+            <Paste your code here>
+            ```
+        2. [...]
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Exception or Error
+      description: Provide error logs
+      placeholder: Copy paste from the log/console
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected Behaviour
+      description: A clear and concise description of what you expected to happen
+      placeholder: The package should [...]
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots to help explain your problem
+      placeholder: You can upload screenshots by drag’n’drop
+  - type: textarea
+    attributes:
+      label: Additional context
+      description: Add any other context about the problem here
+  - type: markdown
+    attributes:
+      value: '# Environment'
+  - type: input
+    attributes:
+      label: Device
+      placeholder: e.g. iPhone 6, Desktop Computer
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: OS
+      placeholder: e.g. iOS 8.1, Windows 10 21H2
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Flutter version
+      placeholder: e.g. 3.13.9
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: catcher_2 version
+      placeholder: e.g. 1.0.0
+    validations:
+      required: true
+  - type: checkboxes
+    attributes:
+      label: Checklist
+      options:
+        - label: >-
+            I have read and followed the **entire**
+            [README](https://github.com/ThexXTURBOXx/catcher_2/blob/master/README.md)
+            and it has not provided the solution I need.
+          required: true
+        - label: I have provided all the information I can.
+          required: true

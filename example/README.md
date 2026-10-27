@@ -1,6 +1,6 @@
-# example
+# catcher_2_example
 
-A project to showcase Catcher.
+Demonstrates how to use the catcher_2 plugin.
 
 ## Getting Started
 

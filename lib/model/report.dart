@@ -1,9 +1,21 @@
-import 'dart:io';
-
-import 'package:catcher/model/platform_type.dart';
+import 'package:catcher_2/model/platform_type.dart';
+import 'package:cross_file/cross_file.dart';
 import 'package:flutter/foundation.dart';
 
 class Report {
+  /// Creates report instance
+  Report(
+    this.error,
+    this.stackTrace,
+    this.dateTime,
+    this.deviceParameters,
+    this.applicationParameters,
+    this.customParameters,
+    this.errorDetails,
+    this.platformType,
+    this.screenshot,
+  );
+
   /// Error that has been caught
   final dynamic error;
 
@@ -28,22 +40,9 @@ class Report {
   /// Type of platform used
   final PlatformType platformType;
 
-  ///Screenshot of screen where error happens. Screenshot won't work everywhere
-  /// (i.e. web platform), so this may be null.
-  final File? screenshot;
-
-  /// Creates report instance
-  Report(
-    this.error,
-    this.stackTrace,
-    this.dateTime,
-    this.deviceParameters,
-    this.applicationParameters,
-    this.customParameters,
-    this.errorDetails,
-    this.platformType,
-    this.screenshot,
-  );
+  /// Screenshot of screen where error happens. Screenshots won't work under
+  /// certain circumstances, so this may be `null`.
+  final XFile? screenshot;
 
   /// Creates json from current instance
   Map<String, dynamic> toJson({

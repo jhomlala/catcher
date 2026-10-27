@@ -1,15 +1,156 @@
-## 1.0.0-dev1
-* [BREAKING_CHANGE] Changed format of Catcher from plugin to package.
-* [BREAKING_CHANGE] Updated Dart SDK min version to 3.0.0 and Flutter version to 3.3.0.
-* Regenerated example project.
-* Updated dependencies.
+## 3.0.0-alpha.1
+* [BREAKING_CHANGE] `material_ui` and `cupertino_ui` enforce newer SDKs. Only Flutter `>=3.47.0` and SDK `>=3.13.0` is supported now
+* [BREAKING_CHANGE] Update to `cross_file` versions `0.4.x`
+* Update example to latest standards
 
-## 0.8.0
-* [BREAKING_CHANGE] Updated min android version to 22 and target/compile version to 34.
-* Updated dependencies version.
-* Replaced lint with very_good_analysis package.
-* Fixed screenshot manger not creating screenshots.
-* Update pub.dev metadata.
+## 3.0.0-alpha.0
+* [BREAKING CHANGE] Migrate to `material_ui` and `cupertino_ui` packages
+
+## 2.1.12
+* Fix lint
+
+## 2.1.11
+* Allow `sentry` versions `10.x` (from now on, built-in Kotlin and AGP 9+ are fully supported)
+
+## 2.1.10
+* Allow `fluttertoast` versions `10.x`
+
+## 2.1.9
+* Allow `device_info_plus` versions `13.x`
+* Allow `package_info_plus` versions `10.x`
+
+## 2.1.8
+* Fix critical bug in `ConsoleHandler`
+
+## 2.1.7
+* Do not print empty sections in `ConsoleHandler`
+
+## 2.1.6
+* Cleanup some handlers
+* Allow `mailer` versions `7.x`
+
+## 2.1.5
+* Allow `fluttertoast` versions `9.x`
+
+## 2.1.4
+* Allow `device_info_plus` versions `12.x`
+* Allow `package_info_plus` versions `9.x`
+
+## 2.1.3
+* Allow better integration of `go_router`/`MaterialApp.router(...)` (Thanks to [@IVLIVS-III](https://github.com/IVLIVS-III) in [#48](https://github.com/ThexXTURBOXx/catcher_2/pull/48))
+
+## 2.1.2
+* Allow `sentry` versions `9.x`
+
+## 2.1.1
+* Update `flutter_mailer` to `3.x`
+
+## 2.1.0
+* Add `extraData` parameter to `reportCheckedError` ([#40](https://github.com/ThexXTURBOXx/catcher_2/issues/40))
+
+## 2.0.2
+* Fix logger after `updateConfig` ([#39](https://github.com/ThexXTURBOXx/catcher_2/issues/39))
+
+## 2.0.1
+* Allow `device_info_plus` versions `11.x`
+* Fix example on Android (build with JDK 21 failed)
+
+## 2.0.0
+* Bump to next stable version
+* Improve logging ([#37](https://github.com/ThexXTURBOXx/catcher_2/issues/37))
+
+## 2.0.0-alpha.2
+* Fix analyser issues for Flutter `3.24.0`
+* Update `fluttertoast` requirement to `8.2.6`
+
+## 2.0.0-alpha.1
+* Apply proper colours from App theme ([#31](https://github.com/ThexXTURBOXx/catcher_2/issues/31))
+
+## 2.0.0-alpha.0
+* [BREAKING_CHANGE] Migrate Slack screenshot API calls to `files.*UploadExternal` (you now need to specify also a `channelId` in the `SlackHandler` for that!)
+* [BREAKING_CHANGE] Migrate screenshots to `cross_file`'s `XFile`s
+* [BREAKING_CHANGE] Migrate away from Android `namespace` workaround (removes support for ancient AGP versions)
+* [BREAKING_CHANGE] Fix error catching on Web (was also improved thanks to [@mikeesouth](https://github.com/mikeesouth) in [#32](https://github.com/ThexXTURBOXx/catcher_2/pull/32))
+* Added more parameters to `SentryHandler` (Thanks to [@mikeesouth](https://github.com/mikeesouth) in [#32](https://github.com/ThexXTURBOXx/catcher_2/pull/32))
+* Better example structure
+* Update `flutter_lints` to `4.x`
+* Rebase on upstream
+
+## 1.2.6
+* Allow `package_info_plus` versions `8.x`
+* Remove direct dependency on `device_info_plus_platform_interface` (why was this there anyway?)
+
+## 1.2.5
+* Allow `package_info_plus` versions `7.x`
+
+## 1.2.4
+* Allow `package_info_plus` versions `6.x` (Thanks to [@bartektartanus](https://github.com/bartektartanus) in [#28](https://github.com/ThexXTURBOXx/catcher_2/pull/28))
+* Allow `device_info_plus` versions `10.x`
+
+## 1.2.3
+* Fix `FileHandler` and optimize it
+
+## 1.2.2
+* Fix a few typos in the README (Thanks to [@mrclauss](https://github.com/mrclauss) in [#23](https://github.com/ThexXTURBOXx/catcher_2/pull/23))
+* Fix lint for Flutter `3.19.x`
+
+## 1.2.1
+* Add `fileSupplier` to `FileHandler` ([#21](https://github.com/ThexXTURBOXx/catcher_2/issues/21) and [#22](https://github.com/ThexXTURBOXx/catcher_2/issues/22))
+* Allow `sentry` versions `8.x`
+
+## 1.2.0
+* Add screenshot support for Sentry (Thanks to [@mikeesouth](https://github.com/mikeesouth) in [#20](https://github.com/ThexXTURBOXx/catcher_2/pull/20))
+
+## 1.1.0
+* Add screenshot support for Slack (Thanks to [@ramaarf](https://github.com/ramaarf) in [#18](https://github.com/ThexXTURBOXx/catcher_2/pull/18))
+* Add Turkish translation (Thanks to [@anilaydinn](https://github.com/anilaydinn) in [#266](https://github.com/jhomlala/catcher/pull/266))
+
+## 1.0.7
+* Fix stack trace in console handler (Thanks to [@MilovdZee](https://github.com/MilovdZee) in [#16](https://github.com/ThexXTURBOXx/catcher_2/pull/16))
+
+## 1.0.6
+* Add Arabic translation ([#265](https://github.com/jhomlala/catcher/pull/265))
+* Improve Russian translation ([#256](https://github.com/jhomlala/catcher/pull/256))
+* Merge upstream `catcher` changes (only smaller things)
+
+## 1.0.5
+* Allow `package_info_plus` versions `5.x`
+* Update to Flutter `3.16`
+
+## 1.0.4
+* Cleanup in many places (also makes a few things more robust)
+* Fix `null` path for screenshot manager ([#12](https://github.com/ThexXTURBOXx/catcher_2/issues/12))
+
+## 1.0.3
+* Add even more error resilience to calls to 3rd party libraries
+
+## 1.0.2
+* Add error resilience to calls to 3rd party libraries
+* Improve documentation
+
+## 1.0.1
+* Fix initialisation order ([#10](https://github.com/ThexXTURBOXx/catcher_2/issues/10))
+* Allow additional, custom error handlers ([#11](https://github.com/ThexXTURBOXx/catcher_2/issues/11))
+* Update `flutter_lints` and clean up implementation
+
+## 1.0.0
+* Stable version arrived, yay!
+* Add `senderUsername` to set an explicit username for SMTP authentication
+
+## 1.0.0-alpha.1
+* Added migration guide
+
+## 1.0.0-alpha.0
+* [BREAKING_CHANGE] Rebrand to `catcher_2`
+* [BREAKING_CHANGE] Fix compatibility with newer versions of Flutter. Only SDK `>=3.0.0` is supported now
+* [BREAKING_CHANGE] Update to `dio` 5.x. This has an effect on the `HttpHandler`
+* [BREAKING_CHANGE] Update to `sentry` 7.x
+* Fix compatibility with AGP 8.x
+* Fix wrong stack trace being sent to Sentry
+* Fix a few typos in the README
+* Fix many other errors as well
+* Update package dependencies
+* Update example dependencies
 
 ## 0.7.0
 * [BREAKING_CHANGE] Update to Flutter 3 by Nico Mexis (https://github.com/ThexXTURBOXx).
